@@ -14,7 +14,7 @@ const configVars = {
 client.commands = new Discord.Collection();
 client.queue = new Map();
 
-const commands = fs.readdirSync(`./commands`).filter(file => file.endsWith(".js"));
+const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
     client.commands.set(cmd.name, cmd);
