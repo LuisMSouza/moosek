@@ -31,7 +31,7 @@ module.exports = {
         let letra = await Lyrics.search(main_entry)
             .then(result => {
                 let mlyric;
-                mlyric = result.url;
+                mlyric = result.lyrics;
                 embed.setDescription(mlyric ? mlyric : result.url)
                 if (embed.description.length >= 2048) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
