@@ -354,6 +354,7 @@ module.exports = {
                     console.log(err)
                 }
                 dispatcher.on("finish", () => {
+                    await serverQueue.dispatcher.end();
                     if (!serverQueue.loop) serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0])
                     embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
