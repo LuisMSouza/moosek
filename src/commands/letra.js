@@ -2,6 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const { usage, aliases, execute } = require('./play.js');
+const lyrics_search = require('@penfoldium/lyrics-search');
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
