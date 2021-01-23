@@ -26,7 +26,7 @@ module.exports = {
 
         let mensagem = await message.channel.send('`Aguarde...`');
 
-        let embed = new Discord.MessageEmbed()
+        let embed = new MessageEmbed()
 
         let letra = await Lyrics.search(main_entry)
             .then(result => {
@@ -43,7 +43,7 @@ module.exports = {
             .catch(error => message.channel.send(error))
 
         mensagem.delete(mensagem);
-        message.channel.send(embed)
+        message.channel.send(embed);
 
         return;
     }
