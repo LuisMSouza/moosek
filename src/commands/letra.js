@@ -11,7 +11,7 @@ module.exports = {
     aliases: ['lyrics', 'l'],
 
     async execute(client, message, args) {
-        const serverQueue = client.queues.get(message.guild.id);
+        const serverQueue = client.queue.get(message.guild.id);
         const Lyrics = new lyrics_search(process.env.GENIUS_API_KEY);
 
         let main_entry = args.join(" ");
