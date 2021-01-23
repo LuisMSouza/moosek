@@ -353,7 +353,7 @@ module.exports = {
                 } catch (err) {
                     console.log(err)
                 }
-                dispatcher.on("finish", () => {
+                dispatcher.on("finish", async () => {
                     await serverQueue.dispatcher.end();
                     if (!serverQueue.loop) serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0])
