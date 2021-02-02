@@ -15,7 +15,6 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "ffmpeg-static": "^4.2.7",
     "fluent-ffmpeg": "^2.1.2",
     "genius-lyrics": "^4.2.1",
     "ms": "^2.1.3",
