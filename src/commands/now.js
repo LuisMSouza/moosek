@@ -6,6 +6,7 @@ module.exports = {
     name: "now",
     description: "Para ver a música que está tocando no servidor",
     usage: [process.env.PREFIX_KEY + 'now'],
+    timeout: 7000,
     aliases: ['tocando', 'nowplaying'],
 
     async execute(client, message, args) {

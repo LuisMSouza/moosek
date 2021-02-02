@@ -7,6 +7,7 @@ module.exports = {
     name: "ajuda",
     description: "Exibe o menu de comandos do servidor",
     usage: [process.env.PREFIX_KEY + 'ajuda'],
+    timeout: 7000,
     aliases: ['help', 'a', 'h'],
 
     async execute(client, message, args) {

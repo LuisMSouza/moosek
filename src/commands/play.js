@@ -1,15 +1,17 @@
 /////////////////////// IMPORTS //////////////////////////
+const ytlist = require('ytpl');;
 const { MessageEmbed, Util } = require('discord.js');
 const ytdl = require('ytdl-core');
 const yts = require("yt-search");
 const sendError = require('../utils/error.js')
-const scrapeYt = require('scrape-yt');
+const QUEUE_LIMIT = process.env.QUEUE_LIMIT;
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     name: "play",
     description: "Para tocar músicas no servidor",
     usage: [process.env.PREFIX_KEY + 'play [nome da música / link da música / link da playlist]'],
+    timeout: 5000,
     aliases: ['p', 'tocar', 'iniciar'],
 
     async execute(client, message, args) {
@@ -31,9 +33,14 @@ module.exports = {
 
         if (isPlaylist) {
             try {
-                const playlist = await scrapeYt.getPlaylist(url.split("list=")[1]);
+                if (serverQueue) {
+                    if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
+                        return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
+                    }
+                }
+                const playlist = await ytlist(`${url.split("list=")[1]}`);
                 if (!playlist) return sendError("Playlist não encontrada", message.channel)
-                const videos = await playlist.videos;
+                const videos = await playlist.items;
                 for (const video of videos) {
                     await handleVideo(video, message, voiceChannel, true);
                 }
@@ -44,13 +51,18 @@ module.exports = {
                 })
             } catch {
                 try {
+                    if (serverQueue) {
+                        if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
+                            return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
+                        }
+                    }
                     var searched = await yts.search(url)
 
                     if (searched.playlists.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
                     var songInfo = searched.playlists[0];
                     let listurl = songInfo.listId;
-                    const playlist = await scrapeYt.getPlaylist(listurl)
-                    const videos = await playlist.videos;
+                    const playlist = await ytlist(listurl);
+                    const videos = await playlist.items;
                     for (const video of videos) {
                         await handleVideo(video, message, message.channel, true);
                     }
@@ -60,6 +72,11 @@ module.exports = {
             }
         } else {
             try {
+                if (serverQueue) {
+                    if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
+                        return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
+                    }
+                }
                 yts(searchString, async (err, result) => {
                     const songInfo = result.videos[0];
 
@@ -115,22 +132,11 @@ module.exports = {
             const song = {
                 id: video.id,
                 title: video.title,
-                views: video.views ? video.views : "-",
-                ago: video.ago ? video.ago : "-",
                 duration: video.duration,
-                url: `https://www.youtube.com/watch?v=${video.id}`,
-                thumbnail: video.thumbnail,
+                url: video.shortUrl,
+                thumbnail: video.thumbnails[0].url,
                 req: message.author
             };
-
-            var time = song.duration;
-            var hours = Math.floor(time / 3600);
-            time -= hours * 3600;
-            var minutes = Math.floor(time / 60);
-            time -= minutes * 60;
-            var seconds = parseInt(time % 60, 10);
-            let tempoMusic = hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-            song.duration = tempoMusic;
 
             if (!serverQueue) {
                 const queueConstruct = {
@@ -361,4 +367,4 @@ module.exports = {
             });
         }
     }
-}
+};

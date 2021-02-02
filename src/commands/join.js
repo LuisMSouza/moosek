@@ -7,6 +7,7 @@ module.exports = {
     name: "entrar",
     description: "Para o bot entrar do chat",
     usage: [process.env.PREFIX_KEY + 'entrar'],
+    timeout: 7000,
     aliases: ['e', 'join'],
 
     async execute(client, message, args) {

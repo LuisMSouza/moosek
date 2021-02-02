@@ -7,6 +7,7 @@ module.exports = {
     name: "sair",
     description: "Para o bot sair no chat",
     usage: [process.env.PREFIX_KEY + 'sair'],
+    timeout: 7000,
     aliases: ['lv', 'leave'],
 
     async execute(client, message, args) {

@@ -6,6 +6,7 @@ module.exports = {
     name: "skipto",
     description: "Para pular para uma música específica na fila do servidor",
     usage: [process.env.PREFIX_KEY + 'skipto [número da música na fila]'],
+    timeout: 7000,
     aliases: ['st', 'nt', 'nextto'],
 
     async execute(client, message, args) {
