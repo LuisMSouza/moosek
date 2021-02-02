@@ -18,7 +18,7 @@ module.exports = {
 
         const volume = Number(args[0]);
 
-        if (volume) return message.channel.send({
+        if (!volume) return message.channel.send({
             embed: {
                 description: `O volume atual do servidor é: **${serverQueue.volume}**`
             }
