@@ -23,12 +23,12 @@ module.exports = {
                 description: `O volume atual do servidor é: **${serverQueue.volume}**`
             }
         });
-        if (isNaN(volume) || volume < 0 || volume > 150) {
+        if (isNaN(volume) || volume < 0 || volume > 5) {
             return sendError("Você deve forncecer um valor de **0** a **5**")
         }
 
         serverQueue.volume = volume;
-        serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 100)
+        serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5)
         message.channel.send({
             embed: {
                 description: `Volume alterado para: **${volume}/5**`

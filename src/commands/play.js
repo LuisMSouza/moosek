@@ -93,7 +93,7 @@ module.exports = {
                             voiceChannel: voiceChannel,
                             connection: null,
                             songs: [],
-                            volume: 80,
+                            volume: 5,
                             playing: true,
                             loop: false
                         }
@@ -144,7 +144,7 @@ module.exports = {
                     voiceChannel: channel,
                     connection: null,
                     songs: [],
-                    volume: 80,
+                    volume: 5,
                     playing: true,
                     loop: false
                 };
