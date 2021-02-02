@@ -18,20 +18,20 @@ module.exports = {
 
         const volume = Number(args.join(" "));
 
-        if (!args[0]) return message.channel.send({
+        if (volume) return message.channel.send({
             embed: {
                 description: `O volume atual do servidor é: **${serverQueue.volume}**`
             }
         });
-        if (isNaN(volume) || volume < 0 || volume > 5) {
-            return sendError("Você deve forncecer um volume de **0** a **5**")
+        if (isNaN(volume) || volume < 0 || volume > 150) {
+            return sendError("Você deve forncecer um valor de **0** a **5**")
         }
 
-        serverQueue.dispatcher.setVolume(volume / 5);
         serverQueue.volume = volume;
+        serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 100)
         message.channel.send({
             embed: {
-                description: `Volume alterado para: **${volume}**`
+                description: `Volume alterado para: **${volume}/5**`
             }
         })
         return undefined;
