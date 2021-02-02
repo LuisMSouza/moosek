@@ -16,19 +16,22 @@ module.exports = {
         if (!message.member.voice.channel) return sendError("Você precisa estar em um canal de voz para alterar o volume das músicas!", message.channel).then(m => m.delete({ timeout: 10000 }));
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
 
+        const volume = Number(args.join(" "));
+
         if (!args[0]) return message.channel.send({
             embed: {
                 description: `O volume atual do servidor é: **${serverQueue.volume}**`
             }
         });
-        if (isNaN(args[0])) return sendError("Informe um valor válido", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
-        if (args[0] > 5) return sendError("Escolha um volume de **1** a **5**", message.channel).then(m4 => m4.delete({ timeout: 10000 }))
+        if (isNaN(volume) || volume < 0 || volume > 5) {
+            return sendError("Você deve forncecer um volume de **0** a **5**")
+        }
 
-        serverQueue.volume = args[1];
-        serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5)
+        serverQueue.dispatcher.setVolume(volume / 5);
+        serverQueue.volume = volume;
         message.channel.send({
             embed: {
-                description: `Volume alterado para: **${args[1]}**`
+                description: `Volume alterado para: **${volume}**`
             }
         })
         return undefined;
