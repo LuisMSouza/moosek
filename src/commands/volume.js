@@ -16,7 +16,7 @@ module.exports = {
         if (!message.member.voice.channel) return sendError("Você precisa estar em um canal de voz para alterar o volume das músicas!", message.channel).then(m => m.delete({ timeout: 10000 }));
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
 
-        const volume = Number(args.join(" "));
+        const volume = Number(args[0]);
 
         if (volume) return message.channel.send({
             embed: {
