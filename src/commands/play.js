@@ -31,8 +31,7 @@ module.exports = {
         playlistRegex = /^http(s)?:\/\/www.youtube.com\/.+list=.+$/
         isPlaylist = playlistRegex.test(url)
 
-        if (isPlaylist) {
-            if (!url.startsWith('https://www')) url = `https://www.${url.split("youtube.com")}`
+        if (isPlaylist || !url.startsWith('https://www.')) {
             try {
                 if (serverQueue) {
                     if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
