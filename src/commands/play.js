@@ -177,10 +177,16 @@ module.exports = {
             const serverQueue = client.queue.get(guild.id)
 
             if (!song) {
-                if (serverQueue) {
-                    serverQueue.connection.disconnect();
-                    return client.queue.delete(guild.id);
-                }
+                setTimeout(function () {
+                    if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
+                    serverQueue.voiceChannel.leave()
+                    serverQueue.textChannel.send({
+                        embed: {
+                            description: `${text.errors.stay_time}`
+                        }
+                    })
+                }, STAY_TIME * 1000);
+                return message.client.queue.delete(message.guild.id);
             }
 
             let url = song.url;
@@ -290,10 +296,10 @@ module.exports = {
                                 }
                                 if (serverQueue) {
                                     if (!serverQueue.loop) serverQueue.songs.shift();
+                                    await serverQueue.connection.dispatcher.end();
                                     await play(guild, serverQueue.songs[0]);
                                 }
                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                return undefined;
                                 return;
                                 break;
                             case "⏹️":
@@ -320,11 +326,10 @@ module.exports = {
                                     await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                     return;
                                 }
-                                if (serverQueue) {
-                                    serverQueue.songs = []
-                                    serverQueue.connection.dispatcher.end();
-                                    return;
-                                }
+                                serverQueue.songs = [];
+                                client.queue.set(message.guild.id, serverQueue);
+                                await message.member.voice.channel.leave();
+                                await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
                                 return;
                                 break;
                             case "🔂":
