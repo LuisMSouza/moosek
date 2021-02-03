@@ -182,7 +182,7 @@ module.exports = {
                     serverQueue.voiceChannel.leave()
                     serverQueue.textChannel.send({
                         embed: {
-                            description: `${text.errors.stay_time}`
+                            description: `Tempo de espera esgotado. Saí do chat ;)`
                         }
                     })
                 }, STAY_TIME * 1000);
