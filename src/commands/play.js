@@ -295,9 +295,17 @@ module.exports = {
                                     return;
                                 }
                                 if (serverQueue) {
-                                    if (!serverQueue.loop) serverQueue.songs.shift();
-                                    await serverQueue.connection.dispatcher.end();
-                                    await play(guild, serverQueue.songs[0]);
+                                    if (!serverQueue.loop) {
+                                        if (!serverQueue.songs[1]) {
+                                            message.member.voice.channel.leave();
+                                            embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                            return;
+                                        }
+                                        serverQueue.songs.shift();
+                                        await play(guild, serverQueue.songs[0])
+                                    } else {
+                                        await play(guild, serverQueue.songs[0])
+                                    }
                                 }
                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                 return;
