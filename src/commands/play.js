@@ -4,7 +4,7 @@ const { MessageEmbed, Util } = require('discord.js');
 const ytdl = require('ytdl-core');
 const yts = require("yt-search");
 const sendError = require('../utils/error.js')
-const QUEUE_LIMIT = process.env.QUEUE_LIMIT;
+const { QUEUE_LIMIT, STAY_TIME } = require('../utils/botUtil.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -177,9 +177,16 @@ module.exports = {
             const serverQueue = client.queue.get(guild.id)
 
             if (!song) {
-                serverQueue.voiceChannel.leave()
-                client.queue.delete(guild.id)
-                return;
+                setTimeout(function () {
+                    if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
+                    serverQueue.voiceChannel.leave()
+                    serverQueue.textChannel.send({
+                        embed: {
+                            description: 'Tempo de espera esgotado. Saí do canal ;)'
+                        }
+                    })
+                }, STAY_TIME * 1000);
+                return message.client.queue.delete(message.guild.id);
             }
 
             let url = song.url;
