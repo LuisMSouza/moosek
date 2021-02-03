@@ -177,16 +177,10 @@ module.exports = {
             const serverQueue = client.queue.get(guild.id)
 
             if (!song) {
-                setTimeout(function () {
-                    if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
-                    serverQueue.voiceChannel.leave()
-                    serverQueue.textChannel.send({
-                        embed: {
-                            description: 'Tempo de espera esgotado. Saí do canal ;)'
-                        }
-                    })
-                }, STAY_TIME * 1000);
-                return message.client.queue.delete(message.guild.id);
+                if (serverQueue) {
+                    serverQueue.connection.disconnect();
+                    return client.queue.delete(guild.id);
+                }
             }
 
             let url = song.url;
