@@ -79,12 +79,20 @@ module.exports = {
                 }
                 yts(searchString, async (err, result) => {
                     const songInfo = result.videos[0];
+                    const info = await ytdl.getInfo(songInfo.url);
+                    let time = info.videoDetails.lengthSeconds
+
+                    hora = Math.round(time / 3600);
+                    minuto = Math.round((time % 3600) / 60);
+                    segundo = ((time % 3600) % 60);
+                    time = hora + ":" + minuto + ":" + segundo;
 
                     const song = {
-                        title: Util.escapeMarkdown(songInfo.title),
-                        url: songInfo.url,
-                        thumbnail: songInfo.thumbnail,
-                        duration: songInfo.timestamp,
+                        title: info.videoDetails.media.song ? info.videoDetails.media.song : info.videoDetails.title,
+                        url: info.videoDetails.video_url,
+                        thumbnail: info.videoDetails.thumbnails[0].url,
+                        duration: time,
+                        isLive: info.videoDetails.isLiveContent,
                     }
 
                     if (!serverQueue) {
@@ -128,14 +136,21 @@ module.exports = {
 
         async function handleVideo(video, message, channel, playlist = false) {
             const serverQueue = message.client.queue.get(message.guild.id);
+            const info = await ytdl.getInfo(video.url);
+            let time = info.videoDetails.lengthSeconds
+
+            hora = Math.round(time / 3600);
+            minuto = Math.round((time % 3600) / 60);
+            segundo = ((time % 3600) % 60);
+            time = hora + ":" + minuto + ":" + segundo;
 
             const song = {
-                id: video.id,
-                title: video.title,
-                duration: video.duration,
-                url: video.shortUrl,
-                thumbnail: video.thumbnails[0].url,
-                req: message.author
+                id: info.videoDetails.videoId,
+                title: info.videoDetails.media.song ? info.videoDetails.media.song : info.videoDetails.title,
+                duration: time,
+                url: info.videoDetails.video_url,
+                thumbnail: info.videoDetails.thumbnails[0].url,
+                isLive: info.videoDetails.isLiveContent,
             };
 
             if (!serverQueue) {
@@ -201,6 +216,12 @@ module.exports = {
                 .setThumbnail(song.thumbnail)
                 .setURL(song.url)
                 .addField("Duração:", song.duration)
+
+            if (song.isLive) {
+                await songEmbed.setDescription("**🔴 LIVE**")
+            } else {
+                await songEmbed.addField(song.duration, song.duration)
+            }
 
             message.channel.send(songEmbed).then(async (embed) => {
                 try {
