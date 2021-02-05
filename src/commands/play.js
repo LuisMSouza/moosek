@@ -79,15 +79,12 @@ module.exports = {
                 }
                 yts(searchString, async (err, result) => {
                     const songInfo = result.videos[0];
-                    const infoTitle = await (await ytdl.getInfo(songInfo.url)).videoDetails.media.song;
-                    const infoLive = await (await ytdl.getInfo(songInfo.url)).videoDetails.isLiveContent
 
                     const song = {
-                        title: infoTitle ? infoTitle : song.title,
+                        title: songInfo.title ? songInfo.title : (await ytdl.getInfo(songInfo.url)).videoDetails.media.song,
                         url: songInfo.url,
                         thumbnail: songInfo.thumbnail,
                         duration: songInfo.timestamp,
-                        isLive: infoLive,
                     }
 
                     if (!serverQueue) {
@@ -131,16 +128,14 @@ module.exports = {
 
         async function handleVideo(video, message, channel, playlist = false) {
             const serverQueue = message.client.queue.get(message.guild.id);
-            const info = await ytdl.getInfo(video.url);
-            const infoTitle = await (await ytdl.getInfo(songInfo.url)).videoDetails.media.song;
-            const infoLive = await (await ytdl.getInfo(songInfo.url)).videoDetails.isLiveContent
 
             const song = {
-                title: infoTitle ? infoTitle : song.title,
-                url: songInfo.url,
-                thumbnail: songInfo.thumbnail,
-                duration: songInfo.timestamp,
-                isLive: infoLive,
+                id: video.id,
+                title: video.title ? video.title : (await ytdl.getInfo(video.shortUrl)).videoDetails.media.song,
+                url: video.shortUrl,
+                thumbnail: video.thumbnails[0].url,
+                duration: video.duration,
+                isLive: video.isLive,
             }
 
             if (!serverQueue) {
@@ -205,12 +200,7 @@ module.exports = {
                 .setTitle(song.title)
                 .setThumbnail(song.thumbnail)
                 .setURL(song.url)
-
-            if (song.isLive) {
-                await songEmbed.setDescription("**🔴 LIVE**")
-            } else {
-                await songEmbed.addField("Duração:", song.duration)
-            }
+                .addField("Duração:", song.duration)
 
             message.channel.send(songEmbed).then(async (embed) => {
                 try {
