@@ -89,7 +89,7 @@ module.exports = {
 
                     const song = {
                         title: info.videoDetails.media.song ? info.videoDetails.media.song : info.videoDetails.title,
-                        url: info.videoDetails.video_url,
+                        url: info.videoDetails.video_url ? info.videoDetails.video_url : songInfo.url,
                         thumbnail: info.videoDetails.thumbnails[0].url,
                         duration: time,
                         isLive: info.videoDetails.isLiveContent,
@@ -148,7 +148,7 @@ module.exports = {
                 id: info.videoDetails.videoId,
                 title: info.videoDetails.media.song ? info.videoDetails.media.song : info.videoDetails.title,
                 duration: time,
-                url: info.videoDetails.video_url,
+                url: info.videoDetails.video_url ? info.videoDetails.video_url : video.url,
                 thumbnail: info.videoDetails.thumbnails[0].url,
                 isLive: info.videoDetails.isLiveContent,
             };
