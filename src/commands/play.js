@@ -4,7 +4,7 @@ const { MessageEmbed, Util } = require('discord.js');
 const ytdl = require('ytdl-core');
 const yts = require("yt-search");
 const sendError = require('../utils/error.js')
-const { QUEUE_LIMIT, STAY_TIME } = require('../utils/botUtil.js');
+const { QUEUE_LIMIT, STAY_TIME } = require('../utils/botUtils.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -79,20 +79,15 @@ module.exports = {
                 }
                 yts(searchString, async (err, result) => {
                     const songInfo = result.videos[0];
-                    const info = await ytdl.getInfo(songInfo.url);
-                    let time = info.videoDetails.lengthSeconds
-
-                    hora = Math.round(time / 3600);
-                    minuto = Math.round((time % 3600) / 60);
-                    segundo = ((time % 3600) % 60);
-                    time = hora + ":" + minuto + ":" + segundo;
+                    const infoTitle = await (await ytdl.getInfo(songInfo.url)).videoDetails.media.song;
+                    const infoLive = await (await ytdl.getInfo(songInfo.url)).videoDetails.isLiveContent
 
                     const song = {
-                        title: info.videoDetails.media.song ? info.videoDetails.media.song : info.videoDetails.title,
-                        url: info.videoDetails.video_url ? info.videoDetails.video_url : songInfo.url,
-                        thumbnail: info.videoDetails.thumbnails[0].url,
-                        duration: time,
-                        isLive: info.videoDetails.isLiveContent,
+                        title: infoTitle ? infoTitle : song.title,
+                        url: songInfo.url,
+                        thumbnail: songInfo.thumbnail,
+                        duration: songInfo.timestamp,
+                        isLive: infoLive,
                     }
 
                     if (!serverQueue) {
@@ -137,21 +132,16 @@ module.exports = {
         async function handleVideo(video, message, channel, playlist = false) {
             const serverQueue = message.client.queue.get(message.guild.id);
             const info = await ytdl.getInfo(video.url);
-            let time = info.videoDetails.lengthSeconds
-
-            hora = Math.round(time / 3600);
-            minuto = Math.round((time % 3600) / 60);
-            segundo = ((time % 3600) % 60);
-            time = hora + ":" + minuto + ":" + segundo;
+            const infoTitle = await (await ytdl.getInfo(songInfo.url)).videoDetails.media.song;
+            const infoLive = await (await ytdl.getInfo(songInfo.url)).videoDetails.isLiveContent
 
             const song = {
-                id: info.videoDetails.videoId,
-                title: info.videoDetails.media.song ? info.videoDetails.media.song : info.videoDetails.title,
-                duration: time,
-                url: info.videoDetails.video_url ? info.videoDetails.video_url : video.url,
-                thumbnail: info.videoDetails.thumbnails[0].url,
-                isLive: info.videoDetails.isLiveContent,
-            };
+                title: infoTitle ? infoTitle : song.title,
+                url: songInfo.url,
+                thumbnail: songInfo.thumbnail,
+                duration: songInfo.timestamp,
+                isLive: infoLive,
+            }
 
             if (!serverQueue) {
                 const queueConstruct = {
