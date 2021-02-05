@@ -215,12 +215,11 @@ module.exports = {
                 .setTitle(song.title)
                 .setThumbnail(song.thumbnail)
                 .setURL(song.url)
-                .addField("Duração:", song.duration)
 
             if (song.isLive) {
                 await songEmbed.setDescription("**🔴 LIVE**")
             } else {
-                await songEmbed.addField(song.duration, song.duration)
+                await songEmbed.addField("Duração:", song.duration)
             }
 
             message.channel.send(songEmbed).then(async (embed) => {
