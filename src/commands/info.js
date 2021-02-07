@@ -9,6 +9,7 @@ module.exports = {
     aliases: ['i', 'infos', 'status', 'stats'],
 
     async execute(client, message, args) {
+        let ping = Math.round(message.client.ws.ping);
         let embed = new MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL())
             .setTitle(`Informações`)
@@ -17,6 +18,7 @@ module.exports = {
             .addField("Meu ID é:", client.user.id, true)
             .addField("Estou ativo há:", ms(client.uptime), true)
             .addField("Status atual:", client.user.presence.status, true)
+            .addField("Ping atual:", ping, true)
             .addField("Alcancei um total de:", client.users.cache.size + ` pessoas`, true)
 
         message.channel.send(embed)
