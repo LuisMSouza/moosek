@@ -7,6 +7,7 @@ module.exports = {
     name: "remover",
     description: "Para remover uma música específica na fila do servidor",
     usage: [process.env.PREFIX_KEY + 'remover [número da música na fila]'],
+    category: 'user',
     timeout: 7000,
     aliases: ['rm', 'rv', 'remove'],
 

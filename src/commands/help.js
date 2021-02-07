@@ -7,12 +7,14 @@ module.exports = {
     name: "ajuda",
     description: "Exibe o menu de comandos do servidor",
     usage: [process.env.PREFIX_KEY + 'ajuda'],
+    category: 'user',
     timeout: 7000,
     aliases: ['help', 'a', 'h'],
 
     async execute(client, message, args) {
+        const sorted = client.commands.filter(c => c.category !== 'ceo');
         let cmds = "";
-        client.commands.forEach(cmd => {
+        sorted.forEach(cmd => {
             cmds += "``" + process.env.PREFIX_KEY + cmd.name + " `` -> " + cmd.description + "\n"
         })
         let embed = new MessageEmbed()

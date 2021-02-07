@@ -11,6 +11,7 @@ module.exports = {
     name: "play",
     description: "Para tocar músicas no servidor",
     usage: [process.env.PREFIX_KEY + 'play [nome da música / link da música / link da playlist]'],
+    category: 'user',
     timeout: 5000,
     aliases: ['p', 'tocar', 'iniciar'],
 

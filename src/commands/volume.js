@@ -7,6 +7,7 @@ module.exports = {
     name: "volume",
     description: "Para alterar o volume das músicas do servidor",
     usage: [process.env.PREFIX_KEY + 'volume [volume de 1 a 5]'],
+    category: 'user',
     timeout: 7000,
     aliases: ['v', 'vol'],
 

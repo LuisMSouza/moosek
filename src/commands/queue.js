@@ -7,6 +7,7 @@ module.exports = {
     name: "fila",
     description: "Para ver a fila de músicas do servidor",
     usage: [process.env.PREFIX_KEY + 'fila'],
+    category: 'user',
     timeout: 7000,
     aliases: ['queue', 'q', 'f', 'lista'],
 

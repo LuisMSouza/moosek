@@ -5,6 +5,7 @@ module.exports = {
     name: "info",
     description: "Mostra informações do bot",
     usage: [process.env.PREFIX_KEY + 'info'],
+    category: 'user',
     timeout: 7000,
     aliases: ['i', 'infos', 'status', 'stats'],
 

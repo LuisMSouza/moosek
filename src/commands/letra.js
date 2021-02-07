@@ -9,6 +9,7 @@ module.exports = {
     name: "letra",
     description: "Para pegar a letra de uma música",
     usage: [process.env.PREFIX_KEY + 'letra [nome da música]'],
+    category: 'user',
     timeout: 7000,
     aliases: ['lyrics', 'l'],
 

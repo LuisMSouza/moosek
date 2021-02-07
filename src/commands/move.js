@@ -7,6 +7,7 @@ module.exports = {
     name: "mover",
     description: "Para mover uma música de posição na fila",
     usage: [process.env.PREFIX_KEY + 'mover [posição atual] [nova posição]'],
+    category: 'user',
     timeout: 5000,
     aliases: ['mv', 'move'],
 
