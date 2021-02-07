@@ -177,7 +177,7 @@ module.exports = {
             const serverQueue = client.queue.get(guild.id)
 
             if (!song) {
-                setTimeout(function () {
+                var timer = setTimeout(function () {
                     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                     serverQueue.voiceChannel.leave()
                     serverQueue.textChannel.send({
@@ -185,6 +185,7 @@ module.exports = {
                             description: `Tempo de espera esgotado. Saí do chat ;)`
                         }
                     })
+                    clearTimeout(timer);
                 }, STAY_TIME * 1000);
                 return message.client.queue.delete(message.guild.id);
             }
