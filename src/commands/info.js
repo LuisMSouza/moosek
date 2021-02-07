@@ -18,7 +18,7 @@ module.exports = {
             .addField("Meu ID é:", client.user.id, true)
             .addField("Estou ativo há:", ms(client.uptime), true)
             .addField("Status atual:", client.user.presence.status, true)
-            .addField("Ping atual:", ping, true)
+            .addField("Ping atual:", `${ping} ms`, true)
             .addField("Alcancei um total de:", client.users.cache.size + ` pessoas`, true)
 
         message.channel.send(embed)
