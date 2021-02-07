@@ -13,6 +13,7 @@
   "author": "Luís#0685",
   "license": "ISC",
   "dependencies": {
+    "array-move": "^3.0.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "fluent-ffmpeg": "^2.1.2",
