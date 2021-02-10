@@ -5,11 +5,12 @@ const guildData = require('../models/guildData.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = async (client, message) => {
+    var prefix = await guildData.findOne({ guildID: message.guild.id, })
     const args = message.content.split(/ +/g);
-    const commandName = args.shift().slice((await guildData.findOne({ guildID: message.guild.id })).guildPrefix).toLowerCase();
+    const commandName = args.shift().slice(prefix.guildPrefix.lenght).toLowerCase();
     const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    if (!message.content.toLowerCase().startsWith((await guildData.findOne({ guildID: message.guild.id }))) || !message.guild || message.author.bot) return;
+    if (!message.content.toLowerCase().startsWith(prefix.guildPrefix) || !message.guild || message.author.bot) return;
 
     try {
         if (cmd) {
