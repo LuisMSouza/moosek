@@ -27,18 +27,19 @@ module.exports = {
             .setFooter(client.user.username, client.user.displayAvatarURL())
 
         if (!args.length) return message.channel.send(embed);
-        if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config\n` + "```", message.channel);
+        if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config prefix\n` + "```", message.channel);
 
         if (args[0].toLowerCase() === ("prefix" || "prefixo" || "pref")) {
             const filter = m => m.author.id === message.author.id;
-            let newPrefix;
+            var msg = await message.channel.send({ embed: { description: "**Digite o novo prefixo**" } });
             message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                 .then(async collected => {
-                    await newPrefix === collected.first().content.toLowerCase();
-                    guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: newPrefix } }, { new: true });
+                    collected.first().content.toLowerCase();
+                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: collected.first().content.toLowerCase() } }, { new: true });
+                    msg.delete(msg);
                     message.channel.send({
                         embed: {
-                            description: "Prefixo alterado para: `" + `${newPrefix}` + "`"
+                            description: "Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`"
                         }
                     })
                 }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
