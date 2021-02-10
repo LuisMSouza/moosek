@@ -33,7 +33,7 @@ module.exports = {
             const filter = m => m.author.id === message.author.id;
             let newPrefix;
             message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
-                .then(collected => {
+                .then(async collected => {
                     await newPrefix === collected.first().content.toLowerCase();
                     guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: newPrefix } }, { new: true });
                     message.channel.send({
