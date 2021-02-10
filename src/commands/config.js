@@ -34,7 +34,7 @@ module.exports = {
             var msg = await message.channel.send({ embed: { description: "**Digite o novo prefixo**" } });
             message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                 .then(async collected => {
-                    if (collected.first().content >= 5) return sendError("Esse prefixo é muito longo!", message.channel);
+                    if (collected.first().content.length >= 5) return sendError("Esse prefixo é muito longo!", message.channel);
                     collected.first().content.toLowerCase();
                     await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: collected.first().content.toLowerCase() } }, { new: true });
                     msg.delete(msg);
