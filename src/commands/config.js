@@ -35,7 +35,7 @@ module.exports = {
             message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                 .then(collected => {
                     await newPrefix === collected.first().content.toLowerCase();
-                    guildData.findByIdAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: newPrefix } }, { new: true });
+                    guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: newPrefix } }, { new: true });
                     message.channel.send({
                         embed: {
                             description: "Prefixo alterado para: `" + `${newPrefix}` + "`"
