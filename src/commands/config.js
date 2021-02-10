@@ -30,15 +30,18 @@ module.exports = {
         if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config\n` + "```", message.channel);
 
         if (args[0].toLowerCase() === ("prefix" || "prefixo" || "pref")) {
-            const filter = m => m.author;
+            const filter = m => m.author.id === message.author.id;
             let newPrefix;
-            message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] }).then(collected => newPrefix == collected).catch(collected => message.channel.send("Tempo de resposta esgotado"))
-            guildData.findByIdAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: newPrefix } }, { new: true });
-            message.channel.send({
-                embed: {
-                    description: "Prefixo alterado para: `" + `${newPrefix}` + "`"
-                }
-            })
+            message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
+                .then(collected => {
+                    await newPrefix === collected.first().content.toLowerCase();
+                    guildData.findByIdAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: newPrefix } }, { new: true });
+                    message.channel.send({
+                        embed: {
+                            description: "Prefixo alterado para: `" + `${newPrefix}` + "`"
+                        }
+                    })
+                }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
         }
     }
 }
