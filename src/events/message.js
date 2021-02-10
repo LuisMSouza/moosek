@@ -5,7 +5,7 @@ const guildData = require('../models/guildData.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = async (client, message) => {
-    const prefix = guildData.findOne({
+    const prefix = await guildData.findOne({
         guildID: message.guild.id,
     });
     const args = message.content.split(/ +/g);
