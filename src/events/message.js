@@ -8,6 +8,7 @@ module.exports = async (client, message) => {
     const prefix = await guildData.findOne({
         guildID: message.guild.id,
     });
+    console.log(prefix.guildPrefix)
     const args = message.content.split(/ +/g);
     const commandName = args.shift().slice(prefix.guildPrefix).toLowerCase();
     const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
