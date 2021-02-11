@@ -23,7 +23,8 @@ module.exports = {
         var embed = new MessageEmbed()
             .setTitle(`${message.guild.name} | Configuração Moosek`)
             .setThumbnail(message.guild.iconURL())
-            .addField(`> Prefixo`, `Prefixo do servidor: ` + "`" + `${pref}` + "`", true)
+            .addField(`> Prefixo`, `Prefixo atual do servidor: ` + "`" + `${pref}` + "`", true)
+            .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "`")
             .setFooter(client.user.username, client.user.displayAvatarURL())
 
         if (!args.length) return message.channel.send(embed);
