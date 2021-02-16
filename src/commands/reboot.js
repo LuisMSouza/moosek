@@ -20,7 +20,7 @@ module.exports = {
             }
         });
         try {
-            processed.exec('heroku ps:restart --app moosek')
+            processed.exec('heroku dyno:restart moosek')
         } catch (e) {
             console.log(e);
         }
