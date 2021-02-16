@@ -3,7 +3,11 @@ const guildData = require('./guildData.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = async (guild) => {
-    await guildData.findOneAndDelete({
-        guildID: guild
-    });
+    try {
+        await guildData.findOneAndDelete({
+            guildID: guild
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }

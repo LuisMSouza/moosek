@@ -27,14 +27,17 @@ module.exports = {
         if (isNaN(volume) || volume < 0 || volume > 5) {
             return sendError("Você deve forncecer um valor de **0** a **5**")
         }
-
-        serverQueue.volume = volume;
-        serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5)
-        message.channel.send({
-            embed: {
-                description: `Volume alterado para: **${volume}/5**`
-            }
-        })
-        return undefined;
+        try {
+            serverQueue.volume = volume;
+            serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5)
+            message.channel.send({
+                embed: {
+                    description: `Volume alterado para: **${volume}/5**`
+                }
+            })
+            return undefined;
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

@@ -25,11 +25,15 @@ module.exports = {
                 }
             }).then(m2 => m2.delete({ timeout: 10000 }))
         }
-        await voiceChannel.join();
-        message.channel.send({
-            embed: {
-                description: `Me juntei ao canal **${message.member.voice.channel.name}**`
-            }
-        });
+        try {
+            await voiceChannel.join();
+            message.channel.send({
+                embed: {
+                    description: `Me juntei ao canal **${message.member.voice.channel.name}**`
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

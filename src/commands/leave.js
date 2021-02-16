@@ -25,11 +25,15 @@ module.exports = {
                 }
             }).then(m2 => m2.delete({ timeout: 10000 }))
         }
-        await voiceChannel.leave();
-        message.channel.send({
-            embed: {
-                description: `**Saí do canal ;)**`
-            }
-        });
+        try {
+            await voiceChannel.leave();
+            message.channel.send({
+                embed: {
+                    description: `**Saí do canal ;)**`
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

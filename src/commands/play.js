@@ -235,10 +235,14 @@ module.exports = {
                                     return;
                                 }
                                 if (serverQueue) {
-                                    serverQueue.playing = false;
-                                    serverQueue.connection.dispatcher.pause();
-                                    await reaction.users.remove(user);
-                                    return undefined;
+                                    try {
+                                        serverQueue.playing = false;
+                                        serverQueue.connection.dispatcher.pause();
+                                        await reaction.users.remove(user);
+                                        return undefined;
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
                                 } else {
                                     await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                     return undefined;
@@ -264,10 +268,14 @@ module.exports = {
                                     return;
                                 }
                                 if (serverQueue) {
-                                    serverQueue.playing = true;
-                                    serverQueue.connection.dispatcher.resume();
-                                    await reaction.users.remove(user);
-                                    return undefined;
+                                    try {
+                                        serverQueue.playing = true;
+                                        serverQueue.connection.dispatcher.resume();
+                                        await reaction.users.remove(user);
+                                        return undefined;
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
                                 } else {
                                     await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                     return undefined;
@@ -298,16 +306,20 @@ module.exports = {
                                     return;
                                 }
                                 if (serverQueue) {
-                                    if (!serverQueue.loop) {
-                                        if (!serverQueue.songs[1]) {
-                                            message.member.voice.channel.leave();
-                                            embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                            return;
+                                    try {
+                                        if (!serverQueue.loop) {
+                                            if (!serverQueue.songs[1]) {
+                                                message.member.voice.channel.leave();
+                                                embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                                return;
+                                            }
+                                            serverQueue.songs.shift();
+                                            await play(guild, serverQueue.songs[0])
+                                        } else {
+                                            await play(guild, serverQueue.songs[0])
                                         }
-                                        serverQueue.songs.shift();
-                                        await play(guild, serverQueue.songs[0])
-                                    } else {
-                                        await play(guild, serverQueue.songs[0])
+                                    } catch (e) {
+                                        console.log(e);
                                     }
                                 }
                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
@@ -337,11 +349,15 @@ module.exports = {
                                     await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                     return;
                                 }
-                                serverQueue.songs = [];
-                                client.queue.set(message.guild.id, serverQueue);
-                                await message.member.voice.channel.leave();
-                                await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
-                                return;
+                                try {
+                                    serverQueue.songs = [];
+                                    client.queue.set(message.guild.id, serverQueue);
+                                    await message.member.voice.channel.leave();
+                                    await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
+                                    return;
+                                } catch (e) {
+                                    console.log(e);
+                                }
                                 break;
                             case "🔂":
                                 if (!message.member.voice.channel) {
@@ -363,13 +379,17 @@ module.exports = {
                                     return;
                                 }
                                 if (!serverQueue) return;
-                                serverQueue.loop = !serverQueue.loop
-                                await reaction.users.remove(user);
-                                return message.channel.send({
-                                    embed: {
-                                        description: `🔁 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
-                                    }
-                                })
+                                try {
+                                    serverQueue.loop = !serverQueue.loop
+                                    await reaction.users.remove(user);
+                                    return message.channel.send({
+                                        embed: {
+                                            description: `🔁 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
+                                        }
+                                    })
+                                } catch (e) {
+                                    console.log(e);
+                                }
                                 break;
                         }
                     })

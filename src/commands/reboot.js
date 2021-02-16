@@ -18,6 +18,10 @@ module.exports = {
                 description: "Reiniciando..."
             }
         });
-        process.exit(1);
+        try {
+            process.exit(1);
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

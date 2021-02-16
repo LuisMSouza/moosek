@@ -26,11 +26,15 @@ module.exports = {
 
         let song = serverQueue.songs[oldPosition - 1].title;
 
-        serverQueue.songs = move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
-        message.channel.send({
-            embed: {
-                description: `**${song}** agora está na posição **${newPosition}** da fila.`
-            }
-        })
+        try {
+            serverQueue.songs = move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
+            message.channel.send({
+                embed: {
+                    description: `**${song}** agora está na posição **${newPosition}** da fila.`
+                }
+            })
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
