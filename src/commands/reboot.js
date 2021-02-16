@@ -1,6 +1,6 @@
 /////////////////////// IMPORTS ///////////////////////////
 const { CEO_ID } = require('../utils/botUtils.js');
-const process = require('child_process');
+const processed = require('child_process');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
             }
         });
         try {
-            process.exec('heroku ps:restart --app moosek')
+            processed.exec('heroku ps:restart --app moosek')
         } catch (e) {
             console.log(e);
         }
