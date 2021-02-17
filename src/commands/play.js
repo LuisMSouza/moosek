@@ -180,7 +180,7 @@ module.exports = {
             if (!song) {
                 var timer = setTimeout(async function () {
                     if (serverQueue.connection.dispatcher && !message.guild.me.voice.channel) return;
-                    if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
+                    if (!message.guild.me.voice.channel) return;
                     serverQueue.voiceChannel.leave();
                     serverQueue.textChannel.send({
                         embed: {
