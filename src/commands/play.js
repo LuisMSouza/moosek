@@ -1,6 +1,6 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
-const { MessageEmbed, Util } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const yts = require("yt-search");
 const sendError = require('../utils/error.js')
@@ -178,18 +178,22 @@ module.exports = {
             const serverQueue = client.queue.get(guild.id)
 
             if (!song) {
-                var timer = setTimeout(async function () {
-                    if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
-                    if (!message.guild.me.voice.channel) return;
-                    serverQueue.voiceChannel.leave();
-                    serverQueue.textChannel.send({
-                        embed: {
-                            description: `Tempo de espera esgotado. Saí do chat ;)`
-                        }
-                    })
-                    clearTimeout(timer);
-                }, STAY_TIME * 1000);
-                return message.client.queue.delete(message.guild.id);
+                try {
+                    var timer = setTimeout(async function () {
+                        if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
+                        if (!message.guild.me.voice.channel) return;
+                        serverQueue.voiceChannel.leave();
+                        serverQueue.textChannel.send({
+                            embed: {
+                                description: `Tempo de espera esgotado. Saí do chat ;)`
+                            }
+                        })
+                        clearTimeout(timer);
+                    }, STAY_TIME * 1000);
+                    return message.client.queue.delete(message.guild.id);
+                } catch (e) {
+                    console.log(e);
+                }
             }
 
             let url = song.url;
