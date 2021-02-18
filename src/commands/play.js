@@ -179,7 +179,7 @@ module.exports = {
 
             if (!song) {
                 try {
-                    var timer = setTimeout(async function () {
+                    setTimeout(async function () {
                         if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                         if (!message.guild.me.voice.channel) return;
                         serverQueue.voiceChannel.leave();
@@ -187,8 +187,7 @@ module.exports = {
                             embed: {
                                 description: `Tempo de espera esgotado. Saí do chat ;)`
                             }
-                        })
-                        clearTimeout(timer);
+                        });
                     }, STAY_TIME * 1000);
                     return message.client.queue.delete(message.guild.id);
                 } catch (e) {
