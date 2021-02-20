@@ -183,6 +183,7 @@ module.exports = {
                     setTimeout(async function () {
                         if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                         if (!message.guild.me.voice.channel) return;
+                        await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
                         serverQueue.voiceChannel.leave();
                         serverQueue.textChannel.send({
                             embed: {
@@ -322,7 +323,7 @@ module.exports = {
                                                 return;
                                             }
                                             serverQueue.songs.shift();
-                                            if (srch.aleatory) {
+                                            if (srch.aleatory === true) {
                                                 play(guild, serverQueue.songs[Math.floor(Math.random() * (serverQueue.length))]);
                                             } else {
                                                 play(guild, serverQueue.songs[0]);
@@ -452,7 +453,7 @@ module.exports = {
                     const search_al = await guildData.findOne({
                         guildID: message.guild.id
                     });
-                    if (search_al.aleatory) {
+                    if (search_al.aleatory === true) {
                         play(guild, serverQueue.songs[Math.floor(Math.random() * (serverQueue.length))]);
                     } else {
                         play(guild, serverQueue.songs[0]);
