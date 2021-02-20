@@ -5,6 +5,7 @@ const ytdl = require('ytdl-core');
 const yts = require("yt-search");
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT, STAY_TIME } = require('../utils/botUtils.js');
+const guildData = require('../models/guildData.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -215,7 +216,8 @@ module.exports = {
                     await embed.react("⏭️");
                     await embed.react("⏹️");
                     await embed.react("🔂");
-                    const collector = embed.createReactionCollector((reaction, user) => ["⏸️", "▶️", "⏭️", "⏹️", "🔂"].includes(reaction.emoji.name) && user != user.bot);
+                    await embed.react("🔀");
+                    const collector = embed.createReactionCollector((reaction, user) => ["⏸️", "▶️", "⏭️", "⏹️", "🔂", "🔀"].includes(reaction.emoji.name) && user != user.bot);
                     collector.on("collect", async (reaction, user) => {
                         switch (reaction.emoji.name) {
                             case "⏸️":
@@ -310,6 +312,9 @@ module.exports = {
                                 }
                                 if (serverQueue) {
                                     try {
+                                        var srch = await guildData.findOne({
+                                            guildID: message.guild.id
+                                        });
                                         if (!serverQueue.loop) {
                                             if (!serverQueue.songs[1]) {
                                                 message.member.voice.channel.leave();
@@ -317,9 +322,13 @@ module.exports = {
                                                 return;
                                             }
                                             serverQueue.songs.shift();
-                                            await play(guild, serverQueue.songs[0])
+                                            if (srch.aleatory) {
+                                                play(guild, serverQueue.songs[Math.floor(Math.random() * (serverQueue.length))]);
+                                            } else {
+                                                play(guild, serverQueue.songs[0]);
+                                            }
                                         } else {
-                                            await play(guild, serverQueue.songs[0])
+                                            play(guild, serverQueue.songs[0]);
                                         }
                                     } catch (e) {
                                         console.log(e);
@@ -389,7 +398,46 @@ module.exports = {
                                         embed: {
                                             description: `🔁 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
                                         }
-                                    })
+                                    });
+                                } catch (e) {
+                                    console.log(e);
+                                }
+                                break;
+                            case "🔀":
+                                if (!message.member.voice.channel) {
+                                    message.channel.send({
+                                        embed: {
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                                    message.channel.send({
+                                        embed: {
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (!serverQueue) return;
+                                try {
+                                    var sg = await guildData.findOne({
+                                        guildID: message.guild.id
+                                    });
+                                    var isAleatory = sg.aleatory_mode;
+                                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: !isAleatory } }, { new: true });
+                                    var sg_2 = await guildData.findOne({
+                                        guildID: message.guild.id
+                                    });
+                                    await reaction.users.remove(user);
+                                    return message.channel.send({
+                                        embed: {
+                                            description: `🔀 Modo aleatório ${sg_2.aleatory_mode ? `**Habilitado**` : `**Desabilitado**`}`
+                                        }
+                                    });
                                 } catch (e) {
                                     console.log(e);
                                 }
@@ -401,7 +449,14 @@ module.exports = {
                 }
                 dispatcher.on("finish", async () => {
                     if (!serverQueue.loop) serverQueue.songs.shift();
-                    play(guild, serverQueue.songs[0])
+                    const search_al = await guildData.findOne({
+                        guildID: message.guild.id
+                    });
+                    if (search_al.aleatory) {
+                        play(guild, serverQueue.songs[Math.floor(Math.random() * (serverQueue.length))]);
+                    } else {
+                        play(guild, serverQueue.songs[0]);
+                    }
                     embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                 })
             });

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const guildSchema = mongoose.Schema({
     guildID: String,
     guildPrefix: String,
+    aleatory_mode: Boolean,
 });
 
 module.exports = mongoose.model('guildData', guildSchema);
