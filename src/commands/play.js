@@ -368,6 +368,7 @@ module.exports = {
                                     serverQueue.songs = [];
                                     client.queue.set(message.guild.id, serverQueue);
                                     await message.member.voice.channel.leave();
+                                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
                                     await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
                                     return;
                                 } catch (e) {
