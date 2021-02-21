@@ -324,8 +324,9 @@ module.exports = {
                                                 return;
                                             }
                                             serverQueue.songs.shift();
-                                            if (srch.aleatory === true) {
-                                                play(guild, serverQueue.songs[Math.floor(Math.random() * (serverQueue.length))]);
+                                            if (srch.aleatory) {
+                                                const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                                play(guild, serverQueue.songs[random]);
                                             } else {
                                                 play(guild, serverQueue.songs[0]);
                                             }
@@ -454,8 +455,9 @@ module.exports = {
                     const search_al = await guildData.findOne({
                         guildID: message.guild.id
                     });
-                    if (search_al.aleatory === true) {
-                        play(guild, serverQueue.songs[Math.floor(Math.random() * (serverQueue.length))]);
+                    if (search_al.aleatory) {
+                        const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                        play(guild, serverQueue.songs[random]);
                     } else {
                         play(guild, serverQueue.songs[0]);
                     }
