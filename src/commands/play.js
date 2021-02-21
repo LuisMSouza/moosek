@@ -324,7 +324,7 @@ module.exports = {
                                                 return;
                                             }
                                             serverQueue.songs.shift();
-                                            if (srch.aleatory) {
+                                            if (srch.aleatory_mode) {
                                                 const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                                 play(guild, serverQueue.songs[random]);
                                             } else {
@@ -455,7 +455,7 @@ module.exports = {
                     const search_al = await guildData.findOne({
                         guildID: message.guild.id
                     });
-                    if (search_al.aleatory) {
+                    if (search_al.aleatory_mode) {
                         const random = Math.floor(Math.random() * (serverQueue.songs.length));
                         play(guild, serverQueue.songs[random]);
                     } else {
