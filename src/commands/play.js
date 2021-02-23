@@ -469,15 +469,17 @@ module.exports = {
                     })
                 });
             } catch (e) {
-                if (e.message.includes("Cannot read property 'title' of undefined")) {
+                if (err.message.includes("UnhandledPromiseRejectionWarning")) {
                     serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0]);
-                    return sendError("**Este vídeo está indisponível.**", message.channel);
+                    sendError("**Este vídeo está indisponível.**", message.channel); 
+                    return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
                 }
                 if (e.message.includes("Video unavailable")) {
                     serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0]);
-                    return sendError("**Este vídeo está indisponível.**", message.channel);
+                    sendError("**Este vídeo está indisponível.**", message.channel);
+                    return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
                 }
                 return console.log(e);
             }
