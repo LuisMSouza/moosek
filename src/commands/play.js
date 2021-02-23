@@ -24,7 +24,7 @@ module.exports = {
         const serverQueue = client.queue.get(message.guild.id);
 
         const voiceChannel = message.member.voice.channel;
-        if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel).then(m => m.delete({ timeout: 10000 }));
+        if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel);
 
         const permissions = voiceChannel.permissionsFor(message.client.user);
         if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
@@ -124,8 +124,8 @@ module.exports = {
                     return undefined;
                 })
             } catch (err) {
-                if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**", message.channel);
-                return console.log(err.message);
+                if (err.message.includes("UnhandledPromiseRejectionWarning")) return sendError("**Este vídeo está indisponível.**", message.channel);
+                return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
             }
         }
 
