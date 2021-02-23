@@ -125,7 +125,7 @@ module.exports = {
                 })
             } catch (err) {
                 if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**");
-                return console.log(e);
+                return console.log(err.message);
             }
         }
 
