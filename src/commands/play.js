@@ -124,8 +124,8 @@ module.exports = {
                     return undefined;
                 })
             } catch (err) {
-                if (err.name === "Cannot read property 'title' of undefined") return console.log(`Erro: ${err.name}`);
-                return console.log(err.name);
+                if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**");
+                return console.log(e);
             }
         }
 
@@ -176,8 +176,8 @@ module.exports = {
                 }
                 return;
             } catch (e) {
-                if (err.name === "Cannot read property 'title' of undefined") return console.log(`Erro: ${err.name}`);
-                return console.log(err.name);
+                if (e.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**");
+                return console.log(e);
             }
         }
 
@@ -469,8 +469,17 @@ module.exports = {
                     })
                 });
             } catch (e) {
-                if (e.name === "Cannot read property 'title' of undefined") return console.log(e.name);
-                console.log(e.name);
+                if (e.message.includes("Cannot read property 'title' of undefined")) {
+                    serverQueue.songs.shift();
+                    play(guild, serverQueue.songs[0]);
+                    return sendError("**Este vídeo está indisponível.**");
+                }
+                if (e.message.includes("Video unavailable")) {
+                    serverQueue.songs.shift();
+                    play(guild, serverQueue.songs[0]);
+                    return sendError("**Este vídeo está indisponível.**");
+                }
+                return console.log(e);
             }
         }
     }
