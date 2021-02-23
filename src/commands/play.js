@@ -455,14 +455,15 @@ module.exports = {
                         console.log(err)
                     }
                     dispatcher.on("finish", async () => {
-                        if (!serverQueue.loop) serverQueue.songs.shift();
                         const search_al = await guildData.findOne({
                             guildID: message.guild.id
                         });
                         if (search_al.aleatory_mode) {
+                            if (!serverQueue.loop) await serverQueue.songs.shift();
                             const random = Math.floor(Math.random() * (serverQueue.songs.length));
                             play(guild, serverQueue.songs[random]);
                         } else {
+                            if (!serverQueue.loop) await serverQueue.songs.shift();
                             play(guild, serverQueue.songs[0]);
                         }
                         embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
