@@ -186,10 +186,10 @@ module.exports = {
                 const serverQueue = client.queue.get(guild.id)
 
                 if (!song) {
-                    setTimeout(async function () {
+                    var tempo = setTimeout(async function () {
                         if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                         if (!message.guild.me.voice.channel) return;
-                        if (message.guild.me.voice.channel && serverQueue.playing) return;
+                        if (serverQueue.playing) return;
                         await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
                         serverQueue.voiceChannel.leave();
                         serverQueue.textChannel.send({
@@ -199,6 +199,8 @@ module.exports = {
                         });
                     }, STAY_TIME * 1000);
                     return message.client.queue.delete(message.guild.id);
+                } else {
+                    await clearTimeout(tempo);
                 }
 
                 let url = song.url;
@@ -473,7 +475,7 @@ module.exports = {
                 if (err.message.includes("UnhandledPromiseRejectionWarning")) {
                     serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0]);
-                    sendError("**Este vídeo está indisponível.**", message.channel); 
+                    sendError("**Este vídeo está indisponível.**", message.channel);
                     return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
                 }
                 if (e.message.includes("Video unavailable")) {
