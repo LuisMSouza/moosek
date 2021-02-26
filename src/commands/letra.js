@@ -14,10 +14,12 @@ module.exports = {
     aliases: ['lyrics', 'l'],
 
     async execute(client, message, args) {
+        const emoji = client.guilds.cache.get(message.guild.id).emojis.cache.find(emj => emj.name === "7041_loading");
+        const emoji_2 = client.guilds.cache.get(message.guild.id).emojis.cache.find(emj => emj.name === "4077_warning");
         const serverQueue = client.queue.get(message.guild.id);
         let main_entry = args.join(" ");
         let embed = new MessageEmbed()
-        let msge = await message.channel.send("`Aguarde...`")
+        let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {
             if (serverQueue) {
