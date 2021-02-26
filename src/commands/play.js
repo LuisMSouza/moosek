@@ -50,7 +50,7 @@ module.exports = {
                     embed: {
                         description: `**Playlist adicionada à fila**`
                     }
-                })
+                });
             } catch {
                 try {
                     if (serverQueue) {
@@ -73,65 +73,60 @@ module.exports = {
                 }
             }
         } else {
-            try {
-                if (serverQueue) {
-                    if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
-                        return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
-                    }
+            if (serverQueue) {
+                if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
+                    return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                 }
-                yts(searchString, async (err, result) => {
+            }
+            yts(searchString, async (err, result) => {
+                try {
                     const songInfo = result.videos[0];
 
-                    try {
-                        const song = {
-                            title: songInfo.title ? songInfo.title : (await ytdl.getInfo(songInfo.url)).videoDetails.media.song,
-                            url: songInfo.url,
-                            thumbnail: songInfo.thumbnail,
-                            duration: songInfo.timestamp,
-                        }
-
-                        if (!serverQueue) {
-                            const queueConstruct = {
-                                textChannel: message.channel,
-                                voiceChannel: voiceChannel,
-                                connection: null,
-                                songs: [],
-                                volume: 5,
-                                playing: true,
-                                loop: false
-                            }
-                            client.queue.set(message.guild.id, queueConstruct)
-
-                            queueConstruct.songs.push(song)
-
-                            try {
-                                var connection = await voiceChannel.join();
-                                queueConstruct.connection = connection
-                                play(message.guild, queueConstruct.songs[0])
-                            } catch (err) {
-                                console.log(err);
-                                client.queue.delete(message.guild.id)
-                                return;
-                            }
-                        } else {
-                            serverQueue.songs.push(song);
-                            return message.channel.send({
-                                embed: {
-                                    title: "Adicionado à fila",
-                                    description: `**${song.title}** foi adicionada à fila`
-                                }
-                            })
-                        }
-                    } catch (err) {
-                        if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**", message.channel);
-                        return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
+                    const song = {
+                        title: songInfo.title ? songInfo.title : (await ytdl.getInfo(songInfo.url)).videoDetails.media.song,
+                        url: songInfo.url,
+                        thumbnail: songInfo.thumbnail,
+                        duration: songInfo.timestamp,
                     }
-                    return undefined;
-                });
-            } catch (err) {
-                if (err.message.includes("Video unavailable")) return sendError("**Este vídeo está indisponível.**", message.channel);
-                return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
-            }
+
+                    if (!serverQueue) {
+                        const queueConstruct = {
+                            textChannel: message.channel,
+                            voiceChannel: voiceChannel,
+                            connection: null,
+                            songs: [],
+                            volume: 5,
+                            playing: true,
+                            loop: false
+                        }
+                        client.queue.set(message.guild.id, queueConstruct)
+
+                        queueConstruct.songs.push(song)
+
+                        try {
+                            var connection = await voiceChannel.join();
+                            queueConstruct.connection = connection
+                            play(message.guild, queueConstruct.songs[0])
+                        } catch (err) {
+                            console.log(err);
+                            client.queue.delete(message.guild.id)
+                            return;
+                        }
+                    } else {
+                        serverQueue.songs.push(song);
+                        return message.channel.send({
+                            embed: {
+                                title: "Adicionado à fila",
+                                description: `**${song.title}** foi adicionada à fila`
+                            }
+                        })
+                    }
+                } catch (err) {
+                    if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**", message.channel);
+                    return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
+                }
+                return undefined;
+            });
         }
 
         async function handleVideo(video, message, channel, playlist = false) {
@@ -181,7 +176,6 @@ module.exports = {
                 }
                 return;
             } catch (e) {
-                if (e.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**", message.channel);
                 return console.log(e);
             }
         }
@@ -477,18 +471,6 @@ module.exports = {
                     })
                 });
             } catch (e) {
-                if (err.message.includes("UnhandledPromiseRejectionWarning")) {
-                    serverQueue.songs.shift();
-                    play(guild, serverQueue.songs[0]);
-                    sendError("**Este vídeo está indisponível.**", message.channel);
-                    return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
-                }
-                if (e.message.includes("Video unavailable")) {
-                    serverQueue.songs.shift();
-                    play(guild, serverQueue.songs[0]);
-                    sendError("**Este vídeo está indisponível.**", message.channel);
-                    return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
-                }
                 return console.log(e);
             }
         }
