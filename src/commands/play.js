@@ -205,8 +205,13 @@ module.exports = {
                 let url = song.url;
                 const dispatcher = serverQueue.connection.play(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
                     .on("error", error => {
-                        console.log(error);
-                    })
+                        if (error.message.includes("Video unavailable")) {
+                            sendError("Video indisponível.", message.channel);
+                            serverQueue.songs.shift();
+                            play(guild, serverQueue.songs[0]);
+                        }
+                        console.log(error.message);
+                    });
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
                 let songEmbed = new MessageEmbed()
                     .setAuthor("Tocando agora:")
