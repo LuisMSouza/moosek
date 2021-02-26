@@ -82,49 +82,54 @@ module.exports = {
                 yts(searchString, async (err, result) => {
                     const songInfo = result.videos[0];
 
-                    const song = {
-                        title: songInfo.title ? songInfo.title : (await ytdl.getInfo(songInfo.url)).videoDetails.media.song,
-                        url: songInfo.url,
-                        thumbnail: songInfo.thumbnail,
-                        duration: songInfo.timestamp,
-                    }
-
-                    if (!serverQueue) {
-                        const queueConstruct = {
-                            textChannel: message.channel,
-                            voiceChannel: voiceChannel,
-                            connection: null,
-                            songs: [],
-                            volume: 5,
-                            playing: true,
-                            loop: false
+                    try {
+                        const song = {
+                            title: songInfo.title ? songInfo.title : (await ytdl.getInfo(songInfo.url)).videoDetails.media.song,
+                            url: songInfo.url,
+                            thumbnail: songInfo.thumbnail,
+                            duration: songInfo.timestamp,
                         }
-                        client.queue.set(message.guild.id, queueConstruct)
 
-                        queueConstruct.songs.push(song)
-
-                        try {
-                            var connection = await voiceChannel.join();
-                            queueConstruct.connection = connection
-                            play(message.guild, queueConstruct.songs[0])
-                        } catch (err) {
-                            console.log(err);
-                            client.queue.delete(message.guild.id)
-                            return;
-                        }
-                    } else {
-                        serverQueue.songs.push(song);
-                        return message.channel.send({
-                            embed: {
-                                title: "Adicionado à fila",
-                                description: `**${song.title}** foi adicionada à fila`
+                        if (!serverQueue) {
+                            const queueConstruct = {
+                                textChannel: message.channel,
+                                voiceChannel: voiceChannel,
+                                connection: null,
+                                songs: [],
+                                volume: 5,
+                                playing: true,
+                                loop: false
                             }
-                        })
+                            client.queue.set(message.guild.id, queueConstruct)
+
+                            queueConstruct.songs.push(song)
+
+                            try {
+                                var connection = await voiceChannel.join();
+                                queueConstruct.connection = connection
+                                play(message.guild, queueConstruct.songs[0])
+                            } catch (err) {
+                                console.log(err);
+                                client.queue.delete(message.guild.id)
+                                return;
+                            }
+                        } else {
+                            serverQueue.songs.push(song);
+                            return message.channel.send({
+                                embed: {
+                                    title: "Adicionado à fila",
+                                    description: `**${song.title}** foi adicionada à fila`
+                                }
+                            })
+                        }
+                    } catch (err) {
+                        if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**", message.channel);
+                        return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
                     }
                     return undefined;
-                })
+                });
             } catch (err) {
-                if (err.message.includes("UnhandledPromiseRejectionWarning")) return sendError("**Este vídeo está indisponível.**", message.channel);
+                if (err.message.includes("Video unavailable")) return sendError("**Este vídeo está indisponível.**", message.channel);
                 return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
             }
         }
