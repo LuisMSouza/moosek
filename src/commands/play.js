@@ -203,15 +203,16 @@ module.exports = {
                 }
 
                 let url = song.url;
-                const dispatcher = serverQueue.connection.play(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
+                const dispatcher = serverQueue.connection.play(await ytdl(url), { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio", type: 'opus' })
                     .on("error", error => {
-                        console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
                         if (error.message.includes("Video unavailable")) {
+                            console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
                             sendError("**Este vídeo está indisponível.**", message.channel);
                             serverQueue.songs.shift();
                             play(guild, serverQueue.songs[0]);
                             return;
                         }
+                        console.log(error);
                     });
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
                 let songEmbed = new MessageEmbed()
