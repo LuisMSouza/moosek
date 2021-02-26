@@ -210,6 +210,7 @@ module.exports = {
                             sendError("**Este vídeo está indisponível.**", message.channel);
                             serverQueue.songs.shift();
                             play(guild, serverQueue.songs[0]);
+                            return;
                         }
                     });
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
