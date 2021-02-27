@@ -83,7 +83,7 @@ module.exports = {
                     const songInfo = result.videos[0];
 
                     const song = {
-                        title: songInfo.title ? songInfo.title : (await ytdl.getInfo(songInfo.url)).videoDetails.media.song,
+                        title: songInfo.title ? songInfo.title : await ytdl.getBasicInfo(songInfo.url).videoDetails.media.song,
                         url: songInfo.url,
                         thumbnail: songInfo.thumbnail,
                         duration: songInfo.timestamp,
@@ -135,7 +135,7 @@ module.exports = {
 
                 const song = {
                     id: video.id,
-                    title: video.title ? video.title : (await ytdl.getInfo(video.shortUrl)).videoDetails.media.song,
+                    title: video.title ? video.title : await ytdl.getBasicInfo(video.shortUrl).videoDetails.media.song,
                     url: video.shortUrl,
                     thumbnail: video.thumbnails[0].url,
                     duration: video.duration,
@@ -203,7 +203,7 @@ module.exports = {
                 }
 
                 let url = song.url;
-                const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio"}))
+                const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
                     .on("error", error => {
                         if (error.message.includes("Video unavailable")) {
                             console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
