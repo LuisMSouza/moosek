@@ -1,8 +1,8 @@
 /////////////////// IMPORTS ////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const { usage, aliases, execute } = require('./play.js');
-const Genius = new (require("genius-lyrics")).Client(process.env.GENIUS_API_KEY);
+const Genius = require("genius-lyrics");
+const Client = new Genius.Client(process.env.GENIUS_API_KEY);
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -14,8 +14,7 @@ module.exports = {
     aliases: ['lyrics', 'l'],
 
     async execute(client, message, args) {
-        const emoji = client.guilds.cache.get(message.guild.id).emojis.cache.find(emj => emj.name === "7041_loading");
-        const emoji_2 = client.guilds.cache.get(message.guild.id).emojis.cache.find(emj => emj.name === "4077_warning");
+        const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
         let main_entry = args.join(" ");
         let embed = new MessageEmbed()
@@ -25,7 +24,7 @@ module.exports = {
             if (serverQueue) {
                 main_entry = serverQueue.songs[0].title;
                 try {
-                    const songs = await Genius.songs.search(main_entry);
+                    const songs = await Client.songs.search(main_entry);
                     const lyrics = await songs[0].lyrics();
 
                     embed.setDescription(lyrics)

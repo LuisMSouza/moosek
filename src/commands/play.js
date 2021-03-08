@@ -13,7 +13,7 @@ module.exports = {
     description: "Para tocar músicas no servidor",
     usage: [process.env.PREFIX_KEY + 'play [nome da música / link da música / link da playlist]'],
     category: 'user',
-    timeout: 5000,
+    timeout: 3000,
     aliases: ['p', 'tocar', 'iniciar'],
 
     async execute(client, message, args) {
@@ -189,6 +189,7 @@ module.exports = {
                         if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                         if (!message.guild.me.voice.channel) return;
                         if (serverQueue.playing && serverQueue.songs.length > 0) return;
+                        if (serverQueue.songs.lenght > 0) return;
                         await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
                         serverQueue.voiceChannel.leave();
                         serverQueue.textChannel.send({
@@ -196,6 +197,7 @@ module.exports = {
                                 description: `Tempo de espera esgotado. Saí do chat ;)`
                             }
                         });
+                        client.queue.delete(message.guild.id);
                     }, STAY_TIME * 1000);
                     return message.client.queue.delete(message.guild.id);
                 } else {
@@ -411,7 +413,7 @@ module.exports = {
                                         await reaction.users.remove(user);
                                         return message.channel.send({
                                             embed: {
-                                                description: `🔁 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
+                                                description: `🔂 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
                                             }
                                         });
                                     } catch (e) {
