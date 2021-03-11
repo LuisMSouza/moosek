@@ -100,7 +100,6 @@ module.exports = {
                             loop: false
                         }
                         client.queue.set(message.guild.id, queueConstruct)
-
                         queueConstruct.songs.push(song)
 
                         try {
@@ -187,9 +186,9 @@ module.exports = {
                 if (!song) {
                     var tempo = setTimeout(async function () {
                         if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
-                        if (!message.guild.me.voice.channel) return;
-                        if (serverQueue.playing && serverQueue.songs.length > 0) return;
-                        if (serverQueue.songs.lenght > 0) return;
+                        //if (!message.guild.me.voice.channel) return;
+                        //if (serverQueue.playing && serverQueue.songs.length > 0) return;
+                        //if (serverQueue.songs.lenght > 0) return;
                         await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
                         serverQueue.voiceChannel.leave();
                         serverQueue.textChannel.send({
