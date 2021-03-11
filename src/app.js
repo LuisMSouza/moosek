@@ -14,7 +14,7 @@ client.queue = new Map();
 client.timeout = new Discord.Collection();
 client.db = require('./utils/db.js');
 
-const commands = fs.readdirSync(`./commands`).filter(file => file.endsWith(".js"));
+const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
     client.commands.set(cmd.name, cmd);
