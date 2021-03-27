@@ -1,7 +1,8 @@
 /////////////////// IMPORTS ////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const Genius = new (require("genius-lyrics")).Client(process.env.GENIUS_API_KEY);
+const Genius = require("genius-lyrics");
+const Client = new Genius.Client(process.env.GENIUS_API_KEY);
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
             if (serverQueue) {
                 main_entry = serverQueue.songs[0].title;
                 try {
-                    const songs = await Genius.songs.search(main_entry);
+                    const songs = await Client.songs.search(main_entry);
                     const lyrics = await songs[0].lyrics();
 
                     embed.setDescription(lyrics)

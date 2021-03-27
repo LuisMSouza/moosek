@@ -1,11 +1,12 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
-const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const yts = require("yt-search");
 const sendError = require('../utils/error.js')
-const { QUEUE_LIMIT, STAY_TIME } = require('../utils/botUtils.js');
-const guildData = require('../models/guildData.js');
+const { QUEUE_LIMIT } = require('../utils/botUtils.js');
+const YouTube = require("youtube-sr").default;
+const music_init = require('../structures/music_init.js');
+const playlist_init = require('../structures/playlist_init');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -44,7 +45,7 @@ module.exports = {
                 if (!playlist) return sendError("Playlist não encontrada", message.channel)
                 const videos = await playlist.items;
                 for (const video of videos) {
-                    await handleVideo(video, message, voiceChannel, true);
+                    await playlist_init.handleVideo(video, message, voiceChannel, true);
                 }
                 return message.channel.send({
                     embed: {
@@ -66,7 +67,7 @@ module.exports = {
                     const playlist = await ytlist(listurl);
                     const videos = await playlist.items;
                     for (const video of videos) {
-                        await handleVideo(video, message, message.channel, true);
+                        await playlist_init.handleVideo(video, message, voiceChannel, true);
                     }
                 } catch (error) {
                     console.log(error);
@@ -78,15 +79,14 @@ module.exports = {
                     return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                 }
             }
-            yts(searchString, async (err, result) => {
-                try {
-                    const songInfo = result.videos[0];
-
+            try {
+                await YouTube.search(searchString, { limit: 1 }).then(async x => {
                     const song = {
-                        title: songInfo.title ? songInfo.title : await ytdl.getBasicInfo(songInfo.url).videoDetails.media.song,
-                        url: songInfo.url,
-                        thumbnail: songInfo.thumbnail,
-                        duration: songInfo.timestamp,
+                        title: x[0].title ? x[0].title : ytdl.getBasicInfo(songInfo.url).videoDetails.media.song,
+                        url: x[0].url,
+                        thumbnail: x[0].thumbnail.url,
+                        duration: x[0].durationFormatted,
+                        liveStream: x[0].live,
                     }
 
                     if (!serverQueue) {
@@ -100,12 +100,13 @@ module.exports = {
                             loop: false
                         }
                         client.queue.set(message.guild.id, queueConstruct)
+
                         queueConstruct.songs.push(song)
 
                         try {
                             var connection = await voiceChannel.join();
                             queueConstruct.connection = connection
-                            play(message.guild, queueConstruct.songs[0])
+                            await music_init.play(message, queueConstruct.songs[0])
                         } catch (err) {
                             console.log(err);
                             client.queue.delete(message.guild.id)
@@ -120,367 +121,16 @@ module.exports = {
                             }
                         })
                     }
-                } catch (err) {
-                    if (err.message.includes("Cannot read property 'title' of undefined")) return sendError("**Este vídeo está indisponível.**", message.channel);
-                    return console.log(`[VIDEO UNAVAILABLE] ${searchString}`);
+                })
+            } catch (err) {
+                if (err.message.includes("Cannot read property 'title' of undefined")) {
+                    console.log(`[VIDEO UNAVAILABLE] ${searchString}`)
+                    await sendError("**Este vídeo está indisponível.**", message.channel);
+                    return;
                 }
-                return undefined;
-            });
-        }
-
-        async function handleVideo(video, message, channel, playlist = false) {
-            try {
-                const serverQueue = message.client.queue.get(message.guild.id);
-
-                const song = {
-                    id: video.id,
-                    title: video.title ? video.title : await ytdl.getBasicInfo(video.shortUrl).videoDetails.media.song,
-                    url: video.shortUrl,
-                    thumbnail: video.thumbnails[0].url,
-                    duration: video.duration,
-                    isLive: video.isLive,
-                }
-
-                if (!serverQueue) {
-                    const queueConstruct = {
-                        textChannel: message.channel,
-                        voiceChannel: channel,
-                        connection: null,
-                        songs: [],
-                        volume: 5,
-                        playing: true,
-                        loop: false
-                    };
-                    message.client.queue.set(message.guild.id, queueConstruct);
-                    queueConstruct.songs.push(song);
-
-                    try {
-                        var connection = await channel.join();
-                        queueConstruct.connection = connection;
-                        play(message.guild, queueConstruct.songs[0]);
-                    } catch (error) {
-                        console.error(`Eu não consegui entrar no canal: ${error}`);
-                        message.client.queue.delete(message.guild.id);
-                        return sendError(`Eu não consegui entrar no canal: ${error}`, message.channel);
-
-                    }
-                } else {
-                    serverQueue.songs.push(song);
-                    if (playlist) return;
-                    let thing = new MessageEmbed()
-                        .setTitle(`Música adicionada à fila`)
-                        .setThumbnail(song.img)
-                        .setDescription(`**__${song.title}__** adicionado à fila`)
-                    return message.channel.send(thing);
-                }
-                return;
-            } catch (e) {
-                return console.log(e);
+                return console.log(err);
             }
-        }
-
-        async function play(guild, song) {
-            try {
-                const serverQueue = client.queue.get(guild.id)
-
-                if (!song) {
-                    var tempo = setTimeout(async function () {
-                        if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
-                        //if (!message.guild.me.voice.channel) return;
-                        //if (serverQueue.playing && serverQueue.songs.length > 0) return;
-                        //if (serverQueue.songs.lenght > 0) return;
-                        await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
-                        serverQueue.voiceChannel.leave();
-                        serverQueue.textChannel.send({
-                            embed: {
-                                description: `Tempo de espera esgotado. Saí do chat ;)`
-                            }
-                        });
-                        client.queue.delete(message.guild.id);
-                    }, STAY_TIME * 1000);
-                    return message.client.queue.delete(message.guild.id);
-                } else {
-                    await clearTimeout(tempo);
-                }
-
-                let url = song.url;
-                const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
-                    .on("error", error => {
-                        if (error.message.includes("Video unavailable")) {
-                            console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
-                            sendError("**Este vídeo está indisponível.**", message.channel);
-                            serverQueue.songs.shift();
-                            play(guild, serverQueue.songs[0]);
-                            return;
-                        }
-                        console.log(error);
-                    });
-                dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
-                let songEmbed = new MessageEmbed()
-                    .setAuthor("Tocando agora:")
-                    .setTitle(song.title)
-                    .setThumbnail(song.thumbnail)
-                    .setURL(song.url)
-                    .addField("Duração:", song.duration)
-
-                message.channel.send(songEmbed).then(async (embed) => {
-                    try {
-                        await embed.react("⏸️");
-                        await embed.react("▶️");
-                        await embed.react("⏭️");
-                        await embed.react("⏹️");
-                        await embed.react("🔂");
-                        await embed.react("🔀");
-                        const collector = embed.createReactionCollector((reaction, user) => ["⏸️", "▶️", "⏭️", "⏹️", "🔂", "🔀"].includes(reaction.emoji.name) && user != user.bot);
-                        collector.on("collect", async (reaction, user) => {
-                            switch (reaction.emoji.name) {
-                                case "⏸️":
-                                    if (!message.member.voice.channel) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                            }
-                                        }).then(m => m.delete({ timeout: 10000 }));
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                            }
-                                        }).then(m2 => m2.delete({ timeout: 10000 }))
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue) {
-                                        try {
-                                            serverQueue.playing = false;
-                                            serverQueue.connection.dispatcher.pause();
-                                            await reaction.users.remove(user);
-                                            return undefined;
-                                        } catch (e) {
-                                            console.log(e);
-                                        }
-                                    } else {
-                                        await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                        return undefined;
-                                    }
-                                    break;
-                                case "▶️":
-                                    if (!message.member.voice.channel) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                            }
-                                        }).then(m => m.delete({ timeout: 10000 }));
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                            }
-                                        }).then(m2 => m2.delete({ timeout: 10000 }))
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue) {
-                                        try {
-                                            serverQueue.playing = true;
-                                            serverQueue.connection.dispatcher.resume();
-                                            await reaction.users.remove(user);
-                                            return undefined;
-                                        } catch (e) {
-                                            console.log(e);
-                                        }
-                                    } else {
-                                        await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                        return undefined;
-                                    }
-                                    break;
-                                case "⏭️":
-                                    if (!message.member.voice.channel) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                            }
-                                        }).then(m => m.delete({ timeout: 10000 }));
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                            }
-                                        }).then(m2 => m2.delete({ timeout: 10000 }))
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (!serverQueue) {
-                                        sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
-                                        await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                        return;
-                                    }
-                                    if (serverQueue) {
-                                        try {
-                                            var srch = await guildData.findOne({
-                                                guildID: message.guild.id
-                                            });
-                                            if (!serverQueue.loop) {
-                                                if (!serverQueue.songs[1]) {
-                                                    message.member.voice.channel.leave();
-                                                    embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                                    return;
-                                                }
-                                                serverQueue.songs.shift();
-                                                if (srch.aleatory_mode) {
-                                                    const random = Math.floor(Math.random() * (serverQueue.songs.length));
-                                                    play(guild, serverQueue.songs[random]);
-                                                } else {
-                                                    play(guild, serverQueue.songs[0]);
-                                                }
-                                            } else {
-                                                play(guild, serverQueue.songs[0]);
-                                            }
-                                        } catch (e) {
-                                            console.log(e);
-                                        }
-                                    }
-                                    embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                    return;
-                                    break;
-                                case "⏹️":
-                                    if (!message.member.voice.channel) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                            }
-                                        }).then(m => m.delete({ timeout: 10000 }));
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                            }
-                                        }).then(m2 => m2.delete({ timeout: 10000 }))
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (!serverQueue) {
-                                        sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
-                                        await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                        return;
-                                    }
-                                    try {
-                                        serverQueue.songs = [];
-                                        client.queue.set(message.guild.id, serverQueue);
-                                        await message.member.voice.channel.leave();
-                                        await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
-                                        await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
-                                        return;
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
-                                    break;
-                                case "🔂":
-                                    if (!message.member.voice.channel) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                            }
-                                        }).then(m => m.delete({ timeout: 10000 }));
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                            }
-                                        }).then(m2 => m2.delete({ timeout: 10000 }))
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (!serverQueue) return;
-                                    try {
-                                        serverQueue.loop = !serverQueue.loop
-                                        await reaction.users.remove(user);
-                                        return message.channel.send({
-                                            embed: {
-                                                description: `🔂 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
-                                            }
-                                        });
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
-                                    break;
-                                case "🔀":
-                                    if (!message.member.voice.channel) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                            }
-                                        }).then(m => m.delete({ timeout: 10000 }));
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
-                                        message.channel.send({
-                                            embed: {
-                                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                            }
-                                        }).then(m2 => m2.delete({ timeout: 10000 }))
-                                        await reaction.users.remove(user);
-                                        return;
-                                    }
-                                    if (!serverQueue) return;
-                                    try {
-                                        var sg = await guildData.findOne({
-                                            guildID: message.guild.id
-                                        });
-                                        var isAleatory = sg.aleatory_mode;
-                                        await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: !isAleatory } }, { new: true });
-                                        var sg_2 = await guildData.findOne({
-                                            guildID: message.guild.id
-                                        });
-                                        await reaction.users.remove(user);
-                                        return message.channel.send({
-                                            embed: {
-                                                description: `🔀 Modo aleatório ${sg_2.aleatory_mode ? `**Habilitado**` : `**Desabilitado**`}`
-                                            }
-                                        });
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
-                                    break;
-                            }
-                        });
-                    } catch (err) {
-                        console.log(err)
-                    }
-                    dispatcher.on("finish", async () => {
-                        const search_al = await guildData.findOne({
-                            guildID: message.guild.id
-                        });
-                        if (search_al.aleatory_mode) {
-                            if (!serverQueue.loop) await serverQueue.songs.shift();
-                            const random = Math.floor(Math.random() * (serverQueue.songs.length));
-                            play(guild, serverQueue.songs[random]);
-                        } else {
-                            if (!serverQueue.loop) await serverQueue.songs.shift();
-                            play(guild, serverQueue.songs[0]);
-                        }
-                        embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                    })
-                });
-            } catch (e) {
-                return console.log(e);
-            }
+            return undefined;
         }
     }
 };
