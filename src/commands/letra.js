@@ -46,7 +46,7 @@ module.exports = {
             }
         } else {
             try {
-                const songs = await Genius.songs.search(main_entry);
+                const songs = await Client.songs.search(main_entry);
                 const lyrics = await songs[0].lyrics();
 
                 embed.setDescription(lyrics)
