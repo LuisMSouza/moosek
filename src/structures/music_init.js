@@ -30,12 +30,12 @@ module.exports = {
 
             let url = song.url;
             const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
-                .on("error", error => {
+                .on("error", async error => {
                     if (error.message.includes("Video unavailable")) {
                         console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
                         sendError("**Este vídeo está indisponível.**", serverQueue.textChannel);
-                        serverQueue.songs.shift();
-                        play(guild, serverQueue.songs[0]);
+                        await serverQueue.songs.shift();
+                        await play(guild, serverQueue.songs[0]);
                         return;
                     }
                     if (error.message.includes("Connection not established within 15 seconds.") || error.message.includes("[VOICE_CONNECTION_TIMEOUT]")) {
@@ -305,7 +305,7 @@ module.exports = {
                     });
                     if (search_al.aleatory_mode) {
                         if (!serverQueue.loop) await serverQueue.songs.shift();
-                        const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
                         this.play(message, serverQueue.songs[random]);
                     } else {
                         if (!serverQueue.loop) await serverQueue.songs.shift();
