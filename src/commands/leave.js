@@ -29,6 +29,7 @@ module.exports = {
             await voiceChannel.leave();
             message.channel.send({
                 embed: {
+                    color: "#701AAB",
                     description: `**Saí do canal ;)**`
                 }
             });

@@ -39,6 +39,7 @@ module.exports = {
                         if (success) {
                             await message.author.send({
                                 embed: {
+                                    color: "#701AAB",
                                     title: `ServerQueue (${guildID})`,
                                     description: "```css\n" + data + "\n```"
                                 }

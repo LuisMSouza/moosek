@@ -1,5 +1,4 @@
 /////////////////////// IMPORTS //////////////////////////
-const { MessageEmbed, Util } = require('discord.js');
 const sendError = require('../utils/error.js')
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -32,6 +31,7 @@ module.exports = {
             serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5)
             message.channel.send({
                 embed: {
+                    color: "#701AAB",
                     description: `Volume alterado para: **${volume}/5**`
                 }
             })

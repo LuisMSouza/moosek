@@ -31,6 +31,7 @@ module.exports = {
         try {
             const song = serverQueue.songs.splice(args[0] - 1, 1);
             let embed = new MessageEmbed()
+                .setColor("#701AAB")
                 .setDescription(`❌ **${song[0].title}** removida da fila.`)
                 .setFooter(`Removido por ${message.author.tag}`, message.author.displayAvatarURL())
 

@@ -74,6 +74,7 @@ module.exports = {
                 const serverQueue = message.client.queue.get(message.guild.id);
                 const embed = new MessageEmbed()
                     .setTitle(`${emoji1} Fila de músicas do servidor`)
+                    .setColor("#701AAB")
                     .setThumbnail(message.guild.iconURL())
                     .setDescription(`${info}`)
                     .addField("Tocando agora", `[${queue[0].title}](${queue[0].url})`, true)

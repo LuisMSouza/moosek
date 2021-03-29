@@ -13,6 +13,7 @@ module.exports = {
         let ping = Math.round(message.client.ws.ping);
         message.channel.send(({
             embed: {
+                color: "#701AAB",
                 description: `**${ping} ms**`
             }
         }))

@@ -26,10 +26,11 @@ module.exports = {
             let command = client.commands.get(cmd);
             if (!command) command = client.commands.find(x => x.aliases.includes(cmd))
             if (!command) return sendError("Comando desconhecido.", message.channel).then(m => m.delete({ timeout: 10000 }));
-            
+
             let embedCommand = new MessageEmbed()
-            .setTitle(command.name)
-            .setDescription(`
+                .setTitle(command.name)
+                .setColor("#701AAB")
+                .setDescription(`
             **Descrição:** ${command.description}
             **Aliases:** ${command.aliases}
             **Como usar:** ${command.usage}

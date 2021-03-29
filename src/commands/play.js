@@ -49,6 +49,7 @@ module.exports = {
                 }
                 return message.channel.send({
                     embed: {
+                        color: "#701AAB",
                         description: `**Playlist adicionada à fila**`
                     }
                 });
@@ -116,6 +117,7 @@ module.exports = {
                         serverQueue.songs.push(song);
                         return message.channel.send({
                             embed: {
+                                color: "#701AAB",
                                 title: "Adicionado à fila",
                                 description: `**${song.title}** foi adicionada à fila`
                             }

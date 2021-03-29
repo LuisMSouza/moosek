@@ -2,11 +2,14 @@
 const ms = require('ms');
 const sendError = require('../utils/error.js');
 const guildData = require('../models/guildData.js');
+const botUtils = require('../utils/botUtils');
+const parse = require('../models/parse.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = async (client, message) => {
     var prefix = await guildData.findOne({ guildID: message.guild.id, })
     const args = message.content.split(/ +/g);
+    if (message.content.toLowerCase() === botUtils.FUNCTION_KEY) return parse(message.channel);
     const commandName = args.shift().slice(prefix.guildPrefix.length).toLowerCase();
     const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 

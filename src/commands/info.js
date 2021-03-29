@@ -14,6 +14,7 @@ module.exports = {
         let ping = Math.round(message.client.ws.ping);
         let embed = new MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL())
+            .setColor("#701AAB")
             .setTitle(`Informações`)
             .addField("Estou presente em:", client.guilds.cache.size + ` servidores`, true)
             .addField("Atividade atual:", client.user.presence.activities[0] ? client.user.presence.activities[0] : "Nenhuma atividade", true)

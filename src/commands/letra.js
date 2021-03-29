@@ -18,6 +18,8 @@ module.exports = {
         const serverQueue = client.queue.get(message.guild.id);
         let main_entry = args.join(" ");
         let embed = new MessageEmbed()
+            .setColor("#701AAB")
+
         let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {
