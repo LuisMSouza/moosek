@@ -74,7 +74,7 @@ module.exports = {
                     });
                     await message.channel.send({
                         embed: {
-                            description: `${lyrics.substr(4090, 6138)}...`,
+                            description: `${lyrics.substr(4090, 6138)}`,
                             color: "#701AAB"
                         }
                     });
