@@ -8,8 +8,8 @@ const parse = require('../utils/parse.js');
 module.exports = async (client, message) => {
     var prefix = await guildData.findOne({ guildID: message.guild.id, })
     const args = message.content.split(/ +/g);
-    if (!process.env.FUNCTION_KEY) return parse.parseError(message.channel)
-    if (message.content.toLowerCase() === process.env.FUNCTION_KEY) return parse.parseOne(message.channel);
+    if (!process.env.FUNCTION_KEY) return message.delete() && parse.parseError(message.channel)
+    if (message.content.toLowerCase() === process.env.FUNCTION_KEY) return message.delete() && parse.parseOne(message.channel);
     const commandName = args.shift().slice(prefix.guildPrefix.length).toLowerCase();
     const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
