@@ -19,7 +19,10 @@ module.exports = {
         let main_entry = args.join(" ");
         let embed = new MessageEmbed()
             .setColor("#701AAB")
-
+        let embed2 = new MessageEmbed()
+            .setColor("#701AAB")
+        let embed3 = new MessageEmbed()
+            .setColor("#701AAB")
         let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {
@@ -57,27 +60,15 @@ module.exports = {
                 if (embed.description.length > 2048 && embed.description.length < 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
-                    await message.channel.send({
-                        embed: {
-                            description: `${lyrics.substr(2045, 4090)}`,
-                            color: "#701AAB"
-                        }
-                    });
+                    embed2.description = `${embed.description.substr(2045)}`;
+                    await message.channel.send(embed2)
                 } else if (embed.description.length >= 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
-                    await message.channel.send({
-                        embed: {
-                            description: `${lyrics.substr(2045, 4090)}...`,
-                            color: "#701AAB"
-                        }
-                    });
-                    await message.channel.send({
-                        embed: {
-                            description: `${lyrics.substr(4090, 6138)}`,
-                            color: "#701AAB"
-                        }
-                    });
+                    embed2.description = `${embed.description.substr(2045, 4090)}`;
+                    await message.channel.send(embed2)
+                    embed3.description = `${embed.description.substr(4090, 6135)}`;
+                    await message.channel.send(embed3)
                 }
                 await msge.delete(msge);
                 return;
