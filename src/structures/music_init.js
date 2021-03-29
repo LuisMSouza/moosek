@@ -20,6 +20,7 @@ module.exports = {
                     await serverQueue.voiceChannel.leave();
                     serverQueue.textChannel.send({
                         embed: {
+                            color: "#701AAB",
                             description: `Tempo de espera esgotado. Saí do chat ;)`
                         }
                     });
@@ -48,6 +49,7 @@ module.exports = {
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
+                .setColor("#701AAB")
                 .setTitle(song.title)
                 .setThumbnail(song.thumbnail)
                 .setURL(song.url)
@@ -74,6 +76,7 @@ module.exports = {
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
@@ -83,6 +86,7 @@ module.exports = {
                                 if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
@@ -107,6 +111,7 @@ module.exports = {
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
@@ -116,6 +121,7 @@ module.exports = {
                                 if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
@@ -140,6 +146,7 @@ module.exports = {
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
@@ -149,6 +156,7 @@ module.exports = {
                                 if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
@@ -192,6 +200,7 @@ module.exports = {
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
@@ -201,6 +210,7 @@ module.exports = {
                                 if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
@@ -227,6 +237,7 @@ module.exports = {
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
@@ -236,6 +247,7 @@ module.exports = {
                                 if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
@@ -248,6 +260,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: `🔂 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
                                         }
                                     });
@@ -259,6 +272,7 @@ module.exports = {
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
@@ -268,6 +282,7 @@ module.exports = {
                                 if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
@@ -287,6 +302,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
+                                            color: "#701AAB",
                                             description: `🔀 Modo aleatório ${sg_2.aleatory_mode ? `**Habilitado**` : `**Desabilitado**`}`
                                         }
                                     });
