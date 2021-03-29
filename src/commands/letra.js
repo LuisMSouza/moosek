@@ -54,12 +54,34 @@ module.exports = {
                 embed.setDescription(lyrics)
                 embed.setTitle(songs[0].title)
                 embed.setThumbnail(songs[0].thumbnail)
-                if (embed.description.length >= 2048) {
+                if (embed.description.length >= 2048 && embed.description.length <= 4090) {
+                    await msge.delete(msge);
                     embed.description = `${embed.description.substr(0, 2045)}...`;
-                }
-                await msge.delete(msge);
-                message.channel.send(embed)
-                return;
+                    await message.channel.send(embed)
+                    await message.channel.send({
+                        embed: {
+                            description: `${lyrics.substr(2045)}`,
+                            color: "#701AAB"
+                        }
+                    });
+                } else if (embed.description.length >= 4093) {
+                    await msge.delete(msge);
+                    embed.description = `${embed.description.substr(0, 2045)}...`;
+                    await message.channel.send(embed)
+                    await message.channel.send({
+                        embed: {
+                            description: `${lyrics.substr(2045, 4090)}...`,
+                            color: "#701AAB"
+                        }
+                    });
+                    await message.channel.send({
+                        embed: {
+                            description: `${lyrics.substr(4090, 6138)}...`,
+                            color: "#701AAB"
+                        }
+                    });
+                } else
+                    return;
             } catch (e) {
                 await msge.delete(msge)
                 sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
