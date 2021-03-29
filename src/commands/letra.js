@@ -57,17 +57,17 @@ module.exports = {
                 embed.setDescription(lyrics)
                 embed.setTitle(songs[0].title)
                 embed.setThumbnail(songs[0].thumbnail)
-                if (embed.description.length > 2048 && embed.description.length < 4090) {
+                if (embed.description.length > 2048 && embed.description.length <= 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
-                    embed2.description = `${embed.description.substr(2045)}`;
+                    embed2.description = `${lyrics.substr(2045)}`;
                     await message.channel.send(embed2)
-                } else if (embed.description.length >= 4090) {
+                } else if (embed.description.length > 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
-                    embed2.description = `${embed.description.substr(2045, 4090)}`;
+                    embed2.description = `${lyrics.substr(2045, 4090)}`;
                     await message.channel.send(embed2)
-                    embed3.description = `${embed.description.substr(4090, 6135)}`;
+                    embed3.description = `${lyrics.substr(4090, 6135)}`;
                     await message.channel.send(embed3)
                 }
                 await msge.delete(msge);
