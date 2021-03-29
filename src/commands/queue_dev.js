@@ -34,7 +34,8 @@ module.exports = {
                     paste.create({
                         contents: `${queue_list}`,
                         name: `ServerQueue (${guildID})`,
-                        privacy: "2"
+                        privacy: "2",
+                        expires: "1H",
                     }, async function (success, data) {
                         if (success) {
                             await message.author.send({
