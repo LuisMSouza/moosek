@@ -55,7 +55,6 @@ module.exports = {
                 embed.setTitle(songs[0].title)
                 embed.setThumbnail(songs[0].thumbnail)
                 if (embed.description.length >= 2048 && embed.description.length <= 4090) {
-                    await msge.delete(msge);
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
                     await message.channel.send({
@@ -65,7 +64,6 @@ module.exports = {
                         }
                     });
                 } else if (embed.description.length >= 4093) {
-                    await msge.delete(msge);
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
                     await message.channel.send({
@@ -80,8 +78,9 @@ module.exports = {
                             color: "#701AAB"
                         }
                     });
-                } else
-                    return;
+                }
+                await msge.delete(msge);
+                return;
             } catch (e) {
                 await msge.delete(msge)
                 sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
