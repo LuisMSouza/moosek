@@ -69,10 +69,9 @@ module.exports = {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
                     embed2.description = `${lyrics.substr(2045)}`;
-                    if (embed2.description != "...") {
+                    if (embed2.description != "..." || embed2.description != "") {
                         await message.channel.send(embed2)
                     }
-                    await message.channel.send(embed2)
                 } else if (embed.description.length > 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
