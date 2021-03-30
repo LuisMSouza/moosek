@@ -118,8 +118,20 @@ module.exports = {
                         return message.channel.send({
                             embed: {
                                 color: "#701AAB",
-                                title: "Adicionado à fila",
-                                description: `**${song.title}** foi adicionada à fila`
+                                title: "> __Adicionado à fila__",
+                                description: `**__${song.title}__** foi adicionada à fila`,
+                                fields: [
+                                    {
+                                        name: "> __Duração:__",
+                                        value: "```fix\n" + `${song.duration}` + "\n```",
+                                        inline: true
+                                    },
+                                    {
+                                        name: "> __Pedido por:__",
+                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                        inline: true
+                                    }
+                                ]
                             }
                         })
                     }

@@ -21,7 +21,7 @@ module.exports = {
                     serverQueue.textChannel.send({
                         embed: {
                             color: "#701AAB",
-                            description: `Tempo de espera esgotado. Saí do chat ;)`
+                            description: `**Tempo de espera esgotado. Saí do chat ;)**`
                         }
                     });
                     return message.client.queue.delete(message.guild.id);
@@ -55,11 +55,12 @@ module.exports = {
                 .setURL(song.url)
 
             if (song.liveStream || song.duration === '0:00') {
-                songEmbed.addField("Duração:", "🔴 Live")
-                sendError("Este video é uma live, talvez não seja possível reproduzir...", serverQueue.textChannel)
+                songEmbed.addField("> __Duração:__", "🔴 Live", true)
+                sendError("**Este video é uma live, talvez não seja possível reproduzir...**", serverQueue.textChannel)
             } else {
-                songEmbed.addField("Duração:", song.duration)
+                songEmbed.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
             }
+            songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
 
             serverQueue.textChannel.send(songEmbed).then(async (embed) => {
                 try {
