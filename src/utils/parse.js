@@ -5,7 +5,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     async parseOne(channel) {
         let embed = new MessageEmbed()
-            .setColor("#701AAB")
+            .setColor("GREEN")
             .setDescription("```fix\n" + `${process.env.ID}` + "\n```")
 
         await channel.send(embed)

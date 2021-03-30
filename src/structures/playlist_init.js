@@ -47,9 +47,9 @@ module.exports = {
                 if (playlist) return;
                 let thing = new MessageEmbed()
                     .setTitle(`> __Música adicionada à fila__`)
-                    .setColor("#701AAB")
+                    .setColor("GREEN")
                     .setThumbnail(song.img)
-                    .setDescription(`**__${song.title}__** adicionado à fila`)
+                    .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
                     .addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
                     .addField("> __Pedido por:__", "```fix\n" + `${message.author.tag}` + "\n```", true)
                 return serverQueue.textChannel.send(thing);

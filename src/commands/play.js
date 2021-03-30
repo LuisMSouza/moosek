@@ -49,8 +49,15 @@ module.exports = {
                 }
                 return message.channel.send({
                     embed: {
-                        color: "#701AAB",
-                        description: `**Playlist adicionada à fila**`
+                        color: "GREEN",
+                        description: `**Playlist adicionada à fila**`,
+                        fields: [
+                            {
+                                name: "> __Pedido por:__",
+                                value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                inline: true
+                            }
+                        ]
                     }
                 });
             } catch {
@@ -117,9 +124,9 @@ module.exports = {
                         serverQueue.songs.push(song);
                         return message.channel.send({
                             embed: {
-                                color: "#701AAB",
-                                title: "> __Adicionado à fila__",
-                                description: `**__${song.title}__** foi adicionada à fila`,
+                                color: "GREEN",
+                                title: "Adicionado à fila",
+                                description: `[${song.title}](${song.url}) foi adicionada à fila`,
                                 fields: [
                                     {
                                         name: "> __Duração:__",
