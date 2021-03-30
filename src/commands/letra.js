@@ -69,25 +69,23 @@ module.exports = {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
                     embed2.description = `${lyrics.substr(2045)}`;
-                    if (lyrics.substr(2045) != "") {
-                        await message.channel.send(embed4)
+                    if (embed2.description != "...") {
+                        await message.channel.send(embed2)
                     }
                     await message.channel.send(embed2)
                 } else if (embed.description.length > 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
                     embed2.description = `${lyrics.substr(2045, 2045)}...`;
-                    await message.channel.send(embed2)
-                    if (lyrics.substr(2045, 2045) != "") {
-                        await message.channel.send(embed4)
+                    if (embed2.description != "...") {
+                        await message.channel.send(embed2)
                     }
                     embed3.description = `${lyrics.substr(4090, 2045)}...`;
-                    if (lyrics.substr(4090, 2045) != "") {
-                        await message.channel.send(embed4)
+                    if (embed3.description != "...") {
+                        await message.channel.send(embed3)
                     }
-                    await message.channel.send(embed3)
                     embed4.description = `${lyrics.substr(6135, 2045)}...`;
-                    if (lyrics.substr(6135, 2045) != "") {
+                    if (embed4.description != "...") {
                         await message.channel.send(embed4)
                     }
                 }
