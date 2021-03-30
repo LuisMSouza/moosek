@@ -77,15 +77,15 @@ module.exports = {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
                     await message.channel.send(embed)
                     embed2.description = `${lyrics.substr(2045, 2045)}...`;
-                    if (embed2.description != "...") {
+                    if (embed2.description !== "...") {
                         await message.channel.send(embed2)
                     }
                     embed3.description = `${lyrics.substr(4090, 2045)}...`;
-                    if (embed3.description != "...") {
+                    if (embed3.description !== "...") {
                         await message.channel.send(embed3)
                     }
                     embed4.description = `${lyrics.substr(6135, 2045)}...`;
-                    if (embed4.description != "...") {
+                    if (embed4.description !== "...") {
                         await message.channel.send(embed4)
                     }
                 }
