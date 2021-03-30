@@ -49,7 +49,7 @@ module.exports = {
                     .setTitle(`> __Música adicionada à fila__`)
                     .setColor("GREEN")
                     .setThumbnail(song.img)
-                    .setDescription("`" + `[${song.title}](${song.url})` + "`" + " adicionado à fila")
+                    .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
                     .addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
                     .addField("> __Pedido por:__", "```fix\n" + `${message.author.tag}` + "\n```", true)
                 return serverQueue.textChannel.send(thing);

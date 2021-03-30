@@ -126,7 +126,7 @@ module.exports = {
                             embed: {
                                 color: "GREEN",
                                 title: "Adicionado à fila",
-                                description: "`" + `[${song.title}](${song.url})` + "`" + " foi adicionada à fila",
+                                description: `[${song.title}](${song.url}) adicionado à fila`,
                                 fields: [
                                     {
                                         name: "> __Duração:__",
