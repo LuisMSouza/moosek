@@ -1,7 +1,6 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
 const ytdl = require('ytdl-core');
-const yts = require("yt-search");
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
@@ -67,9 +66,9 @@ module.exports = {
                             return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                         }
                     }
-                    var searched = await yts.search(url)
+                    var searched = await YouTube.getPlaylist(url, { limit: 1 })
 
-                    if (searched.playlists.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
+                    if (searched.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
                     var songInfo = searched.playlists[0];
                     let listurl = songInfo.listId;
                     const playlist = await ytlist(listurl);
