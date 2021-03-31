@@ -30,7 +30,7 @@ module.exports = {
         if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
         if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
 
-        playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
+        playlistRegex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
         isPlaylist = playlistRegex.test(url)
 
         if (isPlaylist) {
