@@ -30,7 +30,7 @@ module.exports = {
         if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
         if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
 
-        playlistRegex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+        const playlistRegex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
         isPlaylist = playlistRegex.test(url)
 
         if (isPlaylist) {
@@ -40,7 +40,7 @@ module.exports = {
                         return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                     }
                 }
-                const playlist = await ytlist(`${url.split("list=")[1]}`);
+                const playlist = await ytlist(`${url.match(playlistRegex)}`);
                 if (!playlist) return sendError("Playlist não encontrada", message.channel)
                 const videos = await playlist.items;
                 for (const video of videos) {
