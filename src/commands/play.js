@@ -1,6 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
 const ytdl = require('ytdl-core');
+const yts = require('yt-search');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
@@ -30,7 +31,7 @@ module.exports = {
         if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
         if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
 
-        const playlistRegex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+        const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         isPlaylist = playlistRegex.test(url)
 
         if (isPlaylist) {
@@ -40,7 +41,7 @@ module.exports = {
                         return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                     }
                 }
-                const playlist = await ytlist(`${url.match(playlistRegex)}`);
+                const playlist = await ytlist(`${url.split("list=")[1]}`);
                 if (!playlist) return sendError("Playlist não encontrada", message.channel)
                 const videos = await playlist.items;
                 for (const video of videos) {
@@ -66,9 +67,9 @@ module.exports = {
                             return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                         }
                     }
-                    var searched = await YouTube.getPlaylist(url, { limit: 1 })
+                    var searched = await yts(url.match(playlistRegex))
 
-                    if (searched.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
+                    if (searched.playlists.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
                     var songInfo = searched.playlists[0];
                     let listurl = songInfo.listId;
                     const playlist = await ytlist(listurl);
