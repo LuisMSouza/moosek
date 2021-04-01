@@ -78,6 +78,19 @@ module.exports = {
                     for (const video of videos) {
                         await playlist_init.handleVideo(video, message, voiceChannel, true);
                     }
+                    return message.channel.send({
+                        embed: {
+                            color: "GREEN",
+                            description: `**Playlist adicionada à fila**`,
+                            fields: [
+                                {
+                                    name: "> __Pedido por:__",
+                                    value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                    inline: true
+                                }
+                            ]
+                        }
+                    });
                 } catch (error) {
                     console.log(error);
                 }
