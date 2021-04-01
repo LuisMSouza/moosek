@@ -42,7 +42,7 @@ module.exports = {
                         return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                     }
                 }
-                const playlist = await ytlist(`${url.match(regPlaylist[1])}`);
+                const playlist = await ytlist(`${url.match(playlistRegex)}`)
                 if (!playlist) return sendError("Playlist não encontrada", message.channel)
                 const videos = await playlist.items;
                 for (const video of videos) {
