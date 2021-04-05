@@ -68,12 +68,10 @@ module.exports = {
                             return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
                         }
                     }
-                    var searched = await yts(`${url.match(regPlaylist)}`);
+                    var searched = await ytlist(searchString)
+                    console.log(searched)
                     if (searched.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
-                    var songInfo = searched.playlists[0];
-                    let listurl = songInfo.listId;
-                    const playlist = await ytlist(listurl);
-                    const videos = await playlist.items;
+                    const videos = await searched.items;
                     for (const video of videos) {
                         await playlist_init.handleVideo(video, message, voiceChannel, true);
                     }
