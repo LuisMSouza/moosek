@@ -69,7 +69,6 @@ module.exports = {
                         }
                     }
                     var searched = await ytlist(searchString)
-                    console.log(searched)
                     if (searched.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
                     const videos = await searched.items;
                     for (const video of videos) {
