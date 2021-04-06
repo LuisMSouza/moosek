@@ -177,7 +177,8 @@ module.exports = {
                                         });
                                         if (!serverQueue.songLooping) {
                                             if (!serverQueue.songs[1]) {
-                                                message.member.voice.channel.leave();
+                                                serverQueue.songs.shift();
+                                                client.queue.delete(message.guild.id);
                                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                                 return;
                                             }
