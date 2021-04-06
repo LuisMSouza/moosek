@@ -298,7 +298,7 @@ module.exports = {
                                     return serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
-                                            description: `🔂 Loop para **${serverQueue.songs[0].title}** ${serverQueue.songLooping ? `**Habilitado**` : `**Desabilitado**`}`
+                                            description: `🔂 Loop para \`${serverQueue.songs[0].title}\` ${serverQueue.songLooping ? `**Habilitado**` : `**Desabilitado**`}`
                                         }
                                     });
                                 } catch (e) {
