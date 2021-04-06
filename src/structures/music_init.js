@@ -178,7 +178,7 @@ module.exports = {
                                         if (!serverQueue.songLooping) {
                                             if (!serverQueue.songs[1]) {
                                                 serverQueue.songs.shift();
-                                                client.queue.delete(message.guild.id);
+                                                await dispatcher.end();
                                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                                 return;
                                             }
