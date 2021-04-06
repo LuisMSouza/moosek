@@ -235,7 +235,7 @@ module.exports = {
                                     console.log(e);
                                 }
                                 break;
-                            case "🔁":
+                            /*case "🔁":
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
@@ -269,7 +269,7 @@ module.exports = {
                                 } catch (e) {
                                     console.log(e);
                                 }
-                                break;
+                                break;*/
                             case "🔂":
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
@@ -336,7 +336,7 @@ module.exports = {
                                     var sg_2 = await guildData.findOne({
                                         guildID: message.guild.id
                                     });
-                                    if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
+                                    //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
@@ -362,7 +362,7 @@ module.exports = {
                         var random = Math.floor(Math.random() * (serverQueue.songs.length));
                         this.play(message, serverQueue.songs[random]);
                     } else {
-                        if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
+                        //if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
                         if (!serverQueue.songLooping) await serverQueue.songs.shift();
                         this.play(message, serverQueue.songs[0]);
                     }
