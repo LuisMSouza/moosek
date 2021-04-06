@@ -105,6 +105,7 @@ module.exports = {
                         thumbnail: x[0].thumbnail.url,
                         duration: x[0].durationFormatted,
                         liveStream: x[0].live,
+                        author: message.author.tag
                     }
 
                     if (!serverQueue) {
@@ -113,14 +114,17 @@ module.exports = {
                             voiceChannel: voiceChannel,
                             connection: null,
                             songs: [],
+                            prevSongs: [],
                             volume: 5,
+                            bass: 1,
+                            nigthCore: false,
                             playing: true,
-                            loop: false
+                            looping: false,
+                            songLooping: false
                         }
                         client.queue.set(message.guild.id, queueConstruct)
-
                         queueConstruct.songs.push(song)
-
+                        
                         try {
                             var connection = await voiceChannel.join();
                             queueConstruct.connection = connection

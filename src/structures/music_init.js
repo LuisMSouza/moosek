@@ -61,6 +61,7 @@ module.exports = {
                 songEmbed.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
             }
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
+            songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
             serverQueue.textChannel.send(songEmbed).then(async (embed) => {
                 try {
@@ -174,7 +175,7 @@ module.exports = {
                                         var srch = await guildData.findOne({
                                             guildID: message.guild.id
                                         });
-                                        if (!serverQueue.loop) {
+                                        if (!serverQueue.songLooping) {
                                             if (!serverQueue.songs[1]) {
                                                 message.member.voice.channel.leave();
                                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
@@ -234,6 +235,41 @@ module.exports = {
                                     console.log(e);
                                 }
                                 break;
+                            case "🔁":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#701AAB",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#701AAB",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (!serverQueue) return;
+                                try {
+                                    await serverQueue.looping != serverQueue.looping;
+                                    await reaction.users.remove(user);
+                                    return serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#701AAB",
+                                            description: `🔁 Loop da fila de músicas ${serverQueue.looping ? `**Habilitado**` : `**Desabilitado**`}`
+                                        }
+                                    });
+                                } catch (e) {
+                                    console.log(e);
+                                }
+                                break;
                             case "🔂":
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
@@ -257,12 +293,12 @@ module.exports = {
                                 }
                                 if (!serverQueue) return;
                                 try {
-                                    serverQueue.loop = !serverQueue.loop
+                                    serverQueue.songLooping = !serverQueue.songLooping
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
-                                            description: `🔂 Loop ${serverQueue.loop ? `**Habilitado**` : `**Desabilitado**`}`
+                                            description: `🔂 Loop para **${serverQueue.songs[0].title}** ${serverQueue.songLooping ? `**Habilitado**` : `**Desabilitado**`}`
                                         }
                                     });
                                 } catch (e) {
@@ -300,6 +336,7 @@ module.exports = {
                                     var sg_2 = await guildData.findOne({
                                         guildID: message.guild.id
                                     });
+                                    if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
@@ -321,11 +358,12 @@ module.exports = {
                         guildID: message.guild.id
                     });
                     if (search_al.aleatory_mode) {
-                        if (!serverQueue.loop) await serverQueue.songs.shift();
+                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
                         var random = Math.floor(Math.random() * (serverQueue.songs.length));
                         this.play(message, serverQueue.songs[random]);
                     } else {
-                        if (!serverQueue.loop) await serverQueue.songs.shift();
+                        if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
+                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
                         this.play(message, serverQueue.songs[0]);
                     }
                     embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));

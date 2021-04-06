@@ -17,18 +17,23 @@ module.exports = {
                 thumbnail: video.thumbnails[0].url,
                 duration: video.duration,
                 isLive: video.isLive,
+                author: message.author.tag
             }
 
             if (!serverQueue) {
                 const queueConstruct = {
                     textChannel: message.channel,
-                    voiceChannel: channel,
+                    voiceChannel: voiceChannel,
                     connection: null,
                     songs: [],
+                    prevSongs: [],
                     volume: 5,
+                    bass: 1,
+                    nigthCore: false,
                     playing: true,
-                    loop: false
-                };
+                    looping: false,
+                    songLooping: false
+                }
                 message.client.queue.set(message.guild.id, queueConstruct);
                 queueConstruct.songs.push(song);
 
