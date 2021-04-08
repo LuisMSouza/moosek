@@ -182,6 +182,10 @@ module.exports = {
                                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                                 return;
                                             }
+                                            //await serverQueue.prevSongs.push(serverQueue.songs);
+                                            if (serverQueue.looping) {
+                                                await serverQueue.songs.push(serverQueue.songs[0]);
+                                            }
                                             serverQueue.songs.shift();
                                             if (srch.aleatory_mode) {
                                                 const random = Math.floor(Math.random() * (serverQueue.songs.length));
@@ -236,7 +240,7 @@ module.exports = {
                                     console.log(e);
                                 }
                                 break;
-                            /*case "🔁":
+                            case "🔁":
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
                                         embed: {
@@ -258,6 +262,11 @@ module.exports = {
                                     return;
                                 }
                                 if (!serverQueue) return;
+                                var sgSet = await guildData.findOne({
+                                    guildID: message.guild.id
+                                });
+                                if (sgSet.aleatory_mode) return sendError("Esta opção não pode ser ativada no modo aleatório.", message.channel);
+                                if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
                                 try {
                                     await serverQueue.looping != serverQueue.looping;
                                     await reaction.users.remove(user);
@@ -270,7 +279,7 @@ module.exports = {
                                 } catch (e) {
                                     console.log(e);
                                 }
-                                break;*/
+                                break;
                             case "🔂":
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
@@ -355,6 +364,7 @@ module.exports = {
                     console.log(err)
                 }
                 dispatcher.on("finish", async () => {
+                    //await serverQueue.prevSongs.push(serverQueue.songs);
                     const search_al = await guildData.findOne({
                         guildID: message.guild.id
                     });
@@ -363,7 +373,7 @@ module.exports = {
                         var random = Math.floor(Math.random() * (serverQueue.songs.length));
                         this.play(message, serverQueue.songs[random]);
                     } else {
-                        //if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
+                        if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
                         if (!serverQueue.songLooping) await serverQueue.songs.shift();
                         this.play(message, serverQueue.songs[0]);
                     }
