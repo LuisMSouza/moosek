@@ -269,7 +269,7 @@ module.exports = {
                                 if (sgSet.aleatory_mode) return sendError("Esta opção não pode ser ativada no modo aleatório.", message.channel);
                                 if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
                                 try {
-                                    await serverQueue.looping != serverQueue.looping;
+                                    serverQueue.looping = !serverQueue.looping;
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
