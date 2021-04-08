@@ -262,6 +262,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
+                                await reaction.users.remove(user);
                                 if (!serverQueue) return;
                                 var sgSet = await guildData.findOne({
                                     guildID: message.guild.id
@@ -270,7 +271,6 @@ module.exports = {
                                 if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
                                 try {
                                     serverQueue.looping = !serverQueue.looping;
-                                    await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
