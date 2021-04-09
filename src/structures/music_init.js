@@ -67,12 +67,13 @@ module.exports = {
                 try {
                     await embed.react("⏸️");
                     await embed.react("▶️");
+                    await embed.react("⏮️");
                     await embed.react("⏭️");
                     await embed.react("⏹️");
                     await embed.react("🔁");
                     await embed.react("🔂");
                     await embed.react("🔀");
-                    const collector = embed.createReactionCollector((reaction, user) => ["⏸️", "▶️", "⏭️", "⏹️", "🔁", "🔂", "🔀"].includes(reaction.emoji.name) && user != user.bot);
+                    const collector = embed.createReactionCollector((reaction, user) => ["⏸️", "▶️", "⏮️", "⏭️", "⏹️", "🔁", "🔂", "🔀"].includes(reaction.emoji.name) && user != user.bot);
                     collector.on("collect", async (reaction, user) => {
                         switch (reaction.emoji.name) {
                             case "⏸️":
@@ -145,6 +146,47 @@ module.exports = {
                                     return undefined;
                                 }
                                 break;
+                            case "⏮️":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#701AAB",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#701AAB",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (!serverQueue) {
+                                    sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
+                                    await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                    return;
+                                }
+                                if (serverQueue) {
+                                    await reaction.users.remove(user);
+                                    try {
+                                        if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) return sendError("Não há nenhuma música anterior.", message.channel);
+                                        await serverQueue.songs.shift()
+                                        await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
+                                        //dispatcher.end();
+                                        await this.play(message, serverQueue.songs[0]);
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+                                }
+                                embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                return;
+                                break;
                             case "⏭️":
                                 if (!message.member.voice.channel) {
                                     serverQueue.textChannel.send({
@@ -183,7 +225,8 @@ module.exports = {
                                                 embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                                 return;
                                             }
-                                            //await serverQueue.prevSongs.push(serverQueue.songs);
+                                            serverQueue.prevSongs = [];
+                                            await serverQueue.prevSongs.push(serverQueue.songs[0]);
                                             if (serverQueue.looping) {
                                                 await serverQueue.songs.push(serverQueue.songs[0]);
                                             }
@@ -365,7 +408,8 @@ module.exports = {
                     console.log(err)
                 }
                 dispatcher.on("finish", async () => {
-                    //await serverQueue.prevSongs.push(serverQueue.songs);
+                    serverQueue.prevSongs = []
+                    serverQueue.prevSongs.push(serverQueue.songs[0])
                     const search_al = await guildData.findOne({
                         guildID: message.guild.id
                     });
