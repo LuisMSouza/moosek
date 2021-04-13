@@ -88,7 +88,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -123,7 +123,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -158,7 +158,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -199,7 +199,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -259,7 +259,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -296,7 +296,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -336,7 +336,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
@@ -371,7 +371,7 @@ module.exports = {
                                     await reaction.users.remove(user);
                                     return;
                                 }
-                                if (serverQueue.connection.channel.id !== membReact) {
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
                                     serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
