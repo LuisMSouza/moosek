@@ -2,6 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const Genius = require("genius-lyrics");
+const ytdl = require('ytdl-core');
 const Client = new Genius.Client(process.env.GENIUS_API_KEY);
 
 ////////////////// SOURCE CODE /////////////////////
@@ -31,9 +32,9 @@ module.exports = {
 
         if (!main_entry) {
             if (serverQueue) {
-                main_entry = serverQueue.songs[0].title;
+                var query = await ytdl.getInfo(serverQueue.songs[0].url).videoDetails.media.song;
                 try {
-                    const songs = await Client.songs.search(main_entry);
+                    const songs = await Client.songs.search(query);
                     const lyrics = await songs[0].lyrics();
 
                     embed.setDescription(lyrics)
