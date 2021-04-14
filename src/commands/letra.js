@@ -32,7 +32,7 @@ module.exports = {
 
         if (!main_entry) {
             if (serverQueue) {
-                var query = await ytdl.getInfo(serverQueue.songs[0].url).videoDetails.media.song;
+                var query = await (await ytdl.getInfo(serverQueue.songs[0].url)).videoDetails.media.song
                 try {
                     const songs = await Client.songs.search(query);
                     const lyrics = await songs[0].lyrics();
