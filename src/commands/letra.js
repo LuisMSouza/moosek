@@ -32,8 +32,8 @@ module.exports = {
 
         if (!main_entry) {
             if (serverQueue) {
-                var query = await (await ytdl.getInfo(serverQueue.songs[0].url)).videoDetails.media.song
-                var artist = await (await ytdl.getBasicInfo(serverQueue.songs[0].url)).videoDetails.media.artist
+                var query = await (await ytdl.getInfo(serverQueue.songs[0].url)).videoDetails.media.song ?? `${serverQueue.songs[0].title}`
+                var artist = await (await ytdl.getBasicInfo(serverQueue.songs[0].url)).videoDetails.media.artist ?? ""
                 try {
                     const songs = await Client.songs.search(`${query} ${artist}`);
                     const lyrics = await songs[0].lyrics();
