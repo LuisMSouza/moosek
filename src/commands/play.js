@@ -1,7 +1,6 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
 const ytdl = require('ytdl-core');
-const yts = require('yt-search');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
