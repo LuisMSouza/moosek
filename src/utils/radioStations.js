@@ -21,3 +21,24 @@ exports.radioStations = [
     "http://cdn.nrjaudio.fm/audio1/fr/30001/mp3_128.mp3",
     "https://streams.ilovemusic.de/iloveradio104.mp3",
 ]
+exports.radioStationsName = [
+    "Standard-Radio",
+    "Base-Radio(Alemã)",
+    "Chill-Radio",
+    "Dance-Radio",
+    "Greatest-hits-Radio",
+    "Hip-hop-Radio",
+    "Party-Radio",
+    "Us-Rap-Radio",
+    "Greatest-hits-Radio-2",
+    "Absolut-Radio",
+    "Absolut-70s-Radio",
+    "Absolut-80s-Radio",
+    "Absolut-90s-Radio",
+    "Absolut-2000s-Radio",
+    "Absolut-Classic-Rock",
+    "88.6-Radio",
+    "Top-Radio",
+    "NRJ-Radio",
+    "Color-Music-Radio"
+]
