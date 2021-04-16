@@ -7,7 +7,7 @@ const radioStations = require('../utils/radioStations.js');
 module.exports = {
     name: "radio",
     description: "Inicia o streaming de radio",
-    usage: [process.env.PREFIX_KEY + 'radio'],
+    usage: [process.env.PREFIX_KEY + 'radio [numero da radio na lista]'],
     category: 'user',
     timeout: 7000,
     aliases: ['r'],
