@@ -32,7 +32,9 @@ module.exports = {
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         isPlaylist = playlistRegex.test(url)
-        const regPlaylist = /[?&]list=([^#\&\?]+)/;
+
+        const radioListen = client.radio.get(message.guild.id);
+        if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isPlaylist) {
             try {
@@ -123,7 +125,7 @@ module.exports = {
                         }
                         client.queue.set(message.guild.id, queueConstruct)
                         queueConstruct.songs.push(song)
-                        
+
                         try {
                             var connection = await voiceChannel.join();
                             queueConstruct.connection = connection

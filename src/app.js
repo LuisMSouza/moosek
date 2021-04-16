@@ -13,6 +13,7 @@ client.commands = new Discord.Collection();
 client.queue = new Map();
 client.timeout = new Discord.Collection();
 client.db = require('./utils/db.js');
+client.radio = new Map();
 
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
