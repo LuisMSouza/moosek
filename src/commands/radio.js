@@ -142,7 +142,7 @@ module.exports = {
                         });
                     })
             } catch (e) {
-                if (err.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
+                if (e.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
                 return sendError("Ocorreu um erro ao tentar executar a radio.", message.channel) && console.log(e);
             }
         }
