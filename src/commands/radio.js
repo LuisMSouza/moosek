@@ -48,7 +48,7 @@ module.exports = {
                                 const embedBBr = new Discord.MessageEmbed()
                                     .setTitle("Radios disponíveis")
                                     .setColor("#701AAB")
-                                    .setDescription("`19` - Rádio Itatiaia\n`20` - Rádio FM 98\n`21` - Rádio Jovem Pan 107.3 FM")
+                                    .setDescription("`19` - Rádio Itatiaia\n`20` - Rádio FM 98\n`21` - Rádio Jovem Pan 107.3 FM\n`22` - Rádio Alvorada FM\n`23` - 89 FM A Rádio Rock")
                                     .setFooter("Para fazer a escolha digite o comando com o número da radio")
                                 embed.edit(embedBBr);
                                 await reaction.users.remove(user);
@@ -57,7 +57,7 @@ module.exports = {
                                 const embedBUs = new Discord.MessageEmbed()
                                     .setTitle("Radios disponíveis")
                                     .setColor("#701AAB")
-                                    .setDescription("`22` - American Road Radio\n`23` - Classic Rock Florida\n`24` - Rádio Z100 - 100.3 FM")
+                                    .setDescription("`24` - American Road Radio\n`25` - Classic Rock Florida\n`26` - Rádio Z100 - 100.3 FM\n`27` - 89.7 KSGN\n`28` - WNCI 97.9")
                                     .setFooter("Para fazer a escolha digite o comando com o número da radio")
                                 embed.edit(embedBUs);
                                 await reaction.users.remove(user);

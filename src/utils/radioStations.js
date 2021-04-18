@@ -21,9 +21,13 @@ exports.radioStations = [
     "http://8903.brasilstream.com.br:8903/stream?1618706382258",
     "https://9554.brasilstream.com.br/stream?1618706821810",
     "https://server01.ouvir.radio.br:8042/stream?1618707015340",
+    "https://22823.live.streamtheworld.com/RADIO_ALVORADA.mp3?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYxODc2NDQ2OCwiaXNzIjoidGlzcnYifQ.NmnIirZa_q5aCWlTN9FOiHrHkqlb6OwlhBTploaXA00",
+    "https://21933.live.streamtheworld.com/RADIO_89FM.mp3?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYxODc2NTE1OCwiaXNzIjoidGlzcnYifQ.o8pYRQzhuqc8ISf58vcFL15az5dUP4Ks8dLGPnGuqjQ",
     "https://c5.radioboss.fm:18224/stream",
     "https://vip2.fastcast4u.com/proxy/classicrockdoug?mp=/1",
     "https://n1ea-e2.revma.ihrhls.com/zc1469?rj-ttl=5&rj-tok=AAABeOKLG9IArEWSocBcSUogkQ",
+    "https://s8.yesstreaming.net/proxy/goodnews?mp=/stream64",
+    "https://n15a-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABeOX6jXMAtsGGyo_v6INP2Q",
 ]
 exports.radioStationsName = [
     "Standard-Radio",
@@ -48,7 +52,11 @@ exports.radioStationsName = [
     "Rádio Itatiaia",
     "Rádio FM 98",
     "Rádio Jovem Pan 107.3 FM",
+    "Rádio Alvorada FM",
+    "89 FM A Rádio Rock",
     "American Road Radio",
     "Classic Rock Florida",
-    "Rádio Z100 - 100.3 FM"
+    "Rádio Z100 - 100.3 FM",
+    "89.7 KSGN",
+    "WNCI 97.9"
 ]
