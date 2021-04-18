@@ -23,6 +23,9 @@ exports.radioStations = [
     "http://8903.brasilstream.com.br:8903/stream?1618706382258",
     "https://9554.brasilstream.com.br/stream?1618706821810",
     "https://server01.ouvir.radio.br:8042/stream?1618707015340",
+    "https://c5.radioboss.fm:18224/stream",
+    "https://vip2.fastcast4u.com/proxy/classicrockdoug?mp=/1",
+    "https://n1ea-e2.revma.ihrhls.com/zc1469?rj-ttl=5&rj-tok=AAABeOKLG9IArEWSocBcSUogkQ",
 ]
 exports.radioStationsName = [
     "Standard-Radio",
@@ -44,10 +47,10 @@ exports.radioStationsName = [
     "Top-Radio",
     "NRJ-Radio",
     "Color-Music-Radio",
-    "",
-    "",
-    "",
     "Rádio Itatiaia",
     "Rádio FM 98",
     "Rádio Jovem Pan 107.3 FM",
+    "American Road Radio",
+    "Classic Rock Florida",
+    "Rádio Z100 - 100.3 FM"
 ]

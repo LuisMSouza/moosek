@@ -41,13 +41,16 @@ module.exports = {
                                     .setDescription("`21` - Rádio Itatiaia\n`22` - Rádio FM 98\n`23` - Rádio Jovem Pan 107.3 FM")
                                     .setFooter("Para fazer a escolha digite o comando com o número da radio")
                                 embed.edit(embedBBr);
+                                await reaction.users.remove(user);
                                 break;
                             case "🇺🇸":
                                 const embedBUs = new Discord.MessageEmbed()
                                     .setTitle("Radios disponíveis")
                                     .setColor("#701AAB")
+                                    .setDescription("`24` - American Road Radio\n`25` - Classic Rock Florida\n`26` - Rádio Z100 - 100.3 FM")
                                     .setFooter("Para fazer a escolha digite o comando com o número da radio")
                                 embed.edit(embedBUs);
+                                await reaction.users.remove(user);
                                 break;
                         }
                     });
