@@ -18,6 +18,9 @@ module.exports = {
         const voiceChannel = message.member.voice.channel;
         const choice = args[0];
         const radioListen = client.radio.get(message.guild.id);
+        var isNum = Number(choice);
+        if (!Number.isInteger(isNum)) return sendError("Indique o número da radio que deseja.", message.channel);
+        if (isNaN(choice)) return sendError("Indique o número da radio que deseja.", message.channel);
         if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);
         if (!choice) {
             const embedChoice = new Discord.MessageEmbed()
@@ -28,10 +31,10 @@ module.exports = {
 
             message.channel.send(embedChoice).then(async (embed) => {
                 try {
+                    await embed.react("🌐");
                     await embed.react("🇧🇷");
                     await embed.react("🇺🇸");
-                    await embed.react("🌐");
-                    const collector = embed.createReactionCollector((reaction, user) => ["🇧🇷", "🇺🇸", "🌐"].includes(reaction.emoji.name) && user != user.bot);
+                    const collector = embed.createReactionCollector((reaction, user) => ["🌐", "🇧🇷", "🇺🇸"].includes(reaction.emoji.name) && user != user.bot);
                     collector.on("collect", async (reaction, user) => {
                         var membReact = message.guild.members.cache.get(user.id);
                         switch (reaction.emoji.name) {
@@ -139,6 +142,7 @@ module.exports = {
                         });
                     })
             } catch (e) {
+                if (err.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
                 return sendError("Ocorreu um erro ao tentar executar a radio.", message.channel) && console.log(e);
             }
         }
