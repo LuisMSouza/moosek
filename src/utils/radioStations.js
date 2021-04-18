@@ -3,12 +3,10 @@ exports.radioStations = [
     "https://baseradiode.stream.laut.fm/baseradiode",
     "https://streams.ilovemusic.de/iloveradio17.mp3",
     "https://streams.ilovemusic.de/iloveradio2.mp3",
-    "https://streams.ilovemusic.de/iloveradio6.mp3",
     "https://streams.ilovemusic.de/iloveradio16.mp3",
     "https://streams.ilovemusic.de/iloveradio3.mp3",
     "https://streams.ilovemusic.de/iloveradio14.mp3",
     "https://streams.ilovemusic.de/iloveradio13.mp3",
-    "https://streams.ilovemusic.de/iloveradio8.mp3",
     "https://stream-mz.planetradio.co.uk/net2national.mp3",
     "http://icy-e-bab-02-gos.sharp-stream.com/absoluteradio.mp3",
     "http://ais.absoluteradio.co.uk/absolute70s.mp3",
@@ -29,7 +27,7 @@ exports.radioStations = [
 ]
 exports.radioStationsName = [
     "Standard-Radio",
-    "Base-Radio(Alemã)",
+    "Base-Radio",
     "Chill-Radio",
     "Dance-Radio",
     "Greatest-hits-Radio",
