@@ -35,12 +35,12 @@ module.exports = {
                         var membReact = message.guild.members.cache.get(user.id);
                         switch (reaction.emoji.name) {
                             case "🌐":
-                                const embedBBr = new Discord.MessageEmbed()
+                                const embedAll = new Discord.MessageEmbed()
                                     .setTitle("Radios disponíveis")
                                     .setColor("#701AAB")
                                     .setDescription("`0` - Standard-Radio\n`1` - Base-Radio(Alemã)\n`2` - Chill-Radio\n`3` - Dance-Radio\n`4` - Greatest-hits-Radio\n`5` - Hip-hop-Radio\n`6` - Party-Radio\n`7` - Us-Rap-Radio\n`8` - Greatest-hits-Radio-2\n`9` - Absolut-Radio\n`10` - Absolut-70s-Radio\n`11` - Absolut-80s-Radio\n`12` - Absolut-90s-Radio\n`13` - Absolut-2000s-Radio\n`14` - Absolut-Classic-Rock\n`15` - 88.6-Radio\n`16` - Top-Radio\n`17` - NRJ-Radio\n`18` - Color-Music-Radio\n")
                                     .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                                embed.edit(embedBBr);
+                                embed.edit(embedAll);
                                 await reaction.users.remove(user);
                                 break;
                             case "🇧🇷":
