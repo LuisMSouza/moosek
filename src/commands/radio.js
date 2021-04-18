@@ -18,10 +18,6 @@ module.exports = {
         const voiceChannel = message.member.voice.channel;
         const choice = args[0];
         const radioListen = client.radio.get(message.guild.id);
-        var isNum = Number(choice);
-        if (!Number.isInteger(isNum)) return sendError("Indique o número da radio que deseja.", message.channel);
-        if (choice > radioStations.radioStations.length) return sendError("Não há nenhuma radio correspondente", message.channel);
-        if (isNaN(choice)) return sendError("Indique o número da radio que deseja.", message.channel);
         if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);
         if (!choice) {
             const embedChoice = new Discord.MessageEmbed()
@@ -74,6 +70,10 @@ module.exports = {
                 }
             });
         } else {
+            var isNum = Number(choice);
+            if (!Number.isInteger(isNum)) return sendError("Indique o número da radio que deseja.", message.channel);
+            if (choice > radioStations.radioStations.length) return sendError("Não há nenhuma radio correspondente", message.channel);
+            if (isNaN(choice)) return sendError("Indique o número da radio que deseja.", message.channel);
             if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar a radio!", message.channel);
             const permissions = voiceChannel.permissionsFor(message.client.user);
             if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
