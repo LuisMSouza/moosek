@@ -20,7 +20,7 @@ module.exports = {
         const radioListen = client.radio.get(message.guild.id);
         var isNum = Number(choice);
         if (!Number.isInteger(isNum)) return sendError("Indique o número da radio que deseja.", message.channel);
-        if (choice > radioStations.radioStations.length) return sendError("Não há nenhuma radio correspondente", message.channel)
+        if (choice > radioStations.radioStations.length) return sendError("Não há nenhuma radio correspondente", message.channel);
         if (isNaN(choice)) return sendError("Indique o número da radio que deseja.", message.channel);
         if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);
         if (!choice) {
