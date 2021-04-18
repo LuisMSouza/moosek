@@ -30,7 +30,8 @@ module.exports = {
                 try {
                     await embed.react("🇧🇷");
                     await embed.react("🇺🇸");
-                    const collector = embed.createReactionCollector((reaction, user) => ["🇧🇷", "🇺🇸"].includes(reaction.emoji.name) && user != user.bot);
+                    await embed.react("🌐");
+                    const collector = embed.createReactionCollector((reaction, user) => ["🇧🇷", "🇺🇸", "🌐"].includes(reaction.emoji.name) && user != user.bot);
                     collector.on("collect", async (reaction, user) => {
                         var membReact = message.guild.members.cache.get(user.id);
                         switch (reaction.emoji.name) {
