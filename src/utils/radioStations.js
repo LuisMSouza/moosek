@@ -20,6 +20,9 @@ exports.radioStations = [
     "http://loadbalancing.topradio.be/topradio.mp3",
     "http://cdn.nrjaudio.fm/audio1/fr/30001/mp3_128.mp3",
     "https://streams.ilovemusic.de/iloveradio104.mp3",
+    "http://8903.brasilstream.com.br:8903/stream?1618706382258",
+    "https://9554.brasilstream.com.br/stream?1618706821810",
+    "https://server01.ouvir.radio.br:8042/stream?1618707015340",
 ]
 exports.radioStationsName = [
     "Standard-Radio",
@@ -40,5 +43,11 @@ exports.radioStationsName = [
     "88.6-Radio",
     "Top-Radio",
     "NRJ-Radio",
-    "Color-Music-Radio"
+    "Color-Music-Radio",
+    "",
+    "",
+    "",
+    "Rádio Itatiaia",
+    "Rádio FM 98",
+    "Rádio Jovem Pan 107.3 FM",
 ]
