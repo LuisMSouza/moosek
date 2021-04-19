@@ -89,7 +89,7 @@ module.exports = {
             try {
                 var connection = await voiceChannel.join();
                 await connection.voice.setSelfDeaf(true);
-                const dispatcher = await connection.play(radioStations.radioStations[choice])
+                const dispatcher = await connection.play(radioStations.radioStations[choice], { quality: 'highestaudio' })
                     .on("start", async () => {
                         const embedRadio = new Discord.MessageEmbed()
                             .setAuthor("Tocando agora:")
