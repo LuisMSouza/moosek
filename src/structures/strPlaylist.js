@@ -2,7 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
-const music_init = require('./music_init.js');
+const music_init = require('./strPlaylist.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {

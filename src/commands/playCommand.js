@@ -4,8 +4,8 @@ const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
-const music_init = require('../structures/music_init.js');
-const playlist_init = require('../structures/playlist_init');
+const music_init = require('../structures/strMusic.js');
+const playlist_init = require('../structures/strPlaylist.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
