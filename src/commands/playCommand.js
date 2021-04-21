@@ -31,10 +31,16 @@ module.exports = {
         if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
-        isPlaylist = playlistRegex.test(url)
+        const sptfRegex = /^(https:\/\/open.spotify.com\/user\/spotify\/playlist\/|spotify:user:spotify:playlist:)([a-zA-Z0-9]+)(.*)$/
+        isPlaylist = playlistRegex.test(url);
+        isSptf = sptfRegex.test(url);
 
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
+
+        if (isSptf) {
+            return sendError("Spotify Support será adicionado em breve ;)", message.channel);
+        }
 
         if (isPlaylist) {
             try {
