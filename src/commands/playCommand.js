@@ -31,15 +31,22 @@ module.exports = {
         if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
-        const sptfRegex = /^(https:\/\/open.spotify.com\/user\/spotify\/playlist\/|spotify:user:spotify:playlist:)([a-zA-Z0-9]+)(.*)$/
+        const sptfRegex = /((open|play)\.spotify\.com\/)/;
         isPlaylist = playlistRegex.test(url);
-        isSptf = sptfRegex.test(url);
+        var isSptf = sptfRegex.test(url);
 
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isSptf) {
-            return sendError("Spotify Support será adicionado em breve ;)", message.channel);
+            sendError("Spotify Support será adicionado em breve ;)", message.channel);
+            /*
+            const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
+            const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
+            var cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
+            console.log(cath[2]);
+            */
+            return;
         }
 
         if (isPlaylist) {
