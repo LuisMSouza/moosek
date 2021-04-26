@@ -13,6 +13,7 @@ module.exports = {
             if (!song) {
                 if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                 if (!message.guild.me.voice.channel) return;
+                if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
                 var tempo = setTimeout(async function () {
                     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                     if (!message.guild.me.voice.channel) return;
