@@ -10,10 +10,12 @@ module.exports = {
     async play(message, song) {
         try {
             const serverQueue = message.client.queue.get(message.guild.id);
+            const serverRadio = message.client.radio.get(message.guild.id);
             if (!song) {
                 if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                 if (!message.guild.me.voice.channel) return;
                 if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
+                if (serverRadio) return;
                 var tempo = setTimeout(async function () {
                     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                     if (!message.guild.me.voice.channel) return;
