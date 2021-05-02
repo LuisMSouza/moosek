@@ -6,6 +6,11 @@ const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
 const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
+const SpotifyWebApi = require('spotify-web-api-node');
+const handleSpotify = require('../structures/strSpotify.js')
+
+const spotifyApi = new SpotifyWebApi();
+spotifyApi.setAccessToken(process.env.SPOTIFY_KEY);
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -39,13 +44,34 @@ module.exports = {
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isSptf) {
-            sendError("Spotify Support será adicionado em breve ;)", message.channel);
-            /*
             const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
             const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
             var cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
             console.log(cath[2]);
-            */
+            spotifyApi.getPlaylist(cath[2])
+                .then(async function (data) {
+                    const tracks = await data.body.tracks.items;
+                    for (const track of tracks) {
+                        await handleSpotify.handleVideo(track, message, voiceChannel, true);
+                    }
+                    return message.channel.send({
+                        embed: {
+                            color: "GREEN",
+                            description: `**Playlist adicionada à fila**`,
+                            fields: [
+                                {
+                                    name: "> __Pedido por:__",
+                                    value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                    inline: true
+                                }
+                            ]
+                        }
+                    });
+                }, async function (err) {
+                    await sendError("Não foi possível carregar esta playlist :(", message.channel);
+                    console.log('ops', err);
+                    return;
+                });
             return;
         }
 
