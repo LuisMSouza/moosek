@@ -48,10 +48,10 @@ module.exports = {
             const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
             const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
             var cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
-            console.log(cath[2]);
             spotifyApi.getPlaylist(cath[2])
                 .then(async function (data) {
                     const tracks = await data.body.tracks.items;
+                    console.log(tracks[1]);
                     for (const track of tracks) {
                         await handleSpotify.handleVideo(track, message, voiceChannel, true);
                     }
