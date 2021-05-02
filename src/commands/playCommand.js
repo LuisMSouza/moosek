@@ -69,7 +69,7 @@ module.exports = {
                     });
                 }, async function (err) {
                     if (err.message.includes("Not found..")) {
-                        spotifyApi.searchTracks(`id:${cath[2]}`)
+                        spotifyApi.searchTracks(`${cath[2]}`)
                             .then(function (data) {
                                 console.log('Search tracks by "Love" in the artist name', data.body.tracks.items);
                             }, function (err) {
