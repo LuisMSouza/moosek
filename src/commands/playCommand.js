@@ -11,6 +11,7 @@ const handleSpotify = require('../structures/strSpotify.js')
 
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(process.env.SPOTIFY_KEY);
+spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
