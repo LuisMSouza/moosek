@@ -71,7 +71,7 @@ module.exports = {
                     if (err.message.includes("Not found..")) {
                         spotifyApi.searchTracks(`id:${cath[2]}`)
                             .then(function (data) {
-                                console.log('Search tracks by "Love" in the artist name', data.body);
+                                console.log('Search tracks by "Love" in the artist name', data.body.tracks.items);
                             }, function (err) {
 
                             });
