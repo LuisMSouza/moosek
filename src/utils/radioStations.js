@@ -25,9 +25,9 @@ exports.radioStations = [
     "https://21933.live.streamtheworld.com/RADIO_89FM.mp3?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYxODc2NTE1OCwiaXNzIjoidGlzcnYifQ.o8pYRQzhuqc8ISf58vcFL15az5dUP4Ks8dLGPnGuqjQ",
     "https://c5.radioboss.fm:18224/stream",
     "https://vip2.fastcast4u.com/proxy/classicrockdoug?mp=/1",
-    "https://n1ea-e2.revma.ihrhls.com/zc1469?rj-ttl=5&rj-tok=AAABeOKLG9IArEWSocBcSUogkQ",
+    "https://n4ab-e2.revma.ihrhls.com/zc1469?rj-ttl=5&rj-tok=AAABeSrMX9YA_jjDxy7FK2Yqtw",
     "https://s8.yesstreaming.net/proxy/goodnews?mp=/stream64",
-    "https://n15a-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABeOX6jXMAtsGGyo_v6INP2Q",
+    "https://n05b-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABeSrLLCoArY_tDCQLRAJHFw",
 ]
 exports.radioStationsName = [
     "Standard-Radio",

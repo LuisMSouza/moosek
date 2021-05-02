@@ -68,7 +68,16 @@ module.exports = {
                         }
                     });
                 }, async function (err) {
-                    await sendError("Não foi possível carregar esta playlist :(", message.channel);
+                    if (err.message.includes("Not found..")) {
+                        spotifyApi.searchTracks(`id:${cath[2]}`)
+                            .then(function (data) {
+                                console.log('Search tracks by "Love" in the artist name', data.body);
+                            }, function (err) {
+
+                            });
+                        return;
+                    }
+                    await sendError("Não encontrei nenhuma música ou playlist :(", message.channel);
                     console.log('ops', err);
                     return;
                 });
