@@ -78,17 +78,15 @@ module.exports = {
                             });
                         return;
                     }
-                    if (err.message.includes("The access token expired.")) {
-                        spotifyApi.refreshAccessToken().then(
-                            function (data) {
-                                console.log('The access token has been refreshed!');
-                                spotifyApi.setAccessToken(data.body['access_token']);
-                            },
-                            function (err) {
-                                console.log('Could not refresh access token', err);
-                            }
-                        );
-                    }
+                    spotifyApi.refreshAccessToken().then(
+                        function (data) {
+                            console.log('The access token has been refreshed!');
+                            spotifyApi.setAccessToken(data.body['access_token']);
+                        },
+                        function (err) {
+                            console.log('Could not refresh access token', err);
+                        }
+                    );
                     await sendError("Ops, ocorreu um erro, tente novamente", message.channel);
                     console.log('ops', err);
                     return;
