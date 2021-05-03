@@ -74,11 +74,22 @@ module.exports = {
                             .then(function (data) {
                                 console.log('Search tracks by "Love" in the artist name', data.body.tracks.items);
                             }, function (err) {
-
+                                console.log("Not returned :(" + err);
                             });
                         return;
                     }
-                    await sendError("Não encontrei nenhuma música ou playlist :(", message.channel);
+                    if (err.message.includes("The access token expired.")) {
+                        spotifyApi.refreshAccessToken().then(
+                            function (data) {
+                                console.log('The access token has been refreshed!');
+                                spotifyApi.setAccessToken(data.body['access_token']);
+                            },
+                            function (err) {
+                                console.log('Could not refresh access token', err);
+                            }
+                        );
+                    }
+                    await sendError("Ops, ocorreu um erro, tente novamente", message.channel);
                     console.log('ops', err);
                     return;
                 });
