@@ -8,12 +8,13 @@ const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const SpotifyWebApi = require('spotify-web-api-node');
 const handleSpotify = require('../structures/strSpotify.js')
+const SptfToken = require('../models/TokenAcess.json');
 
 const spotifyApi = new SpotifyWebApi({
     clientId: "9e88800cff1e43fc95e0c6bd421e0976",
     clientSecret: "a2d2b6951bec462ea6053754c51df3ad"
 });
-spotifyApi.setAccessToken(process.env.SPOTIFY_KEY);
+spotifyApi.setAccessToken(SptfToken.SpotifyAcessToken);
 spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -81,17 +82,36 @@ module.exports = {
                             });
                         return;
                     }
-                    spotifyApi.refreshAccessToken().then(
-                        function (data) {
-                            console.log('The access token has been refreshed!');
-                            spotifyApi.setAccessToken(data.body['access_token']);
-                        },
-                        function (err) {
-                            console.log('Could not refresh access token', err);
-                        }
-                    );
-                    await sendError("Ops, ocorreu um erro, tente novamente", message.channel);
-                    console.log('ops', err);
+                    if (err.message.includes("The access token expired.")) {
+                        spotifyApi.refreshAccessToken().then(
+                            async function (data) {
+                                console.log('The access token has been refreshed!');
+                                spotifyApi.setAccessToken(data.body['access_token']);
+                                var json = JSON.stringify(data.body['access_token']);
+                                await fs.writeFile('./models/TokenAcess.json', json);
+                                for (const track of tracks) {
+                                    await handleSpotify.handleVideo(track, message, voiceChannel, true);
+                                }
+                                return message.channel.send({
+                                    embed: {
+                                        color: "GREEN",
+                                        description: `**Playlist adicionada à fila**`,
+                                        fields: [
+                                            {
+                                                name: "> __Pedido por:__",
+                                                value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                                inline: true
+                                            }
+                                        ]
+                                    }
+                                });
+                            },
+                            function (err) {
+                                console.log('Could not refresh access token', err);
+                            }
+                        );
+                    }
+                    console.log(err.message);
                     return;
                 });
             return;
