@@ -91,7 +91,6 @@ module.exports = {
                                 var json = JSON.stringify(data3.body['access_token']);
                                 await fs.writeFile('./TokenAcess.json', json, function (err) {
                                     if (err) return console.log(err);
-                                    console.log('erro garai');
                                 });
                                 spotifyApi.getPlaylist(cath[2])
                                     .then(async function (data2) {
@@ -258,8 +257,5 @@ module.exports = {
             }
             return undefined;
         }
-    },
-    async pre_main(client, message, search) {
-        return this.execute(client, message, search);
     }
 };
