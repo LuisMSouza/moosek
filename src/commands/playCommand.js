@@ -119,7 +119,7 @@ module.exports = {
                         return;
                     });
             } else if (searchString.includes("open.spotify.com/track")) {
-                spotifyApi.searchTracks(`${cath[2]}`)
+                spotifyApi.searchTracks(`id:${cath[2]}`)
                     .then(function (data4) {
                         console.log('Search: "', data4.body);
                     }, function (err) {
@@ -128,7 +128,23 @@ module.exports = {
             } else if (searchString.includes("open.spotify.com/album")) {
                 spotifyApi.getAlbumTracks(`${cath[2]}`)
                     .then(function (data5) {
-                        console.log(data5.body);
+                        const tracks2 = await data5.body.items
+                        for (const track of tracks2) {
+                            await handleSpotify.handleVideo(track, message, voiceChannel, true);
+                        }
+                        return message.channel.send({
+                            embed: {
+                                color: "GREEN",
+                                description: `**Playlist adicionada à fila**`,
+                                fields: [
+                                    {
+                                        name: "> __Pedido por:__",
+                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                        inline: true
+                                    }
+                                ]
+                            }
+                        });
                     }, function (err) {
                         console.log('Something went wrong!', err);
                     });
