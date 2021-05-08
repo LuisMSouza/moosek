@@ -84,7 +84,42 @@ module.exports = {
                         return;
                     }
                     if (err.message.includes("The access token expired.")) {
-                        return refresh.refreshTokenAcess(client, message, searchString);
+                        spotifyApi.refreshAccessToken().then(
+                            async function (data) {
+                                console.log('The access token has been refreshed!');
+                                spotifyApi.setAccessToken(data.body['access_token']);
+                                var json = JSON.stringify(data.body['access_token']);
+                                await fs.writeFile('./TokenAcess.json', json, function (err) {
+                                    if (err) return console.log(err);
+                                    console.log('erro garai');
+                                });
+                                spotifyApi.getPlaylist(cath[2])
+                                    .then(async function (data2) {
+                                        const tracks = await data2.body.tracks.items;
+                                        console.log(tracks[1]);
+                                        for (const track of tracks) {
+                                            await handleSpotify.handleVideo(track, message, voiceChannel, true);
+                                        }
+                                        return message.channel.send({
+                                            embed: {
+                                                color: "GREEN",
+                                                description: `**Playlist adicionada à fila**`,
+                                                fields: [
+                                                    {
+                                                        name: "> __Pedido por:__",
+                                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                                        inline: true
+                                                    }
+                                                ]
+                                            }
+                                        });
+                                    });
+                            },
+                            function (err) {
+                                console.log('Could not refresh access token', err);
+                                return sendError("Não foi possível reproduzir esta playlist :(", message.channel);
+                            }
+                        );
                     }
                     console.log(err.message);
                     return;
