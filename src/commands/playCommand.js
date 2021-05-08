@@ -9,7 +9,6 @@ const playlist_init = require('../structures/strPlaylist.js');
 const SpotifyWebApi = require('spotify-web-api-node');
 const handleSpotify = require('../structures/strSpotify.js')
 const SptfToken = require('../models/TokenAcess.json');
-const refresh = require('../models/refreshToken.js');
 
 const spotifyApi = new SpotifyWebApi({
     clientId: "9e88800cff1e43fc95e0c6bd421e0976",
