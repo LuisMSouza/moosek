@@ -16,7 +16,7 @@
     "@discordjs/opus": "^0.5.0",
     "array-move": "^3.0.1",
     "discord.js": "^12.5.3",
-    "dotenv": "^8.4.0",
+    "dotenv": "^8.6.0",
     "ffmpeg": "0.0.4",
     "genius-lyrics": "^4.2.0",
     "mongoose": "^5.12.7",
@@ -24,6 +24,6 @@
     "spotify-web-api-node": "^5.0.2",
     "youtube-sr": "^4.0.6",
     "ytdl-core": "^4.7.0",
-    "ytpl": "^2.2.0"
+    "ytpl": "^2.2.1"
   }
 }
