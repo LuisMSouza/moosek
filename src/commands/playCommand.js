@@ -55,7 +55,7 @@ module.exports = {
             spotifyApi.getPlaylist(cath[2])
                 .then(async function (data) {
                     const tracks = await data.body.tracks.items;
-                    console.log(tracks[1]);
+                    console.log(tracks[1].added_by.images[0]);
                     for (const track of tracks) {
                         await handleSpotify.handleVideo(track, message, voiceChannel, true);
                     }
@@ -84,10 +84,10 @@ module.exports = {
                     }
                     if (err.message.includes("The access token expired.")) {
                         spotifyApi.refreshAccessToken().then(
-                            async function (data) {
+                            async function (data3) {
                                 console.log('The access token has been refreshed!');
-                                spotifyApi.setAccessToken(data.body['access_token']);
-                                var json = JSON.stringify(data.body['access_token']);
+                                await spotifyApi.setAccessToken(data3.body['access_token']);
+                                var json = JSON.stringify(data3.body['access_token']);
                                 await fs.writeFile('./TokenAcess.json', json, function (err) {
                                     if (err) return console.log(err);
                                     console.log('erro garai');
