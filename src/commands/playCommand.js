@@ -96,7 +96,6 @@ module.exports = {
                                 spotifyApi.getPlaylist(cath[2])
                                     .then(async function (data2) {
                                         const tracks = await data2.body.tracks.items;
-                                        console.log(tracks[1]);
                                         for (const track of tracks) {
                                             await handleSpotify.handleVideo(track, message, voiceChannel, true);
                                         }
