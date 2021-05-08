@@ -7,7 +7,9 @@ const YouTube = require("youtube-sr").default;
 const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const SpotifyWebApi = require('spotify-web-api-node');
-const handleSpotify = require('../structures/strSpotify.js')
+const handleSpotify = require('../structures/strSpotifyPlaylist.js');
+const handleSpotify2 = require('../structures/strSpotifyAlbum.js');
+const handleSpotify3 = require('../structures/strSpotifyTrack.js');
 const SptfToken = require('../models/TokenAcess.json');
 const fs = require('fs');
 
@@ -130,7 +132,7 @@ module.exports = {
                     .then(async function (data5) {
                         const tracks2 = await data5.body.items
                         for (const track of tracks2) {
-                            await handleSpotify.handleVideo(track, message, voiceChannel, true);
+                            await handleSpotify2.handleVideo(track, message, voiceChannel, true);
                         }
                         return message.channel.send({
                             embed: {
