@@ -9,6 +9,7 @@ const playlist_init = require('../structures/strPlaylist.js');
 const SpotifyWebApi = require('spotify-web-api-node');
 const handleSpotify = require('../structures/strSpotify.js')
 const SptfToken = require('../models/TokenAcess.json');
+const refresh = require('../models/refreshToken.js');
 
 const spotifyApi = new SpotifyWebApi({
     clientId: "9e88800cff1e43fc95e0c6bd421e0976",
@@ -27,9 +28,9 @@ module.exports = {
     aliases: ['p', 'tocar', 'iniciar'],
 
     async execute(client, message, args) {
-        const searchString = args.join(" ");
+        const searchString = args.join(" ") || args;
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
-        const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "";
+        const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
         const serverQueue = client.queue.get(message.guild.id);
 
@@ -83,33 +84,7 @@ module.exports = {
                         return;
                     }
                     if (err.message.includes("The access token expired.")) {
-                        spotifyApi.refreshAccessToken().then(
-                            async function (data) {
-                                console.log('The access token has been refreshed!');
-                                spotifyApi.setAccessToken(data.body['access_token']);
-                                var json = JSON.stringify(data.body['access_token']);
-                                await fs.writeFile('./models/TokenAcess.json', json);
-                                for (const track of tracks) {
-                                    await handleSpotify.handleVideo(track, message, voiceChannel, true);
-                                }
-                                return message.channel.send({
-                                    embed: {
-                                        color: "GREEN",
-                                        description: `**Playlist adicionada à fila**`,
-                                        fields: [
-                                            {
-                                                name: "> __Pedido por:__",
-                                                value: "```fix\n" + `${message.author.tag}` + "\n```",
-                                                inline: true
-                                            }
-                                        ]
-                                    }
-                                });
-                            },
-                            function (err) {
-                                console.log('Could not refresh access token', err);
-                            }
-                        );
+                        return refresh.refreshTokenAcess(client, message, searchString);
                     }
                     console.log(err.message);
                     return;
@@ -249,5 +224,8 @@ module.exports = {
             }
             return undefined;
         }
+    },
+    async pre_main(client, message, search) {
+        return this.execute(client, message, search);
     }
 };
