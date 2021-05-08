@@ -20,7 +20,10 @@ module.exports = {
                 console.log('The access token has been refreshed!');
                 spotifyApi.setAccessToken(data.body['access_token']);
                 var json = JSON.stringify(data.body['access_token']);
-                await fs.writeFile('./models/TokenAcess.json', json);
+                await fs.writeFile('./models/TokenAcess.json', json, function (err) {
+                    if (err) return console.log(err);
+                    console.log('erro garai');
+                });
                 return play.pre_main(client, message, search);
             },
             function (err) {
