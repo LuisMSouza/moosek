@@ -120,14 +120,14 @@ module.exports = {
                     });
             } else if (searchString.includes("open.spotify.com/track")) {
                 spotifyApi.searchTracks(`id:${cath[2]}`)
-                    .then(function (data4) {
+                    .then(async function (data4) {
                         console.log('Search: "', data4.body);
                     }, function (err) {
                         console.error(err);
                     });
             } else if (searchString.includes("open.spotify.com/album")) {
                 spotifyApi.getAlbumTracks(`${cath[2]}`)
-                    .then(function (data5) {
+                    .then(async function (data5) {
                         const tracks2 = await data5.body.items
                         for (const track of tracks2) {
                             await handleSpotify.handleVideo(track, message, voiceChannel, true);
