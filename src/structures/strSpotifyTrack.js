@@ -6,7 +6,7 @@ const YouTube = require("youtube-sr").default;
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    async handleVideo(track, message, channel, playlist = false) {
+    async handleVideo(track, message, channel) {
         const serverQueue = message.client.queue.get(message.guild.id);
         try {
             await YouTube.search(`${track.name} - ${track.artists[0].name}`, { limit: 1 }).then(async x => {
@@ -47,7 +47,6 @@ module.exports = {
                     }
                 } else {
                     serverQueue.songs.push(song);
-                    if (playlist) return;
                     let thing = new MessageEmbed()
                         .setTitle(`> __Música adicionada à fila__`)
                         .setColor("GREEN")

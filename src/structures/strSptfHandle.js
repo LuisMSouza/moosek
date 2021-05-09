@@ -84,7 +84,7 @@ module.exports = {
             spotifyApi.getTrack(`${cath[2]}`)
                 .then(async function (data4) {
                     const track = data4.body
-                    await handleTrack.handleVideo(track, message, voiceChannel, true);
+                    await handleTrack.handleVideo(track, message, voiceChannel);
                     return;
                 }, function (err) {
                     if (err.message.includes("The access token expired.")) {
@@ -99,7 +99,7 @@ module.exports = {
                                 spotifyApi.getTrack(cath[2])
                                     .then(async function (data8) {
                                         const track = data8.body
-                                        await handleTrack.handleVideo(track, message, voiceChannel, false);
+                                        await handleTrack.handleVideo(track, message, voiceChannel);
                                     });
                             },
                             function (err) {
