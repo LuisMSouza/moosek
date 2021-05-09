@@ -99,7 +99,7 @@ module.exports = {
                                 spotifyApi.getTrack(cath[2])
                                     .then(async function (data8) {
                                         const track = data8.body
-                                        await handleTrack.handleVideo(track, message, voiceChannel, true);
+                                        await handleTrack.handleVideo(track, message, voiceChannel, false);
                                     });
                             },
                             function (err) {
