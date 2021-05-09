@@ -83,9 +83,46 @@ module.exports = {
         } else if (searchString.includes("open.spotify.com/track")) {
             spotifyApi.getTrack(`${cath[2]}`)
                 .then(async function (data4) {
-                    console.log(data4.body);
+                    const track = data4.body
+                    await handleTrack.handleVideo(track, message, voiceChannel, true);
+                    return;
                 }, function (err) {
-                    console.error(err);
+                    if (err.message.includes("The access token expired.")) {
+                        spotifyApi.refreshAccessToken().then(
+                            async function (data6) {
+                                console.log('The access token has been refreshed!');
+                                await spotifyApi.setAccessToken(data6.body['access_token']);
+                                var json = JSON.stringify(data6.body['access_token']);
+                                await fs.writeFile('./src/models/TokenAcess.json', json, function (err) {
+                                    if (err) return console.log(err);
+                                });
+                                spotifyApi.getTrack(cath[2])
+                                    .then(async function (data8) {
+                                        const tracks = await data8.body.items;
+                                        for (const track of tracks) {
+                                            await handleAlbum.handleVideo(track, message, voiceChannel, true);
+                                        }
+                                        return message.channel.send({
+                                            embed: {
+                                                color: "GREEN",
+                                                description: `**Album adicionado à fila**`,
+                                                fields: [
+                                                    {
+                                                        name: "> __Pedido por:__",
+                                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                                        inline: true
+                                                    }
+                                                ]
+                                            }
+                                        });
+                                    });
+                            },
+                            function (err) {
+                                console.log('Could not refresh access token', err);
+                                return sendError("Não foi possível reproduzir esta playlist :(", message.channel);
+                            }
+                        );
+                    }
                 });
         } else if (searchString.includes("open.spotify.com/album")) {
             spotifyApi.getAlbumTracks(`${cath[2]}`)
