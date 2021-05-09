@@ -59,7 +59,6 @@ module.exports = {
                 spotifyApi.getPlaylist(cath[2])
                     .then(async function (data) {
                         const tracks = await data.body.tracks.items;
-                        console.log(tracks[1].added_by.images[0]);
                         for (const track of tracks) {
                             await handleSpotify.handleVideo(track, message, voiceChannel, true);
                         }
