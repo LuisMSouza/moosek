@@ -46,7 +46,7 @@ module.exports = {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data3.body['access_token']);
                                 var json = JSON.stringify(data3.body['access_token']);
-                                await fs.writeFile('../models/TokenAcess.json', json, function (err) {
+                                await fs.writeFile('./src/models/TokenAcess.json', json, function (err) {
                                     if (err) return console.log(err);
                                 });
                                 spotifyApi.getPlaylist(cath[2])
@@ -114,12 +114,13 @@ module.exports = {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data4.body['access_token']);
                                 var json = JSON.stringify(data4.body['access_token']);
-                                await fs.writeFile('../models/TokenAcess.json', json, function (err) {
+                                await fs.writeFile('./src/models/TokenAcess.json', json, function (err) {
                                     if (err) return console.log(err);
                                 });
                                 spotifyApi.getAlbumTracks(cath[2])
                                     .then(async function (data7) {
-                                        const tracks = await data7.body.tracks.items;
+                                        console.log(data7)
+                                        const tracks = await data7.body.items;
                                         for (const track of tracks) {
                                             await handleAlbum.handleVideo(track, message, voiceChannel, true);
                                         }
