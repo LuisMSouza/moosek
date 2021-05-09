@@ -13,7 +13,7 @@ module.exports = {
                 const song = {
                     title: `${track.name} - ${track.artists[0].name}`,
                     url: x[0].url,
-                    thumbnail: track.images[0],
+                    thumbnail: x[0].thumbnail.url,
                     duration: x[0].durationFormatted,
                     liveStream: x[0].live,
                     author: message.author.tag
