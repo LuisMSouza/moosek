@@ -11,7 +11,7 @@ module.exports = {
         try {
             await YouTube.search(`${track.name} - ${track.artists[0].name}`, { limit: 1 }).then(async x => {
                 const song = {
-                    title: `${track.track.name} - ${track.track.artists[0].name}`,
+                    title: `${track.name} - ${track.artists[0].name}`,
                     url: x[0].url,
                     thumbnail: track.images[0],
                     duration: x[0].durationFormatted,
