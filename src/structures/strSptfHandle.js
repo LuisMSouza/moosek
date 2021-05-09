@@ -98,23 +98,8 @@ module.exports = {
                                 });
                                 spotifyApi.getTrack(cath[2])
                                     .then(async function (data8) {
-                                        const tracks = await data8.body.items;
-                                        for (const track of tracks) {
-                                            await handleAlbum.handleVideo(track, message, voiceChannel, true);
-                                        }
-                                        return message.channel.send({
-                                            embed: {
-                                                color: "GREEN",
-                                                description: `**Album adicionado à fila**`,
-                                                fields: [
-                                                    {
-                                                        name: "> __Pedido por:__",
-                                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
-                                                        inline: true
-                                                    }
-                                                ]
-                                            }
-                                        });
+                                        const track = data8.body
+                                        await handleTrack.handleVideo(track, message, voiceChannel, true);
                                     });
                             },
                             function (err) {
