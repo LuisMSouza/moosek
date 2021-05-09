@@ -119,7 +119,6 @@ module.exports = {
                                 });
                                 spotifyApi.getAlbumTracks(cath[2])
                                     .then(async function (data7) {
-                                        console.log(data7)
                                         const tracks = await data7.body.items;
                                         for (const track of tracks) {
                                             await handleAlbum.handleVideo(track, message, voiceChannel, true);
