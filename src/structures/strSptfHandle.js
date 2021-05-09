@@ -81,9 +81,9 @@ module.exports = {
                 });
 
         } else if (searchString.includes("open.spotify.com/track")) {
-            spotifyApi.searchTracks(`id:${cath[2]}`)
+            spotifyApi.getTrack(`${cath[2]}`)
                 .then(async function (data4) {
-                    console.log('Search: "', data4.body);
+                    console.log(data4.body);
                 }, function (err) {
                     console.error(err);
                 });
@@ -97,7 +97,7 @@ module.exports = {
                     return message.channel.send({
                         embed: {
                             color: "GREEN",
-                            description: `**Playlist adicionada à fila**`,
+                            description: `**Album adicionado à fila**`,
                             fields: [
                                 {
                                     name: "> __Pedido por:__",
@@ -126,7 +126,7 @@ module.exports = {
                                         return message.channel.send({
                                             embed: {
                                                 color: "GREEN",
-                                                description: `**Playlist adicionada à fila**`,
+                                                description: `**Album adicionado à fila**`,
                                                 fields: [
                                                     {
                                                         name: "> __Pedido por:__",
