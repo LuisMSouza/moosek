@@ -6,7 +6,8 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const botData = require('../models/botData.js');
 const bData = botData.findOne({
     Recc: process.env.BOT_DATA_ID
-})
+});
+console.log(bData.SpotifyTokenAcess);
 
 const spotifyApi = new SpotifyWebApi({
     clientId: bData.SpotifyClientId,
