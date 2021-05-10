@@ -4,7 +4,7 @@ const handleAlbum = require('./strSpotifyAlbum.js');
 const handlePlaylist = require('./strSpotifyPlaylist.js')
 const SpotifyWebApi = require('spotify-web-api-node');
 const createbot = require('../models/createGuild.js');
-await createbot();
+createbot();
 const botData = require('../models/botData.js');
 const bData = botData.findOne({
     Recc: process.env.BOT_DATA_ID
