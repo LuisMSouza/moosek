@@ -4,7 +4,7 @@ const handleAlbum = require('./strSpotifyAlbum.js');
 const handlePlaylist = require('./strSpotifyPlaylist.js')
 const SpotifyWebApi = require('spotify-web-api-node');
 const guildData = require('../models/guildData.js');
-const find = await guildData.findOne({
+const find = guildData.findOne({
     guildID: process.env.SERVER_MAIN
 });
 
