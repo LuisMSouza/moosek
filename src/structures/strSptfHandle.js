@@ -4,9 +4,9 @@ const handleAlbum = require('./strSpotifyAlbum.js');
 const handlePlaylist = require('./strSpotifyPlaylist.js')
 const SpotifyWebApi = require('spotify-web-api-node');
 const botData = require('../models/botData.js');
-const bData = botData.findById(process.env.BOT_DATA_ID, function (err) {
-    console.log(err);
-});
+const bData = botData.findOne({
+    _id: process.env.BOT_DATA_ID
+})
 
 const spotifyApi = new SpotifyWebApi({
     clientId: bData.SpotifyClientId,
