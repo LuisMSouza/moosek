@@ -5,13 +5,14 @@ const handlePlaylist = require('./strSpotifyPlaylist.js')
 const SpotifyWebApi = require('spotify-web-api-node');
 const botData = require('../models/botData.js');
 const bData = botData.findOne({
-    _id: process.env.BOT_DATA_ID
+    Recc: process.env.BOT_DATA_ID
 })
 
 const spotifyApi = new SpotifyWebApi({
     clientId: bData.SpotifyClientId,
     clientSecret: bData.SpotifyClientSecret
 });
+
 spotifyApi.setAccessToken(bData.SpotifyTokenAcess);
 spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 /////////////////////// SOURCE CODE ///////////////////////////
