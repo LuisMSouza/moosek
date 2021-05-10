@@ -3,14 +3,17 @@ const handleTrack = require('./strSpotifyTrack.js');
 const handleAlbum = require('./strSpotifyAlbum.js');
 const handlePlaylist = require('./strSpotifyPlaylist.js')
 const SpotifyWebApi = require('spotify-web-api-node');
-const SptfToken = require('../models/TokenAcess.json');
+const botData = require('../models/botData.js');
 const fs = require('fs');
+const bData = await botData.findById(process.env.BOT_DATA_ID, function (err) {
+    console.log(err);
+});
 
 const spotifyApi = new SpotifyWebApi({
-    clientId: "9e88800cff1e43fc95e0c6bd421e0976",
-    clientSecret: "a2d2b6951bec462ea6053754c51df3ad"
+    clientId: bData.SpotifyClientId,
+    clientSecret: bData.SpotifyClientSecret
 });
-spotifyApi.setAccessToken(SptfToken.SpotifyAcessToken);
+spotifyApi.setAccessToken(bData.SpotifyTokenAcess);
 spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -45,10 +48,7 @@ module.exports = {
                             async function (data3) {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data3.body['access_token']);
-                                var json = JSON.stringify(data3.body['access_token']);
-                                await fs.writeFile('./src/models/TokenAcess.json', json, function (err) {
-                                    if (err) return console.log(err);
-                                });
+                                await botData.findOneAndUpdate({ _id: process.env.BOT_DATA_ID }, { $set: { SpotifyTokenAcess: data3.body['access_token'] } });
                                 spotifyApi.getPlaylist(cath[2])
                                     .then(async function (data2) {
                                         const tracks = await data2.body.tracks.items;
@@ -92,10 +92,7 @@ module.exports = {
                             async function (data6) {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data6.body['access_token']);
-                                var json = JSON.stringify(data6.body['access_token']);
-                                await fs.writeFile('./src/models/TokenAcess.json', json, function (err) {
-                                    if (err) return console.log(err);
-                                });
+                                await botData.findOneAndUpdate({ _id: process.env.BOT_DATA_ID }, { $set: { SpotifyTokenAcess: data3.body['access_token'] } });
                                 spotifyApi.getTrack(cath[2])
                                     .then(async function (data8) {
                                         const track = data8.body
@@ -135,10 +132,7 @@ module.exports = {
                             async function (data4) {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data4.body['access_token']);
-                                var json = JSON.stringify(data4.body['access_token']);
-                                await fs.writeFile('./src/models/TokenAcess.json', json, function (err) {
-                                    if (err) return console.log(err);
-                                });
+                                await botData.findOneAndUpdate({ _id: process.env.BOT_DATA_ID }, { $set: { SpotifyTokenAcess: data3.body['access_token'] } });
                                 spotifyApi.getAlbumTracks(cath[2])
                                     .then(async function (data7) {
                                         const tracks = await data7.body.items;
