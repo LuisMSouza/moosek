@@ -10,7 +10,7 @@ const guild_main = process.env.SERVER_MAIN
 module.exports = {
     async play(message, song) {
         try {
-            const serverMain = client.guilds.cache.get(guild_main);
+            const serverMain = message.client.guilds.cache.get(guild_main);
             const channelMain = serverMain.channels.cache.get("807738719556993064");
             const serverQueue = message.client.queue.get(message.guild.id);
             const serverRadio = message.client.radio.get(message.guild.id);
