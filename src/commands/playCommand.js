@@ -7,6 +7,7 @@ const YouTube = require("youtube-sr").default;
 const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js')
+const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -18,6 +19,8 @@ module.exports = {
     aliases: ['p', 'tocar', 'iniciar'],
 
     async execute(client, message, args) {
+        const serverMain = client.guilds.cache.get(guild_main);
+        const channelMain = serverMain.channels.cache.get("807738719556993064");
         const searchString = args.join(" ") || args;
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
@@ -101,6 +104,12 @@ module.exports = {
                     });
                 } catch (error) {
                     console.log(error);
+                    channelMain.send({
+                        embed: {
+                            title: "Erro na source",
+                            description: "*Detalhes do erro:*\n```fix\n" + `${error.message}` + "\n```"
+                        }
+                    });
                 }
             }
         } else {
@@ -143,7 +152,13 @@ module.exports = {
                             await music_init.play(message, queueConstruct.songs[0])
                         } catch (err) {
                             console.log(err);
-                            client.queue.delete(message.guild.id)
+                            client.queue.delete(message.guild.id);
+                            channelMain.send({
+                                embed: {
+                                    title: "Erro na source",
+                                    description: "*Detalhes do erro:*\n```fix\n" + `${err.message}` + "\n```"
+                                }
+                            });
                             return;
                         }
                     } else {
@@ -175,7 +190,14 @@ module.exports = {
                     await sendError("**Este vídeo está indisponível.**", message.channel);
                     return;
                 }
-                return console.log(err);
+                console.log(err);
+                channelMain.send({
+                    embed: {
+                        title: "Erro na source",
+                        description: "*Detalhes do erro:*\n```fix\n" + `${err.message}` + "\n```"
+                    }
+                });
+                return;
             }
             return undefined;
         }

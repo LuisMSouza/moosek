@@ -4,11 +4,14 @@ const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const guildData = require('../models/guildData.js');
 const { STAY_TIME } = require('../utils/botUtils.js');
+const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     async play(message, song) {
         try {
+            const serverMain = client.guilds.cache.get(guild_main);
+            const channelMain = serverMain.channels.cache.get("807738719556993064");
             const serverQueue = message.client.queue.get(message.guild.id);
             const serverRadio = message.client.radio.get(message.guild.id);
             if (!song) {
@@ -431,7 +434,14 @@ module.exports = {
                 })
             });
         } catch (e) {
-            return console.log(e);
+            console.log(e);
+            channelMain.send({
+                embed: {
+                    title: "Erro na source",
+                    description: "*Detalhes do erro:*\n```fix\n" + `${error.message}` + "\n```"
+                }
+            });
+            return;
         }
     }
 }
