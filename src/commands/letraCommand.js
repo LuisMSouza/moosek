@@ -38,11 +38,41 @@ module.exports = {
                     const songs = await Client.songs.search(`${query} ${artist}`);
                     const lyrics = await songs[0].lyrics();
 
-                    embed.setDescription(lyrics)
-                    embed.setTitle(songs[0].fullTitle)
-                    embed.setThumbnail(songs[0].thumbnail)
-                    if (embed.description.length >= 2048) {
+                    embed.setDescription(lyrics);
+                    embed2.setDescription(lyrics);
+                    embed3.setDescription(lyrics);
+                    embed4.setDescription(lyrics);
+                    embed5.setDescription(lyrics);
+                    embed.setDescription(lyrics);
+                    embed6.setDescription(lyrics);
+                    embed.setTitle(songs[0].fullTitle);
+                    embed.setThumbnail(songs[0].thumbnail);
+                    if (embed.description.length > 2048 && embed.description.length <= 4090) {
                         embed.description = `${embed.description.substr(0, 2045)}...`;
+                        await message.channel.send(embed)
+                        embed2.description = `${lyrics.substr(2045)}`;
+                        if (embed2.description != "..." || embed2.description != "") {
+                            await message.channel.send(embed2)
+                        }
+                    } else if (embed.description.length > 4090) {
+                        embed.description = `${embed.description.substr(0, 2045)}...`;
+                        await message.channel.send(embed)
+                        embed2.description = `${lyrics.substr(2045, 2045)}...`;
+                        if (embed2.description !== "...") {
+                            await message.channel.send(embed2)
+                        }
+                        embed3.description = `${lyrics.substr(4090, 2045)}...`;
+                        if (embed3.description !== "...") {
+                            await message.channel.send(embed3)
+                        }
+                        embed4.description = `${lyrics.substr(6135, 2045)}...`;
+                        if (embed4.description !== "...") {
+                            await message.channel.send(embed4)
+                        }
+                        embed5.description = `${lyrics.substr(8180, 2045)}...`;
+                        if (embed5.description !== "...") {
+                            await message.channel.send(embed4)
+                        }
                     }
                     await msge.delete(msge)
                     message.channel.send(embed)
@@ -87,6 +117,10 @@ module.exports = {
                     }
                     embed4.description = `${lyrics.substr(6135, 2045)}...`;
                     if (embed4.description !== "...") {
+                        await message.channel.send(embed4)
+                    }
+                    embed5.description = `${lyrics.substr(8180, 2045)}...`;
+                    if (embed5.description !== "...") {
                         await message.channel.send(embed4)
                     }
                 }
