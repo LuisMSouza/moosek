@@ -44,7 +44,6 @@ module.exports = {
                     embed4.setDescription(lyrics);
                     embed5.setDescription(lyrics);
                     embed.setDescription(lyrics);
-                    embed6.setDescription(lyrics);
                     embed.setTitle(songs[0].fullTitle);
                     embed.setThumbnail(songs[0].thumbnail);
                     if (embed.description.length > 2048 && embed.description.length <= 4090) {
