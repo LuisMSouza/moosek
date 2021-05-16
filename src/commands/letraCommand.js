@@ -26,8 +26,6 @@ module.exports = {
             .setColor("#701AAB")
         let embed4 = new MessageEmbed()
             .setColor("#701AAB")
-        let embed5 = new MessageEmbed()
-            .setColor("#701AAB")
         let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {
@@ -42,7 +40,6 @@ module.exports = {
                     embed2.setDescription(lyrics);
                     embed3.setDescription(lyrics);
                     embed4.setDescription(lyrics);
-                    embed5.setDescription(lyrics);
                     embed.setDescription(lyrics);
                     embed.setTitle(songs[0].fullTitle);
                     embed.setThumbnail(songs[0].thumbnail);
@@ -68,10 +65,6 @@ module.exports = {
                         if (embed4.description !== "...") {
                             await message.channel.send(embed4)
                         }
-                        embed5.description = `${lyrics.substr(8180, 2045)}...`;
-                        if (embed5.description !== "...") {
-                            await message.channel.send(embed4)
-                        }
                     }
                     await msge.delete(msge)
                     message.channel.send(embed)
@@ -93,7 +86,6 @@ module.exports = {
                 embed2.setDescription(lyrics)
                 embed3.setDescription(lyrics)
                 embed4.setDescription(lyrics)
-                embed5.setDescription(lyrics)
                 embed.setTitle(songs[0].title)
                 embed.setThumbnail(songs[0].thumbnail)
                 if (embed.description.length > 2048 && embed.description.length <= 4090) {
@@ -116,10 +108,6 @@ module.exports = {
                     }
                     embed4.description = `${lyrics.substr(6135, 2045)}...`;
                     if (embed4.description !== "...") {
-                        await message.channel.send(embed4)
-                    }
-                    embed5.description = `${lyrics.substr(8180, 2045)}...`;
-                    if (embed5.description !== "...") {
                         await message.channel.send(embed4)
                     }
                 }
