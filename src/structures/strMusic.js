@@ -22,6 +22,8 @@ module.exports = {
                 var tempo = setTimeout(async function () {
                     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                     if (!message.guild.me.voice.channel) return;
+                    if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
+                    if (!message.guild.me.voice.channel) return;
                     await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
                     await serverQueue.voiceChannel.leave();
                     serverQueue.textChannel.send({
