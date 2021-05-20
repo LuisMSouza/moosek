@@ -46,7 +46,7 @@ module.exports = {
             const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
             const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
             const cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
-            await sptfHandle.handleSpotifyMusic(searchString, cath, message, voiceChannel);
+            await sptfHandle.handleSpotifyMusic(client, searchString, cath, message, voiceChannel);
             return;
         }
 
@@ -61,7 +61,7 @@ module.exports = {
                 if (!playlist) return sendError("Playlist não encontrada", message.channel)
                 const videos = await playlist.items;
                 for (const video of videos) {
-                    await playlist_init.handleVideo(video, message, voiceChannel, true);
+                    await playlist_init.handleVideo(client, video, message, voiceChannel, true);
                 }
                 return message.channel.send({
                     embed: {
@@ -87,7 +87,7 @@ module.exports = {
                     if (searched.length === 0) return sendError("Eu não consegui achar essa playlist :(", message.channel)
                     const videos = await searched.items;
                     for (const video of videos) {
-                        await playlist_init.handleVideo(video, message, voiceChannel, true);
+                        await playlist_init.handleVideo(client, video, message, voiceChannel, true);
                     }
                     return message.channel.send({
                         embed: {
@@ -149,7 +149,7 @@ module.exports = {
                         try {
                             var connection = await voiceChannel.join();
                             queueConstruct.connection = connection
-                            await music_init.play(message, queueConstruct.songs[0])
+                            await music_init.play(client, message, queueConstruct.songs[0])
                         } catch (err) {
                             console.log(err);
                             client.queue.delete(message.guild.id);

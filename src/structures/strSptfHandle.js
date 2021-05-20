@@ -14,13 +14,13 @@ spotifyApi.setAccessToken(acess.acess);
 spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    async handleSpotifyMusic(searchString, cath, message, voiceChannel) {
+    async handleSpotifyMusic(client, searchString, cath, message, voiceChannel) {
         if (searchString.includes("open.spotify.com/playlist")) {
             spotifyApi.getPlaylist(cath[2])
                 .then(async function (data) {
                     const tracks = await data.body.tracks.items;
                     for (const track of tracks) {
-                        await handlePlaylist.handleVideo(track, message, voiceChannel, true);
+                        await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                     }
                     return message.channel.send({
                         embed: {
@@ -55,7 +55,7 @@ module.exports = {
                                     .then(async function (data2) {
                                         const tracks = await data2.body.tracks.items;
                                         for (const track of tracks) {
-                                            await handlePlaylist.handleVideo(track, message, voiceChannel, true);
+                                            await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                                         }
                                         return message.channel.send({
                                             embed: {
@@ -86,7 +86,7 @@ module.exports = {
             spotifyApi.getTrack(`${cath[2]}`)
                 .then(async function (data4) {
                     const track = data4.body
-                    await handleTrack.handleVideo(track, message, voiceChannel);
+                    await handleTrack.handleVideo(client, track, message, voiceChannel);
                     return;
                 }, function (err) {
                     if (err.message.includes("The access token expired.")) {
@@ -103,7 +103,7 @@ module.exports = {
                                 spotifyApi.getTrack(cath[2])
                                     .then(async function (data8) {
                                         const track = data8.body
-                                        await handleTrack.handleVideo(track, message, voiceChannel);
+                                        await handleTrack.handleVideo(client, track, message, voiceChannel);
                                     });
                             },
                             function (err) {
@@ -118,7 +118,7 @@ module.exports = {
                 .then(async function (data5) {
                     const tracks2 = await data5.body.items
                     for (const track of tracks2) {
-                        await handleAlbum.handleVideo(track, message, voiceChannel, true);
+                        await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                     }
                     return message.channel.send({
                         embed: {
@@ -149,7 +149,7 @@ module.exports = {
                                     .then(async function (data7) {
                                         const tracks = await data7.body.items;
                                         for (const track of tracks) {
-                                            await handleAlbum.handleVideo(track, message, voiceChannel, true);
+                                            await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                                         }
                                         return message.channel.send({
                                             embed: {

@@ -6,7 +6,7 @@ const YouTube = require("youtube-sr").default;
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    async handleVideo(track, message, channel) {
+    async handleVideo(client, track, message, channel) {
         const serverQueue = message.client.queue.get(message.guild.id);
         try {
             await YouTube.search(`${track.name} - ${track.artists[0].name} Official Audio`, { limit: 1 }).then(async x => {
@@ -38,7 +38,7 @@ module.exports = {
                     try {
                         var connection = await channel.join();
                         queueConstruct.connection = connection;
-                        music_init.play(message, queueConstruct.songs[0]);
+                        music_init.play(client, message, queueConstruct.songs[0]);
                     } catch (error) {
                         console.error(`Eu não consegui entrar no canal: ${error}`);
                         message.client.queue.delete(message.guild.id);

@@ -6,7 +6,7 @@ const music_init = require('./strMusic.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    async handleVideo(video, message, channel, playlist = false) {
+    async handleVideo(client, video, message, channel, playlist = false) {
         try {
             const serverQueue = message.client.queue.get(message.guild.id);
 
@@ -40,7 +40,7 @@ module.exports = {
                 try {
                     var connection = await channel.join();
                     queueConstruct.connection = connection;
-                    music_init.play(message, queueConstruct.songs[0]);
+                    music_init.play(client, message, queueConstruct.songs[0]);
                 } catch (error) {
                     console.error(`Eu não consegui entrar no canal: ${error}`);
                     message.client.queue.delete(message.guild.id);
