@@ -187,7 +187,7 @@ module.exports = {
                                         await serverQueue.songs.shift()
                                         await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
                                         //dispatcher.end();
-                                        await this.play(message, serverQueue.songs[0]);
+                                        await this.play(client, message, serverQueue.songs[0]);
                                     } catch (e) {
                                         console.log(e);
                                     }
@@ -241,12 +241,12 @@ module.exports = {
                                             serverQueue.songs.shift();
                                             if (srch.aleatory_mode) {
                                                 const random = Math.floor(Math.random() * (serverQueue.songs.length));
-                                                this.play(message, serverQueue.songs[random]);
+                                                this.play(client, message, serverQueue.songs[random]);
                                             } else {
-                                                this.play(message, serverQueue.songs[0]);
+                                                this.play(client, message, serverQueue.songs[0]);
                                             }
                                         } else {
-                                            this.play(message, serverQueue.songs[0]);
+                                            this.play(client, message, serverQueue.songs[0]);
                                         }
                                     } catch (e) {
                                         console.log(e);
