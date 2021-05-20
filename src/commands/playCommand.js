@@ -107,7 +107,7 @@ module.exports = {
                     channelMain.send({
                         embed: {
                             title: "Erro na source",
-                            description: "*Detalhes do erro:*\n```fix\n" + `${error.message}` + "\n```"
+                            description: "*Detalhes do erro:*\n```fix\n" + `${error}` + "\n```"
                         }
                     });
                 }
@@ -156,7 +156,7 @@ module.exports = {
                             channelMain.send({
                                 embed: {
                                     title: "Erro na source",
-                                    description: "*Detalhes do erro:*\n```fix\n" + `${err.message}` + "\n```"
+                                    description: "*Detalhes do erro:*\n```fix\n" + `${err}` + "\n```"
                                 }
                             });
                             return;
@@ -194,7 +194,7 @@ module.exports = {
                 channelMain.send({
                     embed: {
                         title: "Erro na source",
-                        description: "*Detalhes do erro:*\n```fix\n" + `${err.message}` + "\n```"
+                        description: "*Detalhes do erro:*\n```fix\n" + `${err}` + "\n```"
                     }
                 });
                 return;
