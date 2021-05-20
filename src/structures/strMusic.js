@@ -425,11 +425,11 @@ module.exports = {
                     if (search_al.aleatory_mode) {
                         if (!serverQueue.songLooping) await serverQueue.songs.shift();
                         var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                        this.play(message, serverQueue.songs[random]);
+                        this.play(client, message, serverQueue.songs[random]);
                     } else {
                         if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
                         if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                        this.play(message, serverQueue.songs[0]);
+                        this.play(client, message, serverQueue.songs[0]);
                     }
                     embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                 })
