@@ -27,7 +27,7 @@ exports.radioStations = [
     "https://vip2.fastcast4u.com/proxy/classicrockdoug?mp=/1",
     "https://n4ab-e2.revma.ihrhls.com/zc1469?rj-ttl=5&rj-tok=AAABeSrMX9YA_jjDxy7FK2Yqtw",
     "https://s8.yesstreaming.net/proxy/goodnews?mp=/stream64",
-    "https://n05b-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABeSrLLCoArY_tDCQLRAJHFw",
+    "https://n4aa-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABebBtZsAAZbXS02s2bOxXig",
 ]
 exports.radioStationsName = [
     "Standard-Radio",
