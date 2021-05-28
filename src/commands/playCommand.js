@@ -149,6 +149,7 @@ module.exports = {
                         try {
                             var connection = await voiceChannel.join();
                             queueConstruct.connection = connection
+                            await queueConstruct.connection.voice.setSelfDeaf(true);
                             await music_init.play(client, message, queueConstruct.songs[0])
                         } catch (err) {
                             console.log(err);
