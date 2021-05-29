@@ -104,6 +104,7 @@ module.exports = {
                             .setStyle("red")
                             .setID("smart")
                             .setLabel("PARAR RADIO")
+                            .setDisabled()
 
                         const buttonMsg = await message.channel.send("", {
                             buttons: [button],
@@ -139,7 +140,6 @@ module.exports = {
                             await connection.disconnect();
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
-                            button.deffer()
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
