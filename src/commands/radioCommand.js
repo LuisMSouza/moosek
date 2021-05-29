@@ -123,7 +123,7 @@ module.exports = {
                                 //await reaction.users.remove(user);
                                 return;
                             }
-                            if (radioListenConstruct.channel.id !== button.clicker.user.voice.channel) {
+                            if (radioListenConstruct.channel.id !== button.clicker.member.voice.channel) {
                                 message.channel.send({
                                     embed: {
                                         color: "#701AAB",
