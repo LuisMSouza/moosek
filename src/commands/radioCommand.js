@@ -146,7 +146,7 @@ module.exports = {
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
                             b.defer(true)
-                            b.edit({ buttons: [button2], embed: embedRadio });
+                            buttonMsg.edit({ buttons: [button2], embed: embedRadio });
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
