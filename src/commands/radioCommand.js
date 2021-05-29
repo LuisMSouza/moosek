@@ -100,13 +100,19 @@ module.exports = {
                             .addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
                             .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
 
-                        const button = new MessageButton()
+                        const button1 = new MessageButton()
                             .setStyle("red")
                             .setID("smart")
                             .setLabel("PARAR RADIO")
 
+                        const button2 = new MessageButton()
+                            .setStyle("red")
+                            .setID("smart")
+                            .setLabel("RADIO FINALIZADA")
+                            .setDisabled()
+
                         const buttonMsg = await message.channel.send("", {
-                            buttons: [button],
+                            buttons: [button1],
                             embed: embedRadio
                         })
                         const filter = (button) => button.clicker.user.id != client.user.id;
@@ -140,6 +146,7 @@ module.exports = {
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
                             b.defer(true)
+                            b.edit({ buttons: [button2], embed: embedRadio });
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {

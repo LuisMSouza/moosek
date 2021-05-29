@@ -2,6 +2,7 @@
 const sendError = require('../utils/error.js');
 const { MessageEmbed } = require('discord.js');
 const guildData = require('../models/guildData.js');
+const { MessageButton } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -27,6 +28,11 @@ module.exports = {
             .addField(`> Prefixo`, `Prefixo atual do servidor: ` + "`" + `${pref}` + "`", true)
             .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "`")
             .setFooter(client.user.username, client.user.displayAvatarURL())
+
+        const btn = new MessageButton()
+        .setID("prefix_altern")
+        .setLabel("ALTERAR PREFIXO")
+        .setStyle("blurple")
 
         if (!args.length) return message.channel.send(embed);
         if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config prefix\n` + "```", message.channel);
