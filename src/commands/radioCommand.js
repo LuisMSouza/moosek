@@ -101,7 +101,7 @@ module.exports = {
                             .addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
                             .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
 
-                        const button = new MessageButton().setStyle("RED").setID("1").setLabel("PARAR RADIO");
+                        const button = new MessageButton().setStyle("red").setID("1").setLabel("PARAR RADIO");
                         const buttonMsg = await message.channel.send(embedRadio, { buttons: [button] })
                         const colletcButt = buttonMsg.createButtonCollector((button) => button.clicker.user.id != client.user.id, { limit: 1 });
                         colletcButt.on("collect", async (b) => {
@@ -132,6 +132,7 @@ module.exports = {
                             await connection.disconnect();
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
+                            b.defer();
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
