@@ -123,7 +123,7 @@ module.exports = {
                                 //await reaction.users.remove(user);
                                 return;
                             }
-                            if (radioListenConstruct.channel.id !== message.member.voice.channel.id) {
+                            if (radioListenConstruct.channel.id !== button.clicker.user.voice.channel) {
                                 message.channel.send({
                                     embed: {
                                         color: "#701AAB",
@@ -139,7 +139,7 @@ module.exports = {
                             await connection.disconnect();
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
-                            button.setDisabled()
+                            b.defer()
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
