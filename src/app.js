@@ -6,6 +6,7 @@ const fs = require('fs');
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
 const client = new Discord.Client();
+require('discord-buttons')(client);
 const configVars = {
     token: process.env.TOKEN_KEY,
 }

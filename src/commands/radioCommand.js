@@ -14,7 +14,6 @@ module.exports = {
     aliases: ['r'],
 
     async execute(client, message, args) {
-        require('discord-buttons')(client);
         const serverQueue = client.queue.get(message.guild.id);
         if (serverQueue) return sendError("Você deve parar a fila de músicas primeiro.", message.channel)
         const voiceChannel = message.member.voice.channel;
@@ -101,9 +100,17 @@ module.exports = {
                             .addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
                             .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
 
-                        const button = new MessageButton().setStyle("red").setID("1").setLabel("PARAR RADIO");
-                        const buttonMsg = await message.channel.send(embedRadio, { buttons: [button] })
-                        const colletcButt = buttonMsg.createButtonCollector((button) => button.clicker.user.id != client.user.id, { limit: 1 });
+                        const button = new MessageButton()
+                            .setStyle("red")
+                            .setID("smart")
+                            .setLabel("PARAR RADIO")
+
+                        const buttonMsg = await message.channel.send("", {
+                            buttons: [button],
+                            embed: embedRadio
+                        })
+                        const filter = (button) => button.clicker.user.id != client.user.id;
+                        const colletcButt = buttonMsg.createButtonCollector(filter);
                         colletcButt.on("collect", async (b) => {
                             if (!client.radio) return;
                             if (!message.member.voice.channel) {
@@ -132,7 +139,7 @@ module.exports = {
                             await connection.disconnect();
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
-                            b.defer();
+                            button.setDisabled()
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
