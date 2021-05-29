@@ -104,7 +104,7 @@ module.exports = {
                         const button = new MessageButton().setStyle("RED").setID("1").setLabel("PARAR RADIO");
                         const buttonMsg = await message.channel.send(embedRadio, { buttons: [button] })
                         const colletcButt = buttonMsg.createButtonCollector((button) => button.clicker.user.id != client.user.id, { limit: 1 });
-                        colletcButt.on("collect", (b) => {
+                        colletcButt.on("collect", async (b) => {
                             if (!client.radio) return;
                             if (!message.member.voice.channel) {
                                 message.channel.send({
@@ -113,7 +113,7 @@ module.exports = {
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }
                                 }).then(m => m.delete({ timeout: 10000 }));
-                                await reaction.users.remove(user);
+                                //await reaction.users.remove(user);
                                 return;
                             }
                             if (radioListenConstruct.channel.id !== membReact.voice.channel.id) {
@@ -123,7 +123,7 @@ module.exports = {
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }
                                 }).then(m2 => m2.delete({ timeout: 10000 }))
-                                await reaction.users.remove(user);
+                                //await reaction.users.remove(user);
                                 return;
                             }
 
