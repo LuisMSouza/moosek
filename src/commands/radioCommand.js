@@ -2,6 +2,7 @@
 const sendError = require('../utils/error.js');
 const Discord = require('discord.js');
 const radioStations = require('../utils/radioStations.js');
+const { MessageButton } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -13,6 +14,7 @@ module.exports = {
     aliases: ['r'],
 
     async execute(client, message, args) {
+        require('discord-buttons')(client);
         const serverQueue = client.queue.get(message.guild.id);
         if (serverQueue) return sendError("Você deve parar a fila de músicas primeiro.", message.channel)
         const voiceChannel = message.member.voice.channel;
@@ -99,7 +101,40 @@ module.exports = {
                             .addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
                             .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
 
-                        await message.channel.send(embedRadio).then(async (embed) => {
+                        const button = new MessageButton().setStyle("RED").setID("1").setLabel("PARAR RADIO");
+                        const buttonMsg = await message.channel.send(embedRadio, { buttons: [button] })
+                        const colletcButt = buttonMsg.createButtonCollector((button) => button.clicker.user.id != client.user.id, { limit: 1 });
+                        colletcButt.on("collect", (b) => {
+                            if (!client.radio) return;
+                            if (!message.member.voice.channel) {
+                                message.channel.send({
+                                    embed: {
+                                        color: "#701AAB",
+                                        description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                    }
+                                }).then(m => m.delete({ timeout: 10000 }));
+                                await reaction.users.remove(user);
+                                return;
+                            }
+                            if (radioListenConstruct.channel.id !== membReact.voice.channel.id) {
+                                message.channel.send({
+                                    embed: {
+                                        color: "#701AAB",
+                                        description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                    }
+                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                await reaction.users.remove(user);
+                                return;
+                            }
+
+                            //await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                            await message.member.voice.channel.leave();
+                            await connection.disconnect();
+                            await dispatcher.destroy();
+                            await client.radio.delete(message.guild.id);
+                            return
+                        });
+                        /*await message.channel.send(embedRadio).then(async (embed) => {
                             try {
                                 await embed.react("⏹️");
                                 const collector = embed.createReactionCollector((reaction, user) => ["⏹️"].includes(reaction.emoji.name) && user != user.bot);
@@ -140,7 +175,7 @@ module.exports = {
                             } catch (err) {
                                 console.log(err)
                             }
-                        });
+                        });*/
                     })
             } catch (e) {
                 if (e.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
