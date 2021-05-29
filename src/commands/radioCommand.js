@@ -139,8 +139,7 @@ module.exports = {
                             await connection.disconnect();
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
-                            await b.reply.delete()
-                            b.defer()
+                            b.defer(true)
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
