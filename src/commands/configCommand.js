@@ -21,20 +21,43 @@ module.exports = {
         });
         pref = confs.guildPrefix
 
-        var embed = new MessageEmbed()
-            .setTitle(`${message.guild.name} | Configuração Moosek`)
-            .setThumbnail(message.guild.iconURL())
-            .setColor("#701AAB")
-            .addField(`> Prefixo`, `Prefixo atual do servidor: ` + "`" + `${pref}` + "`", true)
-            .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "`")
-            .setFooter(client.user.username, client.user.displayAvatarURL())
+        if (!args.length) {
+            const emb = new MessageEmbed()
+                .setTitle(`${message.guild.name} | Configuração Moosek`)
+                .setThumbnail(message.guild.iconURL())
+                .setColor("#701AAB")
+                .addField(`> Prefixo`, `Prefixo atual do servidor: ` + "`" + `${pref}` + "`", true)
+                .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "` ou clicar no botão abaixo")
+                .setFooter(client.user.username, client.user.displayAvatarURL())
 
-        const btn = new MessageButton()
-        .setID("prefix_altern")
-        .setLabel("ALTERAR PREFIXO")
-        .setStyle("blurple")
+            const btn = new MessageButton()
+                .setID("prefix_altern")
+                .setLabel("ALTERAR PREFIXO")
+                .setStyle("blurple")
 
-        if (!args.length) return message.channel.send(embed);
+            const embd = new MessageEmbed()
+                .setDescription(```fix\nDigite o novo prefixo\n```)
+
+            const btnMsg = await message.channel.send({ buttons: [btn], embed: emb });
+            const filter = (button) => button.clicker.user.id != client.user.id;
+            const colletcButt = btnMsg.createButtonCollector(filter);
+            colletcButt.on("collect", async (b) => {
+                btnMsg.edit({ embed: embd });
+                message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
+                .then(async collected => {
+                    if (collected.first().content.length >= 5) return sendError("Esse prefixo é muito longo!", message.channel);
+                    collected.first().content.toLowerCase();
+                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: collected.first().content.toLowerCase() } }, { new: true });
+                    btnMsg.delete(btnMsg);
+                    message.channel.send({
+                        embed: {
+                            description: "Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`"
+                        }
+                    })
+                }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
+            })
+        }
+
         if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config prefix\n` + "```", message.channel);
 
         if (args[0].toLowerCase() === ("prefix" || "prefixo" || "pref")) {
