@@ -36,7 +36,7 @@ module.exports = {
                 .setStyle("blurple")
 
             const embd = new MessageEmbed()
-                .setDescription(```fix\nDigite o novo prefixo\n```)
+                .setDescription("```fix\nDigite o novo prefixo\n```")
 
             const btnMsg = await message.channel.send({ buttons: [btn], embed: emb });
             const filter = (button) => button.clicker.user.id != client.user.id;
