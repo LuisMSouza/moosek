@@ -10,7 +10,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     async deezerHandler(client, message, search, cth, voiceChannel) {
         if (search.includes("/track/")) {
-            dzr.track(`${cth}`).then(res => {
+            dzr.track(`${cth}`).then(async res => {
                 const serverQueue = message.client.queue.get(message.guild.id);
                 try {
                     await YouTube.search(`${res.title} - ${res.artist.name} Official Audio`, { limit: 1 }).then(async x => {
