@@ -6,7 +6,8 @@ const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
 const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
-const sptfHandle = require('../structures/strSptfHandle.js')
+const sptfHandle = require('../structures/strSptfHandle.js');
+const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -36,11 +37,20 @@ module.exports = {
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         const sptfRegex = /((open|play)\.spotify\.com\/)/;
+        const deezerRegex = /^https?:\/\/(?:www\.)?deezer\.com\/(track|album|playlist)\/(\d+)$/
+        var isDeezer = deezerRegex.test(url);
         isPlaylist = playlistRegex.test(url);
         var isSptf = sptfRegex.test(url);
 
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
+
+        if (isDeezer) {
+            const cth = url.match(deezerRegex);
+            return console.log(cth);
+            await deezerHandler(client, message, searchString, cth, voiceChannel);
+            return;
+        }
 
         if (isSptf) {
             const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
