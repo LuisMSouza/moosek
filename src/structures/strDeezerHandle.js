@@ -71,7 +71,7 @@ module.exports = {
             dzr.playlist(`${cth}`).then(async res2 => {
                 const serverQueue = message.client.queue.get(message.guild.id);
                 try {
-                    console.log(res2);
+                    console.log(res2.tracks.data);
                 } catch (e) {
                     return console.log(e);
                 }
@@ -80,7 +80,7 @@ module.exports = {
             dzr.album(`${cth}`).then(async res3 => {
                 const serverQueue = message.client.queue.get(message.guild.id);
                 try {
-                    console.log(res3);
+                    console.log(res3.tracks.data);
                 } catch (e) {
                     return console.log(e);
                 }
