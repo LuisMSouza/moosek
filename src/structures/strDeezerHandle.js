@@ -68,9 +68,23 @@ module.exports = {
                 }
             })
         } else if (search.includes("/playlist/")) {
-            dzr.playlist(`${cth}`)
+            dzr.playlist(`${cth}`).then(async res2 => {
+                const serverQueue = message.client.queue.get(message.guild.id);
+                try {
+                    console.log(res2);
+                } catch (e) {
+                    return console.log(e);
+                }
+            })
         } else if (search.includes("/album/")) {
-            dzr.album(`${cth}`)
+            dzr.album(`${cth}`).then(async res3 => {
+                const serverQueue = message.client.queue.get(message.guild.id);
+                try {
+                    console.log(res3);
+                } catch (e) {
+                    return console.log(e);
+                }
+            })
         }
     }
 }
