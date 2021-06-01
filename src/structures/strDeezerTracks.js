@@ -9,9 +9,9 @@ module.exports = {
     async handleVideo(client, track, message, channel, playlist = false) {
         const serverQueue = message.client.queue.get(message.guild.id);
         try {
-            await YouTube.search(`${track.title} - ${track.artists.name} Official Audio`, { limit: 1 }).then(async x => {
+            await YouTube.search(`${track.title} - ${track.artist.name} Official Audio`, { limit: 1 }).then(async x => {
                 const song = {
-                    title: `${track.title} - ${track.artists.name}`,
+                    title: `${track.title} - ${track.artist.name}`,
                     url: x[0].url,
                     thumbnail: x[0].thumbnail.url,
                     duration: x[0].durationFormatted,
