@@ -58,8 +58,8 @@ module.exports = {
                             }
                         })
                     }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
-                return;
             })
+            return;
         }
 
         if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config prefix\n` + "```", message.channel);
