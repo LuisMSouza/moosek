@@ -112,7 +112,7 @@ module.exports = {
                             .setDisabled()
 
                         const buttonMsg = await message.channel.send("", {
-                            buttons: [button1],
+                            component: button1,
                             embed: embedRadio
                         })
                         const filter = (button) => button.clicker.user.id != client.user.id;
@@ -146,7 +146,7 @@ module.exports = {
                             await dispatcher.destroy();
                             await client.radio.delete(message.guild.id);
                             b.defer(true)
-                            buttonMsg.edit({ buttons: [button2], embed: embedRadio });
+                            buttonMsg.edit({ component: button2, embed: embedRadio });
                             return
                         });
                         /*await message.channel.send(embedRadio).then(async (embed) => {
