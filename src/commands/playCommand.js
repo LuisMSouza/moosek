@@ -46,8 +46,7 @@ module.exports = {
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isDeezer) {
-            const cth = url.match(deezerRegex);
-            return console.log(cth);
+            const cth = url.match(deezerRegex[2]);
             await deezerHandler(client, message, searchString, cth, voiceChannel);
             return;
         }
