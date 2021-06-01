@@ -5,6 +5,7 @@ const sendError = require('../utils/error.js');
 const music_init = require('./strMusic.js');
 const YouTube = require("youtube-sr").default;
 const { MessageEmbed } = require('discord.js');
+const handleTracks = require('../structures/strDeezerTracks.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -78,12 +79,29 @@ module.exports = {
             })
         } else if (search.includes("/album/")) {
             dzr.album(`${cth}`).then(async res3 => {
-                const serverQueue = message.client.queue.get(message.guild.id);
                 try {
-                    console.log(res3.tracks.data);
+                    const tracks = await res3.tracks.data
+                    for (const track of tracks) {
+                        await handleTracks.handleVideo(client, track, message, voiceChannel, true);
+                    }
+                    return message.channel.send({
+                        embed: {
+                            color: "GREEN",
+                            description: `**Album adicionado à fila**`,
+                            fields: [
+                                {
+                                    name: "> __Pedido por:__",
+                                    value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                    inline: true
+                                }
+                            ]
+                        }
+                    });
                 } catch (e) {
                     return console.log(e);
                 }
+            }, async function (err) {
+                console.log(err);
             })
         }
     }
