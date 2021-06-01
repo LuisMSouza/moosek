@@ -38,13 +38,13 @@ module.exports = {
             const embd = new MessageEmbed()
                 .setDescription("```fix\nDigite o novo prefixo\n```")
 
-            const btnMsg = await message.channel.send({ buttons: [btn], embed: emb });
+            const btnMsg = await message.channel.send({ component: btn, embed: emb });
             const filter = (button) => button.clicker.user.id != client.user.id;
             const colletcButt = btnMsg.createButtonCollector(filter);
             colletcButt.on("collect", async (b) => {
                 btn.setDisabled()
                 b.defer();
-                btnMsg.edit({ buttons: [btn], embed: embd });
+                btnMsg.edit({ component: btn, embed: embd });
                 const filter2 = m => m.author.id === message.author.id;
                 message.channel.awaitMessages(filter2, { max: 1, time: 300000, errors: ['time'] })
                     .then(async collected => {
