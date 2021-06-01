@@ -70,9 +70,24 @@ module.exports = {
             })
         } else if (search.includes("/playlist/")) {
             dzr.playlist(`${cth}`).then(async res2 => {
-                const serverQueue = message.client.queue.get(message.guild.id);
                 try {
-                    console.log(res2.tracks.data);
+                    const tracks = await res2.tracks.data
+                    for (const track of tracks) {
+                        await handleTracks.handleVideo(client, track, message, voiceChannel, true);
+                    }
+                    return message.channel.send({
+                        embed: {
+                            color: "GREEN",
+                            description: `**Playlist adicionada à fila**`,
+                            fields: [
+                                {
+                                    name: "> __Pedido por:__",
+                                    value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                    inline: true
+                                }
+                            ]
+                        }
+                    });
                 } catch (e) {
                     return console.log(e);
                 }
