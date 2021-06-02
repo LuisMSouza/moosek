@@ -20,24 +20,24 @@ module.exports = {
         let currentPage = 0;
         const embeds = generateQueueEmbed(message, serverQueue.songs);
 
-        const bt1 = new MessageButton()
+        let bt1 = new MessageButton()
             .setStyle("green")
             .setID("queue_next")
             .setEmoji("➡️")
-        const bt2 = new MessageButton()
+        let bt2 = new MessageButton()
             .setStyle("green")
             .setID("queue_prev")
             .setEmoji("⬅️")
-        const bt3 = new MessageButton()
+        let bt3 = new MessageButton()
             .setStyle("gray")
             .setDisabled()
             .setID("queue_num")
             .setLabel(`${currentPage + 1}/${embeds.length}`)
-
-        const buttonRow = new MessageActionRow()
-            .addComponents([bt2, bt3, bt1])
-
-        const queueEmbed = await message.channel.send({ component: buttonRow, embed: embeds[currentPage] });
+        /*
+                const buttonRow = new MessageActionRow()
+                    .addComponents([bt2, bt3, bt1])
+        */
+        const queueEmbed = await message.channel.send({ components: [bt1, bt2, bt3], embed: embeds[currentPage] });
 
         const filter = (button) => button.clicker.user.id != client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
@@ -47,9 +47,10 @@ module.exports = {
                 if (currentPage < embeds.length - 1) {
                     currentPage++;
                     await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
-                    queueEmbed.edit({ component: buttonRow, embed: embeds[currentPage] });
+                    queueEmbed.edit({ components: [bt1, bt2, bt3], embed: embeds[currentPage] });
                     b.defer();
                 }
+                b.defer();
             } else if (b.id === "queue_prev") {
                 if (currentPage !== 0) {
                     --currentPage;
@@ -57,7 +58,9 @@ module.exports = {
                     queueEmbed.edit({ component: buttonRow, embed: embeds[currentPage] });
                     b.defer();
                 }
+                b.defer();
             }
+            b.defer();
         });
 
         function generateQueueEmbed(message, queue) {
