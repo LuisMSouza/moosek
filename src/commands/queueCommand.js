@@ -32,13 +32,8 @@ module.exports = {
         const buttonRow = new MessageActionRow()
             .addComponents([bt1, bt2])
 
-        const queueEmbed = await message.channel.send(
-            `**\`${currentPage + 1}\`**/**${embeds.length}**`,
-            embeds[currentPage], {
-            component: buttonRow
-        }
-        );
-        
+        const queueEmbed = await message.channel.send(embeds[currentPage], { component: buttonRow });
+
         const filter = (button) => button.clicker.user.id === client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
 
