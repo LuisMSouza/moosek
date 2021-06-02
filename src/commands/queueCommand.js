@@ -30,9 +30,9 @@ module.exports = {
             .setEmoji("⬅️")
 
         const buttonRow = new MessageActionRow()
-            .addComponents([bt1, bt2])
+            .addComponents([bt2, bt1])
 
-        const queueEmbed = await message.channel.send(embeds[currentPage], { component: buttonRow });
+        const queueEmbed = await message.channel.send({ component: buttonRow , embed: embeds[currentPage]});
 
         const filter = (button) => button.clicker.user.id === client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
