@@ -38,15 +38,7 @@ module.exports = {
             component: buttonRow
         }
         );
-
-        try {
-            await queueEmbed.react("⬅️");
-            await queueEmbed.react("➡️");
-        } catch (error) {
-            console.error(error);
-            message.channel.send(error.message).catch(console.error);
-        }
-
+        
         const filter = (button) => button.clicker.user.id === client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
 
