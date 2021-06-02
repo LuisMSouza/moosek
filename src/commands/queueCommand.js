@@ -67,7 +67,7 @@ module.exports = {
                 }
                 b.defer();
             } catch (err) {
-                if (err.message.includes("Unknown interaction")) return
+                if (err.message.includes("DiscordAPIError: Unknown interaction")) return
             }
         });
 
