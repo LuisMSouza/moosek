@@ -32,7 +32,7 @@ module.exports = {
             .setStyle("gray")
             .setDisabled()
             .setID("queue_num")
-            .setLabel(`**\`${currentPage + 1}\`**/**${embeds.length}**`)
+            .setLabel(`${currentPage + 1}/${embeds.length}`)
 
         const buttonRow = new MessageActionRow()
             .addComponents([bt2, bt3, bt1])
@@ -46,15 +46,16 @@ module.exports = {
             if (b.id === "queue_next") {
                 if (currentPage < embeds.length - 1) {
                     currentPage++;
+                    await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
                     queueEmbed.edit({ component: buttonRow, embed: embeds[currentPage] });
+                    b.defer();
                 }
-                b.defer();
             } else if (b.id === "queue_prev") {
                 if (currentPage !== 0) {
                     --currentPage;
                     queueEmbed.edit({ component: buttonRow, embed: embeds[currentPage] });
+                    b.defer();
                 }
-                b.defer();
             }
         });
 
