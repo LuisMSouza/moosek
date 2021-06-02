@@ -42,7 +42,7 @@ module.exports = {
         const filter = (button) => button.clicker.user.id != client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
 
-        collector.on('collect', b => {
+        collector.on('collect', async (b) => {
             if (b.id === "queue_next") {
                 if (currentPage < embeds.length - 1) {
                     currentPage++;
@@ -53,6 +53,7 @@ module.exports = {
             } else if (b.id === "queue_prev") {
                 if (currentPage !== 0) {
                     --currentPage;
+                    await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
                     queueEmbed.edit({ component: buttonRow, embed: embeds[currentPage] });
                     b.defer();
                 }
