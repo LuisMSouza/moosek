@@ -34,7 +34,7 @@ module.exports = {
 
         const queueEmbed = await message.channel.send({ component: buttonRow , embed: embeds[currentPage]});
 
-        const filter = (button) => button.clicker.user.id === client.user.id;
+        const filter = (button) => button.clicker.user.id != client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
 
         collector.on('collect', b => {
