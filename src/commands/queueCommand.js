@@ -69,7 +69,12 @@ module.exports = {
             } catch (err) {
                 if (err.message.includes("DiscordAPIError: Unknown interaction")) return
             }
+            return;
         });
+        collector.on('end', (collected) => {
+            await queueEmbed.delete(queueEmbed);
+            return;
+        })
 
         function generateQueueEmbed(message, queue) {
             let embeds = [];
@@ -82,10 +87,9 @@ module.exports = {
 
                 const info = current.map((track) => `**\`${++j}\`** | [\`${track.title}\`](${track.url})`).join("\n");
 
-                let emoji1 = message.client.guilds.cache.get('731542666277290016').emojis.cache.find(emoji => emoji.name === "9416_script");
                 const serverQueue = message.client.queue.get(message.guild.id);
                 const embed = new MessageEmbed()
-                    .setTitle(`${emoji1} Fila de músicas do servidor`)
+                    .setTitle(`Fila de músicas do servidor`)
                     .setColor("#701AAB")
                     .setThumbnail(message.guild.iconURL())
                     .setDescription(`${info}`)
