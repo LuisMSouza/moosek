@@ -107,7 +107,7 @@ module.exports = {
             const buttonRow = new MessageActionRow()
                 .addComponents([btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight]);
 
-            serverQueue.textChannel.send(songEmbed, { components: [btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight] });
+            serverQueue.textChannel.send(songEmbed, { component: buttonRow });
 
             /*serverQueue.textChannel.send(songEmbed).then(async (embed) => {
                 try {
