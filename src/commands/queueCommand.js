@@ -43,28 +43,32 @@ module.exports = {
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
 
         collector.on('collect', async (b) => {
-            if (b.id === "queue_next") {
-                if (currentPage < embeds.length - 1) {
-                    currentPage++;
-                    await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
-                    var buttonRow2 = new MessageActionRow()
-                        .addComponents([bt2, bt3, bt1])
-                    queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
+            try {
+                if (b.id === "queue_next") {
+                    if (currentPage < embeds.length - 1) {
+                        currentPage++;
+                        await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
+                        var buttonRow2 = new MessageActionRow()
+                            .addComponents([bt2, bt3, bt1])
+                        queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
+                        b.defer();
+                    }
+                    b.defer();
+                } else if (b.id === "queue_prev") {
+                    if (currentPage !== 0) {
+                        --currentPage;
+                        await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
+                        var buttonRow3 = new MessageActionRow()
+                            .addComponents([bt2, bt3, bt1])
+                        queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
+                        b.defer();
+                    }
                     b.defer();
                 }
                 b.defer();
-            } else if (b.id === "queue_prev") {
-                if (currentPage !== 0) {
-                    --currentPage;
-                    await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
-                    var buttonRow3 = new MessageActionRow()
-                        .addComponents([bt2, bt3, bt1])
-                    queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
-                    b.defer();
-                }
-                b.defer();
+            } catch (err) {
+                if (err.message.includes("Unknown interaction")) return
             }
-            b.defer();
         });
 
         function generateQueueEmbed(message, queue) {
