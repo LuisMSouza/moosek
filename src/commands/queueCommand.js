@@ -33,11 +33,11 @@ module.exports = {
             .setDisabled()
             .setID("queue_num")
             .setLabel(`${currentPage + 1}/${embeds.length}`)
-        /*
-                const buttonRow = new MessageActionRow()
-                    .addComponents([bt2, bt3, bt1])
-        */
-        const queueEmbed = await message.channel.send({ components: [bt1, bt2, bt3], embed: embeds[currentPage] });
+
+        var buttonRow = new MessageActionRow()
+            .addComponents([bt2, bt3, bt1])
+
+        const queueEmbed = await message.channel.send({ component: buttonRow, embed: embeds[currentPage] });
 
         const filter = (button) => button.clicker.user.id != client.user.id;
         const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
@@ -47,7 +47,9 @@ module.exports = {
                 if (currentPage < embeds.length - 1) {
                     currentPage++;
                     await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
-                    queueEmbed.edit({ components: [bt1, bt2, bt3], embed: embeds[currentPage] });
+                    var buttonRow2 = new MessageActionRow()
+                        .addComponents([bt2, bt3, bt1])
+                    queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
                     b.defer();
                 }
                 b.defer();
@@ -55,7 +57,9 @@ module.exports = {
                 if (currentPage !== 0) {
                     --currentPage;
                     await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
-                    queueEmbed.edit({ component: buttonRow, embed: embeds[currentPage] });
+                    var buttonRow3 = new MessageActionRow()
+                        .addComponents([bt2, bt3, bt1])
+                    queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
                     b.defer();
                 }
                 b.defer();
