@@ -1,6 +1,4 @@
-const { message } = require('../events/message.js');
-
-module.exports = async (button) => {
+module.exports = async (message, button) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (button.id === "pause_button") {
         if (!message.member.voice.channel) {
