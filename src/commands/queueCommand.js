@@ -1,6 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
 const { MessageEmbed } = require('discord.js');
-const sendError = require('../utils/error.js')
+const sendError = require('../utils/error.js');
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -19,9 +20,23 @@ module.exports = {
         let currentPage = 0;
         const embeds = generateQueueEmbed(message, serverQueue.songs);
 
+        const bt1 = new MessageButton()
+            .setStyle("green")
+            .setID("queue_next")
+            .setEmoji("➡️")
+        const bt2 = new MessageButton()
+            .setStyle("green")
+            .setID("queue_prev")
+            .setEmoji("⬅️")
+
+        const buttonRow = new MessageActionRow()
+            .addComponents([bt1, bt2])
+
         const queueEmbed = await message.channel.send(
             `**\`${currentPage + 1}\`**/**${embeds.length}**`,
-            embeds[currentPage]
+            embeds[currentPage], {
+            component: buttonRow
+        }
         );
 
         try {
@@ -32,32 +47,24 @@ module.exports = {
             message.channel.send(error.message).catch(console.error);
         }
 
-        const filter = (reaction, user) =>
-            ["⬅️", "➡️"].includes(reaction.emoji.name) && user != user.bot;
-        const collector = queueEmbed.createReactionCollector(filter, { time: 300000 });
+        const filter = (button) => button.clicker.user.id === client.user.id;
+        const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
 
-        collector.on("collect", async (reaction, user) => {
-            try {
-                if (reaction.emoji.name === "➡️") {
-                    if (currentPage < embeds.length - 1) {
-                        currentPage++;
-                        queueEmbed.edit(`**\`${currentPage + 1}\`**/**${embeds.length}**`, embeds[currentPage]);
-                    }
-                } else if (reaction.emoji.name === "⬅️") {
-                    if (currentPage !== 0) {
-                        --currentPage;
-                        queueEmbed.edit(`**\`${currentPage + 1}\`**/**${embeds.length}**`, embeds[currentPage]);
-                    }
+        collector.on('collect', b => {
+            if (b.id === "queue_next") {
+                if (currentPage < embeds.length - 1) {
+                    currentPage++;
+                    queueEmbed.edit(`**\`${currentPage + 1}\`**/**${embeds.length}**`, embeds[currentPage]);
                 }
-                await reaction.users.remove(user);
-            } catch (error) {
-                console.error(error);
-                return message.channel.send(error.message).catch(console.error);
+                b.defer();
+            } else if (b.id === "queue_prev") {
+                if (currentPage !== 0) {
+                    --currentPage;
+                    queueEmbed.edit(`**\`${currentPage + 1}\`**/**${embeds.length}**`, embeds[currentPage]);
+                }
+                b.defer();
             }
         });
-        collector.on("end", async () => {
-            queueEmbed.delete(queueEmbed);
-        })
 
         function generateQueueEmbed(message, queue) {
             let embeds = [];
