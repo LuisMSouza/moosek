@@ -5,6 +5,7 @@ const sendError = require('../utils/error.js')
 const guildData = require('../models/guildData.js');
 const { STAY_TIME } = require('../utils/botUtils.js');
 const guild_main = process.env.SERVER_MAIN
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -70,7 +71,45 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            serverQueue.textChannel.send(songEmbed).then(async (embed) => {
+            const btOne = new MessageButton()
+                .setID("pause_button")
+                .setEmoji("⏸️")
+                .setStyle("blurple")
+            const btTwo = new MessageButton()
+                .setID("play_button")
+                .setEmoji("▶️")
+                .setStyle("blurple")
+            const btThree = new MessageButton()
+                .setID("back_button")
+                .setEmoji("⏮️")
+                .setStyle("blurple")
+            const btFour = new MessageButton()
+                .setID("next_button")
+                .setEmoji("⏭️")
+                .setStyle("blurple")
+            const btFive = new MessageButton()
+                .setID("stop_button")
+                .setEmoji("⏹️")
+                .setStyle("blurple")
+            const btSix = new MessageButton()
+                .setID("repeat_button")
+                .setEmoji("🔁")
+                .setStyle("blurple")
+            const btSeven = new MessageButton()
+                .setID("loop_button")
+                .setEmoji("🔂")
+                .setStyle("blurple")
+            const btEight = new MessageButton()
+                .setID("aleatory_button")
+                .setEmoji("🔀")
+                .setStyle("blurple")
+
+            const buttonRow = new MessageActionRow()
+                .addComponents([btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight]);
+
+            serverQueue.textChannel.send(songEmbed, { components: [btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight] });
+
+            /*serverQueue.textChannel.send(songEmbed).then(async (embed) => {
                 try {
                     await embed.react("⏸️");
                     await embed.react("▶️");
@@ -433,7 +472,7 @@ module.exports = {
                     }
                     embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                 })
-            });
+            });*/
         } catch (e) {
             console.log(e);
             channelMain.send({
