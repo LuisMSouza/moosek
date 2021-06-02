@@ -105,7 +105,7 @@ module.exports = {
                 .setStyle("blurple")
 
             const buttonRow = new MessageActionRow()
-                .addComponents([btOne, btTwo, btThree, btFour, btFive, btSix]);
+                .addComponents([btOne, btTwo, btThree, btFour, btFive]);
 
             serverQueue.textChannel.send({ component: buttonRow, embed: songEmbed });
 
