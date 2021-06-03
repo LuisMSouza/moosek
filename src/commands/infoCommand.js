@@ -39,8 +39,8 @@ module.exports = {
                 .setTitle("**[CLIQUE AQUI :)](https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot)")
                 .setTimestamp()
                 .setFooter("Moosek Client ™")
-            await msg.edit({ embed: emb });
-            b.defer();
+                b.defer();
+            await msgEmb.edit({ embed: emb });
         })
     }
 }
