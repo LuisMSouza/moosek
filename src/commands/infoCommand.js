@@ -31,9 +31,9 @@ module.exports = {
             .setStyle("blurple")
             .setID("invite_button")
 
-        const msg = message.channel.send({ component: bt1, embed: embed });
+        const msgEmb = await message.channel.send({ component: bt1, embed: embed });
         const filter = (button) => button.clicker.user.id != client.user.id;
-        const collector = msg.createButtonCollector(filter);
+        const collector = msgEmb.createButtonCollector(filter, {});
         collector.on("collect", async (b) => {
             var emb = new MessageEmbed()
                 .setTitle("**[CLIQUE AQUI :)](https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot)")
