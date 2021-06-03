@@ -36,7 +36,8 @@ module.exports = {
         const collector = msgEmb.createButtonCollector(filter, {});
         collector.on("collect", async (b) => {
             var emb = new MessageEmbed()
-                .setTitle("**[CLIQUE AQUI :)](https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot)")
+                .setTitle("CLIQUE AQUI :)")
+                .setURL("https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot")
                 .setTimestamp()
                 .setFooter("Moosek Client ™")
                 b.defer();
