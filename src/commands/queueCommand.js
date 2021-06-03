@@ -71,7 +71,7 @@ module.exports = {
             }
             return;
         });
-        collector.on('end', (collected) => {
+        collector.on('end', async (collected) => {
             await queueEmbed.delete(queueEmbed);
             return;
         })
