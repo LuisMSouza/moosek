@@ -1,6 +1,7 @@
 const ms = require('ms');
 const { MessageEmbed } = require('discord.js');
 const { CLIENT_VERSION } = require('../utils/botUtils.js');
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 module.exports = {
     name: "info",
@@ -25,6 +26,21 @@ module.exports = {
             .addField("Versão atual:", `${CLIENT_VERSION}`, true)
             .addField("Alcancei um total de:", client.users.cache.size + ` pessoas`, true)
 
-        message.channel.send(embed)
+        const bt1 = new MessageButton()
+            .setLabel("GERAR CONVITE")
+            .setStyle("blurple")
+            .setID("invite_button")
+
+        const msg = message.channel.send({ component: bt1, embed: embed });
+        const filter = (button) => button.clicker.user.id != client.user.id;
+        const collector = msg.createButtonCollector(filter);
+        collector.on("collect", async (b) => {
+            var emb = new MessageEmbed()
+                .setTitle("**[CLIQUE AQUI :)](https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot)")
+                .setTimestamp()
+                .setFooter("Moosek Client ™")
+            await msg.edit({ embed: emb });
+            b.defer();
+        })
     }
 }
