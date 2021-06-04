@@ -57,6 +57,7 @@ module.exports = {
                         .setColor("#701AAB")
                         .setDescription("`0` - Standard-Radio\n`1` - Base-Radio(Alemã)\n`2` - Chill-Radio\n`3` - Dance-Radio\n`4` - Greatest-hits-Radio\n`5` - Hip-hop-Radio\n`6` - Party-Radio\n`7` - Us-Rap-Radio\n`8` - Greatest-hits-Radio-2\n`9` - Absolut-Radio\n`10` - Absolut-70s-Radio\n`11` - Absolut-80s-Radio\n`12` - Absolut-90s-Radio\n`13` - Absolut-2000s-Radio\n`14` - Absolut-Classic-Rock\n`15` - 88.6-Radio\n`16` - Top-Radio\n`17` - NRJ-Radio\n`18` - Color-Music-Radio\n")
                         .setFooter("Para fazer a escolha digite o comando com o número da radio")
+                        b.defer()
                     msgEmb.edit({ component: msgButtons, embed: embedAll });
                 } else if (b.id === "button_radio_br") {
                     const embedBr = new Discord.MessageEmbed()
@@ -64,6 +65,7 @@ module.exports = {
                         .setColor("#701AAB")
                         .setDescription("`19` - Rádio Itatiaia\n`20` - Rádio FM 98\n`21` - Rádio Jovem Pan 107.3 FM\n`22` - Rádio Alvorada FM\n`23` - 89 FM A Rádio Rock")
                         .setFooter("Para fazer a escolha digite o comando com o número da radio")
+                        b.defer()
                     msgEmb.edit({ component: msgButtons, embed: embedBr });
                 } else if (b.id === "button_radio_usa") {
                     const embedUs = new Discord.MessageEmbed()
@@ -71,6 +73,7 @@ module.exports = {
                         .setColor("#701AAB")
                         .setDescription("`24` - American Road Radio\n`25` - Classic Rock Florida\n`26` - Rádio Z100 - 100.3 FM\n`27` - 89.7 KSGN\n`28` - WNCI 97.9")
                         .setFooter("Para fazer a escolha digite o comando com o número da radio")
+                        b.defer()
                     msgEmb.edit({ component: msgButtons, embed: embedUs });
                 }
             })
