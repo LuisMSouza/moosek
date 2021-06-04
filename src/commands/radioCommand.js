@@ -29,17 +29,17 @@ module.exports = {
 
             const bt1 = new MessageButton()
                 .setEmoji("🌐")
-                .setStyle("black")
+                .setStyle("gray")
                 .setID("button_radio_global")
 
             const bt2 = new MessageButton()
                 .setEmoji("🇧🇷")
-                .setStyle("black")
+                .setStyle("gray")
                 .setID("button_radio_br")
 
             const bt3 = new MessageButton()
                 .setEmoji("🇺🇸")
-                .setStyle("black")
+                .setStyle("gray")
                 .setID("button_radio_usa")
 
             const msgButtons = new MessageActionRow()
