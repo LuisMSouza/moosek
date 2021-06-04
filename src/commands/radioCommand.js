@@ -49,7 +49,7 @@ module.exports = {
 
             const msgEmb = await message.channel.send({ component: msgButtons, embed: embedChoice })
             const filter = (button) => button.clicker.user.id != client.user.id;
-            const colletcButt = buttonMsg.createButtonCollector(filter);
+            const colletcButt = msgEmb.createButtonCollector(filter);
             colletcButt.on("collect", (b) => {
                 if (b.id === "button_radio_global") {
                     const embedAll = new Discord.MessageEmbed()
