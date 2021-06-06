@@ -34,9 +34,14 @@ module.exports = {
             .setID("queue_num")
             .setLabel(`${currentPage + 1}/${embeds.length}`)
 
+        if (embeds.length <= 1) {
+            bt1.setDisabled()
+            bt2.setDisabled()
+        }
+
         var buttonRow = new MessageActionRow()
             .addComponents([bt2, bt3, bt1])
-
+            
         const queueEmbed = await message.channel.send({ component: buttonRow, embed: embeds[currentPage] });
 
         const filter = (button) => button.clicker.user.id != client.user.id;
