@@ -57,11 +57,6 @@ module.exports = {
                             .addComponents([bt2, bt3, bt1])
                         queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
                         b.defer();
-                    } else {
-                        bt1.setDisabled();
-                        var buttonRow2 = new MessageActionRow()
-                            .addComponents([bt2, bt3, bt1])
-                        queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
                     }
                     b.defer();
                 } else if (b.id === "queue_prev") {
@@ -72,11 +67,6 @@ module.exports = {
                             .addComponents([bt2, bt3, bt1])
                         queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
                         b.defer();
-                    } else {
-                        bt2.setDisabled();
-                        var buttonRow2 = new MessageActionRow()
-                            .addComponents([bt2, bt3, bt1])
-                        queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
                     }
                     b.defer();
                 }
