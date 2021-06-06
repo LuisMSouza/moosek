@@ -37,7 +37,7 @@ module.exports = {
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         const sptfRegex = /((open|play)\.spotify\.com\/)/;
-        const deezerRegex = /^https?:\/\/(?:www\.)?deezer\.com\/(track|album|playlist)\/(\d+)$/
+        const deezerRegex = /(https:\/\/)?(www\.)?deezer\.com\/(.+)?\/?(playlist|track|album)\/(.+)?/
         var isDeezer = deezerRegex.test(url);
         isPlaylist = playlistRegex.test(url);
         var isSptf = sptfRegex.test(url);
@@ -46,7 +46,7 @@ module.exports = {
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isDeezer) {
-            const cth = await url.match(deezerRegex)[2]
+            const cth = await url.match(deezerRegex)[5]
             await deezerHandler(client, message, searchString, cth, voiceChannel);
             return;
         }
