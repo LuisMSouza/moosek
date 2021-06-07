@@ -37,7 +37,7 @@ module.exports = {
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         const sptfRegex = /((open|play)\.spotify\.com\/)/;
-        const deezerRegex = /^(http(s)?:\/\/)?(www\.)?deezer\.(com|page\.link)\/(.{2}\/)?(playlist\/|track\/|album\/|artist\/)?(.[0-9]+)?/
+        const deezerRegex = /^(http(s)?:\/\/)?(www\.)?deezer\.(com|page\.link)\/(.{2}\/)?(playlist\/|track\/|album\/|artist\/)?(.[0-9]+)?(.+)/
         var isDeezer = deezerRegex.test(url);
         isPlaylist = playlistRegex.test(url);
         var isSptf = sptfRegex.test(url);
