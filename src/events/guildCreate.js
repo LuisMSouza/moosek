@@ -11,6 +11,7 @@ module.exports = async (client, guild) => {
             .setTitle("Obrigado por me adicionar!")
             .addField(`${emoji} Como usar?`, `Para ober mais informações sobre os comandos do bot, basta digitar: **${process.env.PREFIX_KEY}ajuda**\nLogo em seguida, você receberá uma mensagem contendo os comandos disponíveis.`)
             .setTimestamp()
+            .setColor("#0f42dc")
 
         if (guild.publicUpdatesChannel) {
             guild.publicUpdatesChannel.send(embed_1);
@@ -22,6 +23,7 @@ module.exports = async (client, guild) => {
             .setTimestamp()
             .setFooter(`Atualmente em ${client.guilds.cache.size} servidores`)
             .setThumbnail(guild.iconURL())
+            .setColor("#0f42dc")
 
         client.channels.cache.get("807738719556993064").send(embed_2);
         await createGuild(guild.id);

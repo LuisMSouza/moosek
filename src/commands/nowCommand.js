@@ -17,7 +17,7 @@ module.exports = {
         message.channel.send({
             embed: {
                 title: "Tocando agora:",
-                color: "#701AAB",
+                color: "#0f42dc",
                 description: `**${serverQueue.songs[0].title}**`
             }
         })

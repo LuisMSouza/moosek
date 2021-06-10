@@ -25,7 +25,7 @@ module.exports = {
             const emb = new MessageEmbed()
                 .setTitle(`${message.guild.name} | Configuração Moosek`)
                 .setThumbnail(message.guild.iconURL())
-                .setColor("#701AAB")
+                .setColor("#0f42dc")
                 .addField(`> Prefixo`, `Prefixo atual do servidor: ` + "`" + `${pref}` + "`", true)
                 .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "` ou clicar no botão abaixo")
                 .setFooter(client.user.username, client.user.displayAvatarURL())

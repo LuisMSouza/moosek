@@ -42,7 +42,7 @@ module.exports = {
 
         message.channel.send({
             embed: {
-                color: "#701AAB",
+                color: "#0f42dc",
                 description: `⏭ \`${args[0] - 1}\` músicas puladas por ${message.author}`
             }
 

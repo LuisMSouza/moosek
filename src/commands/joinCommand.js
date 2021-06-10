@@ -28,7 +28,7 @@ module.exports = {
             await voiceChannel.join();
             message.channel.send({
                 embed: {
-                    color: "#701AAB",
+                    color: "#0f42dc",
                     description: `Me juntei ao canal **${message.member.voice.channel.name}**`
                 }
             });

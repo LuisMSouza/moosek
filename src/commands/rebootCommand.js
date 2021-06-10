@@ -22,7 +22,7 @@ module.exports = {
                 await msg.delete(msg);
                 await message.channel.send({
                     embed: {
-                        color: "#701AAB",
+                        color: "#0f42dc",
                         description: "```\nBot reiniciado!\n```"
                     }
                 });

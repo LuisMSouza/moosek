@@ -31,7 +31,7 @@ module.exports = {
             serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5)
             message.channel.send({
                 embed: {
-                    color: "#701AAB",
+                    color: "#0f42dc",
                     description: `Volume alterado para: **${volume}/5**`
                 }
             })
