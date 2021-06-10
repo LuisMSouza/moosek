@@ -265,7 +265,7 @@ module.exports = {
                                     return;
                                 }
 
-                                await dispatcher.pause();
+                                await dispatcher.resume();
                                 b.defer();
                                 const row3 = new MessageActionRow()
                                     .addComponents(button1, buttonStop)
