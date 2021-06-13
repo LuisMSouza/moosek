@@ -10,17 +10,20 @@ const { MessageButton, MessageActionRow } = require('discord-buttons');
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     async play(client, message, song) {
+        const bot = message.guild.members.cache.get(client.user.id);
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         try {
             const serverQueue = message.client.queue.get(message.guild.id);
             const serverRadio = message.client.radio.get(message.guild.id);
             if (!song) {
+                if (bot.voice.speaking) return;
                 if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                 if (!message.guild.me.voice.channel) return;
                 if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
                 if (serverRadio) return;
                 var tempo = setTimeout(async function () {
+                    if (bot.voice.speaking) return;
                     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                     if (!message.guild.me.voice.channel) return;
                     if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
