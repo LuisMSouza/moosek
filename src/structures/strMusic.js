@@ -91,7 +91,7 @@ module.exports = {
                 .setEmoji("🔀")
                 .setID("aleatoryTrue")
             const rowOne = new MessageActionRow()
-                .addComponent(button2, button3, button4, button5, button7)
+                .addComponents(button2, button3, button4, button5, button7)
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
