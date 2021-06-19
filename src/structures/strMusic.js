@@ -86,7 +86,7 @@ module.exports = {
                 .setStyle("gray")
                 .setEmoji("🔀")
                 .setID("aleatory")
-            let button7 = new MessageButton()
+            let button8 = new MessageButton()
                 .setStyle("green")
                 .setEmoji("🔀")
                 .setID("aleatoryTrue")
