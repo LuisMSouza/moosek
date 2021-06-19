@@ -190,9 +190,9 @@ module.exports = {
                                         const rowThreeA = new MessageActionRow()
                                             .addComponents(button2, button3, button4, button6, button7)
                                         await mensagem.edit({ component: rowThreeA, embed: songEmbed });
-                                    } else if (!serverQueue.looping) {
+                                    } else if (!serverQueue.looping || !serverQueue.songLooping) {
                                         const rowTwoAb = new MessageActionRow()
-                                            .addComponents(button1, button3, button4, button5, button7)
+                                            .addComponents(button2, button3, button4, button5, button7)
                                         await mensagem.edit({ component: rowTwoAb, embed: songEmbed });
                                     } else if (serverQueue.songLooping) {
                                         const rowThreeB = new MessageActionRow()
