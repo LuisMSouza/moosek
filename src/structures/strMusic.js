@@ -107,6 +107,9 @@ module.exports = {
                 await button8.setStyle("green")
                 rowOne.addComponents(button2, button3, button4, button5, button8)
             }
+            if (!serverQueue.playing) {
+                rowTwo.addComponents(button1, button3, button4, button5, button7)
+            }
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
@@ -153,7 +156,6 @@ module.exports = {
                                 try {
                                     serverQueue.playing = false;
                                     serverQueue.connection.dispatcher.pause();
-                                    rowTwo.addComponents(button1, button3, button4, button5, button7)
                                     mensagem.edit({ component: rowTwo, embed: songEmbed })
                                     return undefined;
                                 } catch (e) {
