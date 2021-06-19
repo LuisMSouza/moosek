@@ -93,6 +93,7 @@ module.exports = {
             var isAleatory = sg.aleatory_mode;
             const rowOne = new MessageActionRow()
             const rowTwo = new MessageActionRow()
+                .addComponents(button1, button3, button4, button5, button7)
             const rowThree = new MessageActionRow()
             if (serverQueue.looping) {
                 await button6.setStyle("green");
@@ -106,9 +107,6 @@ module.exports = {
             } else if (isAleatory) {
                 await button8.setStyle("green")
                 rowOne.addComponents(button2, button3, button4, button5, button8)
-            }
-            if (!serverQueue.playing) {
-                rowTwo.addComponents(button1, button3, button4, button5, button7)
             }
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
