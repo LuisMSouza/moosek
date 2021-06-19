@@ -94,8 +94,20 @@ module.exports = {
                 .setStyle("green")
                 .setEmoji("🔀")
                 .setID("aleatoryTrue")
+            var sg = await guildData.findOne({
+                guildID: message.guild.id
+            });
+            var isAleatory = sg.aleatory_mode;
             const rowOne = new MessageActionRow()
-                .addComponents(button2, button3, button4, button5, button7)
+            if (serverQueue.looping) {
+                rowOne.addComponents(button2, button3, button4, button6, button7)
+            } else if (!serverQueue.looping && !serverQueue.songLooping && !isAleatory) {
+                rowOne.addComponents(button2, button3, button4, button5, button7)
+            } else if (serverQueue.songLooping) {
+                rowOne.addComponents(button2, button3, button4, button5b, button7)
+            } else if (isAleatory) {
+                rowOne.addComponents(button2, button3, button4, button5b, button8)
+            }
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
@@ -142,19 +154,8 @@ module.exports = {
                                 try {
                                     serverQueue.playing = false;
                                     serverQueue.connection.dispatcher.pause();
-                                    if (serverQueue.looping) {
-                                        const rowTwoA = new MessageActionRow()
-                                            .addComponents(button1, button3, button4, button6, button7)
-                                        await mensagem.edit({ component: rowTwoA, embed: songEmbed });
-                                    } else if (!serverQueue.looping || !serverQueue.songLooping) {
-                                        const rowTwoAb = new MessageActionRow()
-                                            .addComponents(button1, button3, button4, button5, button7)
-                                        await mensagem.edit({ component: rowTwoAb, embed: songEmbed });
-                                    } else if (serverQueue.songLooping) {
-                                        const rowTwoB = new MessageActionRow()
-                                            .addComponents(button1, button3, button4, button5, button7)
-                                        await mensagem.edit({ component: rowTwoB, embed: songEmbed });
-                                    }
+                                    rowOne.addComponents(button1, button3, button4, button5, button7)
+                                    mensagem.edit({ component: rowOne, embed: songEmbed })
                                     return undefined;
                                 } catch (e) {
                                     console.log(e);
@@ -186,19 +187,8 @@ module.exports = {
                                 try {
                                     serverQueue.playing = true;
                                     serverQueue.connection.dispatcher.resume();
-                                    if (serverQueue.looping) {
-                                        const rowThreeA = new MessageActionRow()
-                                            .addComponents(button2, button3, button4, button6, button7)
-                                        await mensagem.edit({ component: rowThreeA, embed: songEmbed });
-                                    } else if (!serverQueue.looping || !serverQueue.songLooping) {
-                                        const rowTwoAb = new MessageActionRow()
-                                            .addComponents(button2, button3, button4, button5, button7)
-                                        await mensagem.edit({ component: rowTwoAb, embed: songEmbed });
-                                    } else if (serverQueue.songLooping) {
-                                        const rowThreeB = new MessageActionRow()
-                                            .addComponents(button2, button3, button4, button5, button7)
-                                        await mensagem.edit({ component: rowThreeB, embed: songEmbed });
-                                    }
+                                    rowOne.addComponents(button2, button3, button4, button5, button7)
+                                    mensagem.edit({ component: rowOne, embed: songEmbed })
                                     return undefined;
                                 } catch (e) {
                                     console.log(e);
