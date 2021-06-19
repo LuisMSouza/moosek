@@ -75,15 +75,9 @@ module.exports = {
                 .setEmoji("⏭️")
                 .setID("skip")
             let button5 = new MessageButton()
-                .setStyle("gray")
                 .setEmoji("🔁")
                 .setID("repeat")
-            let button5b = new MessageButton()
-                .setStyle("green")
-                .setEmoji("🔁")
-                .setID("repeatTrue")
             let button6 = new MessageButton()
-                .setStyle("green")
                 .setEmoji("🔂")
                 .setID("repeatOne")
             let button7 = new MessageButton()
@@ -91,7 +85,6 @@ module.exports = {
                 .setEmoji("🔀")
                 .setID("aleatory")
             let button8 = new MessageButton()
-                .setStyle("green")
                 .setEmoji("🔀")
                 .setID("aleatoryTrue")
             var sg = await guildData.findOne({
@@ -99,14 +92,20 @@ module.exports = {
             });
             var isAleatory = sg.aleatory_mode;
             const rowOne = new MessageActionRow()
+            const rowTwo = new MessageActionRow()
+            const rowThree = new MessageActionRow()
             if (serverQueue.looping) {
+                await button6.setStyle("green");
                 rowOne.addComponents(button2, button3, button4, button6, button7)
             } else if (!serverQueue.looping && !serverQueue.songLooping && !isAleatory) {
+                await button5.setStyle("gray")
                 rowOne.addComponents(button2, button3, button4, button5, button7)
             } else if (serverQueue.songLooping) {
-                rowOne.addComponents(button2, button3, button4, button5b, button7)
+                await button5.setStyle("green");
+                rowOne.addComponents(button2, button3, button4, button5, button7)
             } else if (isAleatory) {
-                rowOne.addComponents(button2, button3, button4, button5b, button8)
+                await button8.setStyle("green")
+                rowOne.addComponents(button2, button3, button4, button5, button8)
             }
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
@@ -154,8 +153,8 @@ module.exports = {
                                 try {
                                     serverQueue.playing = false;
                                     serverQueue.connection.dispatcher.pause();
-                                    rowOne.addComponents(button1, button3, button4, button5, button7)
-                                    mensagem.edit({ component: rowOne, embed: songEmbed })
+                                    rowTwo.addComponents(button1, button3, button4, button5, button7)
+                                    mensagem.edit({ component: rowTwo, embed: songEmbed })
                                     return undefined;
                                 } catch (e) {
                                     console.log(e);
