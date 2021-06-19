@@ -58,6 +58,40 @@ module.exports = {
                     console.log(error);
                 });
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
+            let button1 = new MessageButton()
+                .setStyle("green")
+                .setEmoji("▶️")
+                .setID("play")
+            let button2 = new MessageButton()
+                .setStyle("gray")
+                .setEmoji("⏸️")
+                .setID("pause")
+            let button3 = new MessageButton()
+                .setStyle("gray")
+                .setEmoji("⏹️")
+                .setID("stop")
+            let button4 = new MessageButton()
+                .setStyle("gray")
+                .setEmoji("⏭️")
+                .setID("skip")
+            let button5 = new MessageButton()
+                .setStyle("gray")
+                .setEmoji("🔁")
+                .setID("repeat")
+            let button6 = new MessageButton()
+                .setStyle("green")
+                .setEmoji("🔂")
+                .setID("repeatOne")
+            let button7 = new MessageButton()
+                .setStyle("gray")
+                .setEmoji("🔀")
+                .setID("aleatory")
+            let button7 = new MessageButton()
+                .setStyle("green")
+                .setEmoji("🔀")
+                .setID("aleatoryTrue")
+            const rowOne = new MessageActionRow()
+                .addComponent(button2, button3, button4, button5, button7)
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
@@ -74,8 +108,236 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            serverQueue.textChannel.send(songEmbed).then(async (embed) => {
+            const mensagem = await serverQueue.textChannel.send({ component: rowOne, embed: songEmbed }).then(async (embed) => {
                 try {
+                    const filter = (button) => button.clicker.user.id != client.user.id;
+                    const colletcButt = buttonMsg.createButtonCollector(filter);
+                    colletcButt.on("collect", async (b) => {
+                        await b.defer();
+                        switch (b.id) {
+                            case "pause":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    return;
+                                }
+                                if (serverQueue) {
+                                    try {
+                                        serverQueue.playing = false;
+                                        serverQueue.connection.dispatcher.pause();
+                                        if (serverQueue.looping) {
+                                            const rowTwoA = new MessageActionRow()
+                                                .addComponents(button1, button3, button4, button6, button7)
+                                            await mensagem.edit({ component: rowTwoA, embed: songEmbed });
+                                        } else if (serverQueue.songLooping) {
+                                            const rowTwoB = new MessageActionRow()
+                                                .addComponents(button1, button3, button4, button5, button7)
+                                            await mensagem.edit({ component: rowTwoB, embed: songEmbed });
+                                        }
+                                        return undefined;
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+                                } else {
+                                    return undefined;
+                                }
+                                break;
+                            case "play":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    return;
+                                }
+                                if (serverQueue) {
+                                    try {
+                                        serverQueue.playing = true;
+                                        serverQueue.connection.dispatcher.resume();
+                                        if (serverQueue.looping) {
+                                            const rowThreeA = new MessageActionRow()
+                                                .addComponents(button1, button3, button4, button6, button7)
+                                            await mensagem.edit({ component: rowThreeA, embed: songEmbed });
+                                        } else if (serverQueue.songLooping) {
+                                            const rowThreeB = new MessageActionRow()
+                                                .addComponents(button1, button3, button4, button5, button7)
+                                            await mensagem.edit({ component: rowThreeB, embed: songEmbed });
+                                        }
+                                        return undefined;
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+                                } else {
+                                    return undefined;
+                                }
+                                break;
+                            case "stop":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    return;
+                                }
+                                if (!serverQueue) {
+                                    sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
+                                    return;
+                                }
+                                try {
+                                    serverQueue.songs = [];
+                                    message.client.queue.set(message.guild.id, serverQueue);
+                                    await message.member.voice.channel.leave();
+                                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
+                                    await mensagem.edit({ embed: songEmbed });
+                                    return;
+                                } catch (e) {
+                                    console.log(e);
+                                }
+                                break;
+                            case "skip":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                    return;
+                                }
+                                if (!serverQueue) {
+                                    sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
+                                    await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                    return;
+                                }
+                                if (serverQueue) {
+                                    try {
+                                        var srch = await guildData.findOne({
+                                            guildID: message.guild.id
+                                        });
+                                        if (!serverQueue.songLooping) {
+                                            if (!serverQueue.songs[1]) {
+                                                serverQueue.songs.shift();
+                                                await dispatcher.end();
+                                                embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                                return;
+                                            }
+                                            serverQueue.prevSongs = [];
+                                            await serverQueue.prevSongs.push(serverQueue.songs[0]);
+                                            if (serverQueue.looping) {
+                                                await serverQueue.songs.push(serverQueue.songs[0]);
+                                            }
+                                            serverQueue.songs.shift();
+                                            if (srch.aleatory_mode) {
+                                                const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                                this.play(client, message, serverQueue.songs[random]);
+                                                await mensagem.delete(mensagem);
+                                            } else {
+                                                await mensagem.delete(mensagem);
+                                                this.play(client, message, serverQueue.songs[0]);
+                                            }
+                                        } else {
+                                            await mensagem.delete(mensagem);
+                                            this.play(client, message, serverQueue.songs[0]);
+                                        }
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+                                }
+                                break;
+                            case "repeatOne":
+                                break;
+                            case "repeat":
+                                break;
+                            case "aleatory":
+                                if (!message.member.voice.channel) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }
+                                    }).then(m => m.delete({ timeout: 10000 }));
+
+                                    return;
+                                }
+                                if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                                    serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }
+                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+
+                                    return;
+                                }
+                                if (!serverQueue) return;
+                                try {
+                                    var sg = await guildData.findOne({
+                                        guildID: message.guild.id
+                                    });
+                                    var isAleatory = sg.aleatory_mode;
+                                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: !isAleatory } }, { new: true });
+                                    var sg_2 = await guildData.findOne({
+                                        guildID: message.guild.id
+                                    });
+                                    //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
+
+                                    return serverQueue.textChannel.send({
+                                        embed: {
+                                            color: "#0f42dc",
+                                            description: `🔀 Modo aleatório ${sg_2.aleatory_mode ? `**Habilitado**` : `**Desabilitado**`}`
+                                        }
+                                    });
+                                } catch (e) {
+                                    console.log(e);
+                                }
+                                break;
+                        }
+                    });
+                    /*
                     await embed.react("⏸️");
                     await embed.react("▶️");
                     await embed.react("⏮️");
@@ -96,7 +358,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -106,14 +368,14 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue) {
                                     try {
                                         serverQueue.playing = false;
                                         serverQueue.connection.dispatcher.pause();
-                                        await reaction.users.remove(user);
+    
                                         return undefined;
                                     } catch (e) {
                                         console.log(e);
@@ -131,7 +393,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -141,14 +403,14 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue) {
                                     try {
                                         serverQueue.playing = true;
                                         serverQueue.connection.dispatcher.resume();
-                                        await reaction.users.remove(user);
+    
                                         return undefined;
                                     } catch (e) {
                                         console.log(e);
@@ -166,7 +428,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -176,7 +438,7 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (!serverQueue) {
@@ -185,7 +447,7 @@ module.exports = {
                                     return;
                                 }
                                 if (serverQueue) {
-                                    await reaction.users.remove(user);
+
                                     try {
                                         if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) return sendError("Não há nenhuma música anterior.", message.channel);
                                         await serverQueue.songs.shift()
@@ -207,7 +469,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -217,7 +479,7 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (!serverQueue) {
@@ -267,7 +529,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -277,7 +539,7 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (!serverQueue) {
@@ -304,7 +566,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -314,7 +576,7 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 await reaction.users.remove(user);
@@ -345,7 +607,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -355,13 +617,13 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (!serverQueue) return;
                                 try {
                                     serverQueue.songLooping = !serverQueue.songLooping
-                                    await reaction.users.remove(user);
+
                                     return serverQueue.textChannel.send({
                                         embed: {
                                             color: "#0f42dc",
@@ -380,7 +642,7 @@ module.exports = {
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }
                                     }).then(m => m.delete({ timeout: 10000 }));
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
@@ -390,7 +652,7 @@ module.exports = {
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }
                                     }).then(m2 => m2.delete({ timeout: 10000 }))
-                                    await reaction.users.remove(user);
+
                                     return;
                                 }
                                 if (!serverQueue) return;
@@ -404,7 +666,7 @@ module.exports = {
                                         guildID: message.guild.id
                                     });
                                     //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
-                                    await reaction.users.remove(user);
+
                                     return serverQueue.textChannel.send({
                                         embed: {
                                             color: "#0f42dc",
@@ -417,6 +679,7 @@ module.exports = {
                                 break;
                         }
                     });
+                    */
                 } catch (err) {
                     console.log(err)
                 }
