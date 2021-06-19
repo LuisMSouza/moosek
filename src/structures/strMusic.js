@@ -111,7 +111,7 @@ module.exports = {
             const mensagem = await serverQueue.textChannel.send({ component: rowOne, embed: songEmbed }).then(async (embed) => {
                 try {
                     const filter = (button) => button.clicker.user.id != client.user.id;
-                    const colletcButt = buttonMsg.createButtonCollector(filter);
+                    const colletcButt = mensagem.createButtonCollector(filter);
                     colletcButt.on("collect", async (b) => {
                         await b.defer();
                         switch (b.id) {
