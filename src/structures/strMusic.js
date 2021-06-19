@@ -90,21 +90,17 @@ module.exports = {
             var sg = await guildData.findOne({
                 guildID: message.guild.id
             });
-            var isAleatory = sg.aleatory_mode;
+            const isAleatory = sg.aleatory_mode;
             const rowOne = new MessageActionRow()
             const rowThree = new MessageActionRow()
             if (serverQueue.looping) {
                 await button6.setStyle("green");
-                rowOne.addComponents(button2, button3, button4, button6, button7)
             } else if (!serverQueue.looping && !serverQueue.songLooping && !isAleatory) {
-                await button5.setStyle("gray")
-                rowOne.addComponents(button2, button3, button4, button5, button7)
+                await button5.setStyle("gray") && button8.setStyle("gray") && button6.setStyle("gray")
             } else if (serverQueue.songLooping) {
                 await button5.setStyle("green");
-                rowOne.addComponents(button2, button3, button4, button5, button7)
             } else if (isAleatory) {
                 await button8.setStyle("green")
-                rowOne.addComponents(button2, button3, button4, button5, button8)
             }
             const rowTwo = new MessageActionRow()
                 .addComponents(button1, button3, button4, button5, button7)
@@ -124,7 +120,7 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            const mensagem = await serverQueue.textChannel.send({ component: rowOne, embed: songEmbed })
+            const mensagem = await serverQueue.textChannel.send({ components: [button2, button3, button4, button5, button7], embed: songEmbed })
             try {
                 const filter = (button) => button.clicker.user.id != client.user.id;
                 const colletcButt = mensagem.createButtonCollector(filter);
@@ -154,7 +150,15 @@ module.exports = {
                                 try {
                                     serverQueue.playing = false;
                                     serverQueue.connection.dispatcher.pause();
-                                    mensagem.edit({ component: rowTwo, embed: songEmbed })
+                                    if (serverQueue.looping) {
+                                        button6.setStyle("green")
+                                        mensagem.edit({ components: [button1, button3, button4, button6, button7], embed: songEmbed })
+                                    } else if (serverQueue.songLooping) {
+                                        button5.setStyle("green")
+                                        mensagem.edit({ components: [button1, button3, button4, button5, button7], embed: songEmbed })
+                                    } else if (!serverQueue.looping && !serverQueue.songLooping && !isAleatory) {
+                                        mensagem.edit({ components: [button1, button3, button4, button5, button7], embed: songEmbed })
+                                    }
                                     return undefined;
                                 } catch (e) {
                                     console.log(e);
@@ -186,7 +190,18 @@ module.exports = {
                                 try {
                                     serverQueue.playing = true;
                                     serverQueue.connection.dispatcher.resume();
-                                    mensagem.edit({ component: rowOne, embed: songEmbed })
+                                    if (serverQueue.looping) {
+                                        button6.setStyle("green")
+                                        mensagem.edit({ components: [button2, button3, button4, button6, button7], embed: songEmbed })
+                                    } else if (serverQueue.songLooping) {
+                                        button5.setStyle("green")
+                                        mensagem.edit({ components: [button2, button3, button4, button5, button7], embed: songEmbed })
+                                    } else if (!serverQueue.looping && !serverQueue.songLooping && !isAleatory) {
+                                        mensagem.edit({ components: [button2, button3, button4, button5, button7], embed: songEmbed })
+                                    } else if (isAleatory) {
+                                        button8.setStyle("green")
+                                        mensagem.edit({ components: [button2, button3, button4, button5, button8], embed: songEmbed })
+                                    }
                                     return undefined;
                                 } catch (e) {
                                     console.log(e);
@@ -325,6 +340,8 @@ module.exports = {
                                 });
                                 //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
                                 sg_2.aleatory_mode ? button8.setStyle("green") : button8.setStyle("gray")
+                                const otherRow = new MessageActionRow()
+
                                 mensagem.edit({ component: rowOne, embed: songEmbed })
                                 return serverQueue.textChannel.send({
                                     embed: {
