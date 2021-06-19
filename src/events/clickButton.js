@@ -2,7 +2,7 @@ module.exports = async (button) => {
     try {
         await button.defer();
         switch (button.id) {
-            case "radio_stop":
+            case "stop_radio":
                 console.log("event on!")
                 break;
         }
