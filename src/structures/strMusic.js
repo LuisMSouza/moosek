@@ -324,7 +324,8 @@ module.exports = {
                                     guildID: message.guild.id
                                 });
                                 //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
-
+                                sg_2.aleatory_mode ? button8.setStyle("green") : button8.setStyle("gray")
+                                mensagem.edit({ component: rowOne, embed: songEmbed })
                                 return serverQueue.textChannel.send({
                                     embed: {
                                         color: "#0f42dc",
