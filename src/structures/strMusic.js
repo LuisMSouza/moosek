@@ -125,7 +125,7 @@ module.exports = {
                                 }).then(m => m.delete({ timeout: 10000 }));
                                 return;
                             }
-                            if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                            if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embed: {
                                         color: "#0f42dc",
@@ -165,7 +165,7 @@ module.exports = {
                                 }).then(m => m.delete({ timeout: 10000 }));
                                 return;
                             }
-                            if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                            if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embed: {
                                         color: "#0f42dc",
@@ -205,7 +205,7 @@ module.exports = {
                                 }).then(m => m.delete({ timeout: 10000 }));
                                 return;
                             }
-                            if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                            if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embed: {
                                         color: "#0f42dc",
@@ -239,7 +239,7 @@ module.exports = {
                                 }).then(m => m.delete({ timeout: 10000 }));
                                 return;
                             }
-                            if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                            if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embed: {
                                         color: "#0f42dc",
@@ -303,7 +303,7 @@ module.exports = {
 
                                 return;
                             }
-                            if (serverQueue.connection.channel.id !== membReact.voice.channel.id) {
+                            if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embed: {
                                         color: "#0f42dc",
