@@ -5,7 +5,11 @@ const fs = require('fs');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
-const client = new Discord.Client();
+const client = new Discord.Client({
+    disableMentions: "all",
+    restTimeOffset: 0,
+    shards: "auto"
+});
 require('discord-buttons')(client);
 const configVars = {
     token: process.env.TOKEN_KEY,
