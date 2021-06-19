@@ -186,7 +186,6 @@ module.exports = {
                                 try {
                                     serverQueue.playing = true;
                                     serverQueue.connection.dispatcher.resume();
-                                    rowOne.addComponents(button2, button3, button4, button5, button7)
                                     mensagem.edit({ component: rowOne, embed: songEmbed })
                                     return undefined;
                                 } catch (e) {
