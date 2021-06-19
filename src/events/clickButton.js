@@ -1,6 +1,6 @@
 module.exports = async (button) => {
     try {
-        await button.defer();
+        await button.defer(true);
         switch (button.id) {
             case "stop_radio":
                 console.log("event on!")
