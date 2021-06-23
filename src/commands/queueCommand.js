@@ -64,10 +64,10 @@ module.exports = {
                         var buttonRow2 = new MessageActionRow()
                         if (currentPage + 1 === embeds.length) {
                             bt1.setDisabled()
-                            buttonRow2.addComponents([bt2, bt3, bt1])
+                            buttonRow2.addComponents([bt2b, bt3, bt1])
                         } else if (currentPage + 1 === 1) {
                             bt2.setDisabled()
-                            buttonRow2.addComponents([bt2, bt3, bt1])
+                            buttonRow2.addComponents([bt2, bt3, bt1b])
                         } else {
                             buttonRow2.addComponent([bt2b, bt3, bt1b])
                         }
