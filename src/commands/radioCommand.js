@@ -184,22 +184,22 @@ module.exports = {
                             if (b.id === "stop_radio") {
                                 if (!client.radio) return;
                                 if (!message.member.voice.channel) {
-                                    message.channel.send({
+                                    b.reply.send({
                                         embed: {
                                             color: "#0f42dc",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                        }
-                                    }).then(m => m.delete({ timeout: 10000 }));
+                                        }, ephemeral: true
+                                    });
                                     //await reaction.users.remove(user);
                                     return;
                                 }
                                 if (radioListenConstruct.channel.id !== message.member.voice.channel.id) {
-                                    message.channel.send({
+                                    b.reply.send({
                                         embed: {
                                             color: "#0f42dc",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                        }
-                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                        }, ephemeral: true
+                                    });
                                     //await reaction.users.remove(user);
                                     return;
                                 }
@@ -215,22 +215,22 @@ module.exports = {
                             } else if (b.id === "pause_radio") {
                                 if (!client.radio) return;
                                 if (!message.member.voice.channel) {
-                                    message.channel.send({
+                                    b.reply.send({
                                         embed: {
                                             color: "#0f42dc",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                        }
-                                    }).then(m => m.delete({ timeout: 10000 }));
+                                        }, ephemeral: true
+                                    });
                                     //await reaction.users.remove(user);
                                     return;
                                 }
                                 if (radioListenConstruct.channel.id !== message.member.voice.channel.id) {
-                                    message.channel.send({
+                                    b.reply.send({
                                         embed: {
                                             color: "#0f42dc",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                        }
-                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                        }, ephemeral: true
+                                    });
                                     //await reaction.users.remove(user);
                                     return;
                                 }
@@ -245,22 +245,22 @@ module.exports = {
                             } else if (b.id === "resume_radio") {
                                 if (!client.radio) return;
                                 if (!message.member.voice.channel) {
-                                    message.channel.send({
+                                    b.reply.send({
                                         embed: {
                                             color: "#0f42dc",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                        }
-                                    }).then(m => m.delete({ timeout: 10000 }));
+                                        }, ephemeral: true
+                                    });
                                     //await reaction.users.remove(user);
                                     return;
                                 }
                                 if (radioListenConstruct.channel.id !== message.member.voice.channel.id) {
-                                    message.channel.send({
+                                    b.reply.send({
                                         embed: {
                                             color: "#0f42dc",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                        }
-                                    }).then(m2 => m2.delete({ timeout: 10000 }))
+                                        }, ephemeral: true
+                                    });
                                     //await reaction.users.remove(user);
                                     return;
                                 }
@@ -274,48 +274,6 @@ module.exports = {
                                 return;
                             }
                         });
-                        /*await message.channel.send(embedRadio).then(async (embed) => {
-                            try {
-                                await embed.react("⏹️");
-                                const collector = embed.createReactionCollector((reaction, user) => ["⏹️"].includes(reaction.emoji.name) && user != user.bot);
-                                collector.on("collect", async (reaction, user) => {
-                                    var membReact = message.guild.members.cache.get(user.id);
-                                    switch (reaction.emoji.name) {
-                                        case "⏹️":
-                                            if (!message.member.voice.channel) {
-                                                message.channel.send({
-                                                    embed: {
-                                                        color: "#0f42dc",
-                                                        description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                                    }
-                                                }).then(m => m.delete({ timeout: 10000 }));
-                                                await reaction.users.remove(user);
-                                                return;
-                                            }
-                                            if (radioListenConstruct.channel.id !== membReact.voice.channel.id) {
-                                                message.channel.send({
-                                                    embed: {
-                                                        color: "#0f42dc",
-                                                        description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                                    }
-                                                }).then(m2 => m2.delete({ timeout: 10000 }))
-                                                await reaction.users.remove(user);
-                                                return;
-                                            }
-
-                                            await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                                            await message.member.voice.channel.leave();
-                                            await connection.disconnect();
-                                            await dispatcher.destroy();
-                                            await client.radio.delete(message.guild.id);
-                                            return
-                                            break;
-                                    }
-                                });
-                            } catch (err) {
-                                console.log(err)
-                            }
-                        });*/
                     })
             } catch (e) {
                 if (e.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
