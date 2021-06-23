@@ -59,52 +59,6 @@ module.exports = {
                     console.log(error);
                 });
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
-            let button1 = new MessageButton()
-                .setStyle("green")
-                .setEmoji("▶️")
-                .setID("play")
-            let button2 = new MessageButton()
-                .setStyle("gray")
-                .setEmoji("⏸️")
-                .setID("pause")
-            let button3 = new MessageButton()
-                .setStyle("gray")
-                .setEmoji("⏹️")
-                .setID("stop")
-            let button4 = new MessageButton()
-                .setStyle("gray")
-                .setEmoji("⏭️")
-                .setID("skip")
-            let button5 = new MessageButton()
-                .setEmoji("🔁")
-                .setID("repeat")
-            let button6 = new MessageButton()
-                .setEmoji("🔂")
-                .setID("repeatOne")
-            let button7 = new MessageButton()
-                .setStyle("gray")
-                .setEmoji("🔀")
-                .setID("aleatory")
-            let button8 = new MessageButton()
-                .setEmoji("🔀")
-                .setID("aleatoryTrue")
-            var sg = await guildData.findOne({
-                guildID: message.guild.id
-            });
-            const isAleatory = sg.aleatory_mode;
-            const rowOne = new MessageActionRow()
-            const rowThree = new MessageActionRow()
-            if (serverQueue.looping) {
-                await button6.setStyle("green");
-            } else if (!serverQueue.looping && !serverQueue.songLooping && !isAleatory) {
-                await button5.setStyle("gray") && button8.setStyle("gray") && button6.setStyle("gray")
-            } else if (serverQueue.songLooping) {
-                await button5.setStyle("green");
-            } else if (isAleatory) {
-                await button8.setStyle("green")
-            }
-            const rowTwo = new MessageActionRow()
-                .addComponents(button1, button3, button4, button5, button7)
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
