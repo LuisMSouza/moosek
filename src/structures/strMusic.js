@@ -42,7 +42,7 @@ module.exports = {
             }
 
             let url = song.url;
-            const dispatcher = serverQueue.connection.play(await ytdlAlt(url), { type: 'opus', highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" })
+            const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
                 .on("error", async error => {
                     if (error.message.includes("Video unavailable")) {
                         console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
