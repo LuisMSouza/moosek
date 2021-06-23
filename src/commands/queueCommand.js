@@ -46,6 +46,7 @@ module.exports = {
             bt1.setDisabled()
             bt2.setDisabled()
         }
+        bt2.setDisabled()
 
         var buttonRow = new MessageActionRow()
             .addComponents([bt2, bt3, bt1])
