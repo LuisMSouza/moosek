@@ -62,10 +62,10 @@ module.exports = {
                         currentPage++;
                         await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
                         var buttonRow2 = new MessageActionRow()
-                        if (currentPage === embeds.length) {
+                        if (currentPage + 1 === embeds.length) {
                             bt1.setDisabled()
                             buttonRow2.addComponents([bt2, bt3, bt1])
-                        } else if (currentPage === 1) {
+                        } else if (currentPage + 1 === 1) {
                             bt2.setDisabled()
                             buttonRow2.addComponents([bt2, bt3, bt1])
                         } else {
@@ -80,10 +80,10 @@ module.exports = {
                         --currentPage;
                         await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
                         var buttonRow3 = new MessageActionRow()
-                        if (currentPage === embeds.length) {
+                        if (currentPage + 1 === embeds.length) {
                             bt1.setDisabled()
                             buttonRow3.addComponents([bt2, bt3, bt1])
-                        } else if (currentPage === 1) {
+                        } else if (currentPage + 1 === 1) {
                             bt2.setDisabled()
                             buttonRow3.addComponents([bt2, bt3, bt1])
                         } else {
