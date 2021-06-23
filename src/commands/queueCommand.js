@@ -24,7 +24,15 @@ module.exports = {
             .setStyle("green")
             .setID("queue_next")
             .setEmoji("➡️")
+        let bt1b = new MessageButton()
+            .setStyle("green")
+            .setID("queue_next")
+            .setEmoji("➡️")
         let bt2 = new MessageButton()
+            .setStyle("green")
+            .setID("queue_prev")
+            .setEmoji("⬅️")
+        let bt2b = new MessageButton()
             .setStyle("green")
             .setID("queue_prev")
             .setEmoji("⬅️")
@@ -41,7 +49,7 @@ module.exports = {
 
         var buttonRow = new MessageActionRow()
             .addComponents([bt2, bt3, bt1])
-            
+
         const queueEmbed = await message.channel.send({ component: buttonRow, embed: embeds[currentPage] });
 
         const filter = (button) => button.clicker.user.id != client.user.id;
@@ -54,7 +62,15 @@ module.exports = {
                         currentPage++;
                         await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
                         var buttonRow2 = new MessageActionRow()
-                            .addComponents([bt2, bt3, bt1])
+                        if (currentPage === embeds.length) {
+                            bt1.setDisabled()
+                            buttonRow2.addComponents([bt2, bt3, bt1])
+                        } else if (currentPage === 1) {
+                            bt2.setDisabled()
+                            buttonRow2.addComponents([bt2, bt3, bt1])
+                        } else {
+                            buttonRow2.addComponent([bt2b, bt3, bt1b])
+                        }
                         queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
                         b.defer();
                     }
@@ -64,7 +80,15 @@ module.exports = {
                         --currentPage;
                         await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
                         var buttonRow3 = new MessageActionRow()
-                            .addComponents([bt2, bt3, bt1])
+                        if (currentPage === embeds.length) {
+                            bt1.setDisabled()
+                            buttonRow3.addComponents([bt2, bt3, bt1])
+                        } else if (currentPage === 1) {
+                            bt2.setDisabled()
+                            buttonRow3.addComponents([bt2, bt3, bt1])
+                        } else {
+                            buttonRow3.addComponent([bt2b, bt3, bt1b])
+                        }
                         queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
                         b.defer();
                     }
