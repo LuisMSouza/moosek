@@ -13,9 +13,9 @@ module.exports = {
         const bot = message.guild.members.cache.get(client.user.id);
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
+        const serverQueue = await message.client.queue.get(message.guild.id);
+        const serverRadio = await message.client.radio.get(message.guild.id);
         try {
-            const serverQueue = message.client.queue.get(message.guild.id);
-            const serverRadio = message.client.radio.get(message.guild.id);
             if (!song) {
                 if (bot.voice.speaking) return;
                 if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
