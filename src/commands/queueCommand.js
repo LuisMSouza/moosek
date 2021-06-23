@@ -26,7 +26,7 @@ module.exports = {
             .setEmoji("➡️")
         let bt1b = new MessageButton()
             .setStyle("green")
-            .setID("queue_next")
+            .setID("queue_next2")
             .setEmoji("➡️")
         let bt2 = new MessageButton()
             .setStyle("green")
@@ -34,7 +34,7 @@ module.exports = {
             .setEmoji("⬅️")
         let bt2b = new MessageButton()
             .setStyle("green")
-            .setID("queue_prev")
+            .setID("queue_prev2")
             .setEmoji("⬅️")
         let bt3 = new MessageButton()
             .setStyle("gray")
@@ -85,7 +85,7 @@ module.exports = {
                             buttonRow3.addComponents([bt2, bt3, bt1])
                         } else if (currentPage + 1 === 1) {
                             bt2.setDisabled()
-                            buttonRow3.addComponents([bt2, bt3, bt1])
+                            buttonRow3.addComponents([bt2, bt3, bt1b])
                         } else {
                             buttonRow3.addComponent([bt2b, bt3, bt1b])
                         }
