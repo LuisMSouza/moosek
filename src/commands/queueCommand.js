@@ -71,10 +71,9 @@ module.exports = {
                         } else {
                             buttonRow2.addComponent([bt2b, bt3, bt1b])
                         }
+                        await b.defer();
                         queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
-                        b.defer();
                     }
-                    b.defer();
                 } else if (b.id === "queue_prev") {
                     if (currentPage !== 0) {
                         --currentPage;
@@ -89,12 +88,10 @@ module.exports = {
                         } else {
                             buttonRow3.addComponent([bt2b, bt3, bt1b])
                         }
+                        await b.defer();
                         queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
-                        b.defer();
                     }
-                    b.defer();
                 }
-                b.defer();
             } catch (err) {
                 if (err.message.includes("DiscordAPIError: Unknown interaction")) return
             }
