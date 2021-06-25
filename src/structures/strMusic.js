@@ -2,6 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const ytdlAlt = require('ytdl-core-discord');
+const ytdlAlt2 = require("discord-ytdl-core");
 const sendError = require('../utils/error.js')
 const guildData = require('../models/guildData.js');
 const { STAY_TIME } = require('../utils/botUtils.js');
@@ -42,7 +43,14 @@ module.exports = {
             }
 
             let url = song.url;
-            const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
+            let stream = ytdl(url, {
+                filter: "audioonly",
+                opusEncoded: true,
+                encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
+            });
+            const dispatcher = serverQueue.connection.play(await stream, {
+                type: "opus"
+            })
                 .on("error", async error => {
                     if (error.message.includes("Video unavailable")) {
                         console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
