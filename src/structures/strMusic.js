@@ -43,14 +43,7 @@ module.exports = {
             }
 
             let url = song.url;
-            let stream = ytdl(url, {
-                filter: "audioonly",
-                opusEncoded: true,
-                encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200']
-            });
-            const dispatcher = serverQueue.connection.play(await stream, {
-                type: "opus"
-            })
+            const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
                 .on("error", async error => {
                     if (error.message.includes("Video unavailable")) {
                         console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
