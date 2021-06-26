@@ -119,7 +119,7 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            const mensagem = await serverQueue.textChannel.send({ component: row, embed: songEmbed })
+            const mensagem = await serverQueue.textChannel.send({ components: [row], embed: songEmbed })
             const filter = (button) => button.clicker.user.id != client.user.id;
             const collector = mensagem.createButtonCollector(filter);
             collector.on("collect", async (b) => {
