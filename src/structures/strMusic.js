@@ -77,12 +77,15 @@ module.exports = {
                 .setStyle("gray")
                 .setEmoji("⏹️")
             let b5 = new MessageButton()
+                .setStyle("gray")
                 .setID("repeat")
                 .setEmoji("🔁")
             let b6 = new MessageButton()
+                .setStyle("gray")
                 .setID("repeatOne")
                 .setEmoji("🔂")
             let b7 = new MessageButton()
+                .setStyle("gray")
                 .setID("aleatory")
                 .setEmoji("🔀")
 
@@ -350,6 +353,21 @@ module.exports = {
                         break
                 }
             });
+            dispatcher.on("finish", async () => {
+                serverQueue.prevSongs = []
+                serverQueue.prevSongs.push(serverQueue.songs[0])
+                if (serverQueue.nigthCore) {
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                    await mensagem.delete(mensagem);
+                    this.play(client, message, serverQueue.songs[random]);
+                } else {
+                    if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    await mensagem.delete(mensagem);
+                    this.play(client, message, serverQueue.songs[0]);
+                }
+            })
             /*.then(async (embed) => {
                 try {
                     await embed.react("⏸️");
