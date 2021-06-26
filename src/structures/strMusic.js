@@ -89,18 +89,30 @@ module.exports = {
                 .setID("aleatory")
                 .setEmoji("🔀")
 
-            let row = new MessageActionRow()
+            const row = new MessageActionRow()
             if (serverQueue.looping) {
                 b5.setStyle('green');
-                row.addComponents(b1, b3, b4, b5, b7);
+                row.addComponent(b1);
+                row.addComponent(b3);
+                row.addComponent(b4);
+                row.addComponent(b5);
+                row.addComponent(b7);
             }
             if (serverQueue.songLooping) {
                 b6.setStyle('green');
-                row.addComponents(b1, b3, b4, b6, b7);
+                row.addComponents(b1);
+                row.addComponent(b3);
+                row.addComponent(b4);
+                row.addComponent(b6);
+                row.addComponent(b7);
             }
             if (serverQueue.nigthCore) {
                 b7.setStyle('green');
-                row.addComponents(b1, b3, b4, b5, b7)
+                row.addComponents(b1);
+                row.addComponent(b3);
+                row.addComponent(b4);
+                row.addComponent(b5);
+                row.addComponent(b7);
             }
 
             let songEmbed = new MessageEmbed()
@@ -119,7 +131,7 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            const mensagem = await serverQueue.textChannel.send({ components: [row], embed: songEmbed })
+            const mensagem = await serverQueue.textChannel.send({ component: row, embed: songEmbed })
             const filter = (button) => button.clicker.user.id != client.user.id;
             const collector = mensagem.createButtonCollector(filter);
             collector.on("collect", async (b) => {
