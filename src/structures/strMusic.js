@@ -1,13 +1,9 @@
 /////////////////////// IMPORTS //////////////////////////
 const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
-const ytdlAlt = require('ytdl-core-discord');
-const ytdlAlt2 = require("discord-ytdl-core");
 const sendError = require('../utils/error.js')
-const guildData = require('../models/guildData.js');
 const { STAY_TIME } = require('../utils/botUtils.js');
 const guild_main = process.env.SERVER_MAIN
-const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -19,26 +15,32 @@ module.exports = {
         const serverRadio = await message.client.radio.get(message.guild.id);
         try {
             if (!song) {
-                if (bot.voice.speaking) return;
                 if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                 if (!message.guild.me.voice.channel) return;
                 if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
                 if (serverRadio) return;
-                var tempo = setTimeout(async function () {
-                    if (bot.voice.speaking) return;
-                    if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
-                    if (!message.guild.me.voice.channel) return;
-                    if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
-                    serverQueue.nigthCore = false
-                    await serverQueue.voiceChannel.leave();
-                    serverQueue.textChannel.send({
-                        embed: {
-                            color: "#0f42dc",
-                            description: `**Tempo de espera esgotado. Saí do chat ;)**`
+                if (bot.voice.speaking) {
+                    return undefined;
+                } else {
+                    var tempo = setTimeout(async function () {
+                        if (bot.voice.speaking) {
+                            return undefined;
+                        } else {
+                            if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
+                            if (!message.guild.me.voice.channel) return;
+                            if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
+                            serverQueue.nigthCore = false
+                            await serverQueue.voiceChannel.leave();
+                            serverQueue.textChannel.send({
+                                embed: {
+                                    color: "#0f42dc",
+                                    description: `**Tempo de espera esgotado. Saí do chat ;)**`
+                                }
+                            });
+                            return message.client.queue.delete(message.guild.id);
                         }
-                    });
-                    return message.client.queue.delete(message.guild.id);
-                }, STAY_TIME * 1000);
+                    }, STAY_TIME * 1000);
+                }
                 return message.client.queue.delete(message.guild.id);
             }
 
@@ -73,7 +75,7 @@ module.exports = {
             } else {
                 songEmbed.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
             }
-            songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel : "No provided"}` + "\n```", true)
+            songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "No provided"}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
             await serverQueue.textChannel.send(songEmbed).then(async (embed) => {
