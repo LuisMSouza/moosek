@@ -42,6 +42,7 @@ module.exports = {
                         }
                     }, STAY_TIME * 1000);
                 }
+                return undefined;
             }
 
             let url = song.url;
