@@ -41,7 +41,6 @@ module.exports = {
                         }
                     }, STAY_TIME * 1000);
                 }
-                return message.client.queue.delete(message.guild.id);
             }
 
             let url = song.url;
