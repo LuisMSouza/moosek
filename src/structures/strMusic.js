@@ -75,6 +75,7 @@ module.exports = {
             }
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
+            console.log(message.member.voice.channel)
 
             await serverQueue.textChannel.send(songEmbed).then(async (embed) => {
                 try {
