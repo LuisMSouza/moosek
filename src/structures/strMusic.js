@@ -29,7 +29,7 @@ module.exports = {
                     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
                     if (!message.guild.me.voice.channel) return;
                     if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
-                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
+                    serverQueue.nigthCore = false
                     await serverQueue.voiceChannel.leave();
                     serverQueue.textChannel.send({
                         embed: {
@@ -229,9 +229,6 @@ module.exports = {
                                 }
                                 if (serverQueue) {
                                     try {
-                                        var srch = await guildData.findOne({
-                                            guildID: message.guild.id
-                                        });
                                         if (!serverQueue.songLooping) {
                                             if (!serverQueue.songs[1]) {
                                                 serverQueue.songs.shift();
@@ -245,7 +242,7 @@ module.exports = {
                                                 await serverQueue.songs.push(serverQueue.songs[0]);
                                             }
                                             serverQueue.songs.shift();
-                                            if (srch.aleatory_mode) {
+                                            if (serverQueue.nigthCore) {
                                                 const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                                 this.play(client, message, serverQueue.songs[random]);
                                             } else {
@@ -291,7 +288,7 @@ module.exports = {
                                     serverQueue.songs = [];
                                     message.client.queue.set(message.guild.id, serverQueue);
                                     await message.member.voice.channel.leave();
-                                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: false } }, { new: true });
+                                    serverQueue.nigthCore = false
                                     await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
                                     return;
                                 } catch (e) {
@@ -321,10 +318,7 @@ module.exports = {
                                 }
                                 await reaction.users.remove(user);
                                 if (!serverQueue) return;
-                                var sgSet = await guildData.findOne({
-                                    guildID: message.guild.id
-                                });
-                                if (sgSet.aleatory_mode) return sendError("Esta opção não pode ser ativada no modo aleatório.", message.channel);
+                                if (serverQueue.nigthCore) return sendError("Esta opção não pode ser ativada no modo aleatório.", message.channel);
                                 if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
                                 if (serverQueue.songs.length === 1) return sendError("A fila de músicas só possui uma música.\nCaso queira repeti-la, ative 🔂", message.channel)
                                 try {
@@ -397,20 +391,13 @@ module.exports = {
                                 }
                                 if (!serverQueue) return;
                                 try {
-                                    var sg = await guildData.findOne({
-                                        guildID: message.guild.id
-                                    });
-                                    var isAleatory = sg.aleatory_mode;
-                                    await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { aleatory_mode: !isAleatory } }, { new: true });
-                                    var sg_2 = await guildData.findOne({
-                                        guildID: message.guild.id
-                                    });
+                                    serverQueue.nigthCore = !serverQueue.nigthCore
                                     //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
                                     await reaction.users.remove(user);
                                     return serverQueue.textChannel.send({
                                         embed: {
                                             color: "#701AAB",
-                                            description: `🔀 Modo aleatório ${sg_2.aleatory_mode ? `**Habilitado**` : `**Desabilitado**`}`
+                                            description: `🔀 Modo aleatório ${serverQueue.nigthCore ? `**Habilitado**` : `**Desabilitado**`}`
                                         }
                                     });
                                 } catch (e) {
@@ -425,10 +412,7 @@ module.exports = {
                 dispatcher.on("finish", async () => {
                     serverQueue.prevSongs = []
                     serverQueue.prevSongs.push(serverQueue.songs[0])
-                    const search_al = await guildData.findOne({
-                        guildID: message.guild.id
-                    });
-                    if (search_al.aleatory_mode) {
+                    if (serverQueue.nigthCore) {
                         if (!serverQueue.songLooping) await serverQueue.songs.shift();
                         var random = Math.floor(Math.random() * (serverQueue.songs.length));
                         this.play(client, message, serverQueue.songs[random]);
