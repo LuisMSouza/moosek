@@ -19,6 +19,7 @@ module.exports = {
                 if (!message.guild.me.voice.channel) return;
                 if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
                 if (serverRadio) return;
+                await message.client.queue.delete(message.guild.id);
                 if (bot.voice.speaking) {
                     return undefined;
                 } else {
