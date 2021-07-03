@@ -364,7 +364,6 @@ module.exports = {
                             })
                             return;
                         }
-                        await reaction.users.remove(user);
                         if (!serverQueue) return;
                         if (serverQueue.nigthCore) b.reply.send("> **Esta opção não pode ser ativada com o modo aleatório**", { ephemeral: true });
                         b.defer();
