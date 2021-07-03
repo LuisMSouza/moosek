@@ -141,8 +141,9 @@ module.exports = {
                                 } else if (serverQueue.songLooping) {
                                     await bt5b.setStyle('green')
                                     await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                                } else {
+                                    await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
                                 }
-                                b.defer();
                                 serverQueue.playing = false;
                                 serverQueue.connection.dispatcher.pause();
                                 return undefined;
@@ -180,6 +181,8 @@ module.exports = {
                                     await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed })
                                 } else if (serverQueue.songLooping) {
                                     await bt5b.setStyle('green')
+                                    await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                                } else {
                                     await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
                                 }
                                 b.defer();
