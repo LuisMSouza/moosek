@@ -328,8 +328,8 @@ module.exports = {
                         if (serverQueue.nigthCore) return b.reply.send("> **Esta opção não pode ser ativada com o modo aleatório**", { ephemeral: true });
                         if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
                         if (serverQueue.songs.length === 1) return b.reply.send("> **Só possui uma música na fila.**", { ephemeral: true });
+                        b.defer();
                         try {
-                            b.defer();
                             if (serverQueue.looping) {
                                 if (serverQueue.playing) {
                                     await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
