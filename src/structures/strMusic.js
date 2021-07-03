@@ -119,7 +119,7 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "No provided"}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            let mensagem = await serverQueue.textChannel.send({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed });
+            let mensagem = await serverQueue.textChannel.send({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed });
             const filter = (button) => button.clicker.user.id != client.user.id;
             const collector = mensagem.createButtonCollector(filter);
             collector.on("collect", async (b) => {
@@ -326,18 +326,14 @@ module.exports = {
                         }
                         if (!serverQueue) return;
                         if (serverQueue.nigthCore) return b.reply.send("> **Esta opção não pode ser ativada com o modo aleatório**", { ephemeral: true });
-                        if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
                         if (serverQueue.songs.length === 1) return b.reply.send("> **Só possui uma música na fila.**", { ephemeral: true });
                         b.defer();
                         try {
-                            if (serverQueue.looping) {
-                                if (serverQueue.playing) {
-                                    await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
-                                } else {
-                                    await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
-                                }
+                            if (serverQueue.playing) {
+                                await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                            } else {
+                                await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
                             }
-                            serverQueue.looping ? bt5a.setStyle('green') : bt5a.setStyle('gray')
                             serverQueue.looping = !serverQueue.looping;
                             return serverQueue.textChannel.send({
                                 embed: {
@@ -367,6 +363,26 @@ module.exports = {
                                 }, ephemeral: true
                             })
                             return;
+                        }
+                        await reaction.users.remove(user);
+                        if (!serverQueue) return;
+                        if (serverQueue.nigthCore) b.reply.send("> **Esta opção não pode ser ativada com o modo aleatório**", { ephemeral: true });
+                        b.defer();
+                        try {
+                            if (serverQueue.playing) {
+                                await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed })
+                            } else {
+                                await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5a, bt6], embed: songEmbed })
+                            }
+                            serverQueue.looping = !serverQueue.looping;
+                            return serverQueue.textChannel.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: `🔁 Loop da fila de músicas ${serverQueue.looping ? `**Habilitado**` : `**Desabilitado**`}`
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
                         }
                         break
                     case "aleatory":
