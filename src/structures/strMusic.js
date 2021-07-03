@@ -187,8 +187,8 @@ module.exports = {
                                     await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
                                 }
                                 b.defer();
-                                serverQueue.playing = false;
-                                serverQueue.connection.dispatcher.pause();
+                                serverQueue.playing = true;
+                                serverQueue.connection.dispatcher.resume();
                                 return undefined;
                             } catch (e) {
                                 console.log(e);
@@ -260,19 +260,39 @@ module.exports = {
                         }
                         if (serverQueue) {
                             try {
-                                b.defer();
-                                mensagem.delete(mensagem);
-                                if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) return sendError("Não há nenhuma música anterior.", message.channel);
-                                await serverQueue.songs.shift()
-                                await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
-                                //dispatcher.end();
-                                await this.play(client, message, serverQueue.songs[0]);
-                                return;
+                                if (!serverQueue.songLooping) {
+                                    if (!serverQueue.songs[1]) {
+                                        b.defer();
+                                        serverQueue.songs.shift();
+                                        await dispatcher.end();
+                                        mensagem.edit({ embed: songEmbed });
+                                        return;
+                                    }
+                                    serverQueue.prevSongs = [];
+                                    await serverQueue.prevSongs.push(serverQueue.songs[0]);
+                                    if (serverQueue.looping) {
+                                        await serverQueue.songs.push(serverQueue.songs[0]);
+                                    }
+                                    b.defer();
+                                    serverQueue.songs.shift();
+                                    if (serverQueue.nigthCore) {
+                                        const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                        b.defer();
+                                        await mensagem.delete(mensagem)
+                                        this.play(client, message, serverQueue.songs[random]);
+                                    } else {
+                                        b.defer();
+                                        await mensagem.delete(mensagem)
+                                        this.play(client, message, serverQueue.songs[0]);
+                                    }
+                                } else {
+                                    b.defer();
+                                    await mensagem.delete(mensagem)
+                                    this.play(client, message, serverQueue.songs[0]);
+                                }
                             } catch (e) {
                                 console.log(e);
                             }
-                        } else {
-                            return;
                         }
                         break
                     case "repeata":
