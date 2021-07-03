@@ -144,6 +144,7 @@ module.exports = {
                                 } else {
                                     await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
                                 }
+                                b.defer()
                                 serverQueue.playing = false;
                                 serverQueue.connection.dispatcher.pause();
                                 return undefined;
