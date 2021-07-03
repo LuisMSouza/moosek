@@ -4,6 +4,7 @@ const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const { STAY_TIME } = require('../utils/botUtils.js');
 const guild_main = process.env.SERVER_MAIN
+const { MessageButton } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -63,6 +64,33 @@ module.exports = {
                     console.log(error);
                 });
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
+            let bt1 = new MessageButton()
+                .setID("pause")
+                .setStyle('gray')
+                .setEmoji("⏸️")
+            let bt2 = new MessageButton()
+                .setID("play")
+                .setStyle('green')
+                .setEmoji("▶️")
+            let bt3 = new MessageButton()
+                .setID("stop")
+                .setStyle('gray')
+                .setEmoji("⏹️")
+            let bt4 = new MessageButton()
+                .setID("skip")
+                .setStyle('gray')
+                .setEmoji("⏭️")
+            let bt5a = new MessageButton()
+                .setID("repeat")
+                .setEmoji("🔁")
+            let bt5b = new MessageButton()
+                .setID("repeat")
+                .setEmoji("🔂")
+            let bt6 = new MessageButton()
+                .setID("aleatory")
+                .setStyle('gray')
+                .setEmoji("🔀")
+
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
@@ -79,7 +107,9 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "No provided"}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            await serverQueue.textChannel.send(songEmbed).then(async (embed) => {
+            let mensagem = await serverQueue.textChannel.send({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed })
+
+            /*.then(async (embed) => {
                 try {
                     await embed.react("⏸️");
                     await embed.react("▶️");
@@ -426,7 +456,7 @@ module.exports = {
                     }
                     embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                 })
-            });
+            });*/
         } catch (e) {
             console.log(e);
             channelMain.send({
