@@ -357,6 +357,19 @@ module.exports = {
                         break
                 }
             })
+            dispatcher.on("finish", async () => {
+                serverQueue.prevSongs = []
+                serverQueue.prevSongs.push(serverQueue.songs[0])
+                if (serverQueue.nigthCore) {
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                    this.play(client, message, serverQueue.songs[random]);
+                } else {
+                    if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    this.play(client, message, serverQueue.songs[0]);
+                }
+            })
 
             /*.then(async (embed) => {
                 try {
