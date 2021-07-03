@@ -82,10 +82,11 @@ module.exports = {
                 .setEmoji("⏭️")
             let bt5a = new MessageButton()
                 .setStyle('gray')
-                .setID("repeat")
+                .setID("repeata")
                 .setEmoji("🔁")
             let bt5b = new MessageButton()
-                .setID("repeat")
+                .setStyle('gray')
+                .setID("repeatb")
                 .setEmoji("🔂")
             let bt6 = new MessageButton()
                 .setID("aleatory")
@@ -108,7 +109,230 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "No provided"}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            let mensagem = await serverQueue.textChannel.send({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed })
+            let mensagem = await serverQueue.textChannel.send({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed });
+            const filter = (button) => button.clicker.user.id != client.user.id;
+            const collector = mensagem.createButtonCollector(filter);
+            collector.on("collect", async (b) => {
+                switch (b.id) {
+                    case "pause":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue) {
+                            try {
+                                if (serverQueue.looping) {
+                                    await bt5a.setStyle('green')
+                                    await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5a, bt6], embed: songEmbed })
+                                } else if (serverQueue.songLooping) {
+                                    await bt5b.setStyle('green')
+                                    await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                                }
+                                b.defer();
+                                serverQueue.playing = false;
+                                serverQueue.connection.dispatcher.pause();
+                                return undefined;
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        } else {
+                            b.defer();
+                            return undefined;
+                        }
+                        break
+                    case "play":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue) {
+                            try {
+                                if (serverQueue.looping) {
+                                    await bt5a.setStyle('green')
+                                    await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5a, bt6], embed: songEmbed })
+                                } else if (serverQueue.songLooping) {
+                                    await bt5b.setStyle('green')
+                                    await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                                }
+                                b.defer();
+                                serverQueue.playing = false;
+                                serverQueue.connection.dispatcher.pause();
+                                return undefined;
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        } else {
+                            b.defer();
+                            return undefined;
+                        }
+                        break
+                    case "stop":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (!serverQueue) {
+                            b.defer();
+                            b.reply.send("> **Não há nada tocando no momento.**", { ephemeral: true });
+                            return;
+                        }
+                        try {
+                            b.defer();
+                            mensagem.delete(mensagem);
+                            serverQueue.songs = [];
+                            message.client.queue.set(message.guild.id, serverQueue);
+                            await message.member.voice.channel.leave();
+                            serverQueue.nigthCore = false
+                            return;
+                        } catch (e) {
+                            console.log(e);
+                        }
+                        break
+                    case "skip":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (!serverQueue) {
+                            b.defer();
+                            b.reply.send("> **Não há nada tocando no momento.**", { ephemeral: true });
+                            return;
+                        }
+                        if (serverQueue) {
+                            try {
+                                b.defer();
+                                mensagem.delete(mensagem);
+                                if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) return sendError("Não há nenhuma música anterior.", message.channel);
+                                await serverQueue.songs.shift()
+                                await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
+                                //dispatcher.end();
+                                await this.play(client, message, serverQueue.songs[0]);
+                                return;
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        } else {
+                            return;
+                        }
+                        break
+                    case "repeata":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        break
+                    case "repeatb":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        break
+                    case "aleatory":
+                        if (!message.member.voice.channel) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        if (serverQueue.connection.channel.id !== message.member.voice.channel.id) {
+                            b.reply.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                }, ephemeral: true
+                            })
+                            return;
+                        }
+                        break
+                }
+            })
 
             /*.then(async (embed) => {
                 try {
