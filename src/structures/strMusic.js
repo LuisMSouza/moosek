@@ -93,6 +93,16 @@ module.exports = {
                 .setStyle('gray')
                 .setEmoji("🔀")
 
+
+            if (serverQueue.looping) {
+                await bt5a.setStyle('green')
+            }
+            if (serverQueue.songLooping) {
+                await bt5b.setStyle('green')
+            }
+            if (serverQueue.nigthCore) {
+                await bt6.setStyle('green')
+            }
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
                 .setColor("#0f42dc")
@@ -313,6 +323,30 @@ module.exports = {
                                 }, ephemeral: true
                             })
                             return;
+                        }
+                        if (!serverQueue) return;
+                        if (serverQueue.nigthCore) return b.reply.send("> **Esta opção não pode ser ativada com o modo aleatório**", { ephemeral: true });
+                        if (serverQueue.songLooping) return sendError("Esta opção não pode ser ativada com o loop da música ativado.", message.channel);
+                        if (serverQueue.songs.length === 1) return b.reply.send("> **Só possui uma música na fila.**", { ephemeral: true });
+                        try {
+                            b.defer();
+                            if (serverQueue.looping) {
+                                if (serverQueue.playing) {
+                                    await mensagem.edit({ buttons: [bt1, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                                } else {
+                                    await mensagem.edit({ buttons: [bt2, bt3, bt4, bt5b, bt6], embed: songEmbed })
+                                }
+                            }
+                            serverQueue.looping ? bt5a.setStyle('green') : bt5a.setStyle('gray')
+                            serverQueue.looping = !serverQueue.looping;
+                            return serverQueue.textChannel.send({
+                                embed: {
+                                    color: "#701AAB",
+                                    description: `🔁 Loop da fila de músicas ${serverQueue.looping ? `**Habilitado**` : `**Desabilitado**`}`
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
                         }
                         break
                     case "repeatb":
