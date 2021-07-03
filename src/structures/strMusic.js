@@ -81,6 +81,7 @@ module.exports = {
                 .setStyle('gray')
                 .setEmoji("⏭️")
             let bt5a = new MessageButton()
+                .setStyle('gray')
                 .setID("repeat")
                 .setEmoji("🔁")
             let bt5b = new MessageButton()
