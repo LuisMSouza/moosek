@@ -43,8 +43,8 @@ module.exports = {
             const colletcButt = btnMsg.createButtonCollector(filter);
             colletcButt.on("collect", async (b) => {
                 btn.setDisabled()
-                b.defer();
                 btnMsg.edit({ component: btn, embed: embd });
+                b.reply.defer();
                 const filter2 = m => m.author.id === message.author.id;
                 message.channel.awaitMessages(filter2, { max: 1, time: 300000, errors: ['time'] })
                     .then(async collected => {

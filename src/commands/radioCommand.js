@@ -248,8 +248,8 @@ module.exports = {
                                 await connection.disconnect();
                                 await dispatcher.destroy();
                                 await client.radio.delete(message.guild.id);
-                                b.defer(true)
                                 buttonMsg.edit({ component: button2, embed: embedRadio });
+                                b.reply.defer();
                                 return
                             } else if (b.id === "pause_radio") {
                                 if (!client.radio) return;
@@ -275,11 +275,11 @@ module.exports = {
                                 }
 
                                 await dispatcher.pause();
-                                b.defer();
                                 const row2 = new MessageActionRow()
                                     .addComponents(button1, buttonResume)
 
                                 buttonMsg.edit({ component: row2, embed: embedRadio });
+                                b.reply.defer();
                                 return;
                             } else if (b.id === "resume_radio") {
                                 if (!client.radio) return;
@@ -305,11 +305,11 @@ module.exports = {
                                 }
 
                                 await dispatcher.resume();
-                                b.defer();
                                 const row3 = new MessageActionRow()
                                     .addComponents(button1, buttonStop)
 
                                 buttonMsg.edit({ component: row3, embed: embedRadio });
+                                b.reply.defer();
                                 return;
                             }
                         });
