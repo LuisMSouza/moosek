@@ -87,7 +87,7 @@ module.exports = {
                 .setID("menuOne")
                 .setMaxValues(1)
 
-            const msgEmb = await msg.channel.send({
+            const msgEmb = await message.channel.send({
                 component: menu, embed: {
                     description: "> **Faça a escolha da rádio abaixo:**",
                     color: "#0f42dc"
