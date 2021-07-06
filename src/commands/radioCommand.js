@@ -94,7 +94,7 @@ module.exports = {
                 }
             });
             const collector = msgEmb.createMenuCollector((b) => b, { time: 300000 });
-            collector.on("collect", (m) => {
+            collector.on("collect", async (m) => {
                 m.reply.defer();
                 switch (m.values[0]) {
                     case "1":
