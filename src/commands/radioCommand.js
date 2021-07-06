@@ -333,7 +333,7 @@ module.exports = {
                     .on("start", async () => {
                         const embedRadio = new Discord.MessageEmbed()
                             .setAuthor("Tocando agora:")
-                            .setColor("#e14b07")
+                            .setColor("#0f42dc")
                             .setTitle(choiceName)
                             .setThumbnail("https://cdn.discordapp.com/attachments/810261725219520564/832260730077315162/radio.png")
                             .addField("> __Canal:__", "```fix\n" + `${msg.member.voice.channel.name}` + "\n```", true)
@@ -375,7 +375,7 @@ module.exports = {
                                 if (!msg.member.voice.channel) {
                                     b.reply.send({
                                         embed: {
-                                            color: "#e14b07",
+                                            color: "#0f42dc",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }, ephemeral: true
                                     });
@@ -385,7 +385,7 @@ module.exports = {
                                 if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
                                     b.reply.send({
                                         embed: {
-                                            color: "#e14b07",
+                                            color: "#0f42dc",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }, ephemeral: true
                                     });
@@ -405,7 +405,7 @@ module.exports = {
                                 if (!msg.member.voice.channel) {
                                     b.reply.send({
                                         embed: {
-                                            color: "#e14b07",
+                                            color: "#0f42dc",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }, ephemeral: true
                                     });
@@ -415,7 +415,7 @@ module.exports = {
                                 if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
                                     b.reply.send({
                                         embed: {
-                                            color: "#e14b07",
+                                            color: "#0f42dc",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }, ephemeral: true
                                     });
@@ -435,7 +435,7 @@ module.exports = {
                                 if (!msg.member.voice.channel) {
                                     b.reply.send({
                                         embed: {
-                                            color: "#e14b07",
+                                            color: "#0f42dc",
                                             description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                         }, ephemeral: true
                                     });
@@ -445,7 +445,7 @@ module.exports = {
                                 if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
                                     b.reply.send({
                                         embed: {
-                                            color: "#e14b07",
+                                            color: "#0f42dc",
                                             description: "❌ **O bot está sendo utilizado em outro canal!**"
                                         }, ephemeral: true
                                     });
