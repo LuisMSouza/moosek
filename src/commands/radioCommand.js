@@ -2,7 +2,7 @@
 const sendError = require('../utils/error.js');
 const Discord = require('discord.js');
 const radioStations = require('../utils/radioStations.js');
-const { MessageButton, MessageActionRow } = require('discord-buttons');
+const { MessageButton, MessageActionRow, MessageMenu, MessageMenuOption } = require('discord-buttons');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -21,105 +21,144 @@ module.exports = {
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);
         if (!choice) {
-            const embedChoice = new Discord.MessageEmbed()
-                .setTitle("Radios disponíveis")
-                .setColor("#0f42dc")
-                .setDescription("`0` - Standard-Radio\n`1` - Base-Radio(Alemã)\n`2` - Chill-Radio\n`3` - Dance-Radio\n`4` - Greatest-hits-Radio\n`5` - Hip-hop-Radio\n`6` - Party-Radio\n`7` - Us-Rap-Radio\n`8` - Greatest-hits-Radio-2\n`9` - Absolut-Radio\n`10` - Absolut-70s-Radio\n`11` - Absolut-80s-Radio\n`12` - Absolut-90s-Radio\n`13` - Absolut-2000s-Radio\n`14` - Absolut-Classic-Rock\n`15` - 88.6-Radio\n`16` - Top-Radio\n`17` - NRJ-Radio\n`18` - Color-Music-Radio\n")
-                .setFooter("Para fazer a escolha digite o comando com o número da radio")
+            let op1 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("1")
+                .setLabel("Standard-Radio")
+            let op2 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("2")
+                .setLabel("Chill-Radio")
+            let op3 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("3")
+                .setLabel("Greatest-hits-Radio")
+            let op4 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("4")
+                .setLabel("Hip-hop-Radio")
+            let op5 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("5")
+                .setLabel("Rádio Itatiaia")
+            let op6 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("6")
+                .setLabel("Rádio FM 98")
+            let op7 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("7")
+                .setLabel("Rádio Jovem Pan 107.3 FM")
+            let op8 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("8")
+                .setLabel("Rádio Alvorada FM")
+            let op9 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("9")
+                .setLabel("89 FM A Rádio Rock")
+            let op10 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("10")
+                .setLabel("Liberdade FM")
+            let op11 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("11")
+                .setLabel("American Road Radio")
+            let op12 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("12")
+                .setLabel("Classic Rock Florida")
+            let op13 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("13")
+                .setLabel("Rádio Z100 - 100.3 FM")
+            let op14 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("14")
+                .setLabel("89.7 KSGN")
+            let op15 = new MessageMenuOption()
+                .setEmoji("📻")
+                .setValue("15")
+                .setLabel("WNCI 97.9")
+            const menu = new MessageMenu()
+                .addOptions(op1, op2, op3, op4, op5, op6, op7, op8, op9, op10, op11, op12, op13, op14, op15)
+                .setPlaceholder("Escolha sua rádio")
+                .setID("menuOne")
+                .setMaxValues(1)
 
-            const bt1 = new MessageButton()
-                .setEmoji("🌐")
-                .setStyle("gray")
-                .setID("button_radio_global")
-
-            const bt2 = new MessageButton()
-                .setEmoji("🇧🇷")
-                .setStyle("gray")
-                .setID("button_radio_br")
-
-            const bt3 = new MessageButton()
-                .setEmoji("🇺🇸")
-                .setStyle("gray")
-                .setID("button_radio_usa")
-
-            const msgButtons = new MessageActionRow()
-                .addComponent(bt1)
-                .addComponent(bt2)
-                .addComponent(bt3)
-
-            const msgEmb = await message.channel.send({ component: msgButtons, embed: embedChoice })
-            const filter = (button) => button.clicker.user.id != client.user.id;
-            const colletcButt = msgEmb.createButtonCollector(filter);
-            colletcButt.on("collect", (b) => {
-                if (b.id === "button_radio_global") {
-                    const embedAll = new Discord.MessageEmbed()
-                        .setTitle("Radios disponíveis")
-                        .setColor("#0f42dc")
-                        .setDescription("`0` - Standard-Radio\n`1` - Base-Radio(Alemã)\n`2` - Chill-Radio\n`3` - Dance-Radio\n`4` - Greatest-hits-Radio\n`5` - Hip-hop-Radio\n`6` - Party-Radio\n`7` - Us-Rap-Radio\n`8` - Greatest-hits-Radio-2\n`9` - Absolut-Radio\n`10` - Absolut-70s-Radio\n`11` - Absolut-80s-Radio\n`12` - Absolut-90s-Radio\n`13` - Absolut-2000s-Radio\n`14` - Absolut-Classic-Rock\n`15` - 88.6-Radio\n`16` - Top-Radio\n`17` - NRJ-Radio\n`18` - Color-Music-Radio\n")
-                        .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                    b.defer()
-                    msgEmb.edit({ component: msgButtons, embed: embedAll });
-                } else if (b.id === "button_radio_br") {
-                    const embedBr = new Discord.MessageEmbed()
-                        .setTitle("Radios disponíveis")
-                        .setColor("#0f42dc")
-                        .setDescription("`19` - Rádio Itatiaia\n`20` - Rádio FM 98\n`21` - Rádio Jovem Pan 107.3 FM\n`22` - Rádio Alvorada FM\n`23` - 89 FM A Rádio Rock\n`24` - Liberdade FM")
-                        .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                    b.defer()
-                    msgEmb.edit({ component: msgButtons, embed: embedBr });
-                } else if (b.id === "button_radio_usa") {
-                    const embedUs = new Discord.MessageEmbed()
-                        .setTitle("Radios disponíveis")
-                        .setColor("#0f42dc")
-                        .setDescription("`25` - American Road Radio\n`26` - Classic Rock Florida\n`27` - Rádio Z100 - 100.3 FM\n`28` - 89.7 KSGN\n`29` - WNCI 97.9")
-                        .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                    b.defer()
-                    msgEmb.edit({ component: msgButtons, embed: embedUs });
+            const msgEmb = await msg.channel.send({
+                component: menu, embed: {
+                    description: "> **Faça a escolha da rádio abaixo:**",
+                    color: "#0f42dc"
+                }
+            });
+            const collector = msgEmb.createMenuCollector((b) => b, { time: 300000 });
+            collector.on("collect", (m) => {
+                m.reply.defer();
+                switch (m.values[0]) {
+                    case "1":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[0], radioStations.radioStationsName[0])
+                        break
+                    case "2":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[1], radioStations.radioStationsName[1])
+                        break
+                    case "3":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[2], radioStations.radioStationsName[2])
+                        break
+                    case "4":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[3], radioStations.radioStationsName[3])
+                        break
+                    case "5":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[4], radioStations.radioStationsName[4])
+                        break
+                    case "6":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[5], radioStations.radioStationsName[5])
+                        break
+                    case "7":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[6], radioStations.radioStationsName[6])
+                        break
+                    case "8":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[7], radioStations.radioStationsName[7])
+                        break
+                    case "9":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[8], radioStations.radioStationsName[8])
+                        break
+                    case "10":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[9], radioStations.radioStationsName[9])
+                        break
+                    case "11":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[10], radioStations.radioStationsName[10])
+                        break
+                    case "12":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[11], radioStations.radioStationsName[11])
+                        break
+                    case "13":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[12], radioStations.radioStationsName[12])
+                        break
+                    case "14":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[13], radioStations.radioStationsName[13])
+                        break
+                    case "15":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, radioStations.radioStations[14], radioStations.radioStationsName[14])
+                        break
                 }
             })
-            /*.then(async (embed) => {
-                try {
-                    await embed.react("🌐");
-                    await embed.react("🇧🇷");
-                    await embed.react("🇺🇸");
-                    const collector = embed.createReactionCollector((reaction, user) => ["🌐", "🇧🇷", "🇺🇸"].includes(reaction.emoji.name) && user != user.bot);
-                    collector.on("collect", async (reaction, user) => {
-                        var membReact = message.guild.members.cache.get(user.id);
-                        switch (reaction.emoji.name) {
-                            case "🌐":
-                                const embedAll = new Discord.MessageEmbed()
-                                    .setTitle("Radios disponíveis")
-                                    .setColor("#0f42dc")
-                                    .setDescription("`0` - Standard-Radio\n`1` - Base-Radio(Alemã)\n`2` - Chill-Radio\n`3` - Dance-Radio\n`4` - Greatest-hits-Radio\n`5` - Hip-hop-Radio\n`6` - Party-Radio\n`7` - Us-Rap-Radio\n`8` - Greatest-hits-Radio-2\n`9` - Absolut-Radio\n`10` - Absolut-70s-Radio\n`11` - Absolut-80s-Radio\n`12` - Absolut-90s-Radio\n`13` - Absolut-2000s-Radio\n`14` - Absolut-Classic-Rock\n`15` - 88.6-Radio\n`16` - Top-Radio\n`17` - NRJ-Radio\n`18` - Color-Music-Radio\n")
-                                    .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                                embed.edit(embedAll);
-                                await reaction.users.remove(user);
-                                break;
-                            case "🇧🇷":
-                                const embedBBr = new Discord.MessageEmbed()
-                                    .setTitle("Radios disponíveis")
-                                    .setColor("#0f42dc")
-                                    .setDescription("`19` - Rádio Itatiaia\n`20` - Rádio FM 98\n`21` - Rádio Jovem Pan 107.3 FM\n`22` - Rádio Alvorada FM\n`23` - 89 FM A Rádio Rock")
-                                    .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                                embed.edit(embedBBr);
-                                await reaction.users.remove(user);
-                                break;
-                            case "🇺🇸":
-                                const embedBUs = new Discord.MessageEmbed()
-                                    .setTitle("Radios disponíveis")
-                                    .setColor("#0f42dc")
-                                    .setDescription("`24` - American Road Radio\n`25` - Classic Rock Florida\n`26` - Rádio Z100 - 100.3 FM\n`27` - 89.7 KSGN\n`28` - WNCI 97.9")
-                                    .setFooter("Para fazer a escolha digite o comando com o número da radio")
-                                embed.edit(embedBUs);
-                                await reaction.users.remove(user);
-                                break;
-                        }
-                    });
-                } catch (err) {
-                    if (err.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
-                    console.log(err)
-                }
-            });*/
         } else {
             var isNum = Number(choice);
             if (!Number.isInteger(isNum)) return sendError("Indique o número da radio que deseja.", message.channel);
@@ -278,6 +317,154 @@ module.exports = {
             } catch (e) {
                 if (e.message === "Unknown stream type") return sendError("Radio não encontrada :(", message.channel);
                 return sendError("Ocorreu um erro ao tentar executar a radio.", message.channel) && console.log(e);
+            }
+        }
+        async function initRadio(msg, bot, args, choice, choiceName) {
+            try {
+                const radioListenConstruct = {
+                    playing: true,
+                    channel: msg.member.voice.channel,
+                    author: msg.author.tag
+                }
+                bot.radio.set(msg.guild.id, radioListenConstruct)
+                var connection = await voiceChannel.join();
+                await connection.voice.setSelfDeaf(true);
+                const dispatcher = await connection.play(choice, { quality: 'highestaudio' })
+                    .on("start", async () => {
+                        const embedRadio = new Discord.MessageEmbed()
+                            .setAuthor("Tocando agora:")
+                            .setColor("#e14b07")
+                            .setTitle(choiceName)
+                            .setThumbnail("https://cdn.discordapp.com/attachments/810261725219520564/832260730077315162/radio.png")
+                            .addField("> __Canal:__", "```fix\n" + `${msg.member.voice.channel.name}` + "\n```", true)
+                            .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
+
+                        const button1 = new MessageButton()
+                            .setStyle("red")
+                            .setID("stop_radio")
+                            .setLabel("PARAR RADIO")
+
+                        const buttonStop = new MessageButton()
+                            .setStyle("red")
+                            .setID("pause_radio")
+                            .setLabel("PAUSAR RADIO")
+
+                        const buttonResume = new MessageButton()
+                            .setStyle("green")
+                            .setID("resume_radio")
+                            .setLabel("RESUMIR RADIO")
+
+                        const button2 = new MessageButton()
+                            .setStyle("red")
+                            .setID("smart")
+                            .setLabel("RADIO FINALIZADA")
+                            .setDisabled()
+
+                        const row = new MessageActionRow()
+                            .addComponents(button1, buttonStop)
+
+                        const buttonMsg = await msg.channel.send("", {
+                            component: row,
+                            embed: embedRadio
+                        })
+                        const filter = (button) => button.clicker.user.id != bot.user.id;
+                        const colletcButt = buttonMsg.createButtonCollector(filter);
+                        colletcButt.on("collect", async (b) => {
+                            if (b.id === "stop_radio") {
+                                if (!bot.radio) return;
+                                if (!msg.member.voice.channel) {
+                                    b.reply.send({
+                                        embed: {
+                                            color: "#e14b07",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }, ephemeral: true
+                                    });
+                                    //await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
+                                    b.reply.send({
+                                        embed: {
+                                            color: "#e14b07",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }, ephemeral: true
+                                    });
+                                    //await reaction.users.remove(user);
+                                    return;
+                                }
+
+                                //await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                                await msg.member.voice.channel.leave();
+                                await connection.disconnect();
+                                await dispatcher.destroy();
+                                await bot.radio.delete(msg.guild.id);
+                                buttonMsg.edit({ component: button2, embed: embedRadio });
+                                b.reply.defer();
+                            } else if (b.id === "pause_radio") {
+                                if (!bot.radio) return;
+                                if (!msg.member.voice.channel) {
+                                    b.reply.send({
+                                        embed: {
+                                            color: "#e14b07",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }, ephemeral: true
+                                    });
+                                    //await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
+                                    b.reply.send({
+                                        embed: {
+                                            color: "#e14b07",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }, ephemeral: true
+                                    });
+                                    //await reaction.users.remove(user);
+                                    return;
+                                }
+
+                                await dispatcher.pause();
+                                const row2 = new MessageActionRow()
+                                    .addComponents(button1, buttonResume)
+
+                                buttonMsg.edit({ component: row2, embed: embedRadio });
+                                b.reply.defer();
+                                return;
+                            } else if (b.id === "resume_radio") {
+                                if (!bot.radio) return;
+                                if (!msg.member.voice.channel) {
+                                    b.reply.send({
+                                        embed: {
+                                            color: "#e14b07",
+                                            description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                                        }, ephemeral: true
+                                    });
+                                    //await reaction.users.remove(user);
+                                    return;
+                                }
+                                if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
+                                    b.reply.send({
+                                        embed: {
+                                            color: "#e14b07",
+                                            description: "❌ **O bot está sendo utilizado em outro canal!**"
+                                        }, ephemeral: true
+                                    });
+                                    //await reaction.users.remove(user);
+                                    return;
+                                }
+
+                                await dispatcher.resume();
+                                const row3 = new MessageActionRow()
+                                    .addComponents(button1, buttonStop)
+                                buttonMsg.edit({ component: row3, embed: embedRadio });
+                                b.reply.defer();
+                                return;
+                            }
+                        });
+                    })
+            } catch (e) {
+                if (e.message === "Unknown stream type") return sendError("Radio não encontrada :(", msg.channel);
+                return sendError("Ocorreu um erro ao tentar executar a radio.", msg.channel) && console.log(e);
             }
         }
     }
