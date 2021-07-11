@@ -1,5 +1,6 @@
 module.exports = async (client, message, song) => {
     const serverQueue = await message.client.queue.get(message.guild.id);
+    const serverRadio = await message.client.radio.get(message.guild.id);
     const bot = message.guild.members.cache.get(client.user.id);
     if (bot.voice.speaking) return;
     if (serverQueue.connection.dispatcher && message.guild.me.voice.channel) return;
