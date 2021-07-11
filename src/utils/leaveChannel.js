@@ -1,3 +1,4 @@
+const { STAY_TIME } = require('../utils/botUtils.js');
 module.exports = async (client, message, song) => {
     const serverQueue = await message.client.queue.get(message.guild.id);
     const serverRadio = await message.client.radio.get(message.guild.id);
