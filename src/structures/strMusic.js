@@ -16,7 +16,7 @@ module.exports = {
         const serverRadio = await message.client.radio.get(message.guild.id);
         try {
             if (!song) {
-                await leaveChannel(client, message, song);
+                return leaveChannel(client, message, song);
             }
             let url = song.url;
             const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
