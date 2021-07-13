@@ -2,9 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
-const { STAY_TIME } = require('../utils/botUtils.js');
 const guild_main = process.env.SERVER_MAIN
-const { MessageButton, MessageActionRow } = require('discord-buttons');
 const leaveChannel = require('../utils/leaveChannel.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
