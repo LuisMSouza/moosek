@@ -2,7 +2,7 @@
 const sendError = require('../utils/error.js');
 const { MessageEmbed } = require('discord.js');
 const guildData = require('../models/guildData.js');
-const { MessageButton } = require('discord-buttons');
+const { MessageActionRow, MessageButton } = require('discord.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -31,16 +31,16 @@ module.exports = {
                 .setFooter(client.user.username, client.user.displayAvatarURL())
 
             const btn = new MessageButton()
-                .setID("prefix_altern")
-                .setLabel("ALTERAR PREFIXO")
-                .setStyle("blurple")
+                .setCustomId('change_prefix')
+                .setLabel('ALTERAR PREFIXO')
+                .setStyle('PRIMARY')
 
             const embd = new MessageEmbed()
                 .setDescription("```fix\nDigite o novo prefixo\n```")
 
             const btnMsg = await message.channel.send({ component: btn, embed: emb });
-            const filter = (button) => button.clicker.user.id != client.user.id;
-            const colletcButt = btnMsg.createButtonCollector(filter);
+            const filter = i => i.customId === 'change_prefix' && i.user.id != client.user.id;
+            const colletcButt = interaction
             colletcButt.on("collect", async (b) => {
                 btn.setDisabled()
                 btnMsg.edit({ component: btn, embed: embd });
