@@ -1,6 +1,6 @@
 /////////////////////// IMPORTS ///////////////////////////
 const sendError = require('../utils/error.js');
-const {arrayMoveImmutable} = require('array-move')
+const Move = require('alib-array')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
         let song = serverQueue.songs[oldPosition - 1].title;
 
         try {
-            serverQueue.songs = arrayMoveImmutable(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
+            serverQueue.songs = Move().move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
             message.channel.send({
                 embed: {
                     color: "#0f42dc",
