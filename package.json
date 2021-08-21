@@ -12,6 +12,7 @@
   },
   "author": "Luís#0685",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "@discordjs/opus": "^0.6.0",
     "array-move": "^4.0.0",
