@@ -1,6 +1,6 @@
 /////////////////////// IMPORTS ///////////////////////////
 const sendError = require('../utils/error.js');
-import {arrayMoveImmutable} from 'array-move';
+const {arrayMoveImmutable} = require('array-move')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
