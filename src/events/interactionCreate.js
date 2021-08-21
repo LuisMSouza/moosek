@@ -2,6 +2,7 @@ module.exports = async i => {
     if (i.isButton()) {
         switch (i.customId) {
             case "change_prefix":
+                console.log(i)
                 break
             case "":
                 break
