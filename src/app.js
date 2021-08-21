@@ -11,7 +11,6 @@ const client = new Discord.Client({
     shards: "auto",
     intents: Discord.Intents.FLAGS.GUILDS
 })
-require('discord-buttons')(client);
 const configVars = {
     token: process.env.TOKEN_KEY,
 }
