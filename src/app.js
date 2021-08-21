@@ -8,7 +8,8 @@ dotenv.config();
 const client = new Discord.Client({
     disableMentions: "all",
     restTimeOffset: 0,
-    shards: "auto"
+    shards: "auto",
+    intents: Discord.Intents.FLAGS.GUILDS
 })
 require('discord-buttons')(client);
 const configVars = {
