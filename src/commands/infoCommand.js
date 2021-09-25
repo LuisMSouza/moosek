@@ -1,5 +1,6 @@
 const ms = require('ms');
 const { MessageEmbed } = require('discord.js');
+const { MessageButton } = require('discord-buttons');
 const { CLIENT_VERSION } = require('../utils/botUtils.js');
 
 module.exports = {

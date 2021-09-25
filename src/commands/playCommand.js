@@ -7,6 +7,7 @@ const YouTube = require("youtube-sr").default;
 const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const guild_main = process.env.SERVER_MAIN
 
