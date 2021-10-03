@@ -41,7 +41,7 @@ module.exports = {
             const btnMsg = await message.channel.send(emb);
             btnMsg.react("🆕")
             const filter = message.author.id != client.user.id
-            const collect = embed.createReactionCollector((reaction, user) => ["🆕"].includes(reaction.emoji.name) && user != user.bot);
+            const collect = btnMsg.createReactionCollector((reaction, user) => ["🆕"].includes(reaction.emoji.name) && user != user.bot);
             collector.on("collect", async (reaction, user) => {
                 switch (reaction.emoji.name) {
                     case "🆕":
