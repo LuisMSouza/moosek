@@ -6,10 +6,13 @@ const fs = require('fs');
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
 const client = new Discord.Client({
-    disableMentions: "all",
+    allowedMentions: {
+        parse: ['users', 'roles'],
+        repliedUser: true
+    },
     restTimeOffset: 0,
     shards: "auto",
-    intents: Discord.Intents.FLAGS.GUILDS
+    intents: Discord.Intents.ALL
 })
 const configVars = {
     token: process.env.TOKEN_KEY,
