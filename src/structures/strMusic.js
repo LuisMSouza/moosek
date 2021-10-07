@@ -42,7 +42,7 @@ module.exports = {
                 .setThumbnail(song.thumbnail)
                 .setURL(song.url)
 
-            if (song.liveStream || song.duration === '0:00') {
+            if (song.duration === '0:00') {
                 songEmbed.addField("> __Duração:__", "🔴 Live", true)
                 sendError("**Este video é uma live, talvez não seja possível reproduzir...**", serverQueue.textChannel)
             } else {
