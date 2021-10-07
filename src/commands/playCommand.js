@@ -131,11 +131,11 @@ module.exports = {
             try {
                 await YouTube(searchString).then(async x => {
                     const song = {
-                        title: x.title ? x.title : ytdl.getBasicInfo(x.url).videoDetails.media.song,
-                        url: x.url,
-                        thumbnail: x.thumbnail.url,
-                        duration: x.duration.timestamp,
-                        liveStream: x.live,
+                        title: x.videos[1].title ? x.videos[1].title : ytdl.getBasicInfo(x.url).videoDetails.media.song,
+                        url: x.videos[1].url,
+                        thumbnail: x.videos[1].thumbnail,
+                        duration: x.videos[1].duration.timestamp,
+                        liveStream: x.videos[1].type,
                         author: message.author.tag
                     }
 
