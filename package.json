@@ -18,7 +18,7 @@
     "deezer-public-api": "^1.0.4",
     "discord-buttons": "^4.0.0",
     "discord-ytdl-core": "^5.0.4",
-    "discord.js": "^13.2.0",
+    "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "ffmpeg": "0.0.4",
     "genius-lyrics": "^4.2.9",
