@@ -3,7 +3,7 @@ const ytlist = require('ytpl');;
 const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
-const YouTube = require("yt-search");
+const YouTube = require("ytsr");
 const music_init = require('../structures/strMusic.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
@@ -129,13 +129,13 @@ module.exports = {
                 }
             }
             try {
-                await YouTube(searchString).then(async x => {
+                await YouTube(searchString, { limit: 1 }).then(async x => {
                     const song = {
-                        title: x.videos[1].title ? x.videos[1].title : ytdl.getBasicInfo(x.videos[1].url).videoDetails.media.song,
-                        url: x.videos[1].url,
-                        thumbnail: x.videos[1].thumbnail,
-                        duration: x.videos[1].duration.timestamp,
-                        liveStream: x.videos[1].type,
+                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
+                        url: x.items[0].url,
+                        thumbnail: x.items[0].bestThumbnail.url,
+                        duration: x.items[0].duration,
+                        liveStream: x.items[0].isLive,
                         author: message.author.tag
                     }
 
