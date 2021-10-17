@@ -30,9 +30,9 @@ module.exports = {
             .setStyle("blurple")
             .setID("invite_button")
 
-        const msgEmb = await message.channel.send({ component: bt1, embed: embed });
+        const msgEmb = await message.channel.send({ components: [bt1], embeds: [embed] });
         const filter = (button) => button.clicker.user.id != client.user.id;
-        const collector = msgEmb.createButtonCollector(filter, {});
+        const collector = msgEmb.createMessageComponentCollector(filter);
         collector.on("collect", async (b) => {
             var emb = new MessageEmbed()
                 .setTitle("CLIQUE AQUI :)")
@@ -40,8 +40,7 @@ module.exports = {
                 .setURL("https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot")
                 .setTimestamp()
                 .setFooter("Moosek Client ™")
-            await msgEmb.edit({ component: null, embed: emb });
-            b.reply.defer();
+            await b.update({ components: [], embeds: [emb] });
         })
     }
 }

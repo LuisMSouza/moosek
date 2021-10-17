@@ -37,9 +37,9 @@ module.exports = {
             **Como usar:** ${command.usage}
             `)
 
-            return message.channel.send(embedCommand);
+            return message.channel.send({ embeds: [embedCommand] });
         } else {
-            return message.channel.send(embed);
+            return message.channel.send({ embeds: [embed] });
         }
     }
 }

@@ -8,5 +8,5 @@ module.exports = async (text, channel) => {
         .setColor("RED")
         .setDescription(text)
 
-    await channel.send({ embeds: embed })
+    await channel.send({ embeds: [embed] })
 }

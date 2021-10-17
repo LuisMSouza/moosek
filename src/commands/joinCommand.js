@@ -1,5 +1,6 @@
 ////////////////// IMPORTS //////////////////////
 const sendError = require('../utils/error.js');
+const { joinVoiceChannel } = require('@discordjs/voice');
 
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
@@ -25,7 +26,11 @@ module.exports = {
             }).then(m2 => m2.delete({ timeout: 10000 }))
         }
         try {
-            await voiceChannel.join();
+            await joinVoiceChannel({
+                channelId: voiceChannel.id,
+                guildId: message.guild.id,
+                adapterCreator: message.channel.guild.voiceAdapterCreator,
+            });
             message.channel.send({
                 embed: {
                     color: "#0f42dc",
