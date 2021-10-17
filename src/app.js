@@ -1,5 +1,5 @@
 /////////////////////// IMPORTS //////////////////////////
-const { Client, intents } = require('discord.js');
+const { Client, intents, Collection } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 
@@ -9,9 +9,9 @@ const client = new Client({ intents: 32767 });
 const configVars = {
     token: process.env.TOKEN_KEY,
 }
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 client.queue = new Map();
-client.timeout = new Discord.Collection();
+client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
 
