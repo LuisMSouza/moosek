@@ -5,10 +5,7 @@ const fs = require('fs');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
-const client = new Discord.Client({
-    restTimeOffset: 0,
-    shards: "auto",
-})
+const client = new Discord.Client({ intents: 32767 });
 const configVars = {
     token: process.env.TOKEN_KEY,
 }
