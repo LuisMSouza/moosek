@@ -1,11 +1,11 @@
 /////////////////////// IMPORTS //////////////////////////
-const Discord = require('discord.js');
+const { Client, intents } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
-const client = new Discord.Client({ intents: 32767 });
+const client = new Client({ intents: 32767 });
 const configVars = {
     token: process.env.TOKEN_KEY,
 }
