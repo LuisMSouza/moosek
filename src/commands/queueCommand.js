@@ -1,5 +1,4 @@
 /////////////////////// IMPORTS //////////////////////////
-const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 
