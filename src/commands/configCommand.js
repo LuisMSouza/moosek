@@ -1,6 +1,5 @@
 /////////////////////// IMPORTS //////////////////////////
 const sendError = require('../utils/error.js');
-const { MessageEmbed } = require('discord.js');
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 const guildData = require('../models/guildData.js');
 
