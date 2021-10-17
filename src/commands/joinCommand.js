@@ -1,6 +1,7 @@
 ////////////////// IMPORTS //////////////////////
 const sendError = require('../utils/error.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
+const { MessageEmbed } = require('discord.js');
 
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
@@ -19,11 +20,7 @@ module.exports = {
         if (serverQueue) return;
         const bot = message.guild.members.cache.get(client.user.id);
         if (bot.voice.channel) {
-            return message.channel.send({
-                embed: {
-                    description: "❌ **O bot já está sendo utilizado!**"
-                }
-            }).then(m2 => m2.delete({ timeout: 10000 }))
+            return sendError("❌ **O bot já está sendo utilizado!**", message.channel);
         }
         try {
             await joinVoiceChannel({
@@ -31,11 +28,14 @@ module.exports = {
                 guildId: message.guild.id,
                 adapterCreator: message.channel.guild.voiceAdapterCreator,
             });
+            let emb = new MessageEmbed()
+                .setColor("#0f42dc")
+                .setDescription(`Me juntei ao canal **${message.member.voice.channel.name}**`)
+
             message.channel.send({
-                embed: {
-                    color: "#0f42dc",
-                    description: `Me juntei ao canal **${message.member.voice.channel.name}**`
-                }
+                embeds: [
+
+                ]
             });
         } catch (e) {
             console.log(e);
