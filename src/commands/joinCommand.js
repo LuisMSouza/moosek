@@ -34,7 +34,7 @@ module.exports = {
 
             message.channel.send({
                 embeds: [
-
+                    emb
                 ]
             });
         } catch (e) {
