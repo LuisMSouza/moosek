@@ -46,19 +46,19 @@ module.exports = {
                 const filter2 = m => m.author.id === message.author.id;
                 const collector = btnMsg.channel.createMessageComponentCollector({ filter, max: 1 });
                 collector.on('collect', i => {
-                    i.update({ components: [], embeds: [embdd] });
+                    let up = i.update({ components: [], embeds: [embdd] });
                     message.channel.awaitMessages({ filter2, max: 1, time: 300_000, errors: ['time'] })
                         .then(async collected => {
                             if (collected.first().content.length >= 5) return sendError("Esse prefixo é muito longo!", message.channel) && embed.delete(embed);
                             collected.first().content.toLowerCase();
                             await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: collected.first().content.toLowerCase() } }, { new: true });
-                            embed.delete(embed);
+                            up.delete(up);
                             const embed2 = new MessageEmbed()
                                 .setDescription("Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`")
                                 .setColor("#0f42dc")
                             message.channel.send({ embeds: [embed2] });
 
-                        }).catch(error => message.channel.send("Tempo de resposta esgotado"))
+                        }).catch(collected => message.channel.send("Tempo de resposta esgotado") && console.log(collected))
                     return;
                 });
             } catch (e) {
