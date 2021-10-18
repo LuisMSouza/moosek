@@ -27,12 +27,12 @@ module.exports = {
 
         const bt1 = new MessageButton()
             .setLabel("GERAR CONVITE")
-            .setStyle("blurple")
-            .setID("invite_button")
+            .setStyle("PRIMARY")
+            .setCustomId("invite_button")
 
         const msgEmb = await message.channel.send({ components: [bt1], embeds: [embed] });
-        const filter = (button) => button.clicker.user.id != client.user.id;
-        const collector = msgEmb.createMessageComponentCollector(filter);
+        const filter = (button) => button.user.id != client.user.id;
+        const collector = msgEmb.channel.createMessageComponentCollector(filter);
         collector.on("collect", async (b) => {
             var emb = new MessageEmbed()
                 .setTitle("CLIQUE AQUI :)")
