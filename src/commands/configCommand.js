@@ -37,7 +37,7 @@ module.exports = {
                         .setCustomId("prefix_button")
                 )
 
-            const embd = new MessageEmbed()
+            const embdd = new MessageEmbed()
                 .setDescription("```fix\nDigite o novo prefixo\n```")
 
             const btnMsg = await message.channel.send({ components: [row], embeds: [emb] });
@@ -45,7 +45,7 @@ module.exports = {
                 const filter = (i) => i.user.id === message.author.id;
                 const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1 });
                 collector.on('collect', i => {
-                    i.update({ components: [], embeds: [embd] });
+                    i.update({ components: [], embeds: [embdd] });
                     message.channel.awaitMessages(filter2, { max: 1, time: 300000, errors: ['time'] })
                         .then(async collected => {
                             if (collected.first().content.length >= 5) return sendError("Esse prefixo é muito longo!", message.channel) && embed.delete(embed);
