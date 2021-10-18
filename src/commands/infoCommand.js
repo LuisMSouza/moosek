@@ -33,7 +33,7 @@ module.exports = {
                     .setCustomId("invite_button")
             )
 
-        const msgEmb = await message.channel.send({ components: [bt1], embeds: [embed] });
+        const msgEmb = await message.channel.send({ components: [row], embeds: [embed] });
         const filter = (button) => button.user.id != client.user.id;
         const collector = msgEmb.channel.createMessageComponentCollector(filter);
         collector.on("collect", async (b) => {
