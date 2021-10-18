@@ -25,10 +25,13 @@ module.exports = {
             .addField("Versão atual:", `${CLIENT_VERSION}`, true)
             .addField("Alcancei um total de:", client.users.cache.size + ` pessoas`, true)
 
-        const bt1 = new MessageButton()
-            .setLabel("GERAR CONVITE")
-            .setStyle("PRIMARY")
-            .setCustomId("invite_button")
+        const row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setLabel("GERAR CONVITE")
+                    .setStyle("PRIMARY")
+                    .setCustomId("invite_button")
+            )
 
         const msgEmb = await message.channel.send({ components: [bt1], embeds: [embed] });
         const filter = (button) => button.user.id != client.user.id;

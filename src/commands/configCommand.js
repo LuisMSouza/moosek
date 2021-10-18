@@ -29,15 +29,18 @@ module.exports = {
                 .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "` ou clicar no botão abaixo")
                 .setFooter(client.user.username, client.user.displayAvatarURL())
 
-            const bt1 = new MessageButton()
-                .setLabel("GERAR CONVITE")
-                .setStyle("PRIMARY")
-                .setCustomId("invite_button")
+            const row = new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setLabel("ALTERAR PREFIXO")
+                        .setStyle("PRIMARY")
+                        .setCustomId("prefix_button")
+                )
 
             const embd = new MessageEmbed()
                 .setDescription("```fix\nDigite o novo prefixo\n```")
 
-            const btnMsg = await message.channel.send({ components: [bt1], embeds: [emb] });
+            const btnMsg = await message.channel.send({ components: [row], embeds: [emb] });
             try {
                 const filter = (i) => i.user.id === message.author.id;
                 const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1 });
