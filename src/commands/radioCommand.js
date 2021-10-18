@@ -108,7 +108,7 @@ module.exports = {
             const filter = (i) => i.user.id === message.author.id;
             const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
-                m.reply.defer();
+                m.reply({content: `**Você selecionou: __${m.label}__**`, ephemeral: true})
                 switch (m.value) {
                     case "1":
                         await msgEmb.delete(msgEmb);
