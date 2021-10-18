@@ -58,7 +58,7 @@ module.exports = {
                                 .setColor("#0f42dc")
                             message.channel.send({ embeds: [embed2] });
 
-                        }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
+                        }).catch(error => message.channel.send("Tempo de resposta esgotado"))
                     return;
                 });
             } catch (e) {
@@ -77,10 +77,13 @@ module.exports = {
                         collected.first().content.toLowerCase();
                         await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: collected.first().content.toLowerCase() } }, { new: true });
                         msg.delete(msg);
+                        let embdv = new MessageEmbed()
+                            .setColor("Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`")
+                            .setDescription("#0f42dc")
                         message.channel.send({
-                            embed: {
-                                description: "Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`"
-                            }
+                            embeds: [
+                                embdv
+                            ]
                         })
                     }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
             }
