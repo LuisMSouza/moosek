@@ -71,7 +71,7 @@ module.exports = {
             if (args[0].toLowerCase() === ("prefix" || "prefixo" || "pref")) {
                 const filter = m => m.author.id === message.author.id;
                 var msg = await message.channel.send({ embed: { description: "**Digite o novo prefixo**" } });
-                message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
+                message.channel.awaitMessages(filter, { max: 1, time: 300_000, errors: ['time'] })
                     .then(async collected => {
                         if (collected.first().content.length >= 5) return sendError("Esse prefixo é muito longo!", message.channel);
                         collected.first().content.toLowerCase();
@@ -85,7 +85,7 @@ module.exports = {
                                 embdv
                             ]
                         })
-                    }).catch(collected => message.channel.send("Tempo de resposta esgotado"))
+                    }).catch(collected => message.channel.send("Tempo de resposta esgotado") && console.log(collected))
             }
         }
     }
