@@ -46,7 +46,7 @@ module.exports = {
                 const collector = btnMsg.channel.createMessageComponentCollector({ filter, max: 1 });
                 collector.on('collect', i => {
                     i.update({ components: [], embeds: [embdd] });
-                    message.channel.awaitMessages(filter2, { max: 1, time: 300000, errors: ['time'] })
+                    message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                         .then(async collected => {
                             if (collected.first().content.length >= 5) return sendError("Esse prefixo é muito longo!", message.channel) && embed.delete(embed);
                             collected.first().content.toLowerCase();
