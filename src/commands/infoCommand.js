@@ -35,7 +35,7 @@ module.exports = {
 
         const msgEmb = await message.channel.send({ components: [row], embeds: [embed] });
         const filter = (button) => button.user.id != client.user.id;
-        const collector = msgEmb.channel.createMessageComponentCollector(filter);
+        const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1 });
         collector.on("collect", async (b) => {
             var emb = new MessageEmbed()
                 .setTitle("CLIQUE AQUI :)")

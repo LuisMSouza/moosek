@@ -43,7 +43,7 @@ module.exports = {
             const btnMsg = await message.channel.send({ components: [row], embeds: [emb] });
             try {
                 const filter = (i) => i.user.id === message.author.id;
-                const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1 });
+                const collector = btnMsg.channel.createMessageComponentCollector({ filter, max: 1 });
                 collector.on('collect', i => {
                     i.update({ components: [], embeds: [embdd] });
                     message.channel.awaitMessages(filter2, { max: 1, time: 300000, errors: ['time'] })
