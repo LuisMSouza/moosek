@@ -45,29 +45,27 @@ module.exports = {
                     embed.setThumbnail(songs[0].thumbnail);
                     if (embed.description.length > 2048 && embed.description.length <= 4090) {
                         embed.description = `${embed.description.substr(0, 2045)}...`;
-                        await message.channel.send(embed)
+                        await message.channel.send({ embeds: [embed] })
                         embed2.description = `${lyrics.substr(2045)}`;
                         if (embed2.description != "..." || embed2.description != "") {
-                            await message.channel.send(embed2)
+                            await message.channel.send({ embeds: [embed2] })
                         }
                     } else if (embed.description.length > 4090) {
                         embed.description = `${embed.description.substr(0, 2045)}...`;
-                        await message.channel.send(embed)
+                        await message.channel.send({ embeds: [embed] })
                         embed2.description = `${lyrics.substr(2045, 2045)}...`;
-                        if (embed2.description !== "...") {
-                            await message.channel.send(embed2)
-                        }
+                        await message.channel.send({ embeds: [embed2] })
                         embed3.description = `${lyrics.substr(4090, 2045)}...`;
                         if (embed3.description !== "...") {
-                            await message.channel.send(embed3)
+                            await message.channel.send({ embeds: [embed3] })
                         }
                         embed4.description = `${lyrics.substr(6135, 2045)}...`;
                         if (embed4.description !== "...") {
-                            await message.channel.send(embed4)
+                            await message.channel.send({ embeds: [embed4] })
                         }
                     }
                     await msge.delete(msge)
-                    message.channel.send(embed)
+                    //message.channel.send(embed)
                     return;
                 } catch (e) {
                     await msge.delete(msge)
@@ -90,25 +88,23 @@ module.exports = {
                 embed.setThumbnail(songs[0].thumbnail)
                 if (embed.description.length > 2048 && embed.description.length <= 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
-                    await message.channel.send(embed)
+                    await message.channel.send({ embeds: [embed] })
                     embed2.description = `${lyrics.substr(2045)}`;
                     if (embed2.description != "..." || embed2.description != "") {
-                        await message.channel.send(embed2)
+                        await message.channel.send({ embeds: [embed2] })
                     }
                 } else if (embed.description.length > 4090) {
                     embed.description = `${embed.description.substr(0, 2045)}...`;
-                    await message.channel.send(embed)
+                    await message.channel.send({ embeds: [embed] })
                     embed2.description = `${lyrics.substr(2045, 2045)}...`;
-                    if (embed2.description !== "...") {
-                        await message.channel.send(embed2)
-                    }
+                    await message.channel.send({ embeds: [embed2] })
                     embed3.description = `${lyrics.substr(4090, 2045)}...`;
                     if (embed3.description !== "...") {
-                        await message.channel.send(embed3)
+                        await message.channel.send({ embeds: [embed3] })
                     }
                     embed4.description = `${lyrics.substr(6135, 2045)}...`;
                     if (embed4.description !== "...") {
-                        await message.channel.send(embed4)
+                        await message.channel.send({ embeds: [embed4] })
                     }
                 }
                 await msge.delete(msge);
