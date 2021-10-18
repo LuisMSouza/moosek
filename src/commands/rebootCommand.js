@@ -15,16 +15,18 @@ module.exports = {
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         if (message.author.id != CEO_ID) return;
 
-        var msg = await message.channel.send(`${emoji}`);
+        var msg = await message.channel.send({ content: `${emoji}` });
 
         try {
             setTimeout(async () => {
                 await msg.delete(msg);
                 await message.channel.send({
-                    embed: {
-                        color: "#0f42dc",
-                        description: "```\nBot reiniciado!\n```"
-                    }
+                    embeds: [
+                        {
+                            color: "#0f42dc",
+                            description: "```\nBot reiniciado!\n```"
+                        }
+                    ]
                 });
                 process.exit(1);
             }, 5000);

@@ -2,7 +2,7 @@
 const sendError = require('../utils/error.js');
 const Discord = require('discord.js');
 const radioStations = require('../utils/radioStations.js');
-const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu } = require('discord.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -21,82 +21,95 @@ module.exports = {
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);
         if (!choice) {
-            let op1 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("1")
-                .setLabel("Standard-Radio")
-            let op2 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("2")
-                .setLabel("Chill-Radio")
-            let op3 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("3")
-                .setLabel("Greatest-hits-Radio")
-            let op4 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("4")
-                .setLabel("Hip-hop-Radio")
-            let op5 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("5")
-                .setLabel("Rádio Itatiaia")
-            let op6 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("6")
-                .setLabel("Rádio FM 98")
-            let op7 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("7")
-                .setLabel("Rádio Jovem Pan 107.3 FM")
-            let op8 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("8")
-                .setLabel("Rádio Alvorada FM")
-            let op9 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("9")
-                .setLabel("89 FM A Rádio Rock")
-            let op10 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("10")
-                .setLabel("Liberdade FM")
-            let op11 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("11")
-                .setLabel("American Road Radio")
-            let op12 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("12")
-                .setLabel("Classic Rock Florida")
-            let op13 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("13")
-                .setLabel("Rádio Z100 - 100.3 FM")
-            let op14 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("14")
-                .setLabel("89.7 KSGN")
-            let op15 = new MessageMenuOption()
-                .setEmoji("📻")
-                .setValue("15")
-                .setLabel("WNCI 97.9")
-            const menu = new MessageMenu()
-                .addOptions(op1, op2, op3, op4, op5, op6, op7, op8, op9, op10, op11, op12, op13, op14, op15)
-                .setPlaceholder("Escolha sua rádio")
-                .setID("menuOne")
-                .setMaxValues(1)
-
+            let row = new MessageActionRow()
+                .addComponents(
+                    new MessageSelectMenu()
+                        .setCustomId("radio_select")
+                        .setPlaceholder("Selecione a Rádio")
+                        .addOptions([
+                            {
+                                label: 'Standard-Radio',
+                                description: '🇩🇪',
+                                value: '1',
+                            },
+                            {
+                                label: 'Chill-Radio',
+                                description: '🇩🇪',
+                                value: '2',
+                            },
+                            {
+                                label: 'Greatest-hits-Radio',
+                                description: '🇩🇪',
+                                value: '3',
+                            },
+                            {
+                                label: 'Hip-hop-Radio',
+                                description: '🇩🇪',
+                                value: '4',
+                            },
+                            {
+                                label: 'Rádio Itatiaia',
+                                description: '🇧🇷',
+                                value: '5',
+                            },
+                            {
+                                label: 'Rádio FM 98',
+                                description: '🇧🇷',
+                                value: '6',
+                            },
+                            {
+                                label: 'Rádio Jovem Pan 107.3 FM',
+                                description: '🇧🇷',
+                                value: '7',
+                            },
+                            {
+                                label: 'Rádio Alvorada FM',
+                                description: '🇧🇷',
+                                value: '8',
+                            },
+                            {
+                                label: '89 FM A Rádio Rock',
+                                description: '🇧🇷',
+                                value: '9',
+                            },
+                            {
+                                label: 'Liberdade FM',
+                                description: '🇧🇷',
+                                value: '10',
+                            },
+                            {
+                                label: 'American Road Radio',
+                                description: '🇺🇸',
+                                value: '11',
+                            },
+                            {
+                                label: 'Classic Rock Florida',
+                                description: '🇺🇸',
+                                value: '12',
+                            },
+                            {
+                                label: 'Rádio Z100 - 100.3 FM',
+                                description: '🇺🇸',
+                                value: '13',
+                            },
+                            {
+                                label: 'WNCI 97.9',
+                                description: '🇺🇸',
+                                value: '14',
+                            },
+                        ])
+                )
             const msgEmb = await message.channel.send({
-                component: menu, embed: {
+                components: [row], embeds: [{
                     description: "> **Faça a escolha da rádio abaixo:**",
                     color: "#0f42dc"
-                }
+                }]
             });
-            const collector = msgEmb.createMenuCollector((b) => b, { time: 300000 });
+            const filter = (i) => i.user.id === message.author.id;
+            const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
                 m.reply.defer();
-                switch (m.values[0]) {
+                switch (m.value) {
                     case "1":
                         await msgEmb.delete(msgEmb);
                         await initRadio(message, client, args, radioStations.radioStations[0], radioStations.radioStationsName[0])

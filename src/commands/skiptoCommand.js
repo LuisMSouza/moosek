@@ -13,9 +13,11 @@ module.exports = {
     async execute(client, message, args) {
         if (!args.length || isNaN(args[0]))
             return message.channel.send({
-                embed: {
-                    description: `**Utilize**: \`${process.env.PREFIX_KEY}skipto [número da música na fila]\``
-                }
+                embeds: [
+                    {
+                        description: `**Utilize**: \`${process.env.PREFIX_KEY}skipto [número da música na fila]\``
+                    }
+                ]
             }).catch(console.error);
 
         const serverQueue = message.client.queue.get(message.guild.id);
@@ -35,16 +37,18 @@ module.exports = {
         try {
             serverQueue.connection.dispatcher.end();
         } catch (error) {
-            serverQueue.voiceChannel.leave()
+            await message.guild.me.voice.disconnect();
             message.client.queue.delete(message.guild.id);
             return sendError(`As músicas foram paradas e a fila de músicas foi apagada.: ${error}`, message.channel);
         }
 
         message.channel.send({
-            embed: {
-                color: "#0f42dc",
-                description: `⏭ \`${args[0] - 1}\` músicas puladas por ${message.author}`
-            }
+            embeds: [
+                {
+                    color: "#0f42dc",
+                    description: `⏭ \`${args[0] - 1}\` músicas puladas por ${message.author}`
+                }
+            ]
 
         }).catch(console.error);
         message.react("✅")
