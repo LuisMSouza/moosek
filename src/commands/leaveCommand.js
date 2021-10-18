@@ -1,5 +1,6 @@
 ////////////////// IMPORTS //////////////////////
 const sendError = require('../utils/error.js');
+const { MessageEmbed } = require('discord.js');
 
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
