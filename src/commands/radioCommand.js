@@ -108,9 +108,9 @@ module.exports = {
             const filter = (i) => i.user.id === message.author.id;
             const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
-                m.reply({content: `**Você selecionou: __${m.label}__**`, ephemeral: true})
+                m.reply({ content: `**Você selecionou: __${radioStations.radioStationsName[m.values[0]]}__**`, ephemeral: true })
                 console.log(m)
-                switch (m.value) {
+                switch (m.values[0]) {
                     case "1":
                         await msgEmb.delete(msgEmb);
                         await initRadio(message, client, args, radioStations.radioStations[0], radioStations.radioStationsName[0])
