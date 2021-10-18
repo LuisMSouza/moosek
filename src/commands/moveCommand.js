@@ -29,10 +29,12 @@ module.exports = {
         try {
             serverQueue.songs = Move().move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
             message.channel.send({
-                embed: {
-                    color: "#0f42dc",
-                    description: `**${song}** agora está na posição **${newPosition}** da fila.`
-                }
+                embeds: [
+                    {
+                        color: "#0f42dc",
+                        description: `**${song}** agora está na posição **${newPosition}** da fila.`
+                    }
+                ]
             })
         } catch (e) {
             console.log(e);

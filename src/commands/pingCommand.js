@@ -12,10 +12,12 @@ module.exports = {
     async execute(client, message, args) {
         let ping = Math.round(message.client.ws.ping);
         message.channel.send(({
-            embed: {
-                color: "#0f42dc",
-                description: `**${ping} ms**`
-            }
+            embeds: [
+                {
+                    color: "#0f42dc",
+                    description: `**${ping} ms**`
+                }
+            ]
         }))
     }
 }

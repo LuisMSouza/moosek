@@ -15,11 +15,13 @@ module.exports = {
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));
         message.channel.send({
-            embed: {
-                title: "Tocando agora:",
-                color: "#0f42dc",
-                description: `**${serverQueue.songs[0].title}**`
-            }
+            embeds: [
+                {
+                    title: "Tocando agora:",
+                    color: "#0f42dc",
+                    description: `**${serverQueue.songs[0].title}**`
+                }
+            ]
         })
     }
 }
