@@ -392,7 +392,7 @@ module.exports = {
                     embeds: [embedRadio]
                 })
                 const filter = (button) => button.user.id != bot.user.id;
-                const colletcButt = buttonMsg.channel.createMessageComponentCollector({ filter, max: 1 });
+                const colletcButt = buttonMsg.channel.createMessageComponentCollector({ filter });
                 colletcButt.on("collect", async (b) => {
                     if (b.customId === "stop_radio") {
                         if (!bot.radio) return;
