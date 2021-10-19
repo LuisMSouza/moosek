@@ -3,7 +3,7 @@ const sendError = require('../utils/error.js');
 const Discord = require('discord.js');
 const radioStations = require('../utils/radioStations.js');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu } = require('discord.js');
-const { joinVoiceChannel, createAudioResource, createAudioPlayer } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -354,6 +354,7 @@ module.exports = {
                 await connection.subscribe(player);
                 const resource = createAudioResource(choice);
                 player.play(resource);
+
                 const embedRadio = new Discord.MessageEmbed()
                     .setAuthor("Tocando agora:")
                     .setColor("#0f42dc")
@@ -386,7 +387,7 @@ module.exports = {
                 const row = new MessageActionRow()
                     .addComponents(button1, buttonStop)
 
-                const buttonMsg = await message.channel.send("", {
+                const buttonMsg = await message.channel.send({
                     components: [row],
                     embeds: [embedRadio]
                 })
@@ -396,91 +397,87 @@ module.exports = {
                     if (b.values[0] === "stop_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
-                            b.reply.send({
-                                embed: {
+                            b.reply({
+                                embeds: [{
                                     color: "#0f42dc",
                                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                }, ephemeral: true
+                                }], ephemeral: true
                             });
                             //await reaction.users.remove(user);
                             return;
                         }
                         if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
-                            b.reply.send({
-                                embed: {
+                            b.reply({
+                                embeds: [{
                                     color: "#0f42dc",
                                     description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                }, ephemeral: true
+                                }], ephemeral: true
                             });
                             //await reaction.users.remove(user);
                             return;
                         }
 
                         //await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                        await msg.member.voice.channel.leave();
-                        await connection.disconnect();
-                        await dispatcher.destroy();
+                        await message.guild.me.voice.disconnect();
+                        await connection.destroy()
                         await bot.radio.delete(msg.guild.id);
-                        buttonMsg.edit({ component: button2, embed: embedRadio });
-                        b.reply.defer();
-                    } else if (b.id === "pause_radio") {
+                        b.update({ components: [button2], embeds: [embedRadio] });
+                    } else if (b.values[0] === "pause_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
-                            b.reply.send({
-                                embed: {
+                            b.reply({
+                                embeds: [{
                                     color: "#0f42dc",
                                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                }, ephemeral: true
+                                }], ephemeral: true
                             });
                             //await reaction.users.remove(user);
                             return;
                         }
                         if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
-                            b.reply.send({
-                                embed: {
+                            b.reply({
+                                embeds: [{
                                     color: "#0f42dc",
                                     description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                }, ephemeral: true
+                                }], ephemeral: true
                             });
                             //await reaction.users.remove(user);
                             return;
                         }
 
-                        await dispatcher.pause();
+                        await player.pause()
                         const row2 = new MessageActionRow()
                             .addComponents(button1, buttonResume)
 
-                        buttonMsg.edit({ component: row2, embed: embedRadio });
-                        b.reply.defer();
+                        b.update({ components: [row2], embeds: [embedRadio] });
                         return;
-                    } else if (b.id === "resume_radio") {
+                    } else if (b.values[0] === "resume_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
-                            b.reply.send({
-                                embed: {
+                            b.reply({
+                                embeds: [{
                                     color: "#0f42dc",
                                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
-                                }, ephemeral: true
+                                }], ephemeral: true
                             });
                             //await reaction.users.remove(user);
                             return;
                         }
                         if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
-                            b.reply.send({
-                                embed: {
+                            b.reply({
+                                embeds: [{
                                     color: "#0f42dc",
                                     description: "❌ **O bot está sendo utilizado em outro canal!**"
-                                }, ephemeral: true
+                                }], ephemeral: true
                             });
                             //await reaction.users.remove(user);
                             return;
                         }
 
-                        await dispatcher.resume();
+                        await player.unpause();
                         const row3 = new MessageActionRow()
                             .addComponents(button1, buttonStop)
-                        buttonMsg.edit({ component: row3, embed: embedRadio });
-                        b.reply.defer();
+                        b.update({ components: [row3], embeds: [embedRadio] });
                         return;
                     }
                 });
