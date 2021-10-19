@@ -196,9 +196,44 @@ module.exports = {
                     .setAuthor("Tocando agora:")
                     .setColor("#0f42dc")
                     .setTitle(choiceName)
-                    .setThumbnail("https://cdn.discordapp.com/attachments/810261725219520564/832260730077315162/radio.png")
                     .addField("> __Canal:__", "```fix\n" + `${msg.member.voice.channel.name}` + "\n```", true)
                     .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
+
+                switch (choiceName) {
+                    case "Rádio Itatiaia":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869344337625118/itatiaia.png")
+                        break
+                    case "Rádio FM 98":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869345436536862/98.png")
+                        break
+                    case "Rádio Jovem Pan 107.3 FM":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869346581610518/jovem_pan.png")
+                        break
+                    case "Rádio Alvorada FM":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869348007673917/alvorada.png")
+                        break
+                    case "89 FM A Rádio Rock":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869349848948756/89_fm.png")
+                        break
+                    case "Liberdade FM":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869343763038268/liberdade.png")
+                        break
+                    case "American Road Radio":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869352160018452/american_road.jpg")
+                        break
+                    case "Classic Rock Florida":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869355398008852/cr_florida.png")
+                        break
+                    case "Rádio Z100 - 100.3 FM":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869356744400926/z100.png")
+                        break
+                    case "89.7 KSGN":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899869358883487784/ksgn.png")
+                        break
+                    case "WNCI 97.9":
+                        embedRadio.setThumbnail("https://cdn.discordapp.com/attachments/807747123676053504/899871493972967475/wnci.png")
+                        break
+                }
 
                 const button1 = new MessageButton()
                     .setStyle("DANGER")
