@@ -353,7 +353,7 @@ module.exports = {
                 });
                 const player = createAudioPlayer();
                 await connection.subscribe(player);
-                const resource = createAudioResource(radioStations.radioStations[choice]);
+                const resource = createAudioResource(choice);
                 player.play(resource);
                 const embedRadio = new Discord.MessageEmbed()
                     .setAuthor("Tocando agora:")
