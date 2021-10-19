@@ -394,6 +394,7 @@ module.exports = {
                 const filter = (button) => button.user.id != bot.user.id;
                 const colletcButt = buttonMsg.channel.createMessageComponentCollector({ filter, max: 1 });
                 colletcButt.on("collect", async (b) => {
+                    console.log(b)
                     if (b.values[0] === "stop_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
