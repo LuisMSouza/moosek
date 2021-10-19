@@ -421,7 +421,9 @@ module.exports = {
                         await message.guild.me.voice.disconnect();
                         await connection.destroy()
                         await bot.radio.delete(msg.guild.id);
-                        b.update({ components: [button2], embeds: [embedRadio] });
+                        const newRow = new MessageActionRow()
+                        .addComponents(button2)
+                        b.update({ components: [newRow], embeds: [embedRadio] });
                     } else if (b.customId === "pause_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
