@@ -394,8 +394,7 @@ module.exports = {
                 const filter = (button) => button.user.id != bot.user.id;
                 const colletcButt = buttonMsg.channel.createMessageComponentCollector({ filter, max: 1 });
                 colletcButt.on("collect", async (b) => {
-                    return console.log(b)
-                    if (b.values[0] === "stop_radio") {
+                    if (b.customId === "stop_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
                             b.reply({
@@ -423,7 +422,7 @@ module.exports = {
                         await connection.destroy()
                         await bot.radio.delete(msg.guild.id);
                         b.update({ components: [button2], embeds: [embedRadio] });
-                    } else if (b.values[0] === "pause_radio") {
+                    } else if (b.customId === "pause_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
                             b.reply({
@@ -452,7 +451,7 @@ module.exports = {
 
                         b.update({ components: [row2], embeds: [embedRadio] });
                         return;
-                    } else if (b.values[0] === "resume_radio") {
+                    } else if (b.customId === "resume_radio") {
                         if (!bot.radio) return;
                         if (!msg.member.voice.channel) {
                             b.reply({
