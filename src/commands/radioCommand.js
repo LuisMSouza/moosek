@@ -110,7 +110,6 @@ module.exports = {
             const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
                 m.reply({ content: `**Você selecionou: __${radioStations.radioStationsName[m.values[0] - 1]}__**`, ephemeral: true })
-                console.log(m)
                 switch (m.values[0]) {
                     case "1":
                         await msgEmb.delete(msgEmb);
