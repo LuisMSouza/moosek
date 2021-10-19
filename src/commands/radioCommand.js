@@ -187,10 +187,10 @@ module.exports = {
                     guildId: message.guild.id,
                     adapterCreator: message.channel.guild.voiceAdapterCreator,
                 });
-                //const player = createAudioPlayer();
+                const player = createAudioPlayer();
                 await connection.subscribe(player);
                 const resource = createAudioResource(choice);
-                client.player.play(resource);
+                player.play(resource);
 
                 const embedRadio = new Discord.MessageEmbed()
                     .setAuthor("Tocando agora:")
