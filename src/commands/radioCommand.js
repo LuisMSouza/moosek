@@ -291,7 +291,7 @@ module.exports = {
 
                         //await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                         await message.guild.me.voice.disconnect();
-                        await connection.destroy()
+                        await resource.audioPlayer.stop();
                         await bot.radio.delete(msg.guild.id);
                         const newRow = new MessageActionRow()
                             .addComponents(button2)
