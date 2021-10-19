@@ -2,6 +2,7 @@
 const { Client, intents, Collection } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const { AudioPlayer } = require('@discordjs/voice');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
@@ -14,6 +15,7 @@ client.queue = new Map();
 client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
+client.player = AudioPlayer()
 
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
