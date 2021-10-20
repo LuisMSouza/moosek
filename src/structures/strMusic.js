@@ -22,8 +22,6 @@ module.exports = {
                 guildId: message.guild.id,
                 adapterCreator: message.guild.voiceAdapterCreator,
             });
-            queueConstruct.connection = connection
-            await queueConstruct.connection.voice.setSelfDeaf(true);
             player.play(resource);
 
             let songEmbed = new MessageEmbed()
