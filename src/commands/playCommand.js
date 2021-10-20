@@ -160,8 +160,7 @@ module.exports = {
                         queueConstruct.songs.push(song)
 
                         try {
-                            const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
-                            await music_init.play(client, message, queueConstruct.songs[0], player, resource)
+                            await music_init.play(client, message, queueConstruct.songs[0], player)
                         } catch (err) {
                             console.log(err);
                             client.queue.delete(message.guild.id);
