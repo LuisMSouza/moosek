@@ -290,8 +290,8 @@ module.exports = {
                         }
 
                         //await embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
+                        await player.stop()
                         await message.guild.me.voice.disconnect();
-                        await resource.audioPlayer.stop();
                         await bot.radio.delete(msg.guild.id);
                         const newRow = new MessageActionRow()
                             .addComponents(button2)

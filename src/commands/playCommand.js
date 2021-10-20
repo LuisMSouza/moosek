@@ -9,6 +9,7 @@ const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -157,9 +158,7 @@ module.exports = {
                         queueConstruct.songs.push(song)
 
                         try {
-                            var connection = await voiceChannel.join();
-                            queueConstruct.connection = connection
-                            await queueConstruct.connection.voice.setSelfDeaf(true);
+                            const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
                             await music_init.play(client, message, queueConstruct.songs[0])
                         } catch (err) {
                             console.log(err);

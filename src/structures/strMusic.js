@@ -16,6 +16,13 @@ module.exports = {
             if (!song) {
                 return leaveChannel(client, message, song);
             }
+            var connection = await joinVoiceChannel({
+                channelId: message.member.voice.channel.id,
+                guildId: message.guild.id,
+                adapterCreator: message.guild.voiceAdapterCreator,
+            });
+            queueConstruct.connection = connection
+            await queueConstruct.connection.voice.setSelfDeaf(true);
             let url = song.url;
             const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
                 .on("error", async error => {
