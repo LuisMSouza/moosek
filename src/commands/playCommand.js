@@ -47,6 +47,8 @@ module.exports = {
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
+        const player = createAudioPlayer()
+
         if (isDeezer) {
             const cth = await url.match(deezerRegex)[7]
             await deezerHandler(client, message, searchString, cth, voiceChannel);
@@ -159,7 +161,7 @@ module.exports = {
 
                         try {
                             const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
-                            await music_init.play(client, message, queueConstruct.songs[0])
+                            await music_init.play(client, message, queueConstruct.songs[0], player, resource)
                         } catch (err) {
                             console.log(err);
                             client.queue.delete(message.guild.id);
@@ -174,7 +176,7 @@ module.exports = {
                     } else {
                         serverQueue.songs.push(song);
                         return message.channel.send({
-                            embed: {
+                            embeds: [{
                                 color: "GREEN",
                                 title: "Adicionado à fila",
                                 description: `[${song.title}](${song.url}) adicionado à fila`,
@@ -190,7 +192,7 @@ module.exports = {
                                         inline: true
                                     }
                                 ]
-                            }
+                            }]
                         })
                     }
                 })

@@ -4,10 +4,11 @@ const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const guild_main = process.env.SERVER_MAIN
 const leaveChannel = require('../utils/leaveChannel.js');
+const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    async play(client, message, song) {
+    async play(client, message, song, player, resource) {
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const serverQueue = await message.client.queue.get(message.guild.id);
@@ -23,24 +24,7 @@ module.exports = {
             });
             queueConstruct.connection = connection
             await queueConstruct.connection.voice.setSelfDeaf(true);
-            let url = song.url;
-            const dispatcher = serverQueue.connection.play(await ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }))
-                .on("error", async error => {
-                    if (error.message.includes("Video unavailable")) {
-                        console.log(`[VIDEO INDISPONÍVEL] ${song.url}`);
-                        sendError("**Este vídeo está indisponível.**", serverQueue.textChannel);
-                        await serverQueue.songs.shift();
-                        await play(guild, serverQueue.songs[0]);
-                        return;
-                    }
-                    if (error.message.includes("Connection not established within 15 seconds.") || error.message.includes("[VOICE_CONNECTION_TIMEOUT]")) {
-                        sendError("**Erro de conexão.\nTente novamente.**", serverQueue.textChannel);
-                        serverQueue.voiceChannel.leave();
-                        return;
-                    }
-                    console.log(error);
-                });
-            dispatcher.setVolumeLogarithmic(serverQueue.volume / 5)
+            player.play(resource);
 
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
@@ -58,7 +42,7 @@ module.exports = {
             songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "No provided"}` + "\n```", true)
             songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
-            let mensagem = await serverQueue.textChannel.send(songEmbed).then(async (embed) => {
+            let mensagem = await serverQueue.textChannel.send({ embeds: [songEmbed] }).then(async (embed) => {
                 try {
                     await embed.react("⏸️");
                     await embed.react("▶️");
@@ -415,6 +399,23 @@ module.exports = {
                 }
             });
             return;
+        }
+    },
+    async processQueue() {
+        if (player.state.status !== AudioPlayerStatus.Idle || serverQueue.songs.length === 0) {
+            return;
+        }
+        serverQueue.prevSongs = []
+        serverQueue.prevSongs.push(serverQueue.songs[0])
+        if (serverQueue.nigthCore) {
+            if (!serverQueue.songLooping) await serverQueue.songs.shift();
+            var random = Math.floor(Math.random() * (serverQueue.songs.length));
+            const newResource = createAudioResource(ytdl(random.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
+            this.play(client, message, serverQueue.songs[random], player, newResource);
+        } else {
+            if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
+            if (!serverQueue.songLooping) await serverQueue.songs.shift();
+            this.play(client, message, serverQueue.songs[0]);
         }
     }
 }
