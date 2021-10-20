@@ -375,20 +375,6 @@ module.exports = {
                 } catch (err) {
                     console.log(err)
                 }
-                dispatcher.on("finish", async () => {
-                    serverQueue.prevSongs = []
-                    serverQueue.prevSongs.push(serverQueue.songs[0])
-                    if (serverQueue.nigthCore) {
-                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                        this.play(client, message, serverQueue.songs[random]);
-                    } else {
-                        if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
-                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                        this.play(client, message, serverQueue.songs[0]);
-                    }
-                    embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
-                })
             })
         } catch (e) {
             console.log(e);
