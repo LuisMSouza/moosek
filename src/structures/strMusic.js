@@ -25,7 +25,7 @@ module.exports = {
             client.player = createAudioPlayer()
             const url = song.url
             const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
-            resource.volume(0.5)
+            resource.volume.setVolume(0.5)
             connection.subscribe(client.player);
             connection.joinConfig.selfDeaf;
             client.player.play(resource);
@@ -403,7 +403,6 @@ module.exports = {
         if (serverQueue.nigthCore) {
             if (!serverQueue.songLooping) await serverQueue.songs.shift();
             var random = Math.floor(Math.random() * (serverQueue.songs.length));
-            const newResource = createAudioResource(ytdl(random.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
             this.play(client, message, serverQueue.songs[random]);
         } else {
             if (serverQueue.looping) await serverQueue.songs.push(serverQueue.songs[0]);
