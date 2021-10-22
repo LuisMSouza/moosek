@@ -152,8 +152,8 @@ module.exports = {
                             looping: false,
                             songLooping: false
                         }
-                        await client.queue.set(message.guild.id, queueConstruct)
                         await queueConstruct.songs.push(song)
+                        await client.queue.set(message.guild.id, queueConstruct)
                         try {
                             return music_init.play(client, message, queueConstruct.songs[0]);
                         } catch (err) {
