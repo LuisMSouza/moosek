@@ -25,7 +25,6 @@ module.exports = {
             client.player = createAudioPlayer()
             const url = song.url
             const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
-            resource.volume.setVolume(0.5)
             connection.subscribe(client.player);
             connection.joinConfig.selfDeaf;
             client.player.play(resource);
