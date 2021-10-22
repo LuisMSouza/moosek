@@ -395,7 +395,7 @@ module.exports = {
         }
     },
     async processQueue() {
-        if (player.state.status !== AudioPlayerStatus.Idle || serverQueue.songs.length === 0) {
+        if (client.player.state.status !== AudioPlayerStatus.Idle || serverQueue.songs.length === 0) {
             return;
         }
         serverQueue.prevSongs = []
