@@ -152,8 +152,8 @@ module.exports = {
                             looping: false,
                             songLooping: false
                         }
-                        client.queue.set(message.guild.id, queueConstruct)
-                        queueConstruct.songs.push(song)
+                        await client.queue.set(message.guild.id, queueConstruct)
+                        await queueConstruct.songs.push(song)
                         console.log(serverQueue)
 
                         try {
