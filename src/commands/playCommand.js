@@ -28,7 +28,7 @@ module.exports = {
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
-        const serverQueue = client.queue.get(message.guild.id)
+        const serverQueue = message.client.queue.get(message.guild.id)
 
         console.log(serverQueue)
 
