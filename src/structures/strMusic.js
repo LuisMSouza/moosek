@@ -378,9 +378,10 @@ module.exports = {
                 } catch (err) {
                     console.log(err)
                 }
-            })
-            resource.playStream.on("end", async () => {
-                await this.processQueue(client, message, serverQueue)
+                resource.playStream.on("end", async () => {
+                    await embed.reactions.removeAll().catch(error => console.error(`${text.errors.error_reactions_remove}`, error));
+                    await this.processQueue(client, message, serverQueue)
+                })
             })
         } catch (e) {
             console.log(e);
