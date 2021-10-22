@@ -30,8 +30,6 @@ module.exports = {
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
         const serverQueue = message.client.queue.get(message.guild.id)
 
-        console.log(serverQueue)
-
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel);
 
