@@ -12,6 +12,7 @@ module.exports = {
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const serverQueue = await message.client.queue.get(message.guild.id);
+        console.log(serverQueue)
         const serverRadio = await message.client.radio.get(message.guild.id);
         try {
             if (!song) {

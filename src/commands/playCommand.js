@@ -28,7 +28,9 @@ module.exports = {
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
-        const serverQueue = client.queue
+        const serverQueue = client.queue.get(message.guild.id)
+
+        console.log(serverQueue)
 
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel);
@@ -154,8 +156,6 @@ module.exports = {
                         }
                         await client.queue.set(message.guild.id, queueConstruct)
                         await queueConstruct.songs.push(song)
-                        console.log(serverQueue)
-
                         try {
                             return music_init.play(client, message, queueConstruct.songs[0]);
                         } catch (err) {
