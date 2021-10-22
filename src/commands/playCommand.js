@@ -9,7 +9,7 @@ const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
-const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
+const { AudioPlayerStatus } = require('@discordjs/voice');
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -89,6 +89,7 @@ module.exports = {
                 });
             } catch {
                 try {
+                    console.log("ENTRY3")
                     if (serverQueue) {
                         if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
                             return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
@@ -124,11 +125,7 @@ module.exports = {
                 }
             }
         } else {
-            if (serverQueue) {
-                if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
-                    return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
-                }
-            }
+            console.log("Entry 1")
             try {
                 await YouTube(searchString, { limit: 1 }).then(async x => {
                     const song = {
@@ -141,6 +138,7 @@ module.exports = {
                     }
 
                     if (!serverQueue && AudioPlayerStatus.Idle) {
+                        console.log("ENTRY 2")
                         const queueConstruct = {
                             textChannel: message.channel,
                             voiceChannel: voiceChannel,
@@ -170,7 +168,11 @@ module.exports = {
                             });
                             return;
                         }
-                    } else if (AudioPlayerStatus.Playing) {
+                    } else if (AudioPlayerStatus.Playing && serverQueue) {
+                        console.log("ENTRY 3")
+                        if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
+                            return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
+                        }
                         serverQueue.songs.push(song);
                         return message.channel.send({
                             embeds: [{
