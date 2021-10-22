@@ -47,8 +47,6 @@ module.exports = {
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
-        const player = createAudioPlayer()
-
         if (isDeezer) {
             const cth = await url.match(deezerRegex)[7]
             await deezerHandler(client, message, searchString, cth, voiceChannel);
@@ -142,7 +140,7 @@ module.exports = {
                         author: message.author.tag
                     }
 
-                    if (!serverQueue) {
+                    if (!serverQueue && AudioPlayerStatus.Idle) {
                         const queueConstruct = {
                             textChannel: message.channel,
                             voiceChannel: voiceChannel,
@@ -172,7 +170,7 @@ module.exports = {
                             });
                             return;
                         }
-                    } else {
+                    } else if (AudioPlayerStatus.Playing) {
                         serverQueue.songs.push(song);
                         return message.channel.send({
                             embeds: [{
