@@ -47,7 +47,7 @@ module.exports = {
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
-        const player = createAudioPlayer()
+        const player = new createAudioPlayer()
 
         if (isDeezer) {
             const cth = await url.match(deezerRegex)[7]

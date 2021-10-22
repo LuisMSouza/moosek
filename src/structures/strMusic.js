@@ -25,7 +25,8 @@ module.exports = {
             client.player = createAudioPlayer()
             const url = song.url
             const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
-            client
+            connection.subscribe(client.player);
+            connection.joinConfig.selfDeaf;
             client.player.play(resource);
 
             let songEmbed = new MessageEmbed()
