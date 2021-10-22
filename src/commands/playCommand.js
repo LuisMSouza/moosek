@@ -137,7 +137,7 @@ module.exports = {
                         author: message.author.tag
                     }
 
-                    if (!serverQueue && AudioPlayerStatus.Idle) {
+                    if (!serverQueue) {
                         console.log("ENTRY 2")
                         const queueConstruct = {
                             textChannel: message.channel,
@@ -169,11 +169,9 @@ module.exports = {
                             });
                             return;
                         }
-                    } else if (AudioPlayerStatus.Playing && serverQueue) {
+                    } else if (serverQueue) {
                         console.log("ENTRY 3")
-                        if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
-                            return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
-                        }
+
                         serverQueue.songs.push(song);
                         return message.channel.send({
                             embeds: [{
