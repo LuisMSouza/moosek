@@ -160,7 +160,7 @@ module.exports = {
                         queueConstruct.songs.push(song)
 
                         try {
-                            await music_init.play(client, message, queueConstruct.songs[0], player)
+                            await music_init.play(client, message, queueConstruct.songs[0])
                         } catch (err) {
                             console.log(err);
                             client.queue.delete(message.guild.id);

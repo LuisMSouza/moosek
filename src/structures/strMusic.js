@@ -8,7 +8,7 @@ const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerSta
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    async play(client, message, song, player) {
+    async play(client, message, song) {
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const serverQueue = await message.client.queue.get(message.guild.id);
@@ -22,9 +22,11 @@ module.exports = {
                 guildId: message.guild.id,
                 adapterCreator: message.guild.voiceAdapterCreator,
             });
+            client.player = createAudioPlayer()
             const url = song.url
             const resource = createAudioResource(ytdl(url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" }));
-            player.play(resource);
+            client
+            client.player.play(resource);
 
             let songEmbed = new MessageEmbed()
                 .setAuthor("Tocando agora:")
