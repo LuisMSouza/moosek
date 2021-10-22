@@ -159,7 +159,7 @@ module.exports = {
                         try {
                             return music_init.play(client, message, queueConstruct.songs[0]);
                         } catch (err) {
-                            console.log(err);
+                            console.log(`[SOURCE][ERROR]`, err);
                             client.queue.delete(message.guild.id);
                             channelMain.send({
                                 embed: {

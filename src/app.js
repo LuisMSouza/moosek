@@ -6,12 +6,12 @@ const { AudioPlayer } = require('@discordjs/voice');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
-const client = new Client({ intents: 32767 });
+const client = new Client({ intents: 32767, queue: new Map() });
 const configVars = {
     token: process.env.TOKEN_KEY,
 }
 client.commands = new Collection();
-client.queue = new Map();
+//client.queue = new Map();
 client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
