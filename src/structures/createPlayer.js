@@ -38,7 +38,7 @@ module.exports.play = async (client, message, song) => {
         throw error;
     }
     serverQueue.resource.playStream
-        .on("end", () => {
+        .on("end", async () => {
             if (playingMessage && playingMessage.deleted)
                 playingMessage.delete().catch(console.error);
 
