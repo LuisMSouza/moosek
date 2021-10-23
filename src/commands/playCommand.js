@@ -8,6 +8,7 @@ const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
+const { joinVoiceChannel } = require("@discordjs/voice");
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
