@@ -98,7 +98,7 @@ module.exports = {
                     for (const video of videos) {
                         await playlist_init.handleVideo(client, video, message, voiceChannel, true);
                     }
-                    return message.channel.send({
+                    return message.reply({
                         embed: {
                             color: "GREEN",
                             description: `**Playlist adicionada à fila**`,
@@ -122,7 +122,6 @@ module.exports = {
                 }
             }
         } else {
-            console.log("Entry 1")
             try {
                 await YouTube(searchString, { limit: 1 }).then(async x => {
                     const serverQueue = message.client.queue.get(message.guild.id)
@@ -151,10 +150,9 @@ module.exports = {
                     }
 
                     if (serverQueue) {
-                        console.log("ENTRY 2")
                         if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                         serverQueue.songs.push(song);
-                        message.channel.send({
+                        message.reply({
                             embeds: [{
                                 color: "GREEN",
                                 title: "Adicionado à fila",
@@ -176,10 +174,8 @@ module.exports = {
                             .catch(console.error);
                         return;
                     } else {
-                        await console.log(serverQueue)
-                        console.log("ENTRY 3")
                         queueConstruct.songs.push(song);
-                        message.channel.send({
+                        message.reply({
                             embeds: [{
                                 color: "GREEN",
                                 title: "Adicionado à fila",
