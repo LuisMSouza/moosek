@@ -89,14 +89,14 @@ module.exports.play = async (client, message, song) => {
             .setURL(song.url)
 
         if (song.duration === '0:00' || song.liveStream) {
-            songEmbed.addField("> __Duração:__", "🔴 Live", true)
+            embedMusic.addField("> __Duração:__", "🔴 Live", true)
             sendError("**Este video é uma live, talvez não seja possível reproduzir...**", serverQueue.textChannel)
         } else {
-            songEmbed.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
+            embedMusic.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
         }
 
-        songEmbed.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "Not provided"}` + "\n```", true)
-        songEmbed.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
+        embedMusic.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "Not provided"}` + "\n```", true)
+        embedMusic.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
         var playingMessage = await serverQueue.textChannel.send({ embeds: [embedMusic] });
     } catch (error) {
