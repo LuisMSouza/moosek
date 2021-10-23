@@ -203,17 +203,15 @@ module.exports = {
                             channelId: voiceChannel.id,
                             adapterCreator: message.guild.voiceAdapterCreator
                         });
-                        if (!serverQueue) message.client.queue.set(message.guild.id, queueConstruct);
-                        if (!serverQueue) {
-                            try {
-                                queueConstruct.connection = connection;
-                                play(client, message, queueConstruct.songs[0]);
-                            } catch (error) {
-                                console.log(error);
-                                connection.destroy();
-                                client.queue.delete(message.guild.id);
-                                return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
-                            }
+                        await message.client.queue.set(message.guild.id, queueConstruct);
+                        try {
+                            queueConstruct.connection = connection;
+                            play(client, message, queueConstruct.songs[0]);
+                        } catch (error) {
+                            console.log(error);
+                            connection.destroy();
+                            client.queue.delete(message.guild.id);
+                            return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
                         }
                     }
                 });
