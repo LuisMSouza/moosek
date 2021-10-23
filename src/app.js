@@ -11,7 +11,7 @@ const configVars = {
     token: process.env.TOKEN_KEY,
 }
 client.commands = new Collection();
-client.queue = new Collection();
+client.queue = new Map();
 client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
