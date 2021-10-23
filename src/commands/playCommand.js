@@ -126,15 +126,6 @@ module.exports = {
             console.log("Entry 1")
             try {
                 await YouTube(searchString, { limit: 1 }).then(async x => {
-                    const song = {
-                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
-                        url: x.items[0].url,
-                        thumbnail: x.items[0].bestThumbnail.url,
-                        duration: x.items[0].duration,
-                        liveStream: x.items[0].isLive,
-                        author: message.author.tag
-                    }
-
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
@@ -148,6 +139,15 @@ module.exports = {
                         playing: true,
                         looping: false,
                         songLooping: false
+                    }
+
+                    const song = {
+                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
+                        url: x.items[0].url,
+                        thumbnail: x.items[0].bestThumbnail.url,
+                        duration: x.items[0].duration,
+                        liveStream: x.items[0].isLive,
+                        author: message.author.tag
                     }
 
                     if (serverQueue) {
@@ -174,6 +174,7 @@ module.exports = {
                             }]
                         })
                             .catch(console.error);
+                        return undefined
                     } else {
                         console.log("ENTRY 3")
                         queueConstruct.songs.push(song);
@@ -196,25 +197,27 @@ module.exports = {
                                 ]
                             }]
                         })
+                        return undefined
                     }
-                    const connection = joinVoiceChannel({
-                        guildId: message.guild.id,
-                        channelId: voiceChannel.id,
-                        adapterCreator: message.guild.voiceAdapterCreator
-                    });
-                    if (!serverQueue) client.queue.set(message.guild.id, queueConstruct);
-                    if (!serverQueue) {
-                        try {
-                            queueConstruct.connection = connection;
-                            play(client, message, queueConstruct.songs[0]);
-                        } catch (error) {
-                            console.log(error);
-                            connection.destroy();
-                            client.queue.delete(message.guild.id);
-                            return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
-                        }
+                });
+
+                const connection = joinVoiceChannel({
+                    guildId: message.guild.id,
+                    channelId: voiceChannel.id,
+                    adapterCreator: message.guild.voiceAdapterCreator
+                });
+                if (!serverQueue) client.queue.set(message.guild.id, queueConstruct);
+                if (!serverQueue) {
+                    try {
+                        queueConstruct.connection = connection;
+                        play(client, message, queueConstruct.songs[0]);
+                    } catch (error) {
+                        console.log(error);
+                        connection.destroy();
+                        client.queue.delete(message.guild.id);
+                        return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
                     }
-                })
+                }
             } catch (err) {
                 if (err.message.includes("Cannot read property 'title' of undefined")) {
                     console.log(`[VIDEO UNAVAILABLE] ${searchString}`)
