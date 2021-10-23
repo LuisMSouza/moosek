@@ -27,7 +27,6 @@ module.exports = {
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
-        const serverQueue = message.client.queue.get(message.guild.id)
 
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel);
@@ -126,6 +125,7 @@ module.exports = {
             console.log("Entry 1")
             try {
                 await YouTube(searchString, { limit: 1 }).then(async x => {
+                    const serverQueue = message.client.queue.get(message.guild.id)
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
@@ -203,7 +203,7 @@ module.exports = {
                             channelId: voiceChannel.id,
                             adapterCreator: message.guild.voiceAdapterCreator
                         });
-                        if (!serverQueue) client.queue.set(message.guild.id, queueConstruct);
+                        if (!serverQueue) message.client.queue.set(message.guild.id, queueConstruct);
                         if (!serverQueue) {
                             try {
                                 queueConstruct.connection = connection;
