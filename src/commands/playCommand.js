@@ -4,12 +4,10 @@ const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("ytsr");
-const music_init = require('../structures/strMusic.js');
+const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
-const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
-const { AudioPlayerStatus } = require('@discordjs/voice');
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -137,41 +135,49 @@ module.exports = {
                         author: message.author.tag
                     }
 
-                    if (!serverQueue) {
-                        console.log("ENTRY 2")
-                        const queueConstruct = {
-                            textChannel: message.channel,
-                            voiceChannel: voiceChannel,
-                            connection: null,
-                            songs: [],
-                            prevSongs: [],
-                            volume: 5,
-                            bass: 1,
-                            nigthCore: false,
-                            playing: true,
-                            looping: false,
-                            songLooping: false
-                        }
-                        await queueConstruct.songs.push(song)
-                        await client.queue.set(message.guild.id, queueConstruct)
-                        try {
-                            return music_init.play(client, message, queueConstruct.songs[0]);
-                        } catch (err) {
-                            console.log(`[SOURCE][ERROR]`, err);
-                            client.queue.delete(message.guild.id);
-                            channelMain.send({
-                                embed: {
-                                    title: "Erro na source",
-                                    description: "*Detalhes do erro:*\n```fix\n" + `${err}` + "\n```"
-                                }
-                            });
-                            return;
-                        }
-                    } else if (serverQueue) {
-                        console.log("ENTRY 3")
+                    const queueConstruct = {
+                        textChannel: message.channel,
+                        voiceChannel: voiceChannel,
+                        connection: null,
+                        audioPlayer: null,
+                        resource: null,
+                        songs: [],
+                        prevSongs: [],
+                        volume: 100,
+                        nigthCore: false,
+                        playing: true,
+                        looping: false,
+                        songLooping: false
+                    }
 
+                    if (serverQueue) {
+                        console.log("ENTRY 2")
+                        if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                         serverQueue.songs.push(song);
-                        return message.channel.send({
+                        message.channel.send({
+                            embeds: [{
+                                color: "GREEN",
+                                title: "Adicionado à fila",
+                                description: `[${song.title}](${song.url}) adicionado à fila`,
+                                fields: [
+                                    {
+                                        name: "> __Duração:__",
+                                        value: "```fix\n" + `${song.duration}` + "\n```",
+                                        inline: true
+                                    },
+                                    {
+                                        name: "> __Pedido por:__",
+                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                        inline: true
+                                    }
+                                ]
+                            }]
+                        })
+                            .catch(console.error);
+                    } else {
+                        console.log("ENTRY 3")
+                        queueConstruct.songs.push(song);
+                        message.channel.send({
                             embeds: [{
                                 color: "GREEN",
                                 title: "Adicionado à fila",
@@ -191,6 +197,23 @@ module.exports = {
                             }]
                         })
                     }
+                    const connection = joinVoiceChannel({
+                        guildId: message.guild.id,
+                        channelId: voiceChannel.id,
+                        adapterCreator: message.guild.voiceAdapterCreator
+                    });
+                    if (!serverQueue) client.queue.set(message.guild.id, queueConstruct);
+                    if (!serverQueue) {
+                        try {
+                            queueConstruct.connection = connection;
+                            play(client, message, queueConstruct.songs[0]);
+                        } catch (error) {
+                            console.log(error);
+                            connection.destroy();
+                            client.queue.delete(message.guild.id);
+                            return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
+                        }
+                    }
                 })
             } catch (err) {
                 if (err.message.includes("Cannot read property 'title' of undefined")) {
@@ -200,10 +223,10 @@ module.exports = {
                 }
                 console.log(err);
                 channelMain.send({
-                    embed: {
+                    embeds: [{
                         title: "Erro na source",
                         description: "*Detalhes do erro:*\n```fix\n" + `${err}` + "\n```"
-                    }
+                    }]
                 });
                 return;
             }
