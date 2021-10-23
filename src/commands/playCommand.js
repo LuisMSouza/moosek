@@ -88,7 +88,6 @@ module.exports = {
                 });
             } catch {
                 try {
-                    console.log("ENTRY3")
                     if (serverQueue) {
                         if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
                             return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
@@ -231,7 +230,6 @@ module.exports = {
                 });
                 return;
             }
-            return undefined;
         }
     }
 };
