@@ -174,7 +174,7 @@ module.exports = {
                             }]
                         })
                             .catch(console.error);
-                        return undefined
+                        return;
                     } else {
                         console.log("ENTRY 3")
                         queueConstruct.songs.push(song);
@@ -197,7 +197,6 @@ module.exports = {
                                 ]
                             }]
                         })
-                        return undefined
                     }
                 });
 
