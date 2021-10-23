@@ -260,6 +260,7 @@ module.exports.play = async (client, message, song) => {
                                         if (!serverQueue.songs[1]) {
                                             serverQueue.songs.shift();
                                             await message.guild.me.voice.disconnect();
+                                            await message.client.queue.delete(message.guild.id);
                                             embed.reactions.removeAll().catch(error => console.error('Falha ao remover as reações: ', error));
                                             return;
                                         }
