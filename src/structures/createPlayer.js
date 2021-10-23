@@ -198,7 +198,7 @@ module.exports.play = async (client, message, song) => {
                                 await reaction.users.remove(user);
                                 return;
                             }
-                            if (serverQueue.voiceChannel.id.id !== membReact.voice.channel.id) {
+                            if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embeds: [{
                                         color: "#701AAB",
@@ -239,7 +239,7 @@ module.exports.play = async (client, message, song) => {
                                 await reaction.users.remove(user);
                                 return;
                             }
-                            if (serverQueue.voiceChannel.id.id !== membReact.voice.channel.id) {
+                            if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embeds: [{
                                         color: "#701AAB",
@@ -296,7 +296,7 @@ module.exports.play = async (client, message, song) => {
                                 await reaction.users.remove(user);
                                 return;
                             }
-                            if (serverQueue.voiceChannel.id.id !== membReact.voice.channel.id) {
+                            if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embeds: [{
                                         color: "#701AAB",
@@ -334,7 +334,7 @@ module.exports.play = async (client, message, song) => {
                                 await reaction.users.remove(user);
                                 return;
                             }
-                            if (serverQueue.voiceChannel.id.id !== membReact.voice.channel.id) {
+                            if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embeds: [{
                                         color: "#701AAB",
@@ -372,7 +372,7 @@ module.exports.play = async (client, message, song) => {
                                 await reaction.users.remove(user);
                                 return;
                             }
-                            if (serverQueue.voiceChannel.id.id !== membReact.voice.channel.id) {
+                            if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embeds: [{
                                         color: "#701AAB",
@@ -407,7 +407,7 @@ module.exports.play = async (client, message, song) => {
                                 await reaction.users.remove(user);
                                 return;
                             }
-                            if (serverQueue.voiceChannel.id.id !== membReact.voice.channel.id) {
+                            if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                                 serverQueue.textChannel.send({
                                     embeds: [{
                                         color: "#701AAB",
