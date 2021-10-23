@@ -28,7 +28,7 @@ module.exports.play = async (client, message, song) => {
 
     serverQueue.audioPlayer = createAudioPlayer();
     serverQueue.resource = createAudioResource(stream, { inlineVolume: true, inputType: StreamType.Arbitrary });
-    serverQueue.audioPlayer.play(queue.resource);
+    serverQueue.audioPlayer.play(serverQueue.resource);
 
     try {
         await entersState(serverQueue.connection, VoiceConnectionStatus.Ready, 30_000);
