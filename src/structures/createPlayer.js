@@ -8,7 +8,8 @@ const leaveChannel = require('../utils/leaveChannel.js');
 module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!song) {
-        return leaveChannel(client, message, song);
+        await leaveChannel(client, message, song);
+        return;
     }
     try {
         var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" });
