@@ -176,6 +176,7 @@ module.exports = {
                             .catch(console.error);
                         return;
                     } else {
+                        await console.log(serverQueue)
                         console.log("ENTRY 3")
                         queueConstruct.songs.push(song);
                         message.channel.send({
