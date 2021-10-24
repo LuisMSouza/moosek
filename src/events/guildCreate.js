@@ -19,7 +19,7 @@ module.exports = async (client, guild) => {
 
         const embed_2 = new MessageEmbed()
             .setTitle("Novo servidor!")
-            .setDescription("```css\nNOME: " + `${guild.name}` + "\nID: " + `(${guild.id})` + "\nCEO: " + `${guild.owner.user.tag} | (${guild.owner.user.id})` + "\nMEMBROS: " + `${guild.memberCount}` + "\nREGIÃO: " + `${guild.region}` + "\nV-LEVEL: " + `${guild.verificationLevel}` + "\n```")
+            .setDescription("```css\nNOME: " + `${guild.name}` + "\nID: " + `(${guild.id})` + "\nCEO ID: " + `${guild.ownerId}` + "\nMEMBROS: " + `${guild.memberCount}` + "\nREGIÃO: " + `${guild.region}` + "\nV-LEVEL: " + `${guild.verificationLevel}` + "\n```")
             .setTimestamp()
             .setFooter(`Atualmente em ${client.guilds.cache.size} servidores`)
             .setThumbnail(guild.iconURL())

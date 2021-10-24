@@ -7,7 +7,6 @@ module.exports = {
         const dbOptions = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useFindAndModify: true,
         };
 
         mongoose.connect(process.env.DB_KEY, dbOptions);
