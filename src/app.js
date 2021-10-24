@@ -6,7 +6,7 @@ const { AudioPlayer } = require('@discordjs/voice');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
-const client = new Client({ intents: 32767 });
+const client = new Client({ intents: 32767, restTimeOffset: 0 });
 const configVars = {
     token: process.env.TOKEN_KEY,
 }
