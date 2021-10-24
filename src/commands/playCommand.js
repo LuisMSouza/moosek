@@ -43,6 +43,7 @@ module.exports = {
         var isSptf = sptfRegex.test(url);
 
         const radioListen = client.radio.get(message.guild.id);
+        const serverQueue = message.client.queue.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isDeezer) {
@@ -134,7 +135,6 @@ module.exports = {
         } else {
             try {
                 await YouTube(searchString, { limit: 1 }).then(async x => {
-                    const serverQueue = message.client.queue.get(message.guild.id)
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
