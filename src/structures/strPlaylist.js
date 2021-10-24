@@ -23,17 +23,19 @@ module.exports = {
             if (!serverQueue) {
                 const queueConstruct = {
                     textChannel: message.channel,
-                    voiceChannel: channel,
+                    voiceChannel: voiceChannel,
                     connection: null,
+                    audioPlayer: null,
+                    resource: null,
                     songs: [],
                     prevSongs: [],
-                    volume: 5,
-                    bass: 1,
+                    volume: 100,
                     nigthCore: false,
                     playing: true,
                     looping: false,
                     songLooping: false
                 }
+                
                 message.client.queue.set(message.guild.id, queueConstruct);
                 queueConstruct.songs.push(song);
 
