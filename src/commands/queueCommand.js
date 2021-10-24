@@ -101,7 +101,6 @@ module.exports = {
         })
 
         function generateQueueEmbed(message, queue) {
-            console.log(queue)
             let embeds = [];
             let k = 10;
 
