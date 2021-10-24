@@ -2,7 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
-const music_init = require('./strMusic.js');
+const music_init = require('./createPlayer.js');
 const { joinVoiceChannel } = require("@discordjs/voice");
 
 /////////////////////// SOURCE CODE ///////////////////////////
