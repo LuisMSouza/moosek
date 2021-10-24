@@ -14,7 +14,7 @@ module.exports = async (client, guild) => {
             .setColor("#0f42dc")
 
         if (guild.publicUpdatesChannel) {
-            guild.publicUpdatesChannel.send(embed_1);
+            guild.publicUpdatesChannel.send({ embeds: [embed_1] });
         }
 
         const embed_2 = new MessageEmbed()
@@ -25,7 +25,7 @@ module.exports = async (client, guild) => {
             .setThumbnail(guild.iconURL())
             .setColor("#0f42dc")
 
-        client.channels.cache.get("807738719556993064").send(embed_2);
+        client.channels.cache.get("807738719556993064").send({ embeds: [embed_2] });
         await createGuild(guild.id);
     } catch (e) {
         console.log(e);
