@@ -37,8 +37,8 @@ module.exports = {
         data.forEach(async function (c) {
             try {
                 const guild = c.guildID;
-                const channelSystem = message.client.guilds.cache.get(guild).channels.cache.get(guild.systemChannelId);
-                const channelUpdates = message.client.guilds.cache.get(guild).channels.cache.get(guild.publicUpdatesChannelId);
+                const channelSystem = message.client.guilds.cache.get(guild)//.channels.cache.get(guild.systemChannelId);
+                const channelUpdates = message.client.guilds.cache.get(guild)//.channels.cache.get(guild.publicUpdatesChannelId);
                 console.log(channelUpdates)
                 console.log(channelSystem)
                 if (!channelUpdates && !channelSystem) return;
