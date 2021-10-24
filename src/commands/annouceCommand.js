@@ -35,6 +35,7 @@ module.exports = {
 
         const data = await guildData.find({});
         data.forEach(async function (c) {
+            console.log("cheguei aqui")
             const guild = c.guildID;
             const channelSystem = message.client.guilds.cache.get(guild).channels.cache.get(guild.systemChannelId);
             const channelUpdates = message.client.guilds.cache.get(guild).channels.cache.get(guild.publicUpdatesChannelId);
