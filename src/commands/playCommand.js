@@ -72,8 +72,8 @@ module.exports = {
                 for (const video of videos) {
                     await playlist_init.handleVideo(client, video, message, voiceChannel, true);
                 }
-                return message.channel.send({
-                    embed: {
+                return message.reply({
+                    embeds: [{
                         color: "GREEN",
                         description: `**Playlist adicionada à fila**`,
                         fields: [
@@ -81,9 +81,14 @@ module.exports = {
                                 name: "> __Pedido por:__",
                                 value: "```fix\n" + `${message.author.tag}` + "\n```",
                                 inline: true
+                            },
+                            {
+                                name: "> __Total de músicas:__",
+                                value: "```fix\n" + `${videos.length}` + "\n```",
+                                inline: true
                             }
                         ]
-                    }
+                    }]
                 });
             } catch {
                 try {
@@ -99,7 +104,7 @@ module.exports = {
                         await playlist_init.handleVideo(client, video, message, voiceChannel, true);
                     }
                     return message.reply({
-                        embed: {
+                        embeds: [{
                             color: "GREEN",
                             description: `**Playlist adicionada à fila**`,
                             fields: [
@@ -107,9 +112,14 @@ module.exports = {
                                     name: "> __Pedido por:__",
                                     value: "```fix\n" + `${message.author.tag}` + "\n```",
                                     inline: true
+                                },
+                                {
+                                    name: "> __Total de músicas:__",
+                                    value: "```fix\n" + `${videos.length}` + "\n```",
+                                    inline: true
                                 }
                             ]
-                        }
+                        }]
                     });
                 } catch (error) {
                     console.log(error);
@@ -150,30 +160,32 @@ module.exports = {
                     }
 
                     if (serverQueue) {
-                        if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
-                        serverQueue.songs.push(song);
-                        message.reply({
-                            embeds: [{
-                                color: "GREEN",
-                                title: "Adicionado à fila",
-                                description: `[${song.title}](${song.url}) adicionado à fila`,
-                                fields: [
-                                    {
-                                        name: "> __Duração:__",
-                                        value: "```fix\n" + `${song.duration}` + "\n```",
-                                        inline: true
-                                    },
-                                    {
-                                        name: "> __Pedido por:__",
-                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
-                                        inline: true
-                                    }
-                                ]
-                            }]
-                        })
-                            .catch(console.error);
-                        return;
-                    } else {
+                        if (serverQueue.songs) {
+                            if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
+                            serverQueue.songs.push(song);
+                            message.reply({
+                                embeds: [{
+                                    color: "GREEN",
+                                    title: "Adicionado à fila",
+                                    description: `[${song.title}](${song.url}) adicionado à fila`,
+                                    fields: [
+                                        {
+                                            name: "> __Duração:__",
+                                            value: "```fix\n" + `${song.duration}` + "\n```",
+                                            inline: true
+                                        },
+                                        {
+                                            name: "> __Pedido por:__",
+                                            value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                            inline: true
+                                        }
+                                    ]
+                                }]
+                            })
+                                .catch(console.error);
+                            return;
+                        }
+                    } else if (!serverQueue || (serverQueue && serverQueue.songs.length >= 1)) {
                         queueConstruct.songs.push(song);
                         message.reply({
                             embeds: [{

@@ -23,7 +23,7 @@ module.exports = {
             if (!serverQueue) {
                 const queueConstruct = {
                     textChannel: message.channel,
-                    voiceChannel: voiceChannel,
+                    voiceChannel: channel,
                     connection: null,
                     audioPlayer: null,
                     resource: null,
@@ -42,7 +42,7 @@ module.exports = {
                 try {
                     const connection = joinVoiceChannel({
                         guildId: message.guild.id,
-                        channelId: voiceChannel.id,
+                        channelId: channel.id,
                         adapterCreator: message.guild.voiceAdapterCreator
                     });
                     queueConstruct.connection = connection;
