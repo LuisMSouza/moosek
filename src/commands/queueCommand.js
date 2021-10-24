@@ -25,7 +25,7 @@ module.exports = {
             .setEmoji("➡️")
         let bt1b = new MessageButton()
             .setStyle("SUCCESS")
-            .setCustomId("queue_next")
+            .setCustomId("queue_nextb")
             .setEmoji("➡️")
         let bt2 = new MessageButton()
             .setStyle("SUCCESS")
@@ -33,7 +33,7 @@ module.exports = {
             .setEmoji("⬅️")
         let bt2b = new MessageButton()
             .setStyle("SUCCESS")
-            .setCustomId("queue_prev")
+            .setCustomId("queue_prevb")
             .setEmoji("⬅️")
         let bt3 = new MessageButton()
             .setStyle("SECONDARY")
@@ -92,11 +92,12 @@ module.exports = {
                 }
             } catch (err) {
                 if (err.message.includes("DiscordAPIError: Unknown interaction")) return
+                console.log(err);
             }
             return;
         });
         collector.on('end', async (collected) => {
-            await queueEmbed.delete(queueEmbed);
+            await queueEmbed.delete(queueEmbed).catch(e => console.log(e));
             return;
         })
 
