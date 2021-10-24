@@ -69,7 +69,7 @@ module.exports = {
                             bt2.setDisabled()
                             buttonRow2.addComponents([bt2, bt3, bt1b])
                         } else {
-                            buttonRow2.addComponent([bt2b, bt3, bt1b])
+                            buttonRow2.addComponents([bt2b, bt3, bt1b])
                         }
                         await b.update({ components: [buttonRow2], embeds: [embeds[currentPage]] });
                     }
@@ -85,7 +85,7 @@ module.exports = {
                             bt2.setDisabled()
                             buttonRow3.addComponents([bt2, bt3, bt1b])
                         } else {
-                            buttonRow3.addComponent([bt2b, bt3, bt1b])
+                            buttonRow3.addComponents([bt2b, bt3, bt1b])
                         }
                         await b.update({ components: [buttonRow3], embeds: [embeds[currentPage]] });
                     }
