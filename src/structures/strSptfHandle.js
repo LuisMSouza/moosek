@@ -22,8 +22,8 @@ module.exports = {
                     for (const track of tracks) {
                         await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                     }
-                    return message.channel.send({
-                        embed: {
+                    return message.reply({
+                        embeds: [{
                             color: "GREEN",
                             description: `**Playlist adicionada à fila**`,
                             fields: [
@@ -31,9 +31,14 @@ module.exports = {
                                     name: "> __Pedido por:__",
                                     value: "```fix\n" + `${message.author.tag}` + "\n```",
                                     inline: true
+                                },
+                                {
+                                    name: "> __Total de músicas:__",
+                                    value: "```fix\n" + `${tracks.length}` + "\n```",
+                                    inline: true
                                 }
                             ]
-                        }
+                        }]
                     });
                 }, async function (err) {
                     if (err.message.includes("Invalid playlist Id.")) {
@@ -57,8 +62,8 @@ module.exports = {
                                         for (const track of tracks) {
                                             await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                                         }
-                                        return message.channel.send({
-                                            embed: {
+                                        return message.reply({
+                                            embeds: [{
                                                 color: "GREEN",
                                                 description: `**Playlist adicionada à fila**`,
                                                 fields: [
@@ -66,9 +71,14 @@ module.exports = {
                                                         name: "> __Pedido por:__",
                                                         value: "```fix\n" + `${message.author.tag}` + "\n```",
                                                         inline: true
+                                                    },
+                                                    {
+                                                        name: "> __Total de músicas:__",
+                                                        value: "```fix\n" + `${tracks.length}` + "\n```",
+                                                        inline: true
                                                     }
                                                 ]
-                                            }
+                                            }]
                                         });
                                     });
                             },
@@ -120,8 +130,8 @@ module.exports = {
                     for (const track of tracks2) {
                         await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                     }
-                    return message.channel.send({
-                        embed: {
+                    return message.reply({
+                        embeds: [{
                             color: "GREEN",
                             description: `**Album adicionado à fila**`,
                             fields: [
@@ -129,9 +139,14 @@ module.exports = {
                                     name: "> __Pedido por:__",
                                     value: "```fix\n" + `${message.author.tag}` + "\n```",
                                     inline: true
+                                },
+                                {
+                                    name: "> __Total de músicas:__",
+                                    value: "```fix\n" + `${tracks2.length}` + "\n```",
+                                    inline: true
                                 }
                             ]
-                        }
+                        }]
                     });
                 }, function (err) {
                     if (err.message.includes("The access token expired.")) {
@@ -151,8 +166,8 @@ module.exports = {
                                         for (const track of tracks) {
                                             await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                                         }
-                                        return message.channel.send({
-                                            embed: {
+                                        return message.reply({
+                                            embeds: [{
                                                 color: "GREEN",
                                                 description: `**Album adicionado à fila**`,
                                                 fields: [
@@ -160,9 +175,14 @@ module.exports = {
                                                         name: "> __Pedido por:__",
                                                         value: "```fix\n" + `${message.author.tag}` + "\n```",
                                                         inline: true
+                                                    },
+                                                    {
+                                                        name: "> __Total de músicas:__",
+                                                        value: "```fix\n" + `${tracks.length}` + "\n```",
+                                                        inline: true
                                                     }
                                                 ]
-                                            }
+                                            }]
                                         });
                                     });
                             },

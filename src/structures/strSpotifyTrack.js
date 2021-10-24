@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const music_init = require('./createPlayer.js');
 const YouTube = require("youtube-sr").default;
+const { joinVoiceChannel } = require("@discordjs/voice");
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -23,10 +24,11 @@ module.exports = {
                         textChannel: message.channel,
                         voiceChannel: channel,
                         connection: null,
+                        audioPlayer: null,
+                        resource: null,
                         songs: [],
                         prevSongs: [],
-                        volume: 5,
-                        bass: 1,
+                        volume: 100,
                         nigthCore: false,
                         playing: true,
                         looping: false,
@@ -36,7 +38,11 @@ module.exports = {
                     queueConstruct.songs.push(song);
 
                     try {
-                        var connection = await channel.join();
+                        const connection = joinVoiceChannel({
+                            guildId: message.guild.id,
+                            channelId: channel.id,
+                            adapterCreator: message.guild.voiceAdapterCreator
+                        });
                         queueConstruct.connection = connection;
                         music_init.play(client, message, queueConstruct.songs[0]);
                     } catch (error) {
@@ -54,7 +60,7 @@ module.exports = {
                         .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
                         .addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
                         .addField("> __Pedido por:__", "```fix\n" + `${message.author.tag}` + "\n```", true)
-                    return serverQueue.textChannel.send(thing);
+                    return serverQueue.textChannel.send({ embeds: [thing] });
                 }
                 return;
             })
