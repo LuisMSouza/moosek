@@ -101,6 +101,7 @@ module.exports = {
         })
 
         function generateQueueEmbed(message, queue) {
+            console.log(queue)
             let embeds = [];
             let k = 10;
 
@@ -118,8 +119,8 @@ module.exports = {
                     .setThumbnail(message.guild.iconURL())
                     .setDescription(`${info}`)
                     .addField("Tocando agora", `[${queue[0].title}](${queue[0].url})`, true)
-                    .addField("Canal de texto", serverQueue.textChannel, true)
-                    .addField("Canal de voz", serverQueue.voiceChannel, true)
+                    .addField("Canal de texto", `${serverQueue.textChannel}`, true)
+                    .addField("Canal de voz", `${serverQueue.voiceChannel}`, true)
                 //.setFooter(`${message.guild.name}`, `${message.guild.iconURL()}`)
                 if (serverQueue.songs.length === 1) embed.setDescription(`Sem músicas na fila. Adicione mais digitando: .play <nome da música>`)
 
