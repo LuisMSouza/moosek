@@ -13,7 +13,7 @@ module.exports.play = async (client, message, song) => {
         return;
     }
     try {
-        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" });
+        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highest" });
     } catch (error) {
         if (serverQueue) {
             if (serverQueue.loop) {
