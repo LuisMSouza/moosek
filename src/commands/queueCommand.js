@@ -21,24 +21,24 @@ module.exports = {
 
         let bt1 = new MessageButton()
             .setStyle("green")
-            .setID("queue_next")
+            .setCustomId("queue_next")
             .setEmoji("➡️")
         let bt1b = new MessageButton()
             .setStyle("green")
-            .setID("queue_next")
+            .setCustomId("queue_next")
             .setEmoji("➡️")
         let bt2 = new MessageButton()
             .setStyle("green")
-            .setID("queue_prev")
+            .setCustomId("queue_prev")
             .setEmoji("⬅️")
         let bt2b = new MessageButton()
             .setStyle("green")
-            .setID("queue_prev")
+            .setCustomId("queue_prev")
             .setEmoji("⬅️")
         let bt3 = new MessageButton()
             .setStyle("gray")
             .setDisabled()
-            .setID("queue_num")
+            .setCustomId("queue_num")
             .setLabel(`${currentPage + 1}/${embeds.length}`)
 
         if (embeds.length <= 1) {
@@ -50,14 +50,14 @@ module.exports = {
         var buttonRow = new MessageActionRow()
             .addComponents([bt2, bt3, bt1])
 
-        const queueEmbed = await message.channel.send({ component: buttonRow, embed: embeds[currentPage] });
+        const queueEmbed = await message.channel.send({ components: [buttonRow], embeds: [embeds[currentPage]] });
 
         const filter = (button) => button.clicker.user.id != client.user.id;
-        const collector = queueEmbed.createButtonCollector(filter, { time: 300000 });
+        const collector = queueEmbed.channel.createMessageComponentCollector({ filter, time: 300000 });
 
         collector.on('collect', async (b) => {
             try {
-                if (b.id === "queue_next") {
+                if (b.customId === "queue_next") {
                     if (currentPage < embeds.length - 1) {
                         currentPage++;
                         await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
@@ -71,10 +71,9 @@ module.exports = {
                         } else {
                             buttonRow2.addComponent([bt2b, bt3, bt1b])
                         }
-                        await b.defer();
-                        queueEmbed.edit({ component: buttonRow2, embed: embeds[currentPage] });
+                        await b.update({ components: [buttonRow2], embeds: [embeds[currentPage]] });
                     }
-                } else if (b.id === "queue_prev") {
+                } else if (b.customId === "queue_prev") {
                     if (currentPage !== 0) {
                         --currentPage;
                         await bt3.setLabel(`${currentPage + 1}/${embeds.length}`)
@@ -88,8 +87,7 @@ module.exports = {
                         } else {
                             buttonRow3.addComponent([bt2b, bt3, bt1b])
                         }
-                        await b.defer();
-                        queueEmbed.edit({ component: buttonRow3, embed: embeds[currentPage] });
+                        await b.update({ components: [buttonRow3], embeds: [embeds[currentPage]] });
                     }
                 }
             } catch (err) {

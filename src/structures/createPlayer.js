@@ -37,54 +37,6 @@ module.exports.play = async (client, message, song) => {
         serverQueue.connection.destroy();
         throw error;
     }
-    serverQueue.resource.playStream
-        .on("end", async () => {
-            playingMessage.reactions.removeAll();
-            if (playingMessage && playingMessage.deleted)
-                playingMessage.delete().catch(console.error);
-
-            if (serverQueue.looping) {
-                let lastSong = serverQueue.songs.shift();
-                serverQueue.songs.push(lastSong);
-                module.exports.play(client, message, serverQueue.songs[0]);
-            } if (serverQueue.nigthCore) {
-                if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                module.exports.play(client, message, serverQueue.songs[random]);
-            } else {
-                if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                module.exports.play(client, message, serverQueue.songs[0]);
-            }
-        })
-        .on("error", (error) => {
-            console.log(error);
-            if (playingMessage && !playingMessage.deleted)
-                playingMessage.delete().catch(console.error);
-
-            if (serverQueue.loop) {
-                let lastSong = serverQueue.songs.shift();
-                serverQueue.songs.push(lastSong);
-                module.exports.play(client, message, serverQueue.songs[0]);
-            } else {
-                serverQueue.songs.shift();
-                module.exports.play(client, message, serverQueue.songs[0]);
-            }
-        })
-    serverQueue.audioPlayer
-        .on("error", (error) => {
-            console.log(error);
-            if (playingMessage && playingMessage.deleted)
-                playingMessage.delete().catch(console.error);
-
-            if (serverQueue.loop) {
-                let lastSong = serverQueue.songs.shift();
-                serverQueue.songs.push(lastSong);
-                module.exports.play(client, message, serverQueue.songs[0]);
-            } else {
-                serverQueue.songs.shift();
-                module.exports.play(client, message, serverQueue.songs[0]);
-            }
-        });
     try {
         var embedMusic = new MessageEmbed()
             .setAuthor("Tocando agora:")
@@ -438,6 +390,53 @@ module.exports.play = async (client, message, song) => {
             } catch (err) {
                 console.log(err)
             }
+            serverQueue.resource.playStream
+                .on("end", async () => {
+                    embed.reactions.removeAll();
+                    if (playingMessage && playingMessage.deleted)
+                        playingMessage.delete().catch(console.error);
+                    if (serverQueue.looping) {
+                        let lastSong = serverQueue.songs.shift();
+                        serverQueue.songs.push(lastSong);
+                        module.exports.play(client, message, serverQueue.songs[0]);
+                    } if (serverQueue.nigthCore) {
+                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                        module.exports.play(client, message, serverQueue.songs[random]);
+                    } else {
+                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                        module.exports.play(client, message, serverQueue.songs[0]);
+                    }
+                })
+                .on("error", (error) => {
+                    console.log(error);
+                    if (playingMessage && !playingMessage.deleted)
+                        playingMessage.delete().catch(console.error);
+
+                    if (serverQueue.loop) {
+                        let lastSong = serverQueue.songs.shift();
+                        serverQueue.songs.push(lastSong);
+                        module.exports.play(client, message, serverQueue.songs[0]);
+                    } else {
+                        serverQueue.songs.shift();
+                        module.exports.play(client, message, serverQueue.songs[0]);
+                    }
+                })
+            serverQueue.audioPlayer
+                .on("error", (error) => {
+                    console.log(error);
+                    if (playingMessage && playingMessage.deleted)
+                        playingMessage.delete().catch(console.error);
+
+                    if (serverQueue.loop) {
+                        let lastSong = serverQueue.songs.shift();
+                        serverQueue.songs.push(lastSong);
+                        module.exports.play(client, message, serverQueue.songs[0]);
+                    } else {
+                        serverQueue.songs.shift();
+                        module.exports.play(client, message, serverQueue.songs[0]);
+                    }
+                });
         })
     } catch (error) {
         console.log(error)
