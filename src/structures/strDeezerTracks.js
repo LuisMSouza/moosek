@@ -1,7 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const music_init = require('./strMusic.js');
+const music_init = require('./createPlayer.js');
 const YouTube = require("youtube-sr").default;
 
 /////////////////////// SOURCE CODE ///////////////////////////
