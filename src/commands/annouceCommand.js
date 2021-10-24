@@ -46,11 +46,9 @@ module.exports = {
                 if (!cSystem && !cUpdates) return;
                 if (cUpdates) {
                     cUpdates.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
-                        .catch(e => console.log(e))
                     return;
                 } else {
                     cSystem.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
-                        .catch(e => console.log(e))
                     return;
                 }
             } catch (e) {
