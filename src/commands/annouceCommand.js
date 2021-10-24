@@ -37,17 +37,19 @@ module.exports = {
         data.forEach(async function (c) {
             try {
                 const guild = c.guildID;
-                const channelSystem = client.guilds.cache.get(guild).channels.cache.get(guild.channels.systemChannelId);
-                const channelUpdates = client.guilds.cache.get(guild).channels.cache.get(guild.channels.publicUpdatesChannelId);
+                const channelSystem = client.guilds.cache.get(guild)
+                const channelUpdates = client.guilds.cache.get(guild)
 
-                console.log(channelSystem)
-                if (!channelUpdates && !channelSystem) return;
-                if (channelUpdates) {
-                    channelUpdates.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
+                const cSystem = channelSystem.systemChannel
+                const cUpdates = channelUpdates.publicUpdatesChannel
+                console.log(cSystem)
+                if (!cSystem && !cUpdates) return;
+                if (cUpdates) {
+                    cUpdates.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
                         .catch(e => console.log(e))
                     return;
                 } else {
-                    channelSystem.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
+                    cSystem.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
                         .catch(e => console.log(e))
                     return;
                 }
