@@ -2,6 +2,7 @@
 const sendError = require('../utils/error.js');
 const { CEO_ID } = require('../utils/botUtils.js');
 const guildData = require('../models/guildData.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -15,10 +16,37 @@ module.exports = {
     async execute(client, message, args) {
         if (message.author.id != CEO_ID) return;
 
+        const msg = args.join(" ") || args;
+        if (!msg) return;
+
+        const embed = new MessageEmbed()
+            .setTitle("ANÚNCIO DOS DESENVOLVEDORES")
+            .setDescription(`${msg}`)
+            .setColor("#0f42dc")
+            .setFooter("THE DRAGONS COMMUNITY TEAM • All RIGHTS RESERVED", "https://i.imgur.com/l59rO0X.gif")
+
+        const button = new MessageButton()
+            .setStyle("LINK")
+            .setLabel("TDG COMMUNITY")
+            .setURL("https://discord.gg/5QvAqkS7fy")
+
+        const row = new MessageActionRow()
+            .addComponents(button)
+
         const data = await guildData.find({});
         data.forEach(async function (c) {
             const guild = c.guildID;
-            console.log(guild)
+            const channelSystem = message.client.guilds.cache.get(guild).channels.cache.get(guild.systemChannelId);
+            const channelUpdates = message.client.guilds.cache.get(guild).channels.cache.get(guild.publicUpdatesChannelId);
+            var channelsOfGuilds;
+            if (!channelUpdates && !channelSystem) return;
+            if (channelUpdates) {
+                channelsOfGuilds = channelUpdates;
+                return channelsOfGuilds.send({ components: [row], embeds: [embed] });
+            } else {
+                channelsOfGuilds = channelSystem;
+                return channelsOfGuilds.send({ components: [row], embeds: [embed] });
+            }
         })
     }
 }

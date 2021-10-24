@@ -7,8 +7,8 @@ module.exports = async function (client, oldState, newState) {
             return console.log(e);
         }
     }
-    if (newState.member.id === bot.user.id && !newState.connection) {
+    if (newState.member.id === client.user.id && !newState.connection) {
         if (serverQueue) return;
-        bot.queue.delete(newState.guild.id);
+        client.queue.delete(newState.guild.id);
     }
 }
