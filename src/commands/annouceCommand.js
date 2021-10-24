@@ -16,6 +16,9 @@ module.exports = {
         if (message.author.id != CEO_ID) return;
 
         const data = await guildData.find({});
-        console.log(data);
+        data.forEach(async function (c) {
+            const guild = c.guildID;
+            console.log(guild)
+        })
     }
 }
