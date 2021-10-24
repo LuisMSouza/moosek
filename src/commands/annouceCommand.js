@@ -39,14 +39,14 @@ module.exports = {
                 const guild = c.guildID;
                 const channelSystem = message.client.guilds.cache.get(guild).channels.cache.get(guild.systemChannelId);
                 const channelUpdates = message.client.guilds.cache.get(guild).channels.cache.get(guild.publicUpdatesChannelId);
+                console.log(channelUpdates)
+                console.log(channelSystem)
                 if (!channelUpdates && !channelSystem) return;
                 if (channelUpdates) {
-                    console.log(channelUpdates)
                     channelUpdates.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
                         .catch(e => console.log(e))
                     return;
                 } else {
-                    console.log(channelSystem)
                     channelSystem.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
                         .catch(e => console.log(e))
                     return;
