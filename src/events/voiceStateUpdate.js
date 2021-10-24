@@ -7,7 +7,7 @@ module.exports = async function (client, oldState, newState) {
             return console.log(e);
         }
     }
-    if (!newState.guild.me.voice && !newState.guild.me.voice.streaming) {
+    if (!serverQueue.connection) {
         client.queue.delete(newState.guild.id);
     }
 }

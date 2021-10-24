@@ -42,10 +42,14 @@ module.exports = {
             if (!channelUpdates && !channelSystem) return;
             if (channelUpdates) {
                 channelsOfGuilds = channelUpdates;
-                return channelsOfGuilds.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO");
+                channelsOfGuilds.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
+                    .catch(e => console.log(e))
+                    return;
             } else {
                 channelsOfGuilds = channelSystem;
-                return channelsOfGuilds.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
+                channelsOfGuilds.send({ components: [row], embeds: [embed] }) && console.log("[CLIENT] ANÚNCIO ENVIADO")
+                    .catch(e => console.log(e))
+                    return;
             }
         })
     }
