@@ -27,7 +27,7 @@ module.exports = {
 
         serverQueue.playing = true;
 
-        if (serverQueue.loop) {
+        if (serverQueue.looping) {
             for (let i = 0; i < args[0] - 2; i++) {
                 serverQueue.songs.push(serverQueue.songs.shift());
             }
@@ -35,7 +35,7 @@ module.exports = {
             serverQueue.songs = serverQueue.songs.slice(args[0] - 2);
         }
         try {
-            serverQueue.connection.dispatcher.end();
+            message.guild.me.voice.disconnect();
         } catch (error) {
             await message.guild.me.voice.disconnect();
             message.client.queue.delete(message.guild.id);
