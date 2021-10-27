@@ -7,7 +7,6 @@ module.exports = async (client, message, song) => {
             if (serverQueue.playing) {
                 return;
             } else {
-                message.client.queue.delete(message.guildId)
                 setTimeout(async function () {
                     if (serverQueue) {
                         if (serverQueue.playing) return
