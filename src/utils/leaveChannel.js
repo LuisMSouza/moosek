@@ -4,42 +4,22 @@ module.exports = async (client, message, song) => {
     const serverRadio = await message.client.radio.get(message.guild.id);
     message.client.queue.delete(message.guild.id);
     try {
-        if (serverQueue || serverRadio) {
-            if (serverQueue.playing) {
-                return;
-            } else {
-                setTimeout(async function () {
-                    if (serverQueue) {
-                        if (serverQueue.playing) return
-                    }
-                    if (!message.guild.me.voice.channel) return;
-                    if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
-                    serverQueue.nigthCore = false
-                    await serverQueue.connection.disconnect();
-                    serverQueue.textChannel.send({
-                        embeds: [{
-                            color: "#0f42dc",
-                            description: `**Tempo de espera esgotado. Saí do chat ;)**`
-                        }]
-                    });
-                    return message.client.queue.delete(message.guild.id);
-                }, STAY_TIME * 1000);
+        setTimeout(async function () {
+            if (serverQueue) {
+                if (serverQueue.playing) return
             }
-        } else {
-            setTimeout(async function () {
-                if (!message.guild.me.voice.channel) return;
-                if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
-                serverQueue.nigthCore = false
-                await serverQueue.connection.disconnect();
-                serverQueue.textChannel.send({
-                    embeds: [{
-                        color: "#0f42dc",
-                        description: `**Tempo de espera esgotado. Saí do chat ;)**`
-                    }]
-                });
-                return message.client.queue.delete(message.guild.id);
-            }, STAY_TIME * 1000);
-        }
+            if (!message.guild.me.voice.channel) return;
+            if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
+            serverQueue.nigthCore = false
+            await serverQueue.connection.disconnect();
+            serverQueue.textChannel.send({
+                embeds: [{
+                    color: "#0f42dc",
+                    description: `**Tempo de espera esgotado. Saí do chat ;)**`
+                }]
+            });
+            return message.client.queue.delete(message.guild.id);
+        }, STAY_TIME * 1000);
     } catch (e) {
         console.log(e);
     }
