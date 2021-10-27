@@ -8,7 +8,7 @@ const leaveChannel = require('../utils/leaveChannel.js');
 module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!song) {
-        message.client.delete(message.guildId)
+        serverQueue.songs = []
         await leaveChannel(client, message, song);
         return;
     }
