@@ -1,6 +1,7 @@
 const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceConnectionStatus } = require("@discordjs/voice");
 const { CommandInteraction, Client, MessageEmbed } = require("discord.js");
 const playDl = require('play-dl');
+const ytdl = require("ytdl-core");
 const sendError = require('../utils/error.js');
 const leaveChannel = require('../utils/leaveChannel.js');
 
@@ -12,7 +13,7 @@ module.exports.play = async (client, message, song) => {
         return;
     }
     try {
-        var stream = await playDl.stream(song.url);
+        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" });
     } catch (error) {
         if (serverQueue) {
             if (serverQueue.loop) {
@@ -27,7 +28,7 @@ module.exports.play = async (client, message, song) => {
     }
 
     serverQueue.audioPlayer = createAudioPlayer();
-    serverQueue.resource = createAudioResource(stream.stream, { inlineVolume: true, inputType: stream.type });
+    serverQueue.resource = createAudioResource(stream, { inlineVolume: true, inputType: StreamType.Arbitrary });
     serverQueue.audioPlayer.play(serverQueue.resource);
 
     try {
