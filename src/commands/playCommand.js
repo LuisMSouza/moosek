@@ -184,6 +184,42 @@ module.exports = {
                             })
                                 .catch(console.error);
                             return;
+                        } else {
+                            queueConstruct.songs.push(song);
+                            message.reply({
+                                embeds: [{
+                                    color: "GREEN",
+                                    title: "Adicionado à fila",
+                                    description: `[${song.title}](${song.url}) adicionado à fila`,
+                                    fields: [
+                                        {
+                                            name: "> __Duração:__",
+                                            value: "```fix\n" + `${song.duration}` + "\n```",
+                                            inline: true
+                                        },
+                                        {
+                                            name: "> __Pedido por:__",
+                                            value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                            inline: true
+                                        }
+                                    ]
+                                }]
+                            })
+                            const connection = joinVoiceChannel({
+                                guildId: message.guild.id,
+                                channelId: voiceChannel.id,
+                                adapterCreator: message.guild.voiceAdapterCreator
+                            });
+                            await message.client.queue.set(message.guild.id, queueConstruct);
+                            try {
+                                queueConstruct.connection = connection;
+                                play(client, message, queueConstruct.songs[0]);
+                            } catch (error) {
+                                console.log(error);
+                                connection.destroy();
+                                client.queue.delete(message.guild.id);
+                                return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
+                            }
                         }
                     } else if (!serverQueue || (serverQueue && serverQueue.songs.length >= 1)) {
                         queueConstruct.songs.push(song);
