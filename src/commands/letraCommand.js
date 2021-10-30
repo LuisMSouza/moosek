@@ -25,6 +25,9 @@ module.exports = {
                 try {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
                     const songs = await Client.getLyrics(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
+                        if (!r || r === undefined || r === "") {
+                            return sendError("**Ops...**\n\nNão foi possível encontrar a letra dessa música :(")
+                        }
                         const lyrics = r[0].lyrics.lyrics
                         const title = r[0].title
                         const thumb = r[0].thumb
