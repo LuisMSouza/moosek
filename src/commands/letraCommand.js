@@ -26,7 +26,7 @@ module.exports = {
                     const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(async r => {
                         const lyrics = r[0].lyrics.lyrics
                         await msge.delete(msge)
-                        return this.generateEmbeds(message, lyrics)
+                        return generateEmbeds(message, lyrics)
                     })
                 } catch (e) {
                     await msge.delete(msge)
@@ -41,7 +41,7 @@ module.exports = {
                 const songs = await Client.getLyrics(`${main_entry}`).then(async r => {
                     const lyrics = r[0].lyrics.lyrics
                     await msge.delete(msge)
-                    return this.generateEmbeds(message, lyrics)
+                    return generateEmbeds(message, lyrics)
                 })
             } catch (e) {
                 await msge.delete(msge)
@@ -49,44 +49,43 @@ module.exports = {
                 console.log(e);
             }
         }
+        async function generateEmbeds(message, lyrics) {
+            let embed = new MessageEmbed()
+                .setColor("#0f42dc")
+            let embed2 = new MessageEmbed()
+                .setColor("#0f42dc")
+            let embed3 = new MessageEmbed()
+                .setColor("#0f42dc")
+            let embed4 = new MessageEmbed()
+                .setColor("#0f42dc")
 
-    },
-    async generateEmbeds(message, lyrics) {
-        let embed = new MessageEmbed()
-            .setColor("#0f42dc")
-        let embed2 = new MessageEmbed()
-            .setColor("#0f42dc")
-        let embed3 = new MessageEmbed()
-            .setColor("#0f42dc")
-        let embed4 = new MessageEmbed()
-            .setColor("#0f42dc")
+            embed.setDescription(lyrics);
+            embed2.setDescription(lyrics);
+            embed3.setDescription(lyrics);
+            embed4.setDescription(lyrics);
+            embed.setDescription(lyrics);
 
-        embed.setDescription(lyrics);
-        embed2.setDescription(lyrics);
-        embed3.setDescription(lyrics);
-        embed4.setDescription(lyrics);
-        embed.setDescription(lyrics);
-
-        if (embed.description.length > 2048 && embed.description.length <= 4090) {
-            embed.description = `${embed.description.substr(0, 2045)}...`;
-            await message.channel.send({ embeds: [embed] })
-            embed2.description = `${lyrics.substr(2045)}`;
-            if (embed2.description != "..." || embed2.description != "") {
+            if (embed.description.length > 2048 && embed.description.length <= 4090) {
+                embed.description = `${embed.description.substr(0, 2045)}...`;
+                await message.channel.send({ embeds: [embed] })
+                embed2.description = `${lyrics.substr(2045)}`;
+                if (embed2.description != "..." || embed2.description != "") {
+                    await message.channel.send({ embeds: [embed2] })
+                }
+            }
+            if (embed.description.length > 4090) {
+                embed.description = `${embed.description.substr(0, 2045)}...`;
+                await message.channel.send({ embeds: [embed] })
+                embed2.description = `${lyrics.substr(2045, 2045)}...`;
                 await message.channel.send({ embeds: [embed2] })
-            }
-        }
-        if (embed.description.length > 4090) {
-            embed.description = `${embed.description.substr(0, 2045)}...`;
-            await message.channel.send({ embeds: [embed] })
-            embed2.description = `${lyrics.substr(2045, 2045)}...`;
-            await message.channel.send({ embeds: [embed2] })
-            embed3.description = `${lyrics.substr(4090, 2045)}...`;
-            if (embed3.description !== "...") {
-                await message.channel.send({ embeds: [embed3] })
-            }
-            embed4.description = `${lyrics.substr(6135, 2045)}...`;
-            if (embed4.description !== "...") {
-                await message.channel.send({ embeds: [embed4] })
+                embed3.description = `${lyrics.substr(4090, 2045)}...`;
+                if (embed3.description !== "...") {
+                    await message.channel.send({ embeds: [embed3] })
+                }
+                embed4.description = `${lyrics.substr(6135, 2045)}...`;
+                if (embed4.description !== "...") {
+                    await message.channel.send({ embeds: [embed4] })
+                }
             }
         }
     }
