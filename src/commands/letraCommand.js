@@ -23,7 +23,7 @@ module.exports = {
         if (!main_entry) {
             if (serverQueue) {
                 try {
-                    const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(r => {
+                    const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(async r => {
                         const lyrics = r[0].lyrics.lyrics
                         await msge.delete(msge)
                         return this.generateEmbeds(lyrics)
@@ -38,7 +38,7 @@ module.exports = {
             }
         } else {
             try {
-                const songs = await Client.getLyrics(`${main_entry}`).then(r => {
+                const songs = await Client.getLyrics(`${main_entry}`).then(async r => {
                     const lyrics = r[0].lyrics.lyrics
                     await msge.delete(msge)
                     return this.generateEmbeds(lyrics)
