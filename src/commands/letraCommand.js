@@ -1,9 +1,9 @@
 /////////////////// IMPORTS ////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const Genius = require("genius-lyrics");
+const Lyrics = require("song-lyrics-api");
 const ytdl = require('ytdl-core');
-const Client = new Genius.Client(process.env.GENIUS_API_KEY);
+const Client = new Lyrics()
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -30,11 +30,10 @@ module.exports = {
 
         if (!main_entry) {
             if (serverQueue) {
-                var query = await (await ytdl.getInfo(serverQueue.songs[0].url)).videoDetails.media.song ?? `${serverQueue.songs[0].title}`
-                var artist = await (await ytdl.getBasicInfo(serverQueue.songs[0].url)).videoDetails.media.artist ?? ""
                 try {
-                    const songs = await Client.songs.search(`${query} ${artist}`);
-                    const lyrics = await songs[0].lyrics();
+                    const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(r => {
+                        return console.log(r);
+                    })
 
                     embed.setDescription(lyrics);
                     embed2.setDescription(lyrics);
@@ -77,7 +76,9 @@ module.exports = {
             }
         } else {
             try {
-                const songs = await Client.songs.search(main_entry);
+                const songs = await Client.getLyrics(`${main_entry}`).then(r => {
+                    return console.log(r);
+                })
                 const lyrics = await songs[0].lyrics();
 
                 embed.setDescription(lyrics)
