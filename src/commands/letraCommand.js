@@ -32,7 +32,7 @@ module.exports = {
             if (serverQueue) {
                 try {
                     const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(r => {
-                        return console.log(r);
+                        const lyrics = console.log(r[0].lyrics)
                     })
 
                     embed.setDescription(lyrics);
@@ -77,7 +77,8 @@ module.exports = {
         } else {
             try {
                 const songs = await Client.getLyrics(`${main_entry}`).then(r => {
-                    return console.log(r);
+                    const lyrics = console.log(r[0].lyrics)
+                    return
                 })
                 const lyrics = await songs[0].lyrics();
 
