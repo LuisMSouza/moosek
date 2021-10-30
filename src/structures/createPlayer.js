@@ -12,7 +12,10 @@ module.exports.play = async (client, message, song) => {
         return;
     }
     try {
-        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" });
+        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" })
+        .on("error", async (e) => {
+            return sendError("**Ops...**\n\nOcorreu um erro ao reproduzir essa música, tente novamente...")
+        })
     } catch (error) {
         if (serverQueue) {
             if (serverQueue.loop) {
