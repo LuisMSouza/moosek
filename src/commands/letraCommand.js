@@ -72,8 +72,7 @@ module.exports = {
                 if (embed2.description != "..." || embed2.description != "") {
                     await message.channel.send({ embeds: [embed2] })
                 }
-            }
-            if (embed.description.length > 4090) {
+            } else if (embed.description.length > 4090) {
                 embed.description = `${embed.description.substr(0, 2045)}...`;
                 await message.channel.send({ embeds: [embed] })
                 embed2.description = `${lyrics.substr(2045, 2045)}...`;
@@ -86,6 +85,8 @@ module.exports = {
                 if (embed4.description !== "...") {
                     await message.channel.send({ embeds: [embed4] })
                 }
+            } else {
+                await message.channel.send({ embeds: [embed] })
             }
         }
     }
