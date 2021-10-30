@@ -24,8 +24,7 @@ module.exports = {
             if (serverQueue) {
                 try {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
-                    console.log(search)
-                    const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(async r => {
+                    const songs = await Client.getLyrics(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
                         const lyrics = r[0].lyrics.lyrics
                         const title = r[0].title
                         const thumb = r[0].thumb
