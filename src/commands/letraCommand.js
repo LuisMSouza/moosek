@@ -23,11 +23,15 @@ module.exports = {
         if (!main_entry) {
             if (serverQueue) {
                 try {
+                    const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
+                    console.log(search)
                     const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(async r => {
                         const lyrics = r[0].lyrics.lyrics
-                        const title = console.log(r[0])
+                        const title = r[0].title
+                        const thumb = r[0].thumb
+                        const artist = r[0].artist
                         await msge.delete(msge)
-                        return generateEmbeds(message, lyrics)
+                        return generateEmbeds(message, lyrics, title, thumb, artist)
                     })
                 } catch (e) {
                     await msge.delete(msge)
@@ -41,8 +45,11 @@ module.exports = {
             try {
                 const songs = await Client.getLyrics(`${main_entry}`).then(async r => {
                     const lyrics = r[0].lyrics.lyrics
+                    const title = r[0].title
+                    const thumb = r[0].thumb
+                    const artist = r[0].artist
                     await msge.delete(msge)
-                    return generateEmbeds(message, lyrics)
+                    return generateEmbeds(message, lyrics, title, thumb, artist)
                 })
             } catch (e) {
                 await msge.delete(msge)
@@ -50,9 +57,10 @@ module.exports = {
                 console.log(e);
             }
         }
-        async function generateEmbeds(message, lyrics) {
+        async function generateEmbeds(message, lyrics, title, thumb, artist) {
             let embed = new MessageEmbed()
-                .setTitle()
+                .setTitle(`${title} - ${artist}`)
+                .setThumbnail(`${thumb}`)
                 .setColor("#0f42dc")
             let embed2 = new MessageEmbed()
                 .setColor("#0f42dc")
