@@ -26,7 +26,7 @@ module.exports = {
                     const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(async r => {
                         const lyrics = r[0].lyrics.lyrics
                         await msge.delete(msge)
-                        return this.generateEmbeds(lyrics)
+                        return this.generateEmbeds(message, lyrics)
                     })
                 } catch (e) {
                     await msge.delete(msge)
@@ -41,7 +41,7 @@ module.exports = {
                 const songs = await Client.getLyrics(`${main_entry}`).then(async r => {
                     const lyrics = r[0].lyrics.lyrics
                     await msge.delete(msge)
-                    return this.generateEmbeds(lyrics)
+                    return this.generateEmbeds(message, lyrics)
                 })
             } catch (e) {
                 await msge.delete(msge)
@@ -51,7 +51,7 @@ module.exports = {
         }
 
     },
-    async generateEmbeds(lyrics) {
+    async generateEmbeds(message, lyrics) {
         let embed = new MessageEmbed()
             .setColor("#0f42dc")
         let embed2 = new MessageEmbed()
