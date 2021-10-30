@@ -1,6 +1,5 @@
 const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceConnectionStatus } = require("@discordjs/voice");
 const { CommandInteraction, Client, MessageEmbed } = require("discord.js");
-const playDl = require('play-dl');
 const ytdl = require("ytdl-core");
 const sendError = require('../utils/error.js');
 const leaveChannel = require('../utils/leaveChannel.js');
