@@ -17,55 +17,17 @@ module.exports = {
     async execute(client, message, args) {
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
-        let main_entry = args.join(" ");
-        let embed = new MessageEmbed()
-            .setColor("#0f42dc")
-        let embed2 = new MessageEmbed()
-            .setColor("#0f42dc")
-        let embed3 = new MessageEmbed()
-            .setColor("#0f42dc")
-        let embed4 = new MessageEmbed()
-            .setColor("#0f42dc")
+        let main_entry = args.join(" ")
         let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {
             if (serverQueue) {
                 try {
                     const songs = await Client.getLyrics(`${serverQueue.songs[0].title}`).then(r => {
-                        const lyrics = console.log(r[0].lyrics)
+                        const lyrics = console.log(r[0].lyrics);
+                        await msge.delete(msge)
+                        return this.generateEmbeds(lyrics)
                     })
-
-                    embed.setDescription(lyrics);
-                    embed2.setDescription(lyrics);
-                    embed3.setDescription(lyrics);
-                    embed4.setDescription(lyrics);
-                    embed.setDescription(lyrics);
-                    embed.setTitle(songs[0].fullTitle);
-                    embed.setThumbnail(songs[0].thumbnail);
-                    if (embed.description.length > 2048 && embed.description.length <= 4090) {
-                        embed.description = `${embed.description.substr(0, 2045)}...`;
-                        await message.channel.send({ embeds: [embed] })
-                        embed2.description = `${lyrics.substr(2045)}`;
-                        if (embed2.description != "..." || embed2.description != "") {
-                            await message.channel.send({ embeds: [embed2] })
-                        }
-                    } else if (embed.description.length > 4090) {
-                        embed.description = `${embed.description.substr(0, 2045)}...`;
-                        await message.channel.send({ embeds: [embed] })
-                        embed2.description = `${lyrics.substr(2045, 2045)}...`;
-                        await message.channel.send({ embeds: [embed2] })
-                        embed3.description = `${lyrics.substr(4090, 2045)}...`;
-                        if (embed3.description !== "...") {
-                            await message.channel.send({ embeds: [embed3] })
-                        }
-                        embed4.description = `${lyrics.substr(6135, 2045)}...`;
-                        if (embed4.description !== "...") {
-                            await message.channel.send({ embeds: [embed4] })
-                        }
-                    }
-                    await msge.delete(msge)
-                    //message.channel.send(embed)
-                    return;
                 } catch (e) {
                     await msge.delete(msge)
                     sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
@@ -77,44 +39,54 @@ module.exports = {
         } else {
             try {
                 const songs = await Client.getLyrics(`${main_entry}`).then(r => {
-                    const lyrics = console.log(r[0].lyrics)
-                    return
+                    const lyrics = console.log(r[0].lyrics.lyrics);
+                    await msge.delete(msge)
+                    return this.generateEmbeds(lyrics)
                 })
-                const lyrics = await songs[0].lyrics();
-
-                embed.setDescription(lyrics)
-                embed2.setDescription(lyrics)
-                embed3.setDescription(lyrics)
-                embed4.setDescription(lyrics)
-                embed.setTitle(songs[0].title)
-                embed.setThumbnail(songs[0].thumbnail)
-                if (embed.description.length > 2048 && embed.description.length <= 4090) {
-                    embed.description = `${embed.description.substr(0, 2045)}...`;
-                    await message.channel.send({ embeds: [embed] })
-                    embed2.description = `${lyrics.substr(2045)}`;
-                    if (embed2.description != "..." || embed2.description != "") {
-                        await message.channel.send({ embeds: [embed2] })
-                    }
-                } else if (embed.description.length > 4090) {
-                    embed.description = `${embed.description.substr(0, 2045)}...`;
-                    await message.channel.send({ embeds: [embed] })
-                    embed2.description = `${lyrics.substr(2045, 2045)}...`;
-                    await message.channel.send({ embeds: [embed2] })
-                    embed3.description = `${lyrics.substr(4090, 2045)}...`;
-                    if (embed3.description !== "...") {
-                        await message.channel.send({ embeds: [embed3] })
-                    }
-                    embed4.description = `${lyrics.substr(6135, 2045)}...`;
-                    if (embed4.description !== "...") {
-                        await message.channel.send({ embeds: [embed4] })
-                    }
-                }
-                await msge.delete(msge);
-                return;
             } catch (e) {
                 await msge.delete(msge)
                 sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
                 console.log(e);
+            }
+        }
+
+    },
+    async generateEmbeds(lyrics) {
+        let embed = new MessageEmbed()
+            .setColor("#0f42dc")
+        let embed2 = new MessageEmbed()
+            .setColor("#0f42dc")
+        let embed3 = new MessageEmbed()
+            .setColor("#0f42dc")
+        let embed4 = new MessageEmbed()
+            .setColor("#0f42dc")
+
+        embed.setDescription(lyrics);
+        embed2.setDescription(lyrics);
+        embed3.setDescription(lyrics);
+        embed4.setDescription(lyrics);
+        embed.setDescription(lyrics);
+
+        if (embed.description.length > 2048 && embed.description.length <= 4090) {
+            embed.description = `${embed.description.substr(0, 2045)}...`;
+            await message.channel.send({ embeds: [embed] })
+            embed2.description = `${lyrics.substr(2045)}`;
+            if (embed2.description != "..." || embed2.description != "") {
+                await message.channel.send({ embeds: [embed2] })
+            }
+        }
+        if (embed.description.length > 4090) {
+            embed.description = `${embed.description.substr(0, 2045)}...`;
+            await message.channel.send({ embeds: [embed] })
+            embed2.description = `${lyrics.substr(2045, 2045)}...`;
+            await message.channel.send({ embeds: [embed2] })
+            embed3.description = `${lyrics.substr(4090, 2045)}...`;
+            if (embed3.description !== "...") {
+                await message.channel.send({ embeds: [embed3] })
+            }
+            embed4.description = `${lyrics.substr(6135, 2045)}...`;
+            if (embed4.description !== "...") {
+                await message.channel.send({ embeds: [embed4] })
             }
         }
     }
