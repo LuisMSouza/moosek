@@ -370,7 +370,7 @@ module.exports.play = async (client, message, song) => {
                     }
                 });
             serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
-                await b.update({ embeds: [embedMusic], components: [] });
+                await playingMessage.edit({ embeds: [embedMusic] });
                 if (playingMessage && playingMessage.deleted)
                     playingMessage.delete().catch(console.error);
                 if (serverQueue.looping) {
