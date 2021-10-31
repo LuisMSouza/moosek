@@ -2,14 +2,27 @@ const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceCo
 const { CommandInteraction, Client, MessageEmbed } = require("discord.js");
 const ytdl = require("play-dl");
 const sendError = require('../utils/error.js');
-const leaveChannel = require('../utils/leaveChannel.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!song) {
         serverQueue.nigthCore = false
-        leaveChannel(client, message, song);
+        setTimeout(async function () {
+            if (serverQueue) {
+                if (serverQueue.playing) return
+            }
+            if (!message.guild.me.voice.channel) return;
+            if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
+            await serverQueue.connection.disconnect();
+            serverQueue.textChannel.send({
+                embeds: [{
+                    color: "#0f42dc",
+                    description: `**Tempo de espera esgotado. Saí do chat ;)**`
+                }]
+            });
+            return message.client.queue.delete(message.guild.id);
+        }, STAY_TIME * 1000);
         return;
     }
     try {
