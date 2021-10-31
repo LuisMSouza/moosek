@@ -110,6 +110,24 @@ module.exports.play = async (client, message, song) => {
         const filter = (button) => button.user.id != client.user.id;
         const collector = playingMessage.channel.createMessageComponentCollector({ filter });
 
+        serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
+            await playingMessage.edit({ embeds: [embedMusic] });
+            if (playingMessage && playingMessage.deleted)
+                playingMessage.delete().catch(console.error);
+            if (serverQueue.looping) {
+                let lastSong = serverQueue.songs.shift();
+                serverQueue.songs.push(lastSong);
+                module.exports.play(client, message, serverQueue.songs[0]);
+            } if (serverQueue.nigthCore) {
+                if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                module.exports.play(client, message, serverQueue.songs[random]);
+            } else {
+                if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                module.exports.play(client, message, serverQueue.songs[0]);
+            }
+        })
+
         collector.on("collect", async (b) => {
             var membReact = message.guild.members.cache.get(b.user.id);
             switch (b.customId) {
@@ -369,23 +387,6 @@ module.exports.play = async (client, message, song) => {
                         module.exports.play(client, message, serverQueue.songs[0]);
                     }
                 });
-            serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
-                await playingMessage.edit({ embeds: [embedMusic] });
-                if (playingMessage && playingMessage.deleted)
-                    playingMessage.delete().catch(console.error);
-                if (serverQueue.looping) {
-                    let lastSong = serverQueue.songs.shift();
-                    serverQueue.songs.push(lastSong);
-                    module.exports.play(client, message, serverQueue.songs[0]);
-                } if (serverQueue.nigthCore) {
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                    module.exports.play(client, message, serverQueue.songs[random]);
-                } else {
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    module.exports.play(client, message, serverQueue.songs[0]);
-                }
-            })
         })
     } catch (error) {
         console.log(error)
