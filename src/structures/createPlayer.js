@@ -111,7 +111,7 @@ module.exports.play = async (client, message, song) => {
         const collector = playingMessage.channel.createMessageComponentCollector({ filter });
 
         serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
-            await playingMessage.edit({ embeds: [embedMusic] });
+            await playingMessage.edit({ embeds: [embedMusic], components: [] });
             if (playingMessage && playingMessage.deleted)
                 playingMessage.delete().catch(console.error);
             if (serverQueue.looping) {
