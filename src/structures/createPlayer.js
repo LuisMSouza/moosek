@@ -110,7 +110,7 @@ module.exports.play = async (client, message, song) => {
         const collector = playingMessage.channel.createMessageComponentCollector({ filter });
 
         collector.on("collect", async (b) => {
-            var membReact = message.guild.members.cache.get(user.id);
+            var membReact = message.guild.members.cache.get(button.user.id);
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
