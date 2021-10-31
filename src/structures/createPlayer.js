@@ -2,6 +2,7 @@ const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceCo
 const { CommandInteraction, Client, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const ytdl = require("play-dl");
 const sendError = require('../utils/error.js');
+const { STAY_TIME } = require('../utils/botUtils.js')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
