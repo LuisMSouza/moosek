@@ -1,6 +1,6 @@
-const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceConnectionStatus } = require("@discordjs/voice");
+const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceConnectionStatus, AudioPlayerStatus } = require("@discordjs/voice");
 const { CommandInteraction, Client, MessageEmbed } = require("discord.js");
-const ytdl = require("ytdl-core");
+const ytdl = require("play-dl");
 const sendError = require('../utils/error.js');
 const leaveChannel = require('../utils/leaveChannel.js');
 
@@ -8,14 +8,12 @@ const leaveChannel = require('../utils/leaveChannel.js');
 module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!song) {
+        serverQueue.nigthCore = false
         leaveChannel(client, message, song);
         return;
     }
     try {
-        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" })
-        .on("error", async (e) => {
-            return sendError("**Ops...**\n\nOcorreu um erro ao reproduzir essa música, tente novamente...")
-        })
+        var stream = await ytdl.stream(song.url)
     } catch (error) {
         if (serverQueue) {
             if (serverQueue.loop) {
@@ -30,7 +28,7 @@ module.exports.play = async (client, message, song) => {
     }
 
     serverQueue.audioPlayer = createAudioPlayer();
-    serverQueue.resource = createAudioResource(stream, { inlineVolume: true, inputType: StreamType.Arbitrary });
+    serverQueue.resource = createAudioResource(stream.stream, { inlineVolume: true, inputType: stream.type });
     serverQueue.audioPlayer.play(serverQueue.resource);
 
     try {
@@ -440,6 +438,23 @@ module.exports.play = async (client, message, song) => {
                         module.exports.play(client, message, serverQueue.songs[0]);
                     }
                 });
+            serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
+                embed.reactions.removeAll();
+                if (playingMessage && playingMessage.deleted)
+                    playingMessage.delete().catch(console.error);
+                if (serverQueue.looping) {
+                    let lastSong = serverQueue.songs.shift();
+                    serverQueue.songs.push(lastSong);
+                    module.exports.play(client, message, serverQueue.songs[0]);
+                } if (serverQueue.nigthCore) {
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                    module.exports.play(client, message, serverQueue.songs[random]);
+                } else {
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    module.exports.play(client, message, serverQueue.songs[0]);
+                }
+            })
         })
     } catch (error) {
         console.log(error)
