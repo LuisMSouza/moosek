@@ -135,8 +135,6 @@ module.exports.play = async (client, message, song) => {
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -147,8 +145,6 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -175,8 +171,6 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "play":
                     if (!message.member.voice.channel) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -187,8 +181,6 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -215,8 +207,6 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "backward":
                     if (!message.member.voice.channel) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -227,8 +217,6 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -258,8 +246,6 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "forward":
                     if (!message.member.voice.channel) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -270,8 +256,6 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -320,8 +304,6 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "stop":
                     if (!message.member.voice.channel) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
@@ -332,8 +314,6 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        await b.deferUpdate();
-                        await wait(1000);
                         b.deferReply({
                             embeds: [{
                                 color: "RED",
