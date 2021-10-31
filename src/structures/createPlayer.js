@@ -98,7 +98,7 @@ module.exports.play = async (client, message, song) => {
         const button7 = new MessageButton()
             .setCustomId('stop')
             .setEmoji("⏹️")
-            .setStyle('PRIMSECONDARYARY')
+            .setStyle('SECONDARY')
 
         const row2 = new MessageActionRow()
             .addComponents(button2, button3, button5, button6, button7)
