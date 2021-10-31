@@ -3,12 +3,14 @@ const { CommandInteraction, Client, MessageEmbed, MessageActionRow, MessageButto
 const ytdl = require("play-dl");
 const sendError = require('../utils/error.js');
 const { STAY_TIME } = require('../utils/botUtils.js')
+const wait = require('util').promisify(setTimeout);
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!song) {
         serverQueue.nigthCore = false
+        message.client.queue.delete(message.guild.id);
         setTimeout(async function () {
             if (serverQueue) {
                 if (serverQueue.playing) return
@@ -133,7 +135,9 @@ module.exports.play = async (client, message, song) => {
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -143,7 +147,9 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -169,7 +175,9 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "play":
                     if (!message.member.voice.channel) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -179,7 +187,9 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -205,7 +215,9 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "backward":
                     if (!message.member.voice.channel) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -215,7 +227,9 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -244,7 +258,9 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "forward":
                     if (!message.member.voice.channel) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -254,7 +270,9 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -302,7 +320,9 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "stop":
                     if (!message.member.voice.channel) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -312,7 +332,9 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        b.deferReply({
+                        await b.deferUpdate();
+                        await wait(1000);
+                        b.editReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
