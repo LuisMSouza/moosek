@@ -66,7 +66,7 @@ module.exports.play = async (client, message, song) => {
             embedMusic.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
         }
 
-        embedMusic.addField("> __Canal:__", "```fix\n" + `${message.member.voice.channel.name ? message.member.voice.channel.name : "Not provided"}` + "\n```", true)
+        embedMusic.addField("> __Canal:__", "```fix\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```", true)
         embedMusic.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
 
         var playingMessage = await serverQueue.textChannel.send({ embeds: [embedMusic] }).then(async (embed) => {
@@ -90,7 +90,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -100,7 +100,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -125,7 +125,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -135,7 +135,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -160,7 +160,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -170,7 +170,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -201,7 +201,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -211,7 +211,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -259,7 +259,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -269,7 +269,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -297,7 +297,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -307,7 +307,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -335,7 +335,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -345,7 +345,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -370,7 +370,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                     }]
-                                }).then(m => m.delete({ timeout: 10000 }));
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
@@ -380,7 +380,7 @@ module.exports.play = async (client, message, song) => {
                                         color: "RED",
                                         description: "❌ **O bot está sendo utilizado em outro canal!**"
                                     }]
-                                }).then(m2 => m2.delete({ timeout: 10000 }))
+                                })
                                 await reaction.users.remove(user);
                                 return;
                             }
