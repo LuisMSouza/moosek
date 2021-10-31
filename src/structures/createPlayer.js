@@ -213,7 +213,7 @@ module.exports.play = async (client, message, song) => {
                     }
                     if (serverQueue) {
                         try {
-                            if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) return sendError("Não há nenhuma música anterior.", message.channel);
+                            if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) return sendError("Não há nenhuma música anterior.", message.channel) && b.deferUpdate();;
                             await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
                             await b.update({ embeds: [embedMusic], components: [] })
