@@ -137,7 +137,7 @@ module.exports.play = async (client, message, song) => {
                     if (!message.member.voice.channel) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -149,7 +149,7 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -177,7 +177,7 @@ module.exports.play = async (client, message, song) => {
                     if (!message.member.voice.channel) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -189,7 +189,7 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -217,7 +217,7 @@ module.exports.play = async (client, message, song) => {
                     if (!message.member.voice.channel) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -229,7 +229,7 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -260,7 +260,7 @@ module.exports.play = async (client, message, song) => {
                     if (!message.member.voice.channel) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -272,7 +272,7 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -322,7 +322,7 @@ module.exports.play = async (client, message, song) => {
                     if (!message.member.voice.channel) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -334,7 +334,7 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
                         await b.deferUpdate();
                         await wait(1000);
-                        b.reply({
+                        b.deferReply({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
