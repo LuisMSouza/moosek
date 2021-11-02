@@ -1,5 +1,6 @@
 /////////////////////// IMPORTS //////////////////////////
-const sendError = require('../utils/error.js')
+const sendError = require('../utils/error.js');
+const Player = require('../structures/createPlayer.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -35,6 +36,7 @@ module.exports = {
             serverQueue.songs = serverQueue.songs.slice(args[0] - 2);
         }
         try {
+            Player.play(client, message, serverQueue.songs[0]);
             message.channel.send({
                 embeds: [
                     {
