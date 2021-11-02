@@ -35,22 +35,20 @@ module.exports = {
             serverQueue.songs = serverQueue.songs.slice(args[0] - 2);
         }
         try {
-            message.guild.me.voice.disconnect();
+            message.channel.send({
+                embeds: [
+                    {
+                        color: "#0f42dc",
+                        description: `⏭ \`${args[0] - 1}\` músicas puladas por ${message.author}`
+                    }
+                ]
+
+            }).catch(console.error);
+            message.react("✅")
         } catch (error) {
             await message.guild.me.voice.disconnect();
             message.client.queue.delete(message.guild.id);
             return sendError(`As músicas foram paradas e a fila de músicas foi apagada.: ${error}`, message.channel);
         }
-
-        message.channel.send({
-            embeds: [
-                {
-                    color: "#0f42dc",
-                    description: `⏭ \`${args[0] - 1}\` músicas puladas por ${message.author}`
-                }
-            ]
-
-        }).catch(console.error);
-        message.react("✅")
     }
 }
