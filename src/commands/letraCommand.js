@@ -47,6 +47,10 @@ module.exports = {
         } else {
             try {
                 const songs = await Client.getLyrics(`${main_entry}`).then(async r => {
+                    if (!r[0].lyrics || r[0].lyrics === undefined || r[0].title === 'None') {
+                        await msge.delete(msge);
+                        return sendError("Não foi possível encontrar a letra dessa música :(", message.channel)
+                    }
                     const lyrics = r[0].lyrics.lyrics
                     const title = r[0].title
                     const thumb = r[0].thumb
