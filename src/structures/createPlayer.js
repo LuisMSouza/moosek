@@ -273,7 +273,7 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue) {
                         try {
                             if (!serverQueue.songLooping) {
-                                if (!serverQueue.songs[1]) {
+                                if (serverQueue.songs.length <= 1) {
                                     serverQueue.songs.shift();
                                     await message.guild.me.voice.disconnect();
                                     await message.client.queue.delete(message.guild.id);
