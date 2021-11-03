@@ -19,10 +19,14 @@ client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
 client.player = new AudioPlayer()
+let slashCommands = [];
+client.slashCommands = new Collection();
 
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
+    slashCommands.push(cmd);
+    client.slashCommands.set(cmd.name, cmd);
     client.commands.set(cmd.name, cmd);
     console.log("Carregando comando: " + cmd.name)
 }
@@ -37,17 +41,12 @@ fs.readdir(__dirname + "/events/", (err, files) => {
     });
 });
 try {
-    for (const cmds of commands) {
-        const cmdnd = require(`./commands/${cmds}`);
-        console.log(cmdnd.name)
-        createCommand(cmdnd.name, cmdnd.description, cmdnd.input, cmdnd.resInput, cmdnd.category);
-    }
     const rest = new REST({ version: '9' }).setToken(process.env.TOKEN_KEY);
     console.log('[SOURCE] STARTING SLASH COMMANDS');
 
     rest.put(
         Routes.applicationGuildCommands("778462497728364554"),
-        { body: client.commands },
+        { body: slashCommands },
     );
 
     console.log('[SOURCE] SLASH COMMANDS STARTED');
