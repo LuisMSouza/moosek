@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const { AudioPlayer } = require('@discordjs/voice');
 const createCommand = require('./utils/slashCommands.js');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
