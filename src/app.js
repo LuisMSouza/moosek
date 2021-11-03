@@ -37,10 +37,10 @@ fs.readdir(__dirname + "/events/", (err, files) => {
     });
 });
 try {
-    const cmds = client.commands
-    for (const cmd of cmds) {
-        console.log(cmd.name)
-        createCommand(cmd.name, cmd.description, cmd.input, cmd.resInput, cmd.category);
+    for (const cmds of commands) {
+        const cmdnd = require(`./commands/${cmds}`);
+        console.log(cmdnd.name)
+        createCommand(cmdnd.name, cmdnd.description, cmdnd.input, cmdnd.resInput, cmdnd.category);
     }
     const rest = new REST({ version: '9' }).setToken(process.env.TOKEN_KEY);
     console.log('[SOURCE] STARTING SLASH COMMANDS');
