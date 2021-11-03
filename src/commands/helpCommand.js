@@ -10,6 +10,8 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['help', 'a', 'h'],
+    input: null,
+    resInput: null,
 
     async execute(client, message, args) {
         const sorted = client.commands.filter(c => c.category !== 'ceo');

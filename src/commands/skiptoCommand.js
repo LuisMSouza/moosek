@@ -10,6 +10,8 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['st', 'nt', 'nextto'],
+    input: 'POSIÇÃO',
+    resInput: 'POSIÇÃO DA MÚSICA NA FILA',
 
     async execute(client, message, args) {
         if (!args.length || isNaN(args[0]))

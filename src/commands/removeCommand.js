@@ -10,6 +10,8 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['rm', 'rv', 'remove'],
+    input: "POSIÇÃO",
+    resInput: "POSIÇÃO DA MÚSICA NA FILA",
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);

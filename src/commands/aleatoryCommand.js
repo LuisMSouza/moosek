@@ -10,6 +10,8 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['radom', 'rd'],
+    input: null,
+    resInput: null,
 
     async execute(client, message, args) {
         var membReact = message.guild.members.cache.get(message.author.id);

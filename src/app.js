@@ -3,6 +3,7 @@ const { Client, intents, Collection } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const { AudioPlayer } = require('@discordjs/voice');
+const createCommand = require('./utils/slashCommands.js');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
@@ -33,6 +34,23 @@ fs.readdir(__dirname + "/events/", (err, files) => {
         console.log("Carregando evento: " + eventName)
     });
 });
+try {
+    const cmds = client.commands
+    for (const cmd of cmds) {
+        await createCommand(cmd.name, cmd.description, cmd.input, cmd.resInput);
+    }
+    const rest = new REST({ version: '9' }).setToken(process.env.TOKEN_KEY);
+    console.log('[SOURCE] STARTING SLASH COMMANDS');
+
+    await rest.put(
+        Routes.applicationGuildCommands("778462497728364554"),
+        { body: client.commands },
+    );
+
+    console.log('[SOURCE] SLASH COMMANDS STARTED');
+} catch (error) {
+    console.error(error);
+}
 
 /////////////////////// SOURCE CODE //////////////////////////
 client.db.init();

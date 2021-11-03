@@ -12,6 +12,8 @@ module.exports = {
     category: 'ceo',
     timeout: 7000,
     aliases: ['anc', 'msgall', 'msg'],
+    input: null,
+    resInput: null,
 
     async execute(client, message, args) {
         if (message.author.id != CEO_ID) return;

@@ -10,6 +10,8 @@ module.exports = {
     category: 'ceo',
     timeout: 7000,
     aliases: ['rb'],
+    input: null,
+    resInput: null,
 
     async execute(client, message, args) {
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");

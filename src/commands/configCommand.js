@@ -11,6 +11,8 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['configurar'],
+    input: null,
+    resInput: null,
 
     async execute(client, message, args) {
         if (!message.member.permissions.has("ADMINISTRATOR")) return sendError("Você não pode utilizar este comando nesse servidor", message.channel);
