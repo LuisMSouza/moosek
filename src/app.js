@@ -47,7 +47,7 @@ try {
     console.log('[SOURCE] STARTING SLASH COMMANDS');
 
     rest.put(
-        Routes.applicationGuildCommands("778462497728364554", "677548388165615636"),
+        Routes.applicationGuildCommands("778462497728364554", ""),
         { body: slashCommands },
     );
 
