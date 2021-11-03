@@ -42,7 +42,7 @@ try {
     const rest = new REST({ version: '9' }).setToken(process.env.TOKEN_KEY);
     console.log('[SOURCE] STARTING SLASH COMMANDS');
 
-    await rest.put(
+    rest.put(
         Routes.applicationGuildCommands("778462497728364554"),
         { body: client.commands },
     );
