@@ -19,7 +19,7 @@ module.exports = {
     category: 'user',
     timeout: 3000,
     aliases: ['p', 'tocar', 'iniciar'],
-    input: "ENTRADA",
+    input: "entrada",
     resInput: "LINK OU NOME DA MÚSICA",
 
     async execute(client, message, args) {

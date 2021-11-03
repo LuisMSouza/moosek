@@ -37,7 +37,7 @@ fs.readdir(__dirname + "/events/", (err, files) => {
 try {
     const cmds = client.commands
     for (const cmd of cmds) {
-        createCommand(cmd.name, cmd.description, cmd.input, cmd.resInput);
+        createCommand(cmd.name, cmd.description, cmd.input, cmd.resInput, cmd.category);
     }
     const rest = new REST({ version: '9' }).setToken(process.env.TOKEN_KEY);
     console.log('[SOURCE] STARTING SLASH COMMANDS');

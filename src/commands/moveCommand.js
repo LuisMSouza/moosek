@@ -10,7 +10,7 @@ module.exports = {
     category: 'user',
     timeout: 5000,
     aliases: ['mv', 'move'],
-    input: 'POSIÇÃO',
+    input: 'posição',
     resInput: 'NOVA POSIÇÃO PARA A MÚSICA NA FILA',
 
     async execute(client, message, args) {
