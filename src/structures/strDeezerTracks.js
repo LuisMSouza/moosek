@@ -17,7 +17,7 @@ module.exports = {
                     thumbnail: x[0].thumbnail.url,
                     duration: x[0].durationFormatted,
                     liveStream: x[0].live,
-                    author: message.author.tag
+                    author: message.member.user.tag
                 }
                 if (!serverQueue) {
                     const queueConstruct = {

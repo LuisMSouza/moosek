@@ -18,7 +18,7 @@ module.exports = {
                 thumbnail: video.thumbnails[0].url,
                 duration: video.duration,
                 isLive: video.isLive,
-                author: message.author.tag
+                author: message.member.user.tag
             }
 
             if (!serverQueue) {
