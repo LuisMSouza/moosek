@@ -46,7 +46,7 @@ module.exports = {
             var emb = new MessageEmbed()
                 .setTitle("CLIQUE AQUI :)")
                 .setColor("#0f42dc")
-                .setURL("https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=36826944&scope=bot")
+                .setURL("https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=8&scope=bot%20applications.commands")
                 .setTimestamp()
                 .setFooter("Moosek Client ™")
             await b.update({ components: [], embeds: [emb] });
