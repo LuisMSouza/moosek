@@ -2,6 +2,7 @@ module.exports = async function (client, interaction) {
     if (!interaction.channelId || !interaction.guildId) return;;
     if (!interaction.isCommand()) return;
     if (interaction.isCommand()) {
+        await interaction.deferReply();
         const command = client.slashCommands.get(interaction.commandName);
         if (command) {
             if (command.options[0].name != "none") {
@@ -12,5 +13,4 @@ module.exports = async function (client, interaction) {
             return command.execute(client, interaction, undefined);
         }
     }
-    await interaction.deferReply();
 }
