@@ -2,6 +2,7 @@
 const createGuild = require('../models/createGuild.js');
 const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const slash = require('../models/buildCommands.js')
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = async (client, guild) => {
