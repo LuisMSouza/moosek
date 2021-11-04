@@ -46,7 +46,7 @@ const rest = new REST({
 
 (async () => {
     try {
-        await rest.put(Routes.applicationCommand(client.user.id), {
+        await rest.put(Routes.applicationCommands(client.user.id), {
             body: cmnds
         })
         console.log("[SOURCE] GLOBAL COMMANDS READY")
