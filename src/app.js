@@ -25,7 +25,7 @@ const cmnds = []
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
-    cmnds.push(cmd)
+    if (cmd.category != 'ceo') cmnds.push(cmd);
     client.commands.set(cmd.name, cmd);
     console.log("Carregando comando: " + cmd.name)
 }
