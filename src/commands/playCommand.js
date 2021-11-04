@@ -141,7 +141,7 @@ module.exports = {
             }
         } else {
             try {
-                await YouTube(searchString, { limit: 1 }).then(async x => {
+                await YouTube(`${searchString}`, { limit: 1 }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
