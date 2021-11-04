@@ -25,7 +25,7 @@ const cmnds = []
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
-    if (cmd.category != 'ceo') cmnds.push(cmd);
+    if (cmd.category != 'ceo') cmnds.push(cmd.toJSON());
     client.commands.set(cmd.name, cmd);
     console.log("Carregando comando: " + cmd.name)
 }
@@ -40,23 +40,23 @@ fs.readdir(__dirname + "/events/", (err, files) => {
     });
 })
 
-const rest = new REST({
-    version: "9",
-}).setToken(process.env.TOKEN_KEY);
+const rest = new REST({ version: '9' }).setToken(configVars.token);
 
 (async () => {
     try {
-        await rest.put(Routes.applicationCommands(client.user.id), {
-            body: cmnds
-        })
-        console.log("[SOURCE] GLOBAL COMMANDS READY")
-    } catch {
-        await rest.put(Routes.applicationCommand(client.user.id, "677548388165615636"), {
-            body: cmnds
-        })
-        console.log("[SOURCE] LOCAL COMMANDS READY")
+        console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
+
+        await rest.put(
+            Routes.applicationGuildCommands(client.user.id),
+            { body: cmnds },
+        );
+
+        console.log("[SOURCE] GLOBAL COMMANDDS STARTED");
+    } catch (error) {
+        console.error(error);
     }
-})
+})();
+
 for (const one of cmnds) {
     const data = new SlashCommandBuilder()
         .setName(one.name)
