@@ -19,7 +19,7 @@ client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
 client.player = new AudioPlayer()
-client.SlashCommands = new Collection()
+client.slashCommands = new Collection()
 
 const cmnds = []
 
