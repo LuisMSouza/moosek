@@ -12,8 +12,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['e', 'join'],
     options: [{
-        name: "",
-        description: "",
+        name: "NONE",
+        description: "NONE",
         type: 3,
         required: true
     }],

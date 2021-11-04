@@ -9,8 +9,8 @@ module.exports = {
     timeout: 5000,
     aliases: [],
     options: [{
-        name: "",
-        description: "",
+        name: "NONE",
+        description: "NONE",
         type: 3,
         required: true
     }],

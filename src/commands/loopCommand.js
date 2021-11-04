@@ -11,8 +11,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['lp'],
     options: [{
-        name: "",
-        description: "",
+        name: "NONE",
+        description: "NONE",
         type: 3,
         required: true
     }],

@@ -10,8 +10,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['i', 'infos', 'status', 'stats'],
     options: [{
-        name: "",
-        description: "",
+        name: "NONE",
+        description: "NONE",
         type: 3,
         required: true
     }],
