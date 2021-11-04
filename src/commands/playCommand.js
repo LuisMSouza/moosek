@@ -19,8 +19,12 @@ module.exports = {
     category: 'user',
     timeout: 3000,
     aliases: ['p', 'tocar', 'iniciar'],
-    input: "entrada",
-    resInput: "LINK OU NOME DA MÚSICA",
+    options: [{
+        name: "entrada",
+        description: "LINK OU NOME DA MÚSICA",
+        type: 3,
+        required: true
+    }],
 
     async execute(client, message, args) {
         const serverMain = client.guilds.cache.get(guild_main);

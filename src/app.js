@@ -19,13 +19,17 @@ client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
 client.player = new AudioPlayer()
+client.SlashCommands = new Collection()
 
 const cmnds = []
 
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
-    if (cmd.category != 'ceo') cmnds.push(cmd);
+    if (cmd.category != 'ceo') {
+        cmnds.push(cmd);
+        client.slashCommands.set(cmd.name, cmd);
+    }
     client.commands.set(cmd.name, cmd);
     console.log("Carregando comando: " + cmd.name)
 }

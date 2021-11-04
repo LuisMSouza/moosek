@@ -10,9 +10,13 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['st', 'nt', 'nextto'],
-    input: 'posição',
-    resInput: 'POSIÇÃO DA MÚSICA NA FILA',
-
+    options: [{
+        name: "posição",
+        description: "POSIÇÃO DA MÚSICA NA FILA",
+        type: 3,
+        required: true
+    }],
+    
     async execute(client, message, args) {
         if (!args.length || isNaN(args[0]))
             return message.channel.send({

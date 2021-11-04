@@ -8,8 +8,12 @@ module.exports = {
     category: 'user',
     timeout: 5000,
     aliases: [],
-    input: null,
-    resInput: null,
+    options: [{
+        name: null,
+        description: null,
+        type: 3,
+        required: true
+    }],
 
     async execute(client, message, args) {
         let ping = Math.round(message.client.ws.ping);

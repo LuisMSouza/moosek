@@ -13,8 +13,12 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['r'],
-    input: null,
-    resInput: null,
+    options: [{
+        name: null,
+        description: null,
+        type: 3,
+        required: true
+    }],
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);
