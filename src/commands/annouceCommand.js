@@ -13,7 +13,7 @@ module.exports = {
     timeout: 7000,
     aliases: ['anc', 'msgall', 'msg'],
     options: [{
-        name: "NONE",
+        name: "none",
         description: "NONE",
         type: 3,
         required: true

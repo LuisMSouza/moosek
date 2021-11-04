@@ -12,7 +12,7 @@ module.exports = {
     timeout: 7000,
     aliases: ['e', 'join'],
     options: [{
-        name: "NONE",
+        name: "none",
         description: "NONE",
         type: 3,
         required: true

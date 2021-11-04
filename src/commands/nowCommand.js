@@ -10,7 +10,7 @@ module.exports = {
     timeout: 7000,
     aliases: ['tocando', 'nowplaying'],
     options: [{
-        name: "NONE",
+        name: "none",
         description: "NONE",
         type: 3,
         required: true

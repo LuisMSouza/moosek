@@ -9,7 +9,7 @@ module.exports = {
     timeout: 5000,
     aliases: [],
     options: [{
-        name: "NONE",
+        name: "none",
         description: "NONE",
         type: 3,
         required: true
