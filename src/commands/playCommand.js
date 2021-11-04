@@ -26,16 +26,11 @@ module.exports = {
         type: 3,
         required: true
     }],
-    /**
-     * @param {CommandInteraction} message 
-     * @param {Client} client 
-     * @param {string} args 
-     */
+
     async execute(client, message, args) {
-        if (args === undefined) args === null
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
-        const searchString = args.join(" ") || args;
+        const searchString = args;
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
