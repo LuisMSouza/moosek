@@ -29,7 +29,7 @@ module.exports = {
                             fields: [
                                 {
                                     name: "> __Pedido por:__",
-                                    value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                    value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                     inline: true
                                 },
                                 {
@@ -69,7 +69,7 @@ module.exports = {
                                                 fields: [
                                                     {
                                                         name: "> __Pedido por:__",
-                                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                                        value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                                         inline: true
                                                     },
                                                     {
@@ -137,7 +137,7 @@ module.exports = {
                             fields: [
                                 {
                                     name: "> __Pedido por:__",
-                                    value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                    value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                     inline: true
                                 },
                                 {
@@ -173,7 +173,7 @@ module.exports = {
                                                 fields: [
                                                     {
                                                         name: "> __Pedido por:__",
-                                                        value: "```fix\n" + `${message.author.tag}` + "\n```",
+                                                        value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                                         inline: true
                                                     },
                                                     {
