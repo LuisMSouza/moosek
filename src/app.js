@@ -42,21 +42,21 @@ fs.readdir(__dirname + "/events/", (err, files) => {
 
 const rest = new REST({
     version: "9",
-}).setToken(process.env.TOKEN_KEY)
+}).setToken(process.env.TOKEN_KEY);
 
-    (async () => {
-        try {
-            await rest.put(Routes.applicationCommand(client.user.id), {
-                body: cmnds
-            })
-            console.log("[SOURCE] GLOBAL COMMANDS READY")
-        } catch {
-            await rest.put(Routes.applicationCommand(client.user.id, "677548388165615636"), {
-                body: cmnds
-            })
-            console.log("[SOURCE] LOCAL COMMANDS READY")
-        }
-    })
+(async () => {
+    try {
+        await rest.put(Routes.applicationCommand(client.user.id), {
+            body: cmnds
+        })
+        console.log("[SOURCE] GLOBAL COMMANDS READY")
+    } catch {
+        await rest.put(Routes.applicationCommand(client.user.id, "677548388165615636"), {
+            body: cmnds
+        })
+        console.log("[SOURCE] LOCAL COMMANDS READY")
+    }
+})
 for (const one of cmnds) {
     const data = new SlashCommandBuilder()
         .setName(one.name)
