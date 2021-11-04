@@ -60,10 +60,10 @@ const rest = new REST({ version: '9' }).setToken(configVars.token);
         console.error(error);
     }
 })();
-
+/*
 for (const one of cmnds) {
     const data = new SlashCommandBuilder()
-        .setName(one.name)
+        .setName(one.options)
         .setDescription(one.description)
     if (one.input != null) {
         data.addStringOption(option =>
@@ -72,7 +72,7 @@ for (const one of cmnds) {
                 .setRequired(true));
     }
 }
-
+*/
 /////////////////////// SOURCE CODE //////////////////////////
 client.db.init();
 client.login(configVars.token);
