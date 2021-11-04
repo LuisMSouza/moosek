@@ -163,7 +163,7 @@ module.exports = {
                         thumbnail: x.items[0].bestThumbnail.url,
                         duration: x.items[0].duration,
                         liveStream: x.items[0].isLive,
-                        author: message.author.tag
+                        author: message.member.user.tag
                     }
 
                     if (serverQueue) {
