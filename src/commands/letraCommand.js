@@ -49,6 +49,7 @@ module.exports = {
                     console.log(e);
                 }
             } else {
+                await msge.delete(msge)
                 return sendError("não há nenhuma música sendo reproduzida, pesquise pelo nome da música que deseja ;)", message.channel);
             }
         } else {
