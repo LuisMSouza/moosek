@@ -9,6 +9,7 @@ const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const { joinVoiceChannel } = require("@discordjs/voice");
+const { CommandInteraction, Client } = require("discord.js");
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -25,7 +26,11 @@ module.exports = {
         type: 3,
         required: true
     }],
-
+    /**
+     * @param {CommandInteraction} message 
+     * @param {Client} client 
+     * @param {string} args 
+     */
     async execute(client, message, args) {
         if (args === undefined) args === null
         const serverMain = client.guilds.cache.get(guild_main);
