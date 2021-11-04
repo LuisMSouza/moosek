@@ -32,7 +32,7 @@ module.exports = {
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const searchString = args.join(" ") || args;
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
-        const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString.replace(/<(.+)>/g, "$1") || searchString;
+        const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
 
         const voiceChannel = message.member.voice.channel;
