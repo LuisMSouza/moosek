@@ -65,7 +65,7 @@ for (const one of cmnds) {
     const data = new SlashCommandBuilder()
         .setName(one.name)
         .setDescription(one.description)
-    if (one.options[0].name != "NONE") {
+    if (one.options[0].name != "none") {
         data.addStringOption(option =>
             option.setName(one.options[0].name)
                 .setDescription(one.options[0].description)
