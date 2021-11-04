@@ -1,6 +1,7 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const fs = require('fs');
 
 module.exports = {
     async slashBuilder(guildId) {
