@@ -10,7 +10,7 @@ module.exports = async function (client, interaction) {
                 const args = value.split(/ +/g);
                 return command.execute(client, interaction, args);
             }
-            return command.execute(client, interaction, undefined);
+            return command.execute(client, interaction, []);
         }
     }
 }
