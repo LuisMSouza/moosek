@@ -9,16 +9,13 @@ module.exports = async function (client, interaction) {
                     const value = interaction.options.getString(command.options[0].name);
                     const args = value.split(/ +/g);
                     await command.execute(client, interaction, args);
-                    return interaction.deferReply();
                 } else {
                     const args = []
                     await command.execute(client, interaction, args);
-                    return interaction.deferReply();
                 }
             }
             const args = []
             await command.execute(client, interaction, args);
-            return interaction.deferReply();
         }
     }
 }
