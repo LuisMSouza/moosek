@@ -18,6 +18,7 @@ module.exports = {
     }],
 
     async execute(client, message, args) {
+        if (args === undefined) args === null
         const serverQueue = client.queue.get(message.guild.id);
         var oldPosition = args[0];
         var newPosition = args[1];

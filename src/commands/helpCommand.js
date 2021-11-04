@@ -18,6 +18,7 @@ module.exports = {
     }],
 
     async execute(client, message, args) {
+        if (args === undefined) args === null
         const sorted = client.commands.filter(c => c.category !== 'ceo');
         let cmds = "";
         sorted.forEach(cmd => {

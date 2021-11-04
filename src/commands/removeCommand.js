@@ -18,6 +18,7 @@ module.exports = {
     }],
 
     async execute(client, message, args) {
+        if (args === undefined) args === null
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));

@@ -27,6 +27,7 @@ module.exports = {
     }],
 
     async execute(client, message, args) {
+        if (args === undefined) args === null
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const searchString = args.join(" ") || args;

@@ -21,6 +21,7 @@ module.exports = {
     }],
 
     async execute(client, message, args) {
+        if (args === undefined) args === null
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
         let main_entry = args.join(" ")

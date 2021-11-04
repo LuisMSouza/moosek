@@ -18,6 +18,7 @@ module.exports = {
     }],
     
     async execute(client, message, args) {
+        if (args === undefined) args === null
         if (!args.length || isNaN(args[0]))
             return message.channel.send({
                 embeds: [
