@@ -378,15 +378,14 @@ module.exports.play = async (client, message, song) => {
                 if (serverQueue.looping) {
                     let lastSong = serverQueue.songs.shift();
                     serverQueue.songs.push(lastSong);
-                    module.exports.play(client, message, serverQueue.songs[0]);
+                    return module.exports.play(client, message, serverQueue.songs[0]);
                 } if (serverQueue.nigthCore) {
                     if (!serverQueue.songLooping) await serverQueue.songs.shift();
                     var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                    module.exports.play(client, message, serverQueue.songs[random]);
-                } else {
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    module.exports.play(client, message, serverQueue.songs[0]);
+                    return module.exports.play(client, message, serverQueue.songs[random]);
                 }
+                if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                module.exports.play(client, message, serverQueue.songs[0]);
             })
         })
     } catch (error) {
