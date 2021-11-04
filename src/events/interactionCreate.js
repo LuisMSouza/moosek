@@ -5,7 +5,6 @@ module.exports = async function (client, interaction) {
         const command = client.slashCommands.get(interaction.commandName);
         if (command) {
             if (command.options[0].name != "none") {
-                console.log(command.options[0].name)
                 const value = interaction.options.getString(command.options[0].name);
                 return command.execute(client, interaction, value);
             }
