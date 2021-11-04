@@ -13,7 +13,7 @@ module.exports = {
     options: [{
         name: "posição",
         description: 'NOVA POSIÇÃO PARA A MÚSICA NA FILA',
-        type: 3,
+        type: "STRING",
         required: true
     }],
 

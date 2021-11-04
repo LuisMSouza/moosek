@@ -16,7 +16,7 @@ module.exports = {
     options: [{
         name: "escolha",
         description: "número da radio",
-        type: 3,
+        type: "STRING",
         required: true
     }],
 
