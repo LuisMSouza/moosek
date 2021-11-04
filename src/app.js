@@ -47,7 +47,7 @@ const rest = new REST({ version: '9' }).setToken(configVars.token);
         console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
 
         await rest.put(
-            Routes.applicationCommands(client.user.id),
+            Routes.applicationCommands("778462497728364554"),
             { body: cmnds },
         );
 
