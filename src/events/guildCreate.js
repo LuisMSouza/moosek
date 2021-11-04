@@ -1,6 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
 const createGuild = require('../models/createGuild.js');
 const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = async (client, guild) => {
@@ -27,6 +28,7 @@ module.exports = async (client, guild) => {
 
         client.channels.cache.get("807738719556993064").send({ embeds: [embed_2] });
         await createGuild(guild.id);
+        await slash.slashBuilder(guild.id);
     } catch (e) {
         console.log(e);
     }

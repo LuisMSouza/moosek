@@ -1,3 +1,5 @@
+const slash = require('../models/buildCommands.js')
+
 module.exports = async (client) => {
     now = new Date()
     var dia = now.getDate();

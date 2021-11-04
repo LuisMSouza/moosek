@@ -3,9 +3,6 @@ const { Client, intents, Collection } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const { AudioPlayer } = require('@discordjs/voice');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
@@ -21,13 +18,10 @@ client.radio = new Map();
 client.player = new AudioPlayer()
 client.slashCommands = new Collection()
 
-const cmnds = []
-
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
     if (cmd.category != 'ceo') {
-        cmnds.push(cmd);
         client.slashCommands.set(cmd.name, cmd);
     }
     client.commands.set(cmd.name, cmd);
@@ -43,36 +37,6 @@ fs.readdir(__dirname + "/events/", (err, files) => {
         console.log("Carregando evento: " + eventName)
     });
 })
-
-const rest = new REST({ version: '9' }).setToken(configVars.token);
-
-(async () => {
-    try {
-        console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
-
-        await rest.put(
-            Routes.applicationCommands("778462497728364554"),
-            { body: cmnds },
-        );
-
-        console.log("[SOURCE] GLOBAL COMMANDDS STARTED");
-    } catch (error) {
-        console.error(error);
-    }
-})();
-
-for (const one of cmnds) {
-    const data = new SlashCommandBuilder()
-        .setName(one.name)
-        .setDescription(one.description)
-    if (one.options[0].name != "none") {
-        data.addStringOption(option =>
-            option.setName(one.options[0].name)
-                .setDescription(one.options[0].description)
-                .setRequired(one.options[0].required)
-                );
-    }
-}
 
 /////////////////////// SOURCE CODE //////////////////////////
 client.db.init();
