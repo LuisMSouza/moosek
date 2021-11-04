@@ -6,7 +6,7 @@ module.exports = async function (client, interaction) {
         if (command) {
             if (command.options[0].name != "none") {
                 console.log(command.options[0].name)
-                const value = interaction.options.getString(command.options[0].name);
+                const value = interaction.options.getString('input');
                 return command.execute(client, interaction, value);
             }
             return command.execute(client, interaction, undefined);

@@ -23,7 +23,7 @@ module.exports = {
     options: [{
         name: "entrada",
         description: "LINK OU NOME DA MÚSICA",
-        type: "STRING",
+        type: 3,
         required: true
     }],
     /**

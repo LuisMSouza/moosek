@@ -13,7 +13,7 @@ module.exports = {
     options: [{
         name: "none",
         description: "NONE",
-        type: "STRING",
+        type: 3,
         required: true
     }],
 

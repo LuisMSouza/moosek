@@ -16,7 +16,7 @@ module.exports = {
     options: [{
         name: "música",
         description: "Música a ser pesquisada",
-        type: "STRING",
+        type: 3,
         required: false
     }],
 
