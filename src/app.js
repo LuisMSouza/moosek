@@ -60,19 +60,20 @@ const rest = new REST({ version: '9' }).setToken(configVars.token);
         console.error(error);
     }
 })();
-/*
+
 for (const one of cmnds) {
     const data = new SlashCommandBuilder()
-        .setName(one.options)
+        .setName(one.name)
         .setDescription(one.description)
-    if (one.input != null) {
+    if (one.options[0].name != null) {
         data.addStringOption(option =>
-            option.setName(one.input)
-                .setDescription(one.resInput)
-                .setRequired(true));
+            option.setName(one.options[0].name)
+                .setDescription(one.options[0].description)
+                .setRequired(one.options[0].required)
+                );
     }
 }
-*/
+
 /////////////////////// SOURCE CODE //////////////////////////
 client.db.init();
 client.login(configVars.token);
