@@ -14,10 +14,10 @@ module.exports = {
     timeout: 7000,
     aliases: ['lyrics', 'l'],
     options: [{
-        name: null,
-        description: null,
+        name: "música",
+        description: "Música a ser pesquisada",
         type: 3,
-        required: true
+        required: false
     }],
 
     async execute(client, message, args) {

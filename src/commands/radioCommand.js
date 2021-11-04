@@ -14,8 +14,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['r'],
     options: [{
-        name: null,
-        description: null,
+        name: "escolha",
+        description: "número da radio",
         type: 3,
         required: true
     }],

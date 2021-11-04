@@ -11,8 +11,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['radom', 'rd'],
     options: [{
-        name: null,
-        description: null,
+        name: "",
+        description: "",
         type: 3,
         required: true
     }],

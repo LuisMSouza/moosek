@@ -11,8 +11,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['queue', 'q', 'f', 'lista'],
     options: [{
-        name: null,
-        description: null,
+        name: "",
+        description: "",
         type: 3,
         required: true
     }],

@@ -12,8 +12,8 @@ module.exports = {
     timeout: 7000,
     aliases: ['configurar'],
     options: [{
-        name: null,
-        description: null,
+        name: "",
+        description: "",
         type: 3,
         required: true
     }],
