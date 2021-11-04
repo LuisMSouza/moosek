@@ -17,7 +17,7 @@ module.exports = {
         name: "escolha",
         description: "número da radio",
         type: 3,
-        required: true
+        required: false
     }],
 
     async execute(client, message, args) {
