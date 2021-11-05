@@ -356,7 +356,7 @@ module.exports.play = async (client, message, song) => {
                     }
                 })
             serverQueue.audioPlayer
-                .on("error", (error) => {
+                .on("error", async (error) => {
                     console.log(error);
                     if (playingMessage && playingMessage.deleted)
                         playingMessage.delete().catch(console.error);
