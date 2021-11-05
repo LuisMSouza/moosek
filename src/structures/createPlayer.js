@@ -1,6 +1,7 @@
 const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceConnectionStatus, AudioPlayerStatus } = require("@discordjs/voice");
 const { CommandInteraction, Client, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const ytdl = require("play-dl");
+const ytdl2 = require("play-dl");
+const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js');
 const { STAY_TIME } = require('../utils/botUtils.js')
 const wait = require('util').promisify(setTimeout);
@@ -29,7 +30,7 @@ module.exports.play = async (client, message, song) => {
         return;
     }
     try {
-        var stream = await ytdl.stream(song.url)
+        var stream = await ytdl(song.url, { highWaterMark: 1 << 25, filter: "audioonly", quality: "highestaudio" });
     } catch (error) {
         if (serverQueue) {
             if (serverQueue.loop) {
@@ -44,7 +45,7 @@ module.exports.play = async (client, message, song) => {
     }
 
     serverQueue.audioPlayer = createAudioPlayer();
-    serverQueue.resource = createAudioResource(stream.stream, { inlineVolume: true, inputType: stream.type });
+    serverQueue.resource = createAudioResource(stream, { inlineVolume: true, inputType: StreamType.Arbitrary });
     serverQueue.audioPlayer.play(serverQueue.resource);
 
     try {
@@ -327,8 +328,6 @@ module.exports.play = async (client, message, song) => {
             serverQueue.resource.playStream
                 .on("end", async () => {
                     await b.update({ embeds: [embedMusic], components: [] });
-                    if (playingMessage && playingMessage.deleted)
-                        playingMessage.delete().catch(console.error);
                     if (serverQueue.looping) {
                         let lastSong = serverQueue.songs.shift();
                         serverQueue.songs.push(lastSong);
@@ -365,28 +364,27 @@ module.exports.play = async (client, message, song) => {
                     if (serverQueue.loop) {
                         let lastSong = serverQueue.songs.shift();
                         serverQueue.songs.push(lastSong);
-                        module.exports.play(client, message, serverQueue.songs[0]);
+                        await module.exports.play(client, message, serverQueue.songs[0]);
                     } else {
                         serverQueue.songs.shift();
-                        module.exports.play(client, message, serverQueue.songs[0]);
+                        await module.exports.play(client, message, serverQueue.songs[0]);
                     }
                 });
-            serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
-                await playingMessage.edit({ embeds: [embedMusic], components: [] });
-                if (playingMessage && playingMessage.deleted)
-                    playingMessage.delete().catch(console.error);
-                if (serverQueue.looping) {
-                    let lastSong = serverQueue.songs.shift();
-                    serverQueue.songs.push(lastSong);
-                    return module.exports.play(client, message, serverQueue.songs[0]);
-                } if (serverQueue.nigthCore) {
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                    return module.exports.play(client, message, serverQueue.songs[random]);
-                }
+            /*
+        serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
+            await playingMessage.edit({ embeds: [embedMusic], components: [] });
+            if (serverQueue.looping) {
+                let lastSong = serverQueue.songs.shift();
+                serverQueue.songs.push(lastSong);
+                return module.exports.play(client, message, serverQueue.songs[0]);
+            } if (serverQueue.nigthCore) {
                 if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                module.exports.play(client, message, serverQueue.songs[0]);
-            })
+                var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                return module.exports.play(client, message, serverQueue.songs[random]);
+            }
+            if (!serverQueue.songLooping) await serverQueue.songs.shift();
+            return module.exports.play(client, message, serverQueue.songs[0]);
+        })*/
         })
     } catch (error) {
         console.log(error)
