@@ -128,6 +128,7 @@ module.exports.play = async (client, message, song) => {
                             serverQueue.playing = false;
                             serverQueue.audioPlayer.pause();
                             await playingMessage.edit({ embeds: [embedMusic], components: [row2] });
+                            await wait(1000);
                             await b.deferUpdate();
                             await wait(1000);
                             await b.editReply({});
@@ -137,6 +138,7 @@ module.exports.play = async (client, message, song) => {
                         }
                     } else {
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                        await wait(1000);
                         b.deferUpdate()
                         return undefined;
                     }
@@ -168,6 +170,7 @@ module.exports.play = async (client, message, song) => {
                             serverQueue.playing = true;
                             serverQueue.audioPlayer.unpause();
                             await playingMessage.edit({ embeds: [embedMusic], components: [row3] })
+                            await wait(1000);
                             await b.deferUpdate();
                             await wait(1000);
                             await b.editReply({});
@@ -177,6 +180,7 @@ module.exports.play = async (client, message, song) => {
                         }
                     } else {
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                        await wait(1000);
                         b.deferUpdate()
                         return undefined;
                     }
@@ -205,6 +209,7 @@ module.exports.play = async (client, message, song) => {
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                        await wait(1000);
                         b.deferUpdate()
                         return;
                     }
@@ -212,6 +217,7 @@ module.exports.play = async (client, message, song) => {
                         try {
                             if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) {
                                 sendError("Não há nenhuma música anterior.", message.channel);
+                                await wait(1000);
                                 await b.deferUpdate();
                                 await wait(1000);
                                 await b.editReply({});
@@ -219,6 +225,7 @@ module.exports.play = async (client, message, song) => {
                             await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
                             await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                            await wait(1000);
                             await b.deferUpdate();
                             await wait(1000);
                             await b.editReply({});
@@ -253,6 +260,7 @@ module.exports.play = async (client, message, song) => {
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                        await wait(1000);
                         await b.deferUpdate();
                         await wait(1000);
                         await b.editReply({ content: `${emoji}`, ephemeral: true });
@@ -265,6 +273,7 @@ module.exports.play = async (client, message, song) => {
                                     serverQueue.songs.shift();
                                     await message.guild.me.voice.disconnect();
                                     await message.client.queue.delete(message.guild.id);
+                                    await wait(1000);
                                     await b.deferUpdate();
                                     await wait(1000);
                                     await b.editReply({ components: [] });
@@ -279,17 +288,20 @@ module.exports.play = async (client, message, song) => {
                                 serverQueue.songs.shift();
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                    await wait(1000);
                                     await b.deferUpdate();
                                     await wait(1000);
                                     await b.editReply({ components: [] })
                                     module.exports.play(client, message, serverQueue.songs[random]);
                                 } else {
+                                    await wait(1000);
                                     await b.deferUpdate();
                                     await wait(1000);
                                     await b.editReply({ components: [] })
                                     module.exports.play(client, message, serverQueue.songs[0]);
                                 }
                             } else {
+                                await wait(1000);
                                 await b.deferUpdate();
                                 await wait(1000);
                                 await b.editReply({ components: [] })
@@ -300,6 +312,7 @@ module.exports.play = async (client, message, song) => {
                         }
                     }
                     await playingMessage.edit({ embeds: [embedMusic], components: [] });
+                    await wait(1000);
                     await b.deferUpdate();
                     await wait(1000);
                     await b.editReply({ components: [] })
@@ -329,6 +342,7 @@ module.exports.play = async (client, message, song) => {
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                        await wait(1000);
                         await b.deferUpdate();
                         await wait(1000);
                         await b.editReply({ components: [] })
