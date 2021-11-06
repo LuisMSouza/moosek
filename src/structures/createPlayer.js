@@ -3,7 +3,7 @@ const { CommandInteraction, Client, MessageEmbed, MessageActionRow, MessageButto
 const ytdl2 = require("play-dl");
 const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js');
-const { STAY_TIME } = require('../utils/botUtils.js')
+const ms = require("ms");
 const wait = require('util').promisify(setTimeout);
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -11,8 +11,11 @@ module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6181_check");
     if (!song) {
-        await serverQueue.connection.disconnect();
-        return message.client.queue.delete(message.guild.id);
+        setTimeout(() => {
+            if (serverQueue.playing && serverQueue.songs) return;
+            await serverQueue.connection.disconnect();
+            return message.client.queue.delete(message.guild.id);
+        }, ms('1m'))
     }
     try {
         var stream = await ytdl2.stream(song.url);
