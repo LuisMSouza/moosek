@@ -230,7 +230,7 @@ module.exports.play = async (client, message, song) => {
                                 sendError("Não há nenhuma música anterior.", message.channel);
                                 await b.deferUpdate();
                                 await wait(4000);
-                                await b.editReply({ components: [] });
+                                await b.editReply({});
                             }
                             await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
