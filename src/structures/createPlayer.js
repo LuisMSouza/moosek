@@ -349,23 +349,9 @@ module.exports.play = async (client, message, song) => {
                     }
                     break;
             }
-            serverQueue.connection.on("stateChange", async () => {
-                if (AudioPlayerStatus.Idle) {
-                    await playingMessage.edit({ embeds: [embedMusic], components: [] });
-                    if (serverQueue.looping) {
-                        let lastSong = serverQueue.songs.shift();
-                        serverQueue.songs.push(lastSong);
-                        return module.exports.play(client, message, serverQueue.songs[0]);
-                    } if (serverQueue.nigthCore) {
-                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                        return module.exports.play(client, message, serverQueue.songs[random]);
-                    }
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    return module.exports.play(client, message, serverQueue.songs[0]);
-                }
-            })
-            stream.stream.on(AudioPlayerStatus.Idle, async () => {
+        })
+        serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
+            if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
                 await playingMessage.edit({ embeds: [embedMusic], components: [] });
                 if (serverQueue.looping) {
                     let lastSong = serverQueue.songs.shift();
@@ -378,38 +364,7 @@ module.exports.play = async (client, message, song) => {
                 }
                 if (!serverQueue.songLooping) await serverQueue.songs.shift();
                 return module.exports.play(client, message, serverQueue.songs[0]);
-            });;
-            serverQueue.audioPlayer
-                .on("error", async (error) => {
-                    console.log(error);
-                    if (playingMessage && playingMessage.deleted)
-                        playingMessage.delete().catch(console.error);
-
-                    if (serverQueue.loop) {
-                        let lastSong = serverQueue.songs.shift();
-                        serverQueue.songs.push(lastSong);
-                        await module.exports.play(client, message, serverQueue.songs[0]);
-                    } else {
-                        serverQueue.songs.shift();
-                        await module.exports.play(client, message, serverQueue.songs[0]);
-                    }
-                });
-            serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
-                if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
-                    await playingMessage.edit({ embeds: [embedMusic], components: [] });
-                    if (serverQueue.looping) {
-                        let lastSong = serverQueue.songs.shift();
-                        serverQueue.songs.push(lastSong);
-                        return module.exports.play(client, message, serverQueue.songs[0]);
-                    } if (serverQueue.nigthCore) {
-                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                        return module.exports.play(client, message, serverQueue.songs[random]);
-                    }
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    return module.exports.play(client, message, serverQueue.songs[0]);
-                }
-            })
+            }
         })
     } catch (error) {
         console.log(error)
