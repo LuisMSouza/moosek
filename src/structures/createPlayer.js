@@ -12,23 +12,8 @@ module.exports.play = async (client, message, song) => {
     const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6181_check");
     if (!song) {
         serverQueue.nigthCore = false
-        message.client.queue.delete(message.guild.id);
-        setTimeout(async function () {
-            if (serverQueue) {
-                if (serverQueue.playing) return
-            }
-            if (!message.guild.me.voice.channel) return;
-            if (message.guild.me.voice.channel && serverQueue.songs.length >= 1) return;
-            await serverQueue.connection.disconnect();
-            serverQueue.textChannel.send({
-                embeds: [{
-                    color: "#0f42dc",
-                    description: `**Tempo de espera esgotado. Saí do chat ;)**`
-                }]
-            });
-            return message.client.queue.delete(message.guild.id);
-        }, STAY_TIME * 1000);
-        return;
+        await serverQueue.connection.disconnect();
+        return message.client.queue.delete(message.guild.id);
     }
     try {
         var stream = await ytdl2.stream(song.url);
