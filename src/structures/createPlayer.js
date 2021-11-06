@@ -11,7 +11,7 @@ module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
     const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6181_check");
     if (!song) {
-        setTimeout(() => {
+        setTimeout(async () => {
             if (serverQueue.playing && serverQueue.songs) return;
             await serverQueue.connection.disconnect();
             return message.client.queue.delete(message.guild.id);
