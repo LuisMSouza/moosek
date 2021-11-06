@@ -410,19 +410,21 @@ module.exports.play = async (client, message, song) => {
                         await module.exports.play(client, message, serverQueue.songs[0]);
                     }
                 });
-            serverQueue.audioPlayer.on(AudioPlayerStatus.Idle, async () => {
-                await playingMessage.edit({ embeds: [embedMusic], components: [] });
-                if (serverQueue.looping) {
-                    let lastSong = serverQueue.songs.shift();
-                    serverQueue.songs.push(lastSong);
-                    return module.exports.play(client, message, serverQueue.songs[0]);
-                } if (serverQueue.nigthCore) {
+            serverQueue.audioPlayer.on('stateChange', (oldState, newState) => {
+                if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
+                    await playingMessage.edit({ embeds: [embedMusic], components: [] });
+                    if (serverQueue.looping) {
+                        let lastSong = serverQueue.songs.shift();
+                        serverQueue.songs.push(lastSong);
+                        return module.exports.play(client, message, serverQueue.songs[0]);
+                    } if (serverQueue.nigthCore) {
+                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                        return module.exports.play(client, message, serverQueue.songs[random]);
+                    }
                     if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                    return module.exports.play(client, message, serverQueue.songs[random]);
+                    return module.exports.play(client, message, serverQueue.songs[0]);
                 }
-                if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                return module.exports.play(client, message, serverQueue.songs[0]);
             })
         })
     } catch (error) {
