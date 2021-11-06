@@ -9,6 +9,7 @@ const wait = require('util').promisify(setTimeout);
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
     const serverQueue = message.client.queue.get(message.guild.id);
+    const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6181_check");
     if (!song) {
         serverQueue.nigthCore = false
         message.client.queue.delete(message.guild.id);
@@ -145,7 +146,7 @@ module.exports.play = async (client, message, song) => {
                             await playingMessage.edit({ embeds: [embedMusic], components: [row2] });
                             await b.deferUpdate();
                             await wait(4000);
-                            b.editReply("✅", { ephemeral: true });
+                            await b.editReply({ content: `${emoji}`, ephemeral: true });
                             return undefined;
                         } catch (e) {
                             console.log(e);
@@ -185,7 +186,7 @@ module.exports.play = async (client, message, song) => {
                             await playingMessage.edit({ embeds: [embedMusic], components: [row3] })
                             await b.deferUpdate();
                             await wait(4000);
-                            b.editReply("✅", { ephemeral: true });
+                            await b.editReply({ content: `${emoji}`, ephemeral: true });
                             return undefined;
                         } catch (e) {
                             console.log(e);
@@ -231,7 +232,7 @@ module.exports.play = async (client, message, song) => {
                             await playingMessage.edit({ embeds: [embedMusic], components: [] })
                             await b.deferUpdate();
                             await wait(4000);
-                            b.editReply("✅", { ephemeral: true });
+                            await b.editReply({ content: `${emoji}`, ephemeral: true });
                             await module.exports.play(client, message, serverQueue.songs[0]);
                         } catch (e) {
                             console.log(e);
@@ -265,7 +266,7 @@ module.exports.play = async (client, message, song) => {
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
                         await b.deferUpdate();
                         await wait(4000);
-                        b.editReply("✅", { ephemeral: true });
+                        await b.editReply({ content: `${emoji}`, ephemeral: true });
                         return;
                     }
                     if (serverQueue) {
@@ -339,7 +340,7 @@ module.exports.play = async (client, message, song) => {
                             await client.queue.delete(message.guild.id);
                             serverQueue.nigthCore = false
                             await playingMessage.edit({ embeds: [embedMusic], components: [] });
-                            b.reply("✅", { ephemeral: true })
+                            await b.editReply({ content: `${emoji}`, ephemeral: true });
                             return;
                         } catch (e) {
                             console.log(e);
