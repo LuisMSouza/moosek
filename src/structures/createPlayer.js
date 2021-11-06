@@ -142,8 +142,10 @@ module.exports.play = async (client, message, song) => {
                         try {
                             serverQueue.playing = false;
                             serverQueue.audioPlayer.pause();
-                            await playingMessage.edit({ embeds: [embedMusic], components: [row2] })
-                            b.reply("✅", { ephemeral: true })
+                            await playingMessage.edit({ embeds: [embedMusic], components: [row2] });
+                            await b.deferUpdate();
+                            await wait(4000);
+                            b.editReply("✅", { ephemeral: true });
                             return undefined;
                         } catch (e) {
                             console.log(e);
@@ -181,7 +183,9 @@ module.exports.play = async (client, message, song) => {
                             serverQueue.playing = true;
                             serverQueue.audioPlayer.unpause();
                             await playingMessage.edit({ embeds: [embedMusic], components: [row3] })
-                            b.reply("✅", { ephemeral: true })
+                            await b.deferUpdate();
+                            await wait(4000);
+                            b.editReply("✅", { ephemeral: true });
                             return undefined;
                         } catch (e) {
                             console.log(e);
@@ -225,7 +229,9 @@ module.exports.play = async (client, message, song) => {
                             await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
                             await playingMessage.edit({ embeds: [embedMusic], components: [] })
-                            b.reply("✅", { ephemeral: true })
+                            await b.deferUpdate();
+                            await wait(4000);
+                            b.editReply("✅", { ephemeral: true });
                             await module.exports.play(client, message, serverQueue.songs[0]);
                         } catch (e) {
                             console.log(e);
@@ -257,7 +263,9 @@ module.exports.play = async (client, message, song) => {
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
                         await playingMessage.edit({ embeds: [embedMusic], components: [] })
-                        b.reply("✅", { ephemeral: true })
+                        await b.deferUpdate();
+                        await wait(4000);
+                        b.editReply("✅", { ephemeral: true });
                         return;
                     }
                     if (serverQueue) {
