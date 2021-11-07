@@ -44,19 +44,19 @@ module.exports.play = async (client, message, song) => {
         var embedMusic = new MessageEmbed()
             .setAuthor("Tocando agora:")
             .setColor("#0f42dc")
-            .setTitle(song.title)
-            .setThumbnail(song.thumbnail)
-            .setURL(song.url)
+            .setTitle(serverQueue.songs[0].title)
+            .setThumbnail(serverQueue.songs[0].thumbnail)
+            .setURL(serverQueue.songs[0].url)
 
-        if (song.duration === '0:00' || song.liveStream) {
+        if (serverQueue.songs[0].duration === '0:00' || serverQueue.songs[0].liveStream) {
             embedMusic.addField("> __Duração:__", "🔴 Live", true)
             sendError("**Este video é uma live, talvez não seja possível reproduzir...**", serverQueue.textChannel)
         } else {
-            embedMusic.addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
+            embedMusic.addField("> __Duração:__", "```fix\n" + `${serverQueue.songs[0].duration}` + "\n```", true)
         }
 
         embedMusic.addField("> __Canal:__", "```fix\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```", true)
-        embedMusic.addField("> __Pedido por:___", "```fix\n" + `${song.author}` + "\n```", true)
+        embedMusic.addField("> __Pedido por:___", "```fix\n" + `${serverQueue.songs[0].author}` + "\n```", true)
 
         const button = new MessageButton()
             .setCustomId('pause')
@@ -247,7 +247,7 @@ module.exports.play = async (client, message, song) => {
                                 if (serverQueue.looping) {
                                     await serverQueue.songs.push(serverQueue.songs[0]);
                                 }
-                                serverQueue.songs.shift();
+                                await serverQueue.songs.shift();
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     module.exports.play(client, message, serverQueue.songs[random]);
@@ -299,22 +299,22 @@ module.exports.play = async (client, message, song) => {
                     return;
                     break;
             }
-            serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
-                if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
-                    await b.update({ embeds: [embedMusic], components: [] })
-                    if (serverQueue.looping) {
-                        let lastSong = serverQueue.songs.shift();
-                        serverQueue.songs.push(lastSong);
-                        return module.exports.play(client, message, serverQueue.songs[0]);
-                    } if (serverQueue.nigthCore) {
-                        if (!serverQueue.songLooping) await serverQueue.songs.shift();
-                        var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                        return module.exports.play(client, message, serverQueue.songs[random]);
-                    }
-                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+        })
+        serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
+            if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
+                await playingMessage.edit({ embeds: [embedMusic], components: [] })
+                if (serverQueue.looping) {
+                    let lastSong = serverQueue.songs.shift();
+                    serverQueue.songs.push(lastSong);
                     return module.exports.play(client, message, serverQueue.songs[0]);
+                } if (serverQueue.nigthCore) {
+                    if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                    return module.exports.play(client, message, serverQueue.songs[random]);
                 }
-            })
+                if (!serverQueue.songLooping) await serverQueue.songs.shift();
+                return module.exports.play(client, message, serverQueue.songs[0]);
+            }
         })
     } catch (error) {
         console.log(error)
