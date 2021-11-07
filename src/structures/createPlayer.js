@@ -130,14 +130,14 @@ module.exports.play = async (client, message, song) => {
                         try {
                             serverQueue.playing = false;
                             serverQueue.audioPlayer.pause();
-                            await playingMessage.edit({ embeds: [embedMusic], components: [row2] });
+                            await b.update({ embeds: [embedMusic], components: [row2] });
                         } catch (e) {
                             console.log(e);
                         }
                     } else {
-                        await playingMessage.edit({ embeds: [embedMusic], components: [row3] });
+                        await b.update({ embeds: [embedMusic], components: [] });
                     }
-                    return b.update({});
+                    return;
                     break;
                 case "play":
                     if (!message.member.voice.channel) {
@@ -165,14 +165,14 @@ module.exports.play = async (client, message, song) => {
                         try {
                             serverQueue.playing = true;
                             serverQueue.audioPlayer.unpause();
-                            await playingMessage.edit({ embeds: [embedMusic], components: [row3] });
+                            await b.update({ embeds: [embedMusic], components: [row3] });
                         } catch (e) {
                             console.log(e);
                         }
                     } else {
-                        await playingMessage.edit({ embeds: [embedMusic], components: [] });
+                        await b.update({ embeds: [embedMusic], components: [] });
                     }
-                    return b.update({});
+                    return;
                     break;
                 case "backward":
                     if (!message.member.voice.channel) {
@@ -285,19 +285,19 @@ module.exports.play = async (client, message, song) => {
                     }
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
-                        await playingMessage.edit({ embeds: [embedMusic], components: [] });
+                        await b.update({ embeds: [embedMusic], components: [] });
                     } else {
                         try {
                             serverQueue.songs = [];
                             message.client.queue.set(message.guild.id, serverQueue);
                             await message.guild.me.voice.disconnect();
                             await client.queue.delete(message.guild.id);
-                            await playingMessage.edit({ embeds: [embedMusic], components: [] });
+                            await b.update({ embeds: [embedMusic], components: [] });
                         } catch (e) {
                             console.log(e);
                         }
                     }
-                    return b.update({});
+                    return;
                     break;
             }
         })
