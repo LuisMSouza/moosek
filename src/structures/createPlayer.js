@@ -98,9 +98,6 @@ module.exports.play = async (client, message, song) => {
         const filter = (button) => button.user.id != client.user.id;
         const collector = playingMessage.channel.createMessageComponentCollector({ filter });
 
-        var listEmbeds = []
-        listEmbeds.push(embedMusic);
-
         collector.on("collect", async (b) => {
             var membReact = message.guild.members.cache.get(b.user.id);
             switch (b.customId) {
