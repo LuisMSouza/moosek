@@ -103,25 +103,25 @@ module.exports.play = async (client, message, song) => {
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
-                        var msg1 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg1.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        var msg2 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg2.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (!serverQueue.playing) return;
@@ -140,25 +140,25 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "play":
                     if (!message.member.voice.channel) {
-                        var msg1 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg1.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        var msg2 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg2.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (serverQueue.playing) return;
@@ -177,25 +177,25 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "backward":
                     if (!message.member.voice.channel) {
-                        var msg1 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg1.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        var msg2 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg2.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (!serverQueue) {
@@ -217,25 +217,25 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "forward":
                     if (!message.member.voice.channel) {
-                        var msg1 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg1.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        var msg2 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg2.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (!serverQueue) {
@@ -272,25 +272,25 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "stop":
                     if (!message.member.voice.channel) {
-                        var msg1 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg1.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-                        var msg2 = serverQueue.textChannel.send({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
                         })
-                        setTimeout(() => msg2.delete(), 4000)
+                        b.update({});
                         return;
                     }
                     if (!serverQueue) {
