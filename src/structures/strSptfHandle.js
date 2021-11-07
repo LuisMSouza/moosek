@@ -15,13 +15,16 @@ spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     async handleSpotifyMusic(client, searchString, cath, message, voiceChannel) {
+        const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         if (searchString.includes("open.spotify.com/playlist")) {
             spotifyApi.getPlaylist(cath[2])
                 .then(async function (data) {
                     const tracks = await data.body.tracks.items;
+                    const msg = await message.channel.send(`${emoji} Adicionando músicas...`);
                     for (const track of tracks) {
                         await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                     }
+                    await msg.delete(msg);
                     return message.reply({
                         embeds: [{
                             color: "GREEN",
@@ -59,9 +62,11 @@ module.exports = {
                                 spotifyApi.getPlaylist(cath[2])
                                     .then(async function (data2) {
                                         const tracks = await data2.body.tracks.items;
+                                        const msg = await message.channel.send(`${emoji} Adicionando músicas...`);
                                         for (const track of tracks) {
                                             await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                                         }
+                                        msg.delete(msg);
                                         return message.reply({
                                             embeds: [{
                                                 color: "GREEN",
@@ -127,9 +132,11 @@ module.exports = {
             spotifyApi.getAlbumTracks(`${cath[2]}`)
                 .then(async function (data5) {
                     const tracks2 = await data5.body.items
+                    const msg = await message.channel.send(`${emoji} Adicionando músicas...`);
                     for (const track of tracks2) {
                         await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                     }
+                    await msg.delete(msg);
                     return message.reply({
                         embeds: [{
                             color: "GREEN",
@@ -163,9 +170,11 @@ module.exports = {
                                 spotifyApi.getAlbumTracks(cath[2])
                                     .then(async function (data7) {
                                         const tracks = await data7.body.items;
+                                        const msg = await message.channel.send(`${emoji} Adicionando músicas...`);
                                         for (const track of tracks) {
                                             await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                                         }
+                                        await msg.delete(msg);
                                         return message.reply({
                                             embeds: [{
                                                 color: "GREEN",

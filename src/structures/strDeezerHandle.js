@@ -11,6 +11,7 @@ const { joinVoiceChannel } = require("@discordjs/voice");
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     async deezerHandler(client, message, search, cth, voiceChannel) {
+        const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         if (search.includes("/track/")) {
             dzr.track(`${cth}`).then(async res => {
                 const serverQueue = message.client.queue.get(message.guild.id);
@@ -78,9 +79,11 @@ module.exports = {
             dzr.playlist(`${cth}`).then(async res2 => {
                 try {
                     const tracks = await res2.tracks.data
+                    const msg = await message.channel.send(`${emoji} Adicionando músicas...`);
                     for (const track of tracks) {
                         await handleTracks.handleVideo(client, track, message, voiceChannel, true);
                     }
+                    await msg.delete(msg);
                     return message.reply({
                         embeds: [{
                             color: "GREEN",
@@ -107,9 +110,11 @@ module.exports = {
             dzr.album(`${cth}`).then(async res3 => {
                 try {
                     const tracks = await res3.tracks.data
+                    const msg = await message.channel.send(`${emoji} Adicionando músicas...`);
                     for (const track of tracks) {
                         await handleTracks.handleVideo(client, track, message, voiceChannel, true);
                     }
+                    await msg.delete(msg);
                     return message.reply({
                         embeds: [{
                             color: "GREEN",
