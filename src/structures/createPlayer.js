@@ -301,8 +301,6 @@ module.exports.play = async (client, message, song) => {
                             await message.guild.me.voice.disconnect();
                             await client.queue.delete(message.guild.id);
                             await playingMessage.edit({ embeds: [embedMusic], components: [] });
-                            return b.update({});
-                            return;
                         } catch (e) {
                             console.log(e);
                         }
