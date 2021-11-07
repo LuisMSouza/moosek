@@ -18,4 +18,12 @@ module.exports = async function (client, interaction) {
             await command.execute(client, interaction, args);
         }
     }
+    if (interaction.isButton()) {
+        console.log(interaction)
+        switch (interaction.customId) {
+            case "pause":
+                console.log("OK")
+                break
+        }
+    }
 }
