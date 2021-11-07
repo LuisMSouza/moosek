@@ -216,6 +216,7 @@ module.exports.play = async (client, message, song) => {
                             await playingMessage.edit({ embeds: [embedMusic], components: [] })
                             await b.update({});
                             await module.exports.play(client, message, serverQueue.songs[0]);
+                            return undefined;
                         } catch (e) {
                             console.log(e);
                         }
@@ -270,9 +271,11 @@ module.exports.play = async (client, message, song) => {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     await b.update({});
                                     module.exports.play(client, message, serverQueue.songs[random]);
+                                    return undefined;
                                 } else {
                                     await b.update({});
                                     module.exports.play(client, message, serverQueue.songs[0]);
+                                    return undefined;
                                 }
                             }
                         } catch (e) {
@@ -281,6 +284,7 @@ module.exports.play = async (client, message, song) => {
                     }
                     await playingMessage.edit({ embeds: [embedMusic], components: [] });
                     await b.update({});
+                    return undefined;
                     return;
                     break;
                 case "stop":
