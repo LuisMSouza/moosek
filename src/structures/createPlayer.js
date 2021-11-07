@@ -253,7 +253,7 @@ module.exports.play = async (client, message, song) => {
                                     module.exports.play(client, message, serverQueue.songs[random]);
                                     return;
                                 }
-                                await module.exports.play(client, message, serverQueue.songs[0]);
+                                return module.exports.play(client, message, serverQueue.songs[0]);
                             }
                         } catch (e) {
                             console.log(e);
