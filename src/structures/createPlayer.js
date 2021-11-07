@@ -233,12 +233,12 @@ module.exports.play = async (client, message, song) => {
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
                     }
-                    await b.update({ embeds: [embedMusic], components: [] });
                     if (serverQueue) {
                         try {
                             if (!serverQueue.songLooping) {
                                 if (serverQueue.songs.length <= 1) {
                                     serverQueue.songs.shift();
+                                    await b.update({ embeds: [embedMusic], components: [] });
                                     await message.guild.me.voice.disconnect();
                                     await message.client.queue.delete(message.guild.id);
                                 }
@@ -247,12 +247,13 @@ module.exports.play = async (client, message, song) => {
                                 if (serverQueue.looping) {
                                     await serverQueue.songs.push(serverQueue.songs[0]);
                                 }
-                                await serverQueue.songs.shift();
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     module.exports.play(client, message, serverQueue.songs[random]);
                                     return;
                                 }
+                                await serverQueue.songs.shift();
+                                await b.update({ embeds: [embedMusic], components: [] });
                                 return module.exports.play(client, message, serverQueue.songs[0]);
                             }
                         } catch (e) {
