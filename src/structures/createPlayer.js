@@ -29,11 +29,10 @@ module.exports.play = async (client, message, song) => {
         }
     }
 
-    serverQueue.audioPlayer = createAudioPlayer();
-    serverQueue.resource = createAudioResource(stream.stream, { inlineVolume: true, inputType: stream.type });
-    serverQueue.audioPlayer.play(serverQueue.resource);
-
     try {
+        serverQueue.audioPlayer = createAudioPlayer();
+        serverQueue.resource = createAudioResource(stream.stream, { inlineVolume: true, inputType: stream.type });
+        serverQueue.audioPlayer.play(serverQueue.resource);
         await entersState(serverQueue.connection, VoiceConnectionStatus.Ready, 30_000);
         serverQueue.connection.subscribe(serverQueue.audioPlayer);
     } catch (error) {
