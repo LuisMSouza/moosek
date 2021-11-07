@@ -300,6 +300,7 @@ module.exports.play = async (client, message, song) => {
                     return;
                     break;
             }
+            return;
         })
         serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
             if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
