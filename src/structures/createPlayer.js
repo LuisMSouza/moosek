@@ -269,11 +269,13 @@ module.exports.play = async (client, message, song) => {
                                 serverQueue.songs.shift();
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
-                                    await b.update({});
+                                    await b.update({ });
+                                    await playingMessage.edit({ embeds: [embedMusic], components: [] });
                                     module.exports.play(client, message, serverQueue.songs[random]);
                                     return undefined;
                                 } else {
                                     await b.update({});
+                                    await playingMessage.edit({ embeds: [embedMusic], components: [] });
                                     module.exports.play(client, message, serverQueue.songs[0]);
                                     return undefined;
                                 }
