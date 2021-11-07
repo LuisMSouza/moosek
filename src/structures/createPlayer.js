@@ -233,6 +233,7 @@ module.exports.play = async (client, message, song) => {
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
                     }
+                    await b.update({ embeds: [embedMusic], components: [] });
                     if (serverQueue) {
                         try {
                             if (!serverQueue.songLooping) {
@@ -250,6 +251,7 @@ module.exports.play = async (client, message, song) => {
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     module.exports.play(client, message, serverQueue.songs[random]);
+                                    return;
                                 }
                                 await module.exports.play(client, message, serverQueue.songs[0]);
                             }
@@ -257,7 +259,7 @@ module.exports.play = async (client, message, song) => {
                             console.log(e);
                         }
                     }
-                    return b.update({ embeds: [embedMusic], components: [] });
+                    return;
                     break;
                 case "stop":
                     if (!message.member.voice.channel) {
@@ -285,11 +287,11 @@ module.exports.play = async (client, message, song) => {
                         await b.update({ embeds: [embedMusic], components: [] });
                     } else {
                         try {
+                            await b.update({ embeds: [embedMusic], components: [] });
                             serverQueue.songs = [];
                             message.client.queue.set(message.guild.id, serverQueue);
                             await message.guild.me.voice.disconnect();
                             await client.queue.delete(message.guild.id);
-                            await b.update({ embeds: [embedMusic], components: [] });
                         } catch (e) {
                             console.log(e);
                         }
