@@ -48,7 +48,7 @@ module.exports.play = async (client, message, song) => {
             .setURL(serverQueue.songs[0].url)
 
         if (serverQueue.songs[0].duration === '0:00' || serverQueue.songs[0].liveStream) {
-            embedMusic.addField("> __Duração:__", "🔴 Live", true)
+            embedMusic.addField("> __Duração:__", "```fix\n🔴 Live\n```", true)
             sendError("**Este video é uma live, talvez não seja possível reproduzir...**", serverQueue.textChannel)
         } else {
             embedMusic.addField("> __Duração:__", "```fix\n" + `${serverQueue.songs[0].duration}` + "\n```", true)
