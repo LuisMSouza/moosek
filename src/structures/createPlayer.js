@@ -109,7 +109,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -122,7 +122,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -150,7 +150,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -163,7 +163,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -191,7 +191,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -204,7 +204,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -236,7 +236,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -249,7 +249,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -296,7 +296,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
@@ -309,7 +309,7 @@ module.exports.play = async (client, message, song) => {
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
                             }]
                             , ephemeral: true
-                        }).then(() => {
+                        }).then((m) => {
                             setTimeout((m) => m.delete(), 2000)
                         });
                         b.update({});
