@@ -179,7 +179,7 @@ module.exports = {
                                 },
                                 {
                                     "name": "> __Canal:__",
-                                    "value": "```fix\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```",
+                                    "value": "```fix\n" + `${voiceChannel.name}` + "\n```",
                                     "inline": true
                                 },
                                 {
