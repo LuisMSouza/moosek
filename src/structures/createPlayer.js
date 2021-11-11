@@ -112,7 +112,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -149,7 +149,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -186,7 +186,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -226,7 +226,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -281,7 +281,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
