@@ -141,11 +141,6 @@ module.exports = {
             }
         } else {
             try {
-                const connection = await joinVoiceChannel({
-                    guildId: message.guild.id,
-                    channelId: voiceChannel.id,
-                    adapterCreator: message.guild.voiceAdapterCreator
-                });
                 await YouTube(`${searchString}`, { limit: 1 }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
@@ -245,6 +240,11 @@ module.exports = {
                             })
                             await message.client.queue.set(message.guild.id, queueConstruct);
                             try {
+                                const connection = await joinVoiceChannel({
+                                    guildId: message.guild.id,
+                                    channelId: voiceChannel.id,
+                                    adapterCreator: message.guild.voiceAdapterCreator
+                                });
                                 queueConstruct.connection = connection;
                                 play(client, message, queueConstruct.songs[0]);
                             } catch (error) {
