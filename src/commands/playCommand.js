@@ -141,7 +141,7 @@ module.exports = {
             }
         } else {
             try {
-                const connection = joinVoiceChannel({
+                const connection = await joinVoiceChannel({
                     guildId: message.guild.id,
                     channelId: voiceChannel.id,
                     adapterCreator: message.guild.voiceAdapterCreator
