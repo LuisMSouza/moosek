@@ -110,7 +110,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -123,7 +123,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -151,7 +151,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -164,7 +164,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -192,7 +192,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -205,7 +205,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -237,7 +237,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -250,7 +250,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -297,7 +297,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
@@ -310,7 +310,7 @@ module.exports.play = async (client, message, song) => {
                             }]
                             , ephemeral: true
                         }).then((m) => {
-                            setTimeout((m) => m.delete(), 2000)
+                            setTimeout(() => m.delete(), 2000)
                         });
                         b.update({});
                         return;
