@@ -141,6 +141,7 @@ module.exports = {
             }
         } else {
             try {
+                if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                 await YouTube(`${searchString}`, { limit: 1 }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
@@ -156,6 +157,11 @@ module.exports = {
                         looping: false,
                         songLooping: false
                     }
+                    const connection = joinVoiceChannel({
+                        guildId: message.guild.id,
+                        channelId: voiceChannel.id,
+                        adapterCreator: message.guild.voiceAdapterCreator
+                    });
                     let songPrev;
                     if (x.items[0].duration === '0:00' || x.items[0].isLive) {
                         songPrev = {
@@ -232,7 +238,6 @@ module.exports = {
 
                     if (serverQueue) {
                         if (serverQueue.songs) {
-                            if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                             serverQueue.songs.push(song);
                             message.reply({
                                 embeds: [{
@@ -276,11 +281,6 @@ module.exports = {
                                     ]
                                 }]
                             })
-                            const connection = joinVoiceChannel({
-                                guildId: message.guild.id,
-                                channelId: voiceChannel.id,
-                                adapterCreator: message.guild.voiceAdapterCreator
-                            });
                             await message.client.queue.set(message.guild.id, queueConstruct);
                             try {
                                 queueConstruct.connection = connection;
