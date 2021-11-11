@@ -146,7 +146,6 @@ module.exports = {
                     channelId: voiceChannel.id,
                     adapterCreator: message.guild.voiceAdapterCreator
                 });
-                if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                 await YouTube(`${searchString}`, { limit: 1 }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
@@ -238,6 +237,7 @@ module.exports = {
 
                     if (serverQueue) {
                         if (serverQueue.songs) {
+                            if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                             serverQueue.songs.push(song);
                             message.reply({
                                 embeds: [{
