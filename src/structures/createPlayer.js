@@ -93,12 +93,13 @@ module.exports.play = async (client, message, song) => {
         const row3 = new MessageActionRow()
             .addComponents(button, button4, button5, button6, button7)
 
-        var playingMessage = await serverQueue.textChannel.send({ embeds: [embedMusic], components: [row3] })
+        var playingMessage = await serverQueue.textChannel.send({ embeds: [serverQueue.songs[0].embed], components: [row3] })
         const filter = (button) => button.user.id != client.user.id;
         const collector = playingMessage.channel.createMessageComponentCollector({ filter });
 
         collector.on("collect", async (b) => {
             var membReact = message.guild.members.cache.get(b.user.id);
+            var idBot = message.guild.members.cache.get(client.user.id)
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
@@ -112,7 +113,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
+                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -149,7 +150,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
+                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -186,7 +187,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
+                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -226,7 +227,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
+                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
@@ -281,7 +282,7 @@ module.exports.play = async (client, message, song) => {
                         b.update({});
                         return;
                     }
-                    if (message.client.voice.channel.id !== membReact.voice.channel.id) {
+                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
                         serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",

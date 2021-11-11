@@ -156,15 +156,79 @@ module.exports = {
                         looping: false,
                         songLooping: false
                     }
-
-                    const song = {
-                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
-                        url: x.items[0].url,
-                        thumbnail: x.items[0].bestThumbnail.url,
-                        duration: x.items[0].duration,
-                        liveStream: x.items[0].isLive,
-                        author: message.member.user.tag
+                    let songPrev;
+                    if (x.items[0].duration === '0:00' || x.items[0].isLive) {
+                        songPrev = {
+                            title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
+                            url: x.items[0].url,
+                            thumbnail: x.items[0].bestThumbnail.url,
+                            duration: x.items[0].duration,
+                            liveStream: x.items[0].isLive,
+                            author: message.member.user.tag,
+                            embed: {
+                                author: "Tocando agora:",
+                                color: "#0f42dc",
+                                title: `${x.items[0].title}`,
+                                thumbnail: {
+                                    "url": `${x.items[0].bestThumbnail.url}`,
+                                },
+                                url: `${x.items[0].url}`,
+                                fields: [
+                                    {
+                                        "name": "> __Duração:__",
+                                        "value": "```fix\n" + "```fix\n🔴 Live\n```" + "\n```",
+                                        "inline": true
+                                    },
+                                    {
+                                        "name": "> __Canal:__",
+                                        "value": "```fix\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```",
+                                        "inline": true
+                                    },
+                                    {
+                                        "name": "> __Pedido por:___",
+                                        "value": "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                        "inline": true
+                                    },
+                                ]
+                            }
+                        }
+                    } else {
+                        songPrev = {
+                            title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
+                            url: x.items[0].url,
+                            thumbnail: x.items[0].bestThumbnail.url,
+                            duration: x.items[0].duration,
+                            liveStream: x.items[0].isLive,
+                            author: message.member.user.tag,
+                            embed: {
+                                author: "Tocando agora:",
+                                color: "#0f42dc",
+                                title: `${x.items[0].title}`,
+                                thumbnail: {
+                                    "url": `${x.items[0].bestThumbnail.url}`,
+                                },
+                                url: `${x.items[0].url}`,
+                                fields: [
+                                    {
+                                        "name": "> __Duração:__",
+                                        "value": "```fix\n" + `${x.items[0].duration}` + "\n```",
+                                        "inline": true
+                                    },
+                                    {
+                                        "name": "> __Canal:__",
+                                        "value": "```fix\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```",
+                                        "inline": true
+                                    },
+                                    {
+                                        "name": "> __Pedido por:___",
+                                        "value": "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                        "inline": true
+                                    },
+                                ]
+                            }
+                        }
                     }
+                    const song = songPrev;
 
                     if (serverQueue) {
                         if (serverQueue.songs) {
