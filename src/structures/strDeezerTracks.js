@@ -21,7 +21,7 @@ module.exports = {
                     embed: {
                         author: "Tocando agora:",
                         color: "#2592b0",
-                        title: `${res.title} - ${res.artist.name}`,
+                        title: `${track.title} - ${track.artist.name}`,
                         thumbnail: {
                             "url": `${x[0].thumbnail.url}`,
                         },
