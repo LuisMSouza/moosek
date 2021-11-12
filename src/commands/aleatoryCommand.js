@@ -9,7 +9,7 @@ module.exports = {
     usage: [process.env.PREFIX_KEY + 'loop'],
     category: 'user',
     timeout: 7000,
-    aliases: ['radom', 'rd'],
+    aliases: ['random', 'rd'],
     options: [{
         name: "none",
         description: "NONE",

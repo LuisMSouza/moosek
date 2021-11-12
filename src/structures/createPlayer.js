@@ -336,7 +336,7 @@ module.exports.play = async (client, message, song) => {
         })
         serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
             if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
-                await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [] })
+                await playingMessage.edit({ embeds: [song.embed], components: [] })
                 if (serverQueue.looping) {
                     let lastSong = serverQueue.songs.shift();
                     serverQueue.songs.push(lastSong);
