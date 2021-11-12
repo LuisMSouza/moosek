@@ -174,7 +174,7 @@ module.exports = {
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```fix\n" + `${x.items[0].duration != "0:00" ? x.items[0].duration : "🔴 Live"}` + "\n```",
+                                    "value": "```fix\n" + `${x.items[0].isLive ? "🔴 Live" : x.items[0].duration}` + "\n```",
                                     "inline": true
                                 },
                                 {
