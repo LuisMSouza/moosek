@@ -29,7 +29,7 @@ module.exports = {
                 await message.channel.send({
                     embeds: [
                         {
-                            color: "#0f42dc",
+                            color: "#2592b0",
                             description: "```\nBot reiniciado!\n```"
                         }
                     ]

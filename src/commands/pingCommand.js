@@ -20,7 +20,7 @@ module.exports = {
         message.channel.send(({
             embeds: [
                 {
-                    color: "#0f42dc",
+                    color: "#2592b0",
                     description: `**${ping} ms**`
                 }
             ]

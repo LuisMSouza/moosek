@@ -38,7 +38,7 @@ module.exports = {
             message.channel.send({
                 embeds: [
                     {
-                        color: "#0f42dc",
+                        color: "#2592b0",
                         description: `**${song}** agora está na posição **${newPosition}** da fila.`
                     }
                 ]

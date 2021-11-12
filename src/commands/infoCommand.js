@@ -20,7 +20,7 @@ module.exports = {
         let ping = Math.round(message.client.ws.ping);
         let embed = new MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL())
-            .setColor("#0f42dc")
+            .setColor("#2592b0")
             .setTitle(`Informações`)
             .addField("Estou presente em:", client.guilds.cache.size + ` servidores`, true)
             .addField("Atividade atual:", client.user.presence.activities[0] ? client.user.presence.activities[0] : "Nenhuma atividade", true)
@@ -45,7 +45,7 @@ module.exports = {
         collector.on("collect", async (b) => {
             var emb = new MessageEmbed()
                 .setTitle("CLIQUE AQUI :)")
-                .setColor("#0f42dc")
+                .setColor("#2592b0")
                 .setURL("https://discord.com/api/oauth2/authorize?client_id=778462497728364554&permissions=8&scope=bot%20applications.commands")
                 .setTimestamp()
                 .setFooter("Moosek Client ™")

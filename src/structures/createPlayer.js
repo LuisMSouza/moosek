@@ -42,7 +42,7 @@ module.exports.play = async (client, message, song) => {
     try {
         var embedMusic = new MessageEmbed()
             .setAuthor("Tocando agora:")
-            .setColor("#0f42dc")
+            .setColor("#2592b0")
             .setTitle(serverQueue.songs[0].title)
             .setThumbnail(serverQueue.songs[0].thumbnail)
             .setURL(serverQueue.songs[0].url)

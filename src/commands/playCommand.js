@@ -165,7 +165,7 @@ module.exports = {
                         author: message.member.user.tag,
                         embed: {
                             author: "Tocando agora:",
-                            color: "#0f42dc",
+                            color: "#2592b0",
                             title: `${x.items[0].title}`,
                             thumbnail: {
                                 "url": `${x.items[0].bestThumbnail.url}`,

@@ -46,7 +46,7 @@ module.exports = {
             serverQueue.looping = !serverQueue.looping;
             return serverQueue.textChannel.send({
                 embeds: [{
-                    color: "#0f42dc",
+                    color: "#2592b0",
                     description: `🔁 Loop da fila de músicas ${serverQueue.looping ? `**Habilitado**` : `**Desabilitado**`}`
                 }]
             });
