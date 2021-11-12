@@ -18,7 +18,33 @@ module.exports = {
                 thumbnail: video.thumbnails[0].url,
                 duration: video.duration,
                 isLive: video.isLive,
-                author: message.member.user.tag
+                author: message.member.user.tag,
+                embed: {
+                    author: "Tocando agora:",
+                    color: "#2592b0",
+                    title: `${video.title}`,
+                    thumbnail: {
+                        "url": `${video.thumbnails[0].url}`,
+                    },
+                    url: `${video.shortUrl}`,
+                    fields: [
+                        {
+                            "name": "> __Duração:__",
+                            "value": "```fix\n" + `${video.duration}` + "\n```",
+                            "inline": true
+                        },
+                        {
+                            "name": "> __Canal:__",
+                            "value": "```fix\n" + `${channel.name}` + "\n```",
+                            "inline": true
+                        },
+                        {
+                            "name": "> __Pedido por:___",
+                            "value": "```fix\n" + `${message.member.user.tag}` + "\n```",
+                            "inline": true
+                        },
+                    ]
+                }
             }
 
             if (!serverQueue) {

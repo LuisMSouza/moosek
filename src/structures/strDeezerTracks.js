@@ -17,7 +17,33 @@ module.exports = {
                     thumbnail: x[0].thumbnail.url,
                     duration: x[0].durationFormatted,
                     liveStream: x[0].live,
-                    author: message.member.user.tag
+                    author: message.member.user.tag,
+                    embed: {
+                        author: "Tocando agora:",
+                        color: "#2592b0",
+                        title: `${res.title} - ${res.artist.name}`,
+                        thumbnail: {
+                            "url": `${x[0].thumbnail.url}`,
+                        },
+                        url: `${x[0].url}`,
+                        fields: [
+                            {
+                                "name": "> __Duração:__",
+                                "value": "```fix\n" + `${x[0].durationFormatted}` + "\n```",
+                                "inline": true
+                            },
+                            {
+                                "name": "> __Canal:__",
+                                "value": "```fix\n" + `${voiceChannel.name}` + "\n```",
+                                "inline": true
+                            },
+                            {
+                                "name": "> __Pedido por:___",
+                                "value": "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                "inline": true
+                            },
+                        ]
+                    }
                 }
                 if (!serverQueue) {
                     const queueConstruct = {
