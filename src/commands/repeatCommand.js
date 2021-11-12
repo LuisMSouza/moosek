@@ -10,12 +10,7 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['rp', 'rpt', 'repetir'],
-    options: [{
-        name: "none",
-        description: "NONE",
-        type: 3,
-        required: true
-    }],
+
 
     async execute(client, message, args) {
         var membReact = message.guild.members.cache.get(message.author.id);

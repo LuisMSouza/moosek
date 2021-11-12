@@ -11,12 +11,6 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['configurar'],
-    options: [{
-        name: "none",
-        description: "NONE",
-        type: 3,
-        required: true
-    }],
 
     async execute(client, message, args) {
         if (args === undefined) args === null

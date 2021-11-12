@@ -10,12 +10,6 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['lv', 'leave'],
-    options: [{
-        name: "none",
-        description: "NONE",
-        type: 3,
-        required: true
-    }],
 
     async execute(client, message, args) {
         const voiceChannel = message.member.voice.channel;

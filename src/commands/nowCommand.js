@@ -9,12 +9,6 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['tocando', 'nowplaying'],
-    options: [{
-        name: "none",
-        description: "NONE",
-        type: 3,
-        required: true
-    }],
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);

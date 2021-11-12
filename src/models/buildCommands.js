@@ -36,12 +36,15 @@ module.exports = {
             const data = new SlashCommandBuilder()
                 .setName(one.name)
                 .setDescription(one.description)
-            if (one.options[0].name === "none") return;
-            data.addStringOption(option =>
-                option.setName(one.options[0].name)
-                    .setDescription(one.options[0].description)
-                    .setRequired(one.options[0].required)
-            );
+
+
+            if (one.options) {
+                data.addStringOption(option =>
+                    option.setName(one.options[0].name)
+                        .setDescription(one.options[0].description)
+                        .setRequired(one.options[0].required)
+                );
+            }
         }
     }
 }

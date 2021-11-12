@@ -13,12 +13,6 @@ module.exports = {
     category: 'user',
     timeout: 7000,
     aliases: ['r'],
-    options: [{
-        name: "escolha",
-        description: "número da radio",
-        type: 3,
-        required: false
-    }],
 
     async execute(client, message, args) {
         if (args === undefined) args === null
