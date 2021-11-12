@@ -39,8 +39,8 @@ module.exports = {
         if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel);
 
         const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel).then(m2 => m2.delete({ timeout: 10000 }));
-        if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel).then(m3 => m3.delete({ timeout: 10000 }));
+        if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel)
+        if (!permissions.has("SPEAK")) return sendError("Eu não teho permissões para falar nesse canal :(", message.channel)
 
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         const sptfRegex = /((open|play)\.spotify\.com\/)/;
