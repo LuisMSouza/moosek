@@ -37,7 +37,8 @@ module.exports.play = async (client, message, song) => {
         serverQueue.connection.subscribe(serverQueue.audioPlayer);
     } catch (error) {
         serverQueue.connection.destroy();
-        throw error;
+        console.log(error);
+        return sendError("Alguma coisa desastrosa aconteceu :(\nTente novamente...", message.channel);
     }
     try {
         var embedMusic = new MessageEmbed()

@@ -28,5 +28,6 @@ module.exports = async (client, message) => {
 
     } catch (e) {
         console.log(e);
+        return sendError("Alguma coisa desastrosa aconteceu :(\nTente novamente...", message.channel);
     }
 }
