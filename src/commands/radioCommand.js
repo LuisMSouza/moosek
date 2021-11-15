@@ -15,9 +15,6 @@ module.exports = {
     aliases: ['r'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.update({});
-        }
         const serverQueue = client.queue.get(message.guild.id);
         if (serverQueue) return sendError("Você deve parar a fila de músicas primeiro.", message.channel)
         const voiceChannel = message.member.voice.channel;
