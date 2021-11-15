@@ -162,24 +162,24 @@ module.exports = {
                         songLooping: false
                     }
                     const song = {
-                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
-                        url: x.items[0].url,
-                        thumbnail: x.items[0].bestThumbnail.url,
-                        duration: x.items[0].duration,
-                        liveStream: x.items[0].isLive,
+                        title: x[0].title ? x[0].title : ytdl.getBasicInfo(x[0].url).videoDetails.media.song,
+                        url: x[0].url,
+                        thumbnail: x[0].thumbnail.url,
+                        duration: x[0].durationFormatted,
+                        liveStream: x[0].live,
                         author: message.member.user.tag,
                         embed: {
                             author: "Tocando agora:",
                             color: "#2592b0",
-                            title: `${x.items[0].title}`,
+                            title: `${x[0].title}`,
                             thumbnail: {
-                                "url": `${x.items[0].bestThumbnail.url}`,
+                                "url": `${x[0].thumbnail.url}`,
                             },
-                            url: `${x.items[0].url}`,
+                            url: `${x[0].url}`,
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```fix\n" + `${x.items[0].isLive ? "🔴 Live" : x.items[0].duration}` + "\n```",
+                                    "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationFormatted}` + "\n```",
                                     "inline": true
                                 },
                                 {
