@@ -106,7 +106,7 @@ module.exports = {
                     color: "#2592b0"
                 }]
             });
-            const filter = (i) => i.user.id === (message.author.id || message.user.id);
+            const filter = (i) => i.user.id === (message.member.user.id || message.user.id);
             const collector = message.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
                 m.reply({ content: `**Você selecionou: __${radioStations.radioStationsName[m.values[0] - 1]}__**`, ephemeral: true })
