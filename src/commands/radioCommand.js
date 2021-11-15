@@ -106,7 +106,7 @@ module.exports = {
                     color: "#2592b0"
                 }]
             });
-            const canal = client.guild.channels.cache.get(msgEmb.channel.id)
+            const canal = message.guild.channels.cache.get(msgEmb.channel.id)
             const filter = (i) => i.user.id === (message.author.id || message.user.id);
             const collector = canal.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
