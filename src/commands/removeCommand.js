@@ -6,30 +6,35 @@ const sendError = require('../utils/error.js')
 module.exports = {
     name: "remover",
     description: "Para remover uma música específica na fila do servidor",
+    options: [
+        {
+            name: 'posição',
+            type: 4, // 'INTEGER' Type
+            description: 'Posição da música na fila',
+            required: true,
+        }
+    ],
     usage: [process.env.PREFIX_KEY + 'remover [número da música na fila]'],
     category: 'user',
     timeout: 7000,
     aliases: ['rm', 'rv', 'remove'],
-    options: [{
-        name: "posição",
-        description: "POSIÇÃO DA MÚSICA NA FILA",
-        type: 3,
-        required: true
-    }],
 
     async execute(client, message, args) {
-        if (args === undefined) args === null
+        var query;
+        if (interaction.options) {
+            query = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
+        }
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));
-        if (!args.length) return message.channel.send({
+        if (!args.length || !query.length) return message.channel.send({
             embeds: [
                 {
                     description: `**Utilize**: \`${process.env.PREFIX_KEY}remove [número da música na fila]\``
                 }
             ]
         })
-        if (isNaN(args[0])) return message.channel.send({
+        if (isNaN(args[0]) || isNaN(query)) return message.channel.send({
             embeds: [
                 {
                     description: `**Utilize**: \`${process.env.PREFIX_KEY}remove [número da música na fila]\``
@@ -37,10 +42,10 @@ module.exports = {
             ]
         })
         if (serverQueue.songs.length == 1) return sendError("Não há uma fila de músicas.", message.channel).catch(console.error);
-        if (args[0] > serverQueue.songs.length)
+        if (args[0] > serverQueue.songs.length || query > serverQueue.songs.length)
             return sendError(`A fila tem somente ${serverQueue.songs.length} músicas!`, message.channel).catch(console.error);
         try {
-            const song = serverQueue.songs.splice(args[0] - 1, 1);
+            const song = serverQueue.songs.splice((args[0] || query) - 1, 1);
             let embed = new MessageEmbed()
                 .setColor("RED")
                 .setDescription(`❌ **${song[0].title}** removida da fila.`)

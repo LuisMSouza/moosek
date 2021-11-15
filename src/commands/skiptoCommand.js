@@ -6,20 +6,25 @@ const Player = require('../structures/createPlayer.js');
 module.exports = {
     name: "skipto",
     description: "Para pular para uma música específica na fila do servidor",
+    options: [
+        {
+            name: 'posição',
+            type: 4, // 'INTEGER' Type
+            description: 'Posição da música para ser pulada',
+            required: true,
+        }
+    ],
     usage: [process.env.PREFIX_KEY + 'skipto [número da música na fila]'],
     category: 'user',
     timeout: 7000,
     aliases: ['st', 'nt', 'nextto'],
-    options: [{
-        name: "posição",
-        description: "POSIÇÃO DA MÚSICA NA FILA",
-        type: 3,
-        required: true
-    }],
-    
+
     async execute(client, message, args) {
-        if (args === undefined) args === null
-        if (!args.length || isNaN(args[0]))
+        var query;
+        if (interaction.options) {
+            query = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
+        }
+        if (!args.length || isNaN(args[0]) || !query || isNaN(query))
             return message.channel.send({
                 embeds: [
                     {
@@ -30,17 +35,17 @@ module.exports = {
 
         const serverQueue = message.client.queue.get(message.guild.id);
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).catch(console.error);
-        if (args[0] > serverQueue.songs.length)
+        if (args[0] > serverQueue.songs.length || query > serverQueue.songs.length)
             return sendError(`A fila tem somente ${serverQueue.songs.length} músicas!`, message.channel).catch(console.error);
 
         serverQueue.playing = true;
 
         if (serverQueue.looping) {
-            for (let i = 0; i < args[0] - 2; i++) {
+            for (let i = 0; i < (args[0] || query) - 2; i++) {
                 serverQueue.songs.push(serverQueue.songs.shift());
             }
         } else {
-            serverQueue.songs = serverQueue.songs.slice(args[0] - 2);
+            serverQueue.songs = serverQueue.songs.slice((args[0] || query) - 2);
         }
         try {
             Player.play(client, message, serverQueue.songs[0]);
@@ -48,7 +53,7 @@ module.exports = {
                 embeds: [
                     {
                         color: "#2592b0",
-                        description: `⏭ \`${args[0] - 1}\` músicas puladas por ${message.author}`
+                        description: `⏭ \`${(args[0] || query) - 1}\` músicas puladas por ${message.author}`
                     }
                 ]
 

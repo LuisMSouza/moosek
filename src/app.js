@@ -3,6 +3,8 @@ const { Client, intents, Collection } = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const { AudioPlayer } = require('@discordjs/voice');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
@@ -36,7 +38,24 @@ fs.readdir(__dirname + "/events/", (err, files) => {
         client.on(eventName, event.bind(null, client));
         console.log("Carregando evento: " + eventName)
     });
-})
+});
+
+const rest = new REST({ version: '9' }).setToken(configVars.token);
+
+(async () => {
+    try {
+        console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
+
+        await rest.put(
+            Routes.applicationCommands("778462497728364554"),
+            { body: client.slashCommands },
+        );
+
+        console.log("[SOURCE] GLOBAL COMMANDDS STARTED");
+    } catch (error) {
+        console.error(error);
+    }
+})();
 
 /////////////////////// SOURCE CODE //////////////////////////
 client.db.init();

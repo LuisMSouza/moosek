@@ -9,22 +9,27 @@ const Client = new Lyrics()
 module.exports = {
     name: "letra",
     description: "Para pegar a letra de uma música",
+    options: [
+        {
+            name: 'música',
+            type: 3, // 'STRING' Type
+            description: 'Música para ser pesquisado a letra',
+            required: true,
+        }
+    ],
     usage: [process.env.PREFIX_KEY + 'letra [nome da música]'],
     category: 'user',
     timeout: 7000,
     aliases: ['lyrics', 'l'],
-    options: [{
-        name: "música",
-        description: "Música a ser pesquisada",
-        type: 3,
-        required: false
-    }],
 
     async execute(client, message, args) {
-        if (args === undefined) args === null
+        var query;
+        if (interaction.options) {
+            query = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
+        }
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
-        let main_entry = args.join(" ")
+        let main_entry = args.join(" ") || query
         let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {

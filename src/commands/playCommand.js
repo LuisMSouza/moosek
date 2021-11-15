@@ -16,23 +16,29 @@ const guild_main = process.env.SERVER_MAIN
 module.exports = {
     name: "play",
     description: "Para tocar músicas no servidor",
+    options: [
+        {
+            name: 'música',
+            type: 3, // 'STRING' Type
+            description: 'Nome ou link da música',
+            required: true,
+        }
+    ],
     usage: [process.env.PREFIX_KEY + 'play [nome da música / link da música / link da playlist]'],
     category: 'user',
     timeout: 3000,
     aliases: ['p', 'tocar', 'iniciar'],
-    options: [{
-        name: "entrada",
-        description: "LINK OU NOME DA MÚSICA",
-        type: 3,
-        required: true
-    }],
 
     async execute(client, message, args) {
+        var query;
+        if (interaction.options) {
+            query = interaction.options.get('música') ? interaction.options.get('música').value : args[0];
+        }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
-        const searchString = args.join(" ") || args;
+        const searchString = args.join(" ") || args || query;
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
-        const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString;
+        const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString || query;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
 
         const voiceChannel = message.member.voice.channel;

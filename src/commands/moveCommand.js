@@ -6,22 +6,35 @@ const Move = require('alib-array')
 module.exports = {
     name: "mover",
     description: "Para mover uma música de posição na fila",
+    options: [
+        {
+            name: 'posição',
+            type: 4, // 'INTEGER' Type
+            description: 'Posição atual da música na fila',
+            required: true,
+        },
+        {
+            name: 'nova',
+            type: 4, // 'INTEGER' Type
+            description: 'Posição para qual vai ser colocado',
+            required: true,
+        }
+    ],
     usage: [process.env.PREFIX_KEY + 'mover [posição atual] [nova posição]'],
     category: 'user',
     timeout: 5000,
     aliases: ['mv', 'move'],
-    options: [{
-        name: "posição",
-        description: 'NOVA POSIÇÃO PARA A MÚSICA NA FILA',
-        type: 3,
-        required: true
-    }],
 
     async execute(client, message, args) {
-        if (args === undefined) args === null
+        var query1;
+        var query2;;
+        if (interaction.options) {
+            query1 = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
+            query2 = interaction.options.get('nova') ? interaction.options.get('nova').value : args[0];
+        }
         const serverQueue = client.queue.get(message.guild.id);
-        var oldPosition = args[0];
-        var newPosition = args[1];
+        var oldPosition = args[0] || query1;
+        var newPosition = args[1] || query2;
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
 
         if (!args.length) return

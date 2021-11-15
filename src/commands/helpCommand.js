@@ -6,13 +6,24 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: "ajuda",
     description: "Exibe o menu de comandos do servidor",
+    options: [
+        {
+            name: 'comando',
+            type: 3, // 'STRING' Type
+            description: 'Comando específico',
+            required: false,
+        }
+    ],
     usage: [process.env.PREFIX_KEY + 'ajuda'],
     category: 'user',
     timeout: 7000,
     aliases: ['help', 'a', 'h'],
 
     async execute(client, message, args) {
-        if (args === undefined) args === null
+        var query;
+        if (interaction.options) {
+            query = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
+        }
         const sorted = client.commands.filter(c => c.category !== 'ceo');
         let cmds = "";
         sorted.forEach(cmd => {
@@ -23,8 +34,8 @@ module.exports = {
             .setColor("#2592b0")
             .setDescription(`Para mais informações sobre um comando -> **${process.env.PREFIX_KEY}help [commando]**\n\n${cmds}`)
 
-        if (args[0]) {
-            let cmd = args[0]
+        if (args[0] || query) {
+            let cmd = args[0] || query
             let command = client.commands.get(cmd);
             if (!command) command = client.commands.find(x => x.aliases.includes(cmd))
             if (!command) return sendError("Comando desconhecido.", message.channel).then(m => m.delete({ timeout: 10000 }));
