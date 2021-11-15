@@ -3,8 +3,7 @@ const ytlist = require('ytpl');;
 const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
-const YouTube = require("ytsr");
-const ytsr = require('yt-search');
+const YouTube = require("youtube-sr").default;
 const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
@@ -36,7 +35,7 @@ module.exports = {
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
-        const searchString = query || args.join(" ");
+        const searchString = args.join(" ") || args || query;
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString || query;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
@@ -147,7 +146,7 @@ module.exports = {
             }
         } else {
             try {
-                await ytsr(`${searchString}`).then(async x => {
+                await YouTube.search(`${searchString}`, { limit: 1, safeSearch: true }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
@@ -163,24 +162,24 @@ module.exports = {
                         songLooping: false
                     }
                     const song = {
-                        title: x.all[0].title ? x.all[0].title : ytdl.getBasicInfo(x.all[0].url).videoDetails.media.song,
-                        url: x.all[0].url,
-                        thumbnail: x.all[0].thumbnail,
-                        duration: x.all[0].duration.timestamp,
-                        liveStream: x.all[0].type === 'live' ? true : false,
+                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
+                        url: x.items[0].url,
+                        thumbnail: x.items[0].bestThumbnail.url,
+                        duration: x.items[0].duration,
+                        liveStream: x.items[0].isLive,
                         author: message.member.user.tag,
                         embed: {
                             author: "Tocando agora:",
                             color: "#2592b0",
-                            title: `${x.all[0].title}`,
+                            title: `${x.items[0].title}`,
                             thumbnail: {
-                                "url": `${x.all[0].thumbnail}`,
+                                "url": `${x.items[0].bestThumbnail.url}`,
                             },
-                            url: `${x.all[0].url}`,
+                            url: `${x.items[0].url}`,
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```fix\n" + `${x.all[0].type === 'live' ? true : false ? "🔴 Live" : x.all[0].duration.timestamp}` + "\n```",
+                                    "value": "```fix\n" + `${x.items[0].isLive ? "🔴 Live" : x.items[0].duration}` + "\n```",
                                     "inline": true
                                 },
                                 {
