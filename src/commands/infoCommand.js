@@ -11,6 +11,9 @@ module.exports = {
     aliases: ['i', 'infos', 'status', 'stats'],
 
     async execute(client, message, args) {
+        if (message.options) {
+            message.deferReply()
+        }
         let ping = Math.round(message.client.ws.ping);
         let embed = new MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL())

@@ -10,6 +10,9 @@ module.exports = {
     aliases: [],
 
     async execute(client, message, args) {
+        if (message.options) {
+            message.deferReply()
+        }
         let ping = Math.round(message.client.ws.ping);
         message.channel.send(({
             embeds: [

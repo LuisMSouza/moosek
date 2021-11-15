@@ -13,7 +13,9 @@ module.exports = {
     aliases: ['configurar'],
 
     async execute(client, message, args) {
-        if (args === undefined) args === null
+        if (message.options) {
+            message.deferReply()
+        }
         if (!message.member.permissions.has("ADMINISTRATOR")) return sendError("Você não pode utilizar este comando nesse servidor", message.channel);
         var pref;
         const confs = await guildData.findOne({

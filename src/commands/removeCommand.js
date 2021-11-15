@@ -23,6 +23,7 @@ module.exports = {
         var query;
         if (message.options) {
             query = message.options.get('posição') ? message.options.get('posição').value : args[0];
+            message.deferReply()
         }
         const serverQueue = client.queue.get(message.guild.id);
 

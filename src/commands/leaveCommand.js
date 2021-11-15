@@ -12,6 +12,9 @@ module.exports = {
     aliases: ['lv', 'leave'],
 
     async execute(client, message, args) {
+        if (message.options) {
+            message.deferReply()
+        }
         const voiceChannel = message.member.voice.channel;
         const serverQueue = client.queue.get(message.guild.id);
 

@@ -12,6 +12,9 @@ module.exports = {
     aliases: ['queue', 'q', 'f', 'lista'],
 
     async execute(client, message, args) {
+        if (message.options) {
+            message.deferReply()
+        }
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)

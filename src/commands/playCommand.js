@@ -32,6 +32,7 @@ module.exports = {
         var query;
         if (message.options) {
             query = message.options.get('música') ? message.options.get('música').value : args[0];
+            message.deferReply()
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");

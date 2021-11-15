@@ -23,6 +23,7 @@ module.exports = {
         var query;
         if (message.options) {
             query = message.options.get('posição') ? message.options.get('posição').value : args[0];
+            message.deferReply()
         }
         const sorted = client.commands.filter(c => c.category !== 'ceo');
         let cmds = "";

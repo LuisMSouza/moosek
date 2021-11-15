@@ -13,6 +13,9 @@ module.exports = {
 
 
     async execute(client, message, args) {
+        if (message.options) {
+            message.deferReply()
+        }
         var membReact = message.guild.members.cache.get(message.author.id);
         const serverQueue = client.queue.get(message.guild.id);
         if (!message.member.voice.channel) {

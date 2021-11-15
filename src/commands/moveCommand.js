@@ -31,6 +31,7 @@ module.exports = {
         if (message.options) {
             query1 = message.options.get('posição') ? message.options.get('posição').value : args[0];
             query2 = message.options.get('nova') ? message.options.get('nova').value : args[0];
+            message.deferReply()
         }
         const serverQueue = client.queue.get(message.guild.id);
         var oldPosition = args[0] || query1;

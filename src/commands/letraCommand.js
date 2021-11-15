@@ -26,6 +26,7 @@ module.exports = {
         var query;
         if (message.options) {
             query = message.options.get('posição') ? message.options.get('posição').value : args[0];
+            message.deferReply();
         }
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
