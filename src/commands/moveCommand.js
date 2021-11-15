@@ -28,9 +28,9 @@ module.exports = {
     async execute(client, message, args) {
         var query1;
         var query2;;
-        if (interaction.options) {
-            query1 = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
-            query2 = interaction.options.get('nova') ? interaction.options.get('nova').value : args[0];
+        if (message.options) {
+            query1 = message.options.get('posição') ? message.options.get('posição').value : args[0];
+            query2 = message.options.get('nova') ? message.options.get('nova').value : args[0];
         }
         const serverQueue = client.queue.get(message.guild.id);
         var oldPosition = args[0] || query1;

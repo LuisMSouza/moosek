@@ -9,7 +9,6 @@ const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const { joinVoiceChannel } = require("@discordjs/voice");
-const { CommandInteraction, Client } = require("discord.js");
 const guild_main = process.env.SERVER_MAIN
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -31,8 +30,8 @@ module.exports = {
 
     async execute(client, message, args) {
         var query;
-        if (interaction.options) {
-            query = interaction.options.get('música') ? interaction.options.get('música').value : args[0];
+        if (message.options) {
+            query = message.options.get('música') ? message.options.get('música').value : args[0];
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");

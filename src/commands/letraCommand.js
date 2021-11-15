@@ -24,8 +24,8 @@ module.exports = {
 
     async execute(client, message, args) {
         var query;
-        if (interaction.options) {
-            query = interaction.options.get('posição') ? interaction.options.get('posição').value : args[0];
+        if (message.options) {
+            query = message.options.get('posição') ? message.options.get('posição').value : args[0];
         }
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
