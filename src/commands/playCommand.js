@@ -4,6 +4,7 @@ const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("ytsr");
+const ytsr = require('yt-search');
 const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
@@ -146,7 +147,7 @@ module.exports = {
             }
         } else {
             try {
-                await YouTube(`${searchString}`, { limit: 1, safeSearch: true }).then(async x => {
+                await ytsr(`${searchString}`).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
@@ -162,11 +163,11 @@ module.exports = {
                         songLooping: false
                     }
                     const song = {
-                        title: x.items[0].title ? x.items[0].title : ytdl.getBasicInfo(x.items[0].url).videoDetails.media.song,
-                        url: x.items[0].url,
-                        thumbnail: x.items[0].bestThumbnail.url,
-                        duration: x.items[0].duration,
-                        liveStream: x.items[0].isLive,
+                        title: x.all[0].title ? x.all[0].title : ytdl.getBasicInfo(x.all[0].url).videoDetails.media.song,
+                        url: x.all[0].url,
+                        thumbnail: x.all[0].thumbnail,
+                        duration: x.all[0].duration.timestamp,
+                        liveStream: x.all[0].type === 'live' ? true : false,
                         author: message.member.user.tag,
                         embed: {
                             author: "Tocando agora:",
