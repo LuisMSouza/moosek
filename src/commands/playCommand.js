@@ -17,7 +17,7 @@ module.exports = {
     description: "Para tocar músicas no servidor",
     options: [
         {
-            name: 'música',
+            name: 'music',
             type: 3, // 'STRING' Type
             description: 'Nome ou link da música',
             required: true,
@@ -31,8 +31,7 @@ module.exports = {
     async execute(client, message, args) {
         var query;
         if (message.options) {
-            query = message.options.get('música') ? message.options.get('música').value : args[0];
-            message.deferReply()
+            query = message.options.get('music') ? message.options.get('music').value : args[0];
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");

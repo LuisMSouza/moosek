@@ -11,9 +11,6 @@ module.exports = {
     aliases: ['i', 'infos', 'status', 'stats'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         let ping = Math.round(message.client.ws.ping);
         let embed = new MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL())
@@ -36,7 +33,7 @@ module.exports = {
                     .setCustomId("invite_button")
             )
 
-        const msgEmb = await message.channel.send({ components: [row], embeds: [embed] });
+        const msgEmb = await message.reply({ components: [row], embeds: [embed] });
         const filter = (button) => button.user.id != client.user.id;
         const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1 });
         collector.on("collect", async (b) => {

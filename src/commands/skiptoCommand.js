@@ -8,7 +8,7 @@ module.exports = {
     description: "Para pular para uma música específica na fila do servidor",
     options: [
         {
-            name: 'posição',
+            name: 'position',
             type: 4, // 'INTEGER' Type
             description: 'Posição da música para ser pulada',
             required: true,
@@ -22,11 +22,10 @@ module.exports = {
     async execute(client, message, args) {
         var query;
         if (message.options) {
-            query = message.options.get('posição') ? message.options.get('posição').value : args[0];
-            message.deferReply()
+            query = message.options.get('position') ? message.options.get('position').value : args[0];
         }
         if (!args.length || isNaN(args[0]) || !query || isNaN(query))
-            return message.channel.send({
+            returnmessage.reply({
                 embeds: [
                     {
                         description: `**Utilize**: \`${process.env.PREFIX_KEY}skipto [número da música na fila]\``
@@ -50,7 +49,7 @@ module.exports = {
         }
         try {
             Player.play(client, message, serverQueue.songs[0]);
-            message.channel.send({
+            message.reply({
                 embeds: [
                     {
                         color: "#2592b0",

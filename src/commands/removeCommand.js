@@ -8,7 +8,7 @@ module.exports = {
     description: "Para remover uma música específica na fila do servidor",
     options: [
         {
-            name: 'posição',
+            name: 'position',
             type: 4, // 'INTEGER' Type
             description: 'Posição da música na fila',
             required: true,
@@ -22,20 +22,19 @@ module.exports = {
     async execute(client, message, args) {
         var query;
         if (message.options) {
-            query = message.options.get('posição') ? message.options.get('posição').value : args[0];
-            message.deferReply()
+            query = message.options.get('position') ? message.options.get('position').value : args[0];
         }
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));
-        if (!args.length || !query.length) return message.channel.send({
+        if (!args.length || !query.length) return message.reply({
             embeds: [
                 {
                     description: `**Utilize**: \`${process.env.PREFIX_KEY}remove [número da música na fila]\``
                 }
             ]
         })
-        if (isNaN(args[0]) || isNaN(query)) return message.channel.send({
+        if (isNaN(args[0]) || isNaN(query)) return message.reply({
             embeds: [
                 {
                     description: `**Utilize**: \`${process.env.PREFIX_KEY}remove [número da música na fila]\``
@@ -52,7 +51,7 @@ module.exports = {
                 .setDescription(`❌ **${song[0].title}** removida da fila.`)
                 .setFooter(`Removido por ${message.author.tag}`, message.author.displayAvatarURL())
 
-            message.channel.send({ embeds: [embed] })
+            message.reply({ embeds: [embed] })
             message.react("✅")
         } catch (error) {
             return sendError(`Ocorreu um erro.\nType: ${error}`, message.channel);

@@ -12,9 +12,6 @@ module.exports = {
     aliases: ['lp'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         var membReact = message.guild.members.cache.get(message.author.id);
         const serverQueue = client.queue.get(message.guild.id);
         if (!message.member.voice.channel) {
@@ -41,7 +38,7 @@ module.exports = {
         if (serverQueue.songs.length === 1) return sendError("A fila de músicas só possui uma música.", message.channel)
         try {
             serverQueue.looping = !serverQueue.looping;
-            return serverQueue.textChannel.send({
+            return message.reply({
                 embeds: [{
                     color: "#2592b0",
                     description: `🔁 Loop da fila de músicas ${serverQueue.looping ? `**Habilitado**` : `**Desabilitado**`}`

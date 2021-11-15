@@ -12,9 +12,6 @@ module.exports = {
     aliases: ['rb'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         if (message.author.id != CEO_ID) return;
 
@@ -23,7 +20,7 @@ module.exports = {
         try {
             setTimeout(async () => {
                 await msg.delete(msg);
-                await message.channel.send({
+                await message.reply({
                     embeds: [
                         {
                             color: "#2592b0",

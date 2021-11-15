@@ -12,9 +12,6 @@ module.exports = {
     aliases: ['queue', 'q', 'f', 'lista'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
@@ -53,7 +50,7 @@ module.exports = {
         var buttonRow = new MessageActionRow()
             .addComponents([bt2, bt3, bt1])
 
-        const queueEmbed = await message.channel.send({ components: [buttonRow], embeds: [embeds[currentPage]] });
+        const queueEmbed = await message.reply({ components: [buttonRow], embeds: [embeds[currentPage]] });
 
         const filter = (button) => button.user.id != client.user.id;
         const collector = queueEmbed.channel.createMessageComponentCollector({ filter, time: 300000 });

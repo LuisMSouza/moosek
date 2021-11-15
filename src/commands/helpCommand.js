@@ -22,8 +22,7 @@ module.exports = {
     async execute(client, message, args) {
         var query;
         if (message.options) {
-            query = message.options.get('posição') ? message.options.get('posição').value : args[0];
-            message.deferReply()
+            query = message.options.get('comando') ? message.options.get('comando').value : args[0];
         }
         const sorted = client.commands.filter(c => c.category !== 'ceo');
         let cmds = "";
@@ -50,9 +49,9 @@ module.exports = {
             **Como usar:** ${command.usage}
             `)
 
-            return message.channel.send({ embeds: [embedCommand] });
+            return message.reply({ embeds: [embedCommand], ephemeral: true });
         } else {
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed], ephemeral: true });
         }
     }
 }

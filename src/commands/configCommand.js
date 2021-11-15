@@ -13,9 +13,6 @@ module.exports = {
     aliases: ['configurar'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         if (!message.member.permissions.has("ADMINISTRATOR")) return sendError("Você não pode utilizar este comando nesse servidor", message.channel);
         var pref;
         const confs = await guildData.findOne({
@@ -43,7 +40,7 @@ module.exports = {
             const embdd = new MessageEmbed()
                 .setDescription("```fix\nDigite o novo prefixo\n```")
 
-            const btnMsg = await message.channel.send({ components: [row], embeds: [emb] });
+            const btnMsg = await message.reply({ components: [row], embeds: [emb] });
             try {
                 const filter = (i) => i.user.id === message.author.id;
                 const filter2 = m => m.author.id === message.author.id;

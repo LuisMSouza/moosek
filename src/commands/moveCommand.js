@@ -8,13 +8,13 @@ module.exports = {
     description: "Para mover uma música de posição na fila",
     options: [
         {
-            name: 'posição',
+            name: 'position',
             type: 4, // 'INTEGER' Type
             description: 'Posição atual da música na fila',
             required: true,
         },
         {
-            name: 'nova',
+            name: 'new',
             type: 4, // 'INTEGER' Type
             description: 'Posição para qual vai ser colocado',
             required: true,
@@ -29,9 +29,8 @@ module.exports = {
         var query1;
         var query2;;
         if (message.options) {
-            query1 = message.options.get('posição') ? message.options.get('posição').value : args[0];
-            query2 = message.options.get('nova') ? message.options.get('nova').value : args[0];
-            message.deferReply()
+            query1 = message.options.get('position') ? message.options.get('position').value : args[0];
+            query2 = message.options.get('new') ? message.options.get('new').value : args[0];
         }
         const serverQueue = client.queue.get(message.guild.id);
         var oldPosition = args[0] || query1;
@@ -49,7 +48,7 @@ module.exports = {
 
         try {
             serverQueue.songs = Move().move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
-            message.channel.send({
+            message.reply({
                 embeds: [
                     {
                         color: "#2592b0",

@@ -12,9 +12,6 @@ module.exports = {
     aliases: ['lv', 'leave'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         const voiceChannel = message.member.voice.channel;
         const serverQueue = client.queue.get(message.guild.id);
 
@@ -29,7 +26,7 @@ module.exports = {
             let emb = new MessageEmbed()
                 .setColor("#2592b0")
                 .setDescription(`**Saí do canal ;)**`)
-            message.channel.send({
+                message.reply({
                 embeds: [emb]
             })
         } catch (e) {

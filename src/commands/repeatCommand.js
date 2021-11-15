@@ -13,13 +13,10 @@ module.exports = {
 
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         var membReact = message.guild.members.cache.get(message.author.id);
         const serverQueue = client.queue.get(message.guild.id);
         if (!message.member.voice.channel) {
-            serverQueue.textChannel.send({
+            message.reply({
                 embeds: [{
                     color: "RED",
                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -28,7 +25,7 @@ module.exports = {
             return;
         }
         if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-            serverQueue.textChannel.send({
+            message.reply({
                 embeds: [{
                     color: "RED",
                     description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -39,7 +36,7 @@ module.exports = {
         if (!serverQueue) return sendError("Nenhuma música sendo reproduzida no momento...", serverQueue.textChannel);
         try {
             serverQueue.songLooping = !serverQueue.songLooping
-            return serverQueue.textChannel.send({
+            return message.reply({
                 embeds: [{
                     color: "#2592b0",
                     description: `🔂 Loop para \`${serverQueue.songs[0].title}\` ${serverQueue.songLooping ? `**Habilitado**` : `**Desabilitado**`}`

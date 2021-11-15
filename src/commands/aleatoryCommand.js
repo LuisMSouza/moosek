@@ -12,13 +12,10 @@ module.exports = {
     aliases: ['random', 'rd'],
 
     async execute(client, message, args) {
-        if (message.options) {
-            message.deferReply()
-        }
         var membReact = message.guild.members.cache.get(message.author.id);
         const serverQueue = client.queue.get(message.guild.id);
         if (!message.member.voice.channel) {
-            serverQueue.textChannel.send({
+            message.reply({
                 embeds: [{
                     color: "RED",
                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -27,7 +24,7 @@ module.exports = {
             return;
         }
         if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
-            serverQueue.textChannel.send({
+            message.reply({
                 embeds: [{
                     color: "RED",
                     description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -39,7 +36,7 @@ module.exports = {
         try {
             serverQueue.nigthCore = !serverQueue.nigthCore
             //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
-            return serverQueue.textChannel.send({
+            return message.reply({
                 embeds: [{
                     color: "#2592b0",
                     description: `🔀 Modo aleatório ${serverQueue.nigthCore ? `**Habilitado**` : `**Desabilitado**`}`
