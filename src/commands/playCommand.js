@@ -36,7 +36,7 @@ module.exports = {
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
-        const searchString = args.join(" ") || args || query;
+        const searchString = query || args.join(" ");
         if (!searchString) return sendError("Você precisa digitar a música a ser tocada", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "" || searchString || query;
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
