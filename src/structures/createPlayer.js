@@ -267,6 +267,7 @@ module.exports.play = async (client, message, song) => {
                                     serverQueue.songs.shift();
                                     await message.guild.me.voice.disconnect();
                                     await message.client.queue.delete(message.guild.id);
+                                    return;
                                 }
                                 serverQueue.prevSongs = [];
                                 await serverQueue.prevSongs.push(serverQueue.songs[0]);

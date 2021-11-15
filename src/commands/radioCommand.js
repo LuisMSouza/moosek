@@ -106,8 +106,9 @@ module.exports = {
                     color: "#2592b0"
                 }]
             });
+            const canal = client.guild.channels.cache.get(msgEmb.channel.id)
             const filter = (i) => i.user.id === (message.author.id || message.user.id);
-            const collector = msgEmb.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
+            const collector = canal.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
             collector.on("collect", async (m) => {
                 m.reply({ content: `**Você selecionou: __${radioStations.radioStationsName[m.values[0] - 1]}__**`, ephemeral: true })
                 switch (m.values[0]) {
