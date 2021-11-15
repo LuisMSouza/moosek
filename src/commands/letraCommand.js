@@ -29,7 +29,7 @@ module.exports = {
         }
         const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         const serverQueue = client.queue.get(message.guild.id);
-        let main_entry = args.join(" ") || query
+        let main_entry = query || args.join(" ")
         let msge = await message.channel.send(`${emoji}`)
 
         if (!main_entry) {
