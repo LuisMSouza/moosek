@@ -172,15 +172,15 @@ module.exports = {
                         embed: {
                             author: "Tocando agora:",
                             color: "#2592b0",
-                            title: `${x.items[0].title}`,
+                            title: `${x.all[0].title}`,
                             thumbnail: {
-                                "url": `${x.items[0].bestThumbnail.url}`,
+                                "url": `${x.all[0].thumbnail}`,
                             },
-                            url: `${x.items[0].url}`,
+                            url: `${x.all[0].url}`,
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```fix\n" + `${x.items[0].isLive ? "🔴 Live" : x.items[0].duration}` + "\n```",
+                                    "value": "```fix\n" + `${x.all[0].type === 'live' ? true : false ? "🔴 Live" : x.all[0].duration.timestamp}` + "\n```",
                                     "inline": true
                                 },
                                 {
