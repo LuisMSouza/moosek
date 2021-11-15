@@ -179,7 +179,7 @@ module.exports = {
                 const radioListenConstruct = {
                     playing: true,
                     channel: msg.member.voice.channel,
-                    author: msg.author.tag
+                    author: msg.member.user.tag
                 }
                 bot.radio.set(msg.guild.id, radioListenConstruct)
                 var connection = await joinVoiceChannel({
