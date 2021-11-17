@@ -8,6 +8,11 @@ const wait = require('util').promisify(setTimeout);
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
+    const ePlay = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3634002");
+    const ePause = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635043");
+    const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635063");
+    const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635051");
+    const eStop = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635035");
     const serverQueue = message.client.queue.get(message.guild.id);
     const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6181_check");
     if (!song) {
@@ -60,33 +65,33 @@ module.exports.play = async (client, message, song) => {
 
         const button = new MessageButton()
             .setCustomId('pause')
-            .setEmoji("⏸️")
+            .setEmoji(ePause)
             .setStyle('SECONDARY')
         const button2 = new MessageButton()
             .setCustomId('pause_2')
-            .setEmoji("⏸️")
+            .setEmoji(ePause)
             .setStyle('SECONDARY')
             .setDisabled(true)
         const button3 = new MessageButton()
             .setCustomId('play')
-            .setEmoji("▶️")
+            .setEmoji(ePlay)
             .setStyle('SECONDARY')
         const button4 = new MessageButton()
             .setCustomId('play_2')
-            .setEmoji("▶️")
+            .setEmoji(ePlay)
             .setStyle('SECONDARY')
             .setDisabled(true)
         const button5 = new MessageButton()
             .setCustomId('backward')
-            .setEmoji("⏮️")
+            .setEmoji(eBack)
             .setStyle('SECONDARY')
         const button6 = new MessageButton()
             .setCustomId('forward')
-            .setEmoji("⏭️")
+            .setEmoji(eNext)
             .setStyle('SECONDARY')
         const button7 = new MessageButton()
             .setCustomId('stop')
-            .setEmoji("⏹️")
+            .setEmoji(eStop)
             .setStyle('SECONDARY')
 
         const row2 = new MessageActionRow()
