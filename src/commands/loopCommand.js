@@ -40,7 +40,7 @@ module.exports = {
             serverQueue.looping = !serverQueue.looping;
             return message.reply({
                 embeds: [{
-                    color: "#2592b0",
+                    color: "#0184f8",
                     description: `🔁 Loop da fila de músicas ${serverQueue.looping ? `**Habilitado**` : `**Desabilitado**`}`
                 }]
             });

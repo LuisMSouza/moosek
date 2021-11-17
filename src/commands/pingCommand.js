@@ -14,7 +14,7 @@ module.exports = {
         message.reply(({
             embeds: [
                 {
-                    color: "#2592b0",
+                    color: "#0184f8",
                     description: `**${ping} ms**`
                 }
             ]

@@ -52,7 +52,7 @@ module.exports = {
             message.reply({
                 embeds: [
                     {
-                        color: "#2592b0",
+                        color: "#0184f8",
                         description: `⏭ \`${(args[0] || query) - 1}\` músicas puladas por ${message.author}`
                     }
                 ]

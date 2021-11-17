@@ -24,7 +24,7 @@ module.exports = {
             const emb = new MessageEmbed()
                 .setTitle(`${message.guild.name} | Configuração Moosek`)
                 .setThumbnail(message.guild.iconURL())
-                .setColor("#2592b0")
+                .setColor("#0184f8")
                 .addField(`> Prefixo`, `Prefixo atual do servidor: ` + "`" + `${pref}` + "`", true)
                 .addField("> Como alterar?", `Basta digitar ` + "`" + `${pref}config prefix` + "` ou clicar no botão abaixo")
                 .setFooter(client.user.username, client.user.displayAvatarURL())
@@ -54,7 +54,7 @@ module.exports = {
                             await guildData.findOneAndUpdate({ guildID: message.guild.id }, { $set: { guildPrefix: collected.first().content.toLowerCase() } }, { new: true });
                             const embed2 = new MessageEmbed()
                                 .setDescription("Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`")
-                                .setColor("#2592b0")
+                                .setColor("#0184f8")
                             message.channel.send({ embeds: [embed2] });
 
                         }).catch(collected => message.channel.send("Tempo de resposta esgotado") && console.log(collected))
@@ -78,7 +78,7 @@ module.exports = {
                         msg.delete(msg);
                         let embdv = new MessageEmbed()
                             .setColor("Prefixo alterado para: `" + `${collected.first().content.toLowerCase()}` + "`")
-                            .setDescription("#2592b0")
+                            .setDescription("#0184f8")
                         message.channel.send({
                             embeds: [
                                 embdv

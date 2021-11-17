@@ -23,7 +23,7 @@ module.exports = {
                 await message.reply({
                     embeds: [
                         {
-                            color: "#2592b0",
+                            color: "#0184f8",
                             description: "```\nBot reiniciado!\n```"
                         }
                     ]

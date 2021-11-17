@@ -31,7 +31,7 @@ module.exports = {
         })
         let embed = new MessageEmbed()
             .setTitle(`Comandos disponíveis`)
-            .setColor("#2592b0")
+            .setColor("#0184f8")
             .setDescription(`Para mais informações sobre um comando -> **${process.env.PREFIX_KEY}help [commando]**\n\n${cmds}`)
 
         if (args[0] || query) {
@@ -42,7 +42,7 @@ module.exports = {
 
             let embedCommand = new MessageEmbed()
                 .setTitle(command.name)
-                .setColor("#2592b0")
+                .setColor("#0184f8")
                 .setDescription(`
             **Descrição:** ${command.description}
             **Aliases:** ${command.aliases}
