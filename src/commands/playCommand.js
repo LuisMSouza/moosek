@@ -92,12 +92,12 @@ module.exports = {
                         fields: [
                             {
                                 name: "> __Pedido por:__",
-                                value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                value: "```ini\n" + `${message.member.user.tag}` + "\n```",
                                 inline: true
                             },
                             {
                                 name: "> __Total de músicas:__",
-                                value: "```fix\n" + `${videos.length}` + "\n```",
+                                value: "```ini\n" + `${videos.length}` + "\n```",
                                 inline: true
                             }
                         ]
@@ -123,12 +123,12 @@ module.exports = {
                             fields: [
                                 {
                                     name: "> __Pedido por:__",
-                                    value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                    value: "```ini\n" + `${message.member.user.tag}` + "\n```",
                                     inline: true
                                 },
                                 {
                                     name: "> __Total de músicas:__",
-                                    value: "```fix\n" + `${videos.length}` + "\n```",
+                                    value: "```ini\n" + `${videos.length}` + "\n```",
                                     inline: true
                                 }
                             ]
@@ -139,7 +139,7 @@ module.exports = {
                     channelMain.send({
                         embed: {
                             title: "Erro na source",
-                            description: "*Detalhes do erro:*\n```fix\n" + `${error}` + "\n```"
+                            description: "*Detalhes do erro:*\n```ini\n" + `${error}` + "\n```"
                         }
                     });
                 }
@@ -179,17 +179,17 @@ module.exports = {
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationFormatted}` + "\n```",
+                                    "value": "```ini\n" + `${x[0].live ? "🔴 Live" : x[0].durationFormatted}` + "\n```",
                                     "inline": true
                                 },
                                 {
                                     "name": "> __Canal:__",
-                                    "value": "```fix\n" + `${voiceChannel.name}` + "\n```",
+                                    "value": "```ini\n" + `${voiceChannel.name}` + "\n```",
                                     "inline": true
                                 },
                                 {
                                     "name": "> __Pedido por:___",
-                                    "value": "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                    "value": "```ini\n" + `${message.member.user.tag}` + "\n```",
                                     "inline": true
                                 },
                             ]
@@ -209,12 +209,12 @@ module.exports = {
                                     fields: [
                                         {
                                             name: "> __Duração:__",
-                                            value: "```fix\n" + `${song.duration}` + "\n```",
+                                            value: "```ini\n" + `${song.duration}` + "\n```",
                                             inline: true
                                         },
                                         {
                                             name: "> __Pedido por:__",
-                                            value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                            value: "```ini\n" + `${message.member.user.tag}` + "\n```",
                                             inline: true
                                         }
                                     ]
@@ -232,12 +232,12 @@ module.exports = {
                                     fields: [
                                         {
                                             name: "> __Duração:__",
-                                            value: "```fix\n" + `${song.duration}` + "\n```",
+                                            value: "```ini\n" + `${song.duration}` + "\n```",
                                             inline: true
                                         },
                                         {
                                             name: "> __Pedido por:__",
-                                            value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                            value: "```ini\n" + `${message.member.user.tag}` + "\n```",
                                             inline: true
                                         }
                                     ]
@@ -269,12 +269,12 @@ module.exports = {
                                 fields: [
                                     {
                                         name: "> __Duração:__",
-                                        value: "```fix\n" + `${song.duration}` + "\n```",
+                                        value: "```ini\n" + `${song.duration}` + "\n```",
                                         inline: true
                                     },
                                     {
                                         name: "> __Pedido por:__",
-                                        value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                        value: "```ini\n" + `${message.member.user.tag}` + "\n```",
                                         inline: true
                                     }
                                 ]
@@ -307,7 +307,7 @@ module.exports = {
                 channelMain.send({
                     embeds: [{
                         title: "Erro na source",
-                        description: "*Detalhes do erro:*\n```fix\n" + `${err}` + "\n```"
+                        description: "*Detalhes do erro:*\n```ini\n" + `${err}` + "\n```"
                     }]
                 });
                 return;
