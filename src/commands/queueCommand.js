@@ -12,6 +12,8 @@ module.exports = {
     aliases: ['queue', 'q', 'f', 'lista'],
 
     async execute(client, message, args) {
+        const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "892535");
+        const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "892519");
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
@@ -22,19 +24,19 @@ module.exports = {
         let bt1 = new MessageButton()
             .setStyle("SUCCESS")
             .setCustomId("queue_next")
-            .setEmoji("➡️")
+            .setEmoji(eNext)
         let bt1b = new MessageButton()
             .setStyle("SUCCESS")
             .setCustomId("queue_next")
-            .setEmoji("➡️")
+            .setEmoji(eNext)
         let bt2 = new MessageButton()
             .setStyle("SUCCESS")
             .setCustomId("queue_prev")
-            .setEmoji("⬅️")
+            .setEmoji(eBack)
         let bt2b = new MessageButton()
             .setStyle("SUCCESS")
             .setCustomId("queue_prev")
-            .setEmoji("⬅️")
+            .setEmoji(eBack)
         let bt3 = new MessageButton()
             .setStyle("SECONDARY")
             .setDisabled()

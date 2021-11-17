@@ -14,7 +14,6 @@ module.exports.play = async (client, message, song) => {
     const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635051");
     const eStop = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635035");
     const serverQueue = message.client.queue.get(message.guild.id);
-    const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6181_check");
     if (!song) {
         await message.client.queue.delete(message.guild.id);
         return serverQueue.connection.disconnect();
