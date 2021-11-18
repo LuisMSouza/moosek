@@ -268,7 +268,7 @@ module.exports.play = async (client, message, song) => {
                                 await message.guild.me.voice.disconnect();
                                 await message.client.queue.delete(message.guild.id);
                                 return b.update({ embeds: [song.embed], components: [] });
-                            } else if (serverQueue.length > 1) {
+                            } else if (serverQueue.songs.length > 1) {
                                 serverQueue.prevSongs = [];
                                 await serverQueue.prevSongs.push(serverQueue.songs[0]);
                                 if (serverQueue.looping) {
