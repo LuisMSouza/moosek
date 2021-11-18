@@ -101,7 +101,6 @@ module.exports.play = async (client, message, song) => {
         collector.on("collect", async (b) => {
             var membReact = message.guild.members.cache.get(b.user.id);
             var idBot = message.guild.members.cache.get(client.user.id);
-            await b.update({});
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
@@ -273,8 +272,8 @@ module.exports.play = async (client, message, song) => {
                                 }
                                 await serverQueue.songs.shift();
                                 await b.update({ embeds: [song.embed], components: [] });
+                                await collector.stop();
                                 this.play(client, message, serverQueue.songs[0]);
-                                collector.stop();
                                 return;
                             }
                         } catch (e) {
