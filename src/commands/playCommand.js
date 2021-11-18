@@ -33,6 +33,7 @@ module.exports = {
         if (message.options) {
             query = message.options.get('music') ? message.options.get('music').value : args[0];
         }
+        const eSearch = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635119");
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const searchString = query || args.join(" ");
@@ -68,7 +69,7 @@ module.exports = {
             const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
             const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
             const cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
-            if (message.options) message.defer({});
+            if (message.options) message.reply({ content: `${eSearch} Procurando Playlist...` });
             await sptfHandle.handleSpotifyMusic(client, searchString, cath, message, voiceChannel);
             return;
         }
