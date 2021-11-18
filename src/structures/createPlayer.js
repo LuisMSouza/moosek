@@ -280,8 +280,9 @@ module.exports.play = async (client, message, song) => {
                                     return b.update({ embeds: [song.embed], components: [] });
                                 }
                                 await serverQueue.songs.shift();
+                                await b.update({ embeds: [song.embed], components: [] });
                                 this.play(client, message, serverQueue.songs[0]);
-                                return await b.update({ embeds: [song.embed], components: [] });
+                                return;
                             }
                         } catch (e) {
                             console.log(e);
