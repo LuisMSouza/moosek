@@ -287,7 +287,7 @@ module.exports.play = async (client, message, song) => {
                             console.log(e);
                             b.update({});
                             await serverQueue.songs.shift();
-                            await module.exports.play(client, message, serverQueue.songs[0]);
+                            await this.play(client, message, serverQueue.songs[0]);
                             return sendError("Erro ao reagir :(", serverQueue.textChannel);
                         }
                     }
