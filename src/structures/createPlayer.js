@@ -1,10 +1,7 @@
-const { createAudioPlayer, createAudioResource, entersState, StreamType, VoiceConnectionStatus, AudioPlayerStatus } = require("@discordjs/voice");
-const { CommandInteraction, Client, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { createAudioPlayer, createAudioResource, entersState, VoiceConnectionStatus, AudioPlayerStatus } = require("@discordjs/voice");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const ytdl2 = require("play-dl");
-const ytdl = require('ytdl-core');
 const sendError = require('../utils/error.js');
-const ms = require("ms");
-const wait = require('util').promisify(setTimeout);
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
@@ -261,18 +258,17 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (!serverQueue) {
-                        sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
+                        sendError("Não há nada tocando no momento.", message.guild);
+                        return;
                     }
                     if (serverQueue) {
                         try {
-                            if (!serverQueue.songLooping) {
-                                if (serverQueue.songs.length <= 1) {
-                                    await b.update({ embeds: [song.embed], components: [] });
-                                    serverQueue.songs.shift();
-                                    await message.guild.me.voice.disconnect();
-                                    await message.client.queue.delete(message.guild.id);
-                                    return;
-                                }
+                            if (serverQueue.songs.length <= 1) {
+                                serverQueue.songs.shift();
+                                await message.guild.me.voice.disconnect();
+                                await message.client.queue.delete(message.guild.id);
+                                return b.update({ embeds: [song.embed], components: [] });
+                            } else if (serverQueue.length > 1) {
                                 serverQueue.prevSongs = [];
                                 await serverQueue.prevSongs.push(serverQueue.songs[0]);
                                 if (serverQueue.looping) {
@@ -280,16 +276,19 @@ module.exports.play = async (client, message, song) => {
                                 }
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
-                                    module.exports.play(client, message, serverQueue.songs[random]);
-                                    return;
+                                    this.play(client, message, serverQueue.songs[random]);
+                                    return b.update({ embeds: [song.embed], components: [] });
                                 }
-                                await b.update({ embeds: [song.embed], components: [] });
                                 await serverQueue.songs.shift();
                                 this.play(client, message, serverQueue.songs[0]);
-                                return;
+                                return await b.update({ embeds: [song.embed], components: [] });
                             }
                         } catch (e) {
                             console.log(e);
+                            b.update({});
+                            await serverQueue.songs.shift();
+                            this.play(client, message, serverQueue.songs[0]);
+                            return sendError("Erro ao reagir :(", serverQueue.textChannel);
                         }
                     }
                     return;
