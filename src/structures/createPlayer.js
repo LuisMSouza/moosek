@@ -126,7 +126,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (!serverQueue.playing) return;
@@ -134,12 +133,12 @@ module.exports.play = async (client, message, song) => {
                         try {
                             serverQueue.playing = false;
                             serverQueue.audioPlayer.pause();
-                            await b.update({ embeds: [serverQueue.songs[0].embed], components: [row2] });
+                            await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [row2] });
                         } catch (e) {
                             console.log(e);
                         }
                     } else {
-                        await b.update({ embeds: [serverQueue.songs[0].embed], components: [] });
+                        await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
                     }
                     return;
                     break;
@@ -154,7 +153,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
@@ -167,7 +165,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (serverQueue.playing) return;
@@ -175,12 +172,12 @@ module.exports.play = async (client, message, song) => {
                         try {
                             serverQueue.playing = true;
                             serverQueue.audioPlayer.unpause();
-                            await b.update({ embeds: [serverQueue.songs[0].embed], components: [row3] });
+                            await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [row3] });
                         } catch (e) {
                             console.log(e);
                         }
                     } else {
-                        await b.update({ embeds: [serverQueue.songs[0].embed], components: [] });
+                        await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
                     }
                     return;
                     break;
@@ -195,7 +192,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
@@ -208,7 +204,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (!serverQueue) {
@@ -219,10 +214,10 @@ module.exports.play = async (client, message, song) => {
                             if (serverQueue.prevSongs[0] == undefined || serverQueue.prevSongs[0] === null || serverQueue.prevSongs[0] === []) {
                                 sendError("Não há nenhuma música anterior.", message.channel);
                             }
-                            await b.update({ embeds: [song.embed], components: [] });
+                            await playingMessage.edit({ embeds: [song.embed], components: [] });
                             await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
-                            await module.exports.play(client, message, serverQueue.songs[0]);
+                            await this.play(client, message, serverQueue.songs[0]);
                         } catch (e) {
                             console.log(e);
                         }
@@ -240,7 +235,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
@@ -253,7 +247,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (!serverQueue) {
@@ -266,7 +259,7 @@ module.exports.play = async (client, message, song) => {
                                 serverQueue.songs.shift();
                                 await message.guild.me.voice.disconnect();
                                 await message.client.queue.delete(message.guild.id);
-                                return b.update({ embeds: [song.embed], components: [] });
+                                return playingMessage.edit({ embeds: [song.embed], components: [] });
                             } else if (serverQueue.songs.length > 1) {
                                 serverQueue.prevSongs = [];
                                 await serverQueue.prevSongs.push(serverQueue.songs[0]);
@@ -276,16 +269,15 @@ module.exports.play = async (client, message, song) => {
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     this.play(client, message, serverQueue.songs[random]);
-                                    return b.update({ embeds: [song.embed], components: [] });
+                                    return playingMessage.edit({ embeds: [song.embed], components: [] });
                                 }
                                 await serverQueue.songs.shift();
-                                await b.update({ embeds: [song.embed], components: [] });
+                                await playingMessage.edit({ embeds: [song.embed], components: [] });
                                 this.play(client, message, serverQueue.songs[0]);
                                 return;
                             }
                         } catch (e) {
                             console.log(e);
-                            b.update({});
                             await serverQueue.songs.shift();
                             await this.play(client, message, serverQueue.songs[0]);
                             return sendError("Erro ao reagir :(", serverQueue.textChannel);
@@ -304,7 +296,6 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
@@ -317,15 +308,14 @@ module.exports.play = async (client, message, song) => {
                         }).then((m) => {
                             setTimeout(() => m.delete(), 2000)
                         });
-                        b.update({});
                         return;
                     }
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
-                        await b.update({ embeds: [serverQueue.songs[0].embed], components: [] });
+                        await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
                     } else {
                         try {
-                            await b.update({ embeds: [serverQueue.songs[0].embed], components: [] });
+                            await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
                             serverQueue.songs = [];
                             message.client.queue.set(message.guild.id, serverQueue);
                             await message.guild.me.voice.disconnect();
