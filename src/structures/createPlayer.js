@@ -134,6 +134,7 @@ module.exports.play = async (client, message, song) => {
                             serverQueue.playing = false;
                             serverQueue.audioPlayer.pause();
                             await playingMessage.edit({ embeds: [serverQueue.songs[0].embed], components: [row2] });
+                            b.update({});
                         } catch (e) {
                             console.log(e);
                         }
