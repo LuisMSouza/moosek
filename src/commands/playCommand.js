@@ -68,7 +68,7 @@ module.exports = {
             const regEx = /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:(album|track|playlist)\/|\?uri=spotify:track:)((\w|-){22})/;
             const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
             const cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
-            if (message.options) message.update({});
+            if (message.options) message.defer({});
             await sptfHandle.handleSpotifyMusic(client, searchString, cath, message, voiceChannel);
             return;
         }
