@@ -5,7 +5,6 @@ const Lyrics = require("yt-lirik");
 const cLyrics = require("genius-lyrics");
 const ytdl = require('ytdl-core');
 const Genius = new cLyrics.Client(process.env.GENIUS_API_KEY);
-const Client = new Lyrics()
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
