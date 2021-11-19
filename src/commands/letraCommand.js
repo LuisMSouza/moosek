@@ -1,9 +1,9 @@
 /////////////////// IMPORTS ////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const Lyrics = require("genius-lyrics");
 const ytdl = require('ytdl-core');
-const Genius = new Lyrics.Client(process.env.GENIUS_API_KEY);
+const Lyrics = require('song-lyrics-api');
+const search = new Lyrics();
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -36,10 +36,11 @@ module.exports = {
             if (serverQueue) {
                 try {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
-                    await Genius.songs.search(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
-                        const lyrics = r[0].lyrics();
+                    await search.getLyrics(`${search.videoDetails.media.song}`).then(async r => {
+                        if (!r) return sendError("Não foi possível encontrar...", message.channel);
+                        const lyrics = r[0].lyrics.lyrics;
                         const title = r[0].title
-                        const thumb = r[0].thumbnail
+                        const thumb = r[0].thumb
                         const artist = r[0].artist
                         await msge.delete(msge)
                         return generateEmbeds(message, lyrics, title, thumb, artist)
@@ -47,7 +48,7 @@ module.exports = {
                 } catch (e) {
                     await msge.delete(msge)
                     sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
-                    console.log(e);
+                    return console.log(e);
                 }
             } else {
                 await msge.delete(msge)
@@ -55,10 +56,11 @@ module.exports = {
             }
         } else {
             try {
-                await Genius.songs.search(`${main_entry}`).then(async r => {
-                    const lyrics = r[0].lyrics();
+                await search.getLyrics(`${main_entry}`).then(async r => {
+                    if (!r) return sendError("Não foi possível encontrar...", message.channel);
+                    const lyrics = r[0].lyrics.lyrics;
                     const title = r[0].title
-                    const thumb = r[0].thumbnail
+                    const thumb = r[0].thumb
                     const artist = r[0].artist
                     await msge.delete(msge)
                     return generateEmbeds(message, lyrics, title, thumb, artist)
