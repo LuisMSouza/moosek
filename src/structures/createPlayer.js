@@ -214,6 +214,7 @@ module.exports.play = async (client, message, song) => {
                                 sendError("Não há nenhuma música anterior.", message.channel);
                             }
                             await b.update({ embeds: [song.embed], components: [] });
+                            await collector.stop();
                             await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
                             await this.play(client, message, serverQueue.songs[0]);
@@ -331,7 +332,8 @@ module.exports.play = async (client, message, song) => {
         })
         serverQueue.audioPlayer.on('stateChange', async (oldState, newState) => {
             if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
-                await playingMessage.edit({ embeds: [song.embed], components: [] })
+                await playingMessage.edit({ embeds: [song.embed], components: [] });
+                await collector.stop();
                 if (serverQueue.looping) {
                     let lastSong = serverQueue.songs.shift();
                     serverQueue.songs.push(lastSong);
