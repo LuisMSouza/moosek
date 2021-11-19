@@ -36,10 +36,11 @@ module.exports = {
                 try {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url);
                     await lyrics.search(`${search.videoDetails.media.song}`).then(async r => {
-                        await msge.delete(msge)
-                        return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.media.artist)
+                        await generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.media.artist)
+                        return msge.delete(msge);
                     })
                 } catch (e) {
+                    msge.delete(msge);
                     sendError(`Não encontrei resultados...`, message.channel)
                     return console.log(e);
                 }
@@ -51,11 +52,11 @@ module.exports = {
             try {
                 const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
                 await lyrics.search(`${main_entry}`).then(async r => {
-                    await msge.delete(msge)
-                    return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.media.artist)
+                    await generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.media.artist)
+                    return msge.delete(msge);
                 })
             } catch (e) {
-                await msge.delete(msge)
+                msge.delete(msge)
                 sendError(`Não encontrei resultados...`, message.channel)
                 return console.log(e);
             }
