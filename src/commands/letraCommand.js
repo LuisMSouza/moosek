@@ -41,7 +41,7 @@ module.exports = {
                     })
                 } catch (e) {
                     msge.delete(msge);
-                    sendError(`Não encontrei resultados...`, message.channel)
+                    sendError(`Não encontrei resultados.\nTente procurar digitando o nome da música...`, message.channel)
                     return console.log(e);
                 }
             } else {
