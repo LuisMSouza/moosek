@@ -37,7 +37,7 @@ module.exports = {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url);
                     await lyrics.search(`${search.videoDetails.media.song}`).then(async r => {
                         await msge.delete(msge)
-                        return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnail, search.videoDetails.author)
+                        return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.author)
                     })
                 } catch (e) {
                     sendError(`Não encontrei resultados...`, message.channel)
@@ -52,7 +52,7 @@ module.exports = {
                 const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
                 await lyrics.search(`${main_entry}`).then(async r => {
                     await msge.delete(msge)
-                    return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnail, search.videoDetails.author)
+                    return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.author)
                 })
             } catch (e) {
                 await msge.delete(msge)
