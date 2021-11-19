@@ -40,7 +40,6 @@ module.exports = {
                         return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnail, search.videoDetails.author)
                     })
                 } catch (e) {
-                    await msge.delete(msge)
                     sendError(`Não encontrei resultados...`, message.channel)
                     return console.log(e);
                 }
