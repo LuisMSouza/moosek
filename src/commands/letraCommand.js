@@ -2,8 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const ytdl = require('ytdl-core');
-const Lyrics = require('song-lyrics-api');
-const search = new Lyrics();
+const lyrics = require("music-lyrics");
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -35,19 +34,14 @@ module.exports = {
         if (!main_entry) {
             if (serverQueue) {
                 try {
-                    const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
-                    await search.getLyrics(`${search.videoDetails.media.song}`).then(async r => {
-                        if (!r) return sendError("Não foi possível encontrar...", message.channel);
-                        const lyrics = r[0].lyrics.lyrics;
-                        const title = r[0].title
-                        const thumb = r[0].thumb
-                        const artist = r[0].artist
+                    const search = await ytdl.getBasicInfo(serverQueue.songs[0].url);
+                    await lyrics.search(`${search.videoDetails.media.song}`).then(async r => {
                         await msge.delete(msge)
-                        return generateEmbeds(message, lyrics, title, thumb, artist)
+                        return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnail, search.videoDetails.author)
                     })
                 } catch (e) {
                     await msge.delete(msge)
-                    sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
+                    sendError(`Não encontrei resultados...`, message.channel)
                     return console.log(e);
                 }
             } else {
@@ -56,19 +50,15 @@ module.exports = {
             }
         } else {
             try {
-                await search.getLyrics(`${main_entry}`).then(async r => {
-                    if (!r) return sendError("Não foi possível encontrar...", message.channel);
-                    const lyrics = r[0].lyrics.lyrics;
-                    const title = r[0].title
-                    const thumb = r[0].thumb
-                    const artist = r[0].artist
+                const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
+                await lyrics.search(`${main_entry}`).then(async r => {
                     await msge.delete(msge)
-                    return generateEmbeds(message, lyrics, title, thumb, artist)
+                    return generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnail, search.videoDetails.author)
                 })
             } catch (e) {
                 await msge.delete(msge)
-                sendError(`Ocorreu um erro :(\n**${e}**`, message.channel)
-                console.log(e);
+                sendError(`Não encontrei resultados...`, message.channel)
+                return console.log(e);
             }
         }
         async function generateEmbeds(message, lyrics, title, thumb, artist) {
