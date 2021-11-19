@@ -1,8 +1,10 @@
 /////////////////// IMPORTS ////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const Lyrics = require("song-lyrics-api");
+const Lyrics = require("yt-lirik");
+const cLyrics = require("genius-lyrics");
 const ytdl = require('ytdl-core');
+const Genius = new cLyrics.Client(process.env.GENIUS_API_KEY);
 const Client = new Lyrics()
 
 ////////////////// SOURCE CODE /////////////////////
@@ -36,11 +38,8 @@ module.exports = {
             if (serverQueue) {
                 try {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
-                    const songs = await Client.getLyrics(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
-                        if (!r[0].lyrics || r[0].lyrics === undefined || r[0].title === 'None') {
-                            await msge.delete(msge);
-                            return sendError("Não foi possível encontrar a letra dessa música :(", message.channel)
-                        }
+                    const songs = await Genius.songs.search(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
+                        return console.log(r)
                         const lyrics = r[0].lyrics.lyrics
                         const title = r[0].title
                         const thumb = r[0].thumb

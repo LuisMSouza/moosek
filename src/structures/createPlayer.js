@@ -317,6 +317,7 @@ module.exports.play = async (client, message, song) => {
                     } else {
                         try {
                             await b.update({ embeds: [serverQueue.songs[0].embed], components: [] });
+                            await collector.stop();
                             serverQueue.songs = [];
                             message.client.queue.set(message.guild.id, serverQueue);
                             await message.guild.me.voice.disconnect();
