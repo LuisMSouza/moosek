@@ -33,7 +33,6 @@
     "spotify-web-api-node": "^5.0.2",
     "tweetnacl": "^1.0.3",
     "youtube-sr": "^4.1.9",
-    "yt-lirik": "^1.0.0",
     "ytdl-core": "^4.9.1",
     "ytpl": "^2.2.3",
     "ytsr": "^3.5.3"

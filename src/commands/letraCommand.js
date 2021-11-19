@@ -1,10 +1,9 @@
 /////////////////// IMPORTS ////////////////////////
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
-const Lyrics = require("yt-lirik");
-const cLyrics = require("genius-lyrics");
+const Lyrics = require("genius-lyrics");
 const ytdl = require('ytdl-core');
-const Genius = new cLyrics.Client(process.env.GENIUS_API_KEY);
+const Genius = new Lyrics.Client(process.env.GENIUS_API_KEY);
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -37,11 +36,10 @@ module.exports = {
             if (serverQueue) {
                 try {
                     const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
-                    const songs = await Genius.songs.search(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
-                        return console.log(r[0])
-                        const lyrics = r[0].lyrics.lyrics
+                    await Genius.songs.search(`${search.videoDetails.media.song} ${search.videoDetails.media.artist}`).then(async r => {
+                        const lyrics = r[0].lyrics();
                         const title = r[0].title
-                        const thumb = r[0].thumb
+                        const thumb = r[0].thumbnail
                         const artist = r[0].artist
                         await msge.delete(msge)
                         return generateEmbeds(message, lyrics, title, thumb, artist)
@@ -57,14 +55,10 @@ module.exports = {
             }
         } else {
             try {
-                const songs = await Client.getLyrics(`${main_entry}`).then(async r => {
-                    if (!r[0].lyrics || r[0].lyrics === undefined || r[0].title === 'None') {
-                        await msge.delete(msge);
-                        return sendError("Não foi possível encontrar a letra dessa música :(", message.channel)
-                    }
-                    const lyrics = r[0].lyrics.lyrics
+                await Genius.songs.search(`${main_entry}`).then(async r => {
+                    const lyrics = r[0].lyrics();
                     const title = r[0].title
-                    const thumb = r[0].thumb
+                    const thumb = r[0].thumbnail
                     const artist = r[0].artist
                     await msge.delete(msge)
                     return generateEmbeds(message, lyrics, title, thumb, artist)
