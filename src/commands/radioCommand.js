@@ -17,7 +17,15 @@ module.exports = {
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);
         if (serverQueue) return sendError("Você deve parar a fila de músicas primeiro.", message.channel)
-        const voiceChannel = message.member.voice.channel;
+        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+            serverQueue.textChannel.send({
+                embeds: [{
+                    color: "RED",
+                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                }]
+            })
+            return;
+        }
         const choice = args[0];
         const radioListen = client.radio.get(message.guild.id);
         if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);

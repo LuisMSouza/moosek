@@ -35,6 +35,15 @@ module.exports = {
 
         const serverQueue = message.client.queue.get(message.guild.id);
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).catch(console.error);
+        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+            serverQueue.textChannel.send({
+                embeds: [{
+                    color: "RED",
+                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                }]
+            })
+            return;
+        }
         if (args[0] > serverQueue.songs.length || query > serverQueue.songs.length)
             return sendError(`A fila tem somente ${serverQueue.songs.length} músicas!`, message.channel).catch(console.error);
 

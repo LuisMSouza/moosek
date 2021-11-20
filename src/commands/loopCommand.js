@@ -12,18 +12,17 @@ module.exports = {
     aliases: ['lp'],
 
     async execute(client, message, args) {
-        var membReact = message.guild.members.cache.get(message.author.id);
         const serverQueue = client.queue.get(message.guild.id);
         if (!message.member.voice.channel) {
             serverQueue.textChannel.send({
                 embeds: [{
                     color: "RED",
-                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                    description: "❌ **Você precisa estar em um canal de voz.**"
                 }]
             })
             return;
         }
-        if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
             serverQueue.textChannel.send({
                 embeds: [{
                     color: "RED",

@@ -32,6 +32,15 @@ module.exports = {
             query1 = message.options.get('position') ? message.options.get('position').value : args[0];
             query2 = message.options.get('new') ? message.options.get('new').value : args[0];
         }
+        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+            serverQueue.textChannel.send({
+                embeds: [{
+                    color: "RED",
+                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                }]
+            })
+            return;
+        }
         const serverQueue = client.queue.get(message.guild.id);
         var oldPosition = args[0] || query1;
         var newPosition = args[1] || query2;

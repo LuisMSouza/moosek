@@ -17,7 +17,7 @@ module.exports = {
             message.reply({
                 embeds: [{
                     color: "RED",
-                    description: "❌ **Você precisa estar em um canal de voz para reagir!**"
+                    description: "❌ **Você precisa estar em um canal de voz.**"
                 }]
             })
             return;

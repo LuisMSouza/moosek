@@ -25,8 +25,16 @@ module.exports = {
             query = message.options.get('position') ? message.options.get('position').value : args[0];
         }
         const serverQueue = client.queue.get(message.guild.id);
-
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));
+        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+            serverQueue.textChannel.send({
+                embeds: [{
+                    color: "RED",
+                    description: "❌ **O bot está sendo utilizado em outro canal!**"
+                }]
+            })
+            return;
+        }
         if (!args[0] && !query) return message.reply({
             embeds: [
                 {
