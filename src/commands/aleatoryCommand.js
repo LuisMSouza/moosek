@@ -12,7 +12,6 @@ module.exports = {
     aliases: ['random', 'rd'],
 
     async execute(client, message, args) {
-        var membReact = message.guild.members.cache.get(message.author.id);
         const serverQueue = client.queue.get(message.guild.id);
         if (!message.member.voice.channel) {
             message.reply({
@@ -23,7 +22,7 @@ module.exports = {
             })
             return;
         }
-        if (serverQueue.voiceChannel.id !== membReact.voice.channel.id) {
+        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
             message.reply({
                 embeds: [{
                     color: "RED",
