@@ -50,7 +50,7 @@ module.exports = {
             }
         } else {
             try {
-                const search = await ytdl.getBasicInfo(serverQueue.songs[0].url)
+                const search = await ytdl.getBasicInfo(`${main_entry}`)
                 await lyrics.search(`${main_entry}`).then(async r => {
                     await generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.media.artist)
                     return msge.delete(msge);
