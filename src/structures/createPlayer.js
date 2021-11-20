@@ -215,7 +215,6 @@ module.exports.play = async (client, message, song) => {
                             }
                             await b.update({ embeds: [song.embed], components: [] });
                             await collector.stop();
-                            await serverQueue.songs.shift()
                             await serverQueue.songs.unshift(serverQueue.prevSongs[0]);
                             await this.play(client, message, serverQueue.songs[0]);
                         } catch (e) {
@@ -259,6 +258,7 @@ module.exports.play = async (client, message, song) => {
                                 serverQueue.songs.shift();
                                 await message.guild.me.voice.disconnect();
                                 await message.client.queue.delete(message.guild.id);
+                                await collector.stop();
                                 return b.update({ embeds: [song.embed], components: [] });
                             } else if (serverQueue.songs.length > 1) {
                                 serverQueue.prevSongs = [];
@@ -268,6 +268,7 @@ module.exports.play = async (client, message, song) => {
                                 }
                                 if (serverQueue.nigthCore) {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                    await collector.stop();
                                     this.play(client, message, serverQueue.songs[random]);
                                     return b.update({ embeds: [song.embed], components: [] });
                                 }
