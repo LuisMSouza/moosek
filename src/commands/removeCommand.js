@@ -27,7 +27,7 @@ module.exports = {
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));
-        if (!args[0] || !query) return message.reply({
+        if (!args[0] && !query) return message.reply({
             embeds: [
                 {
                     description: `**Utilize**: \`${process.env.PREFIX_KEY}remove [número da música na fila]\``,
@@ -35,7 +35,7 @@ module.exports = {
                 }
             ]
         })
-        if (isNaN(query) || isNaN(args[0])) return message.reply({
+        if (isNaN(query) && isNaN(args[0])) return message.reply({
             embeds: [
                 {
                     description: `**Utilize**: \`${process.env.PREFIX_KEY}remove [número da música na fila]\``,
