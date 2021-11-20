@@ -25,7 +25,7 @@ module.exports = {
                         await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                     }
                     await msg.delete(msg);
-                    return message.reply({
+                    return message.channel.send({
                         embeds: [{
                             color: "GREEN",
                             description: `**Playlist adicionada à fila**`,
@@ -67,7 +67,7 @@ module.exports = {
                                             await handlePlaylist.handleVideo(client, track, message, voiceChannel, true);
                                         }
                                         msg.delete(msg);
-                                        return message.reply({
+                                        return message.channel.send({
                                             embeds: [{
                                                 color: "GREEN",
                                                 description: `**Playlist adicionada à fila**`,
@@ -137,7 +137,7 @@ module.exports = {
                         await handleAlbum.handleVideo(client, track, message, voiceChannel, true);
                     }
                     await msg.delete(msg);
-                    return message.reply({
+                    return message.channel.send({
                         embeds: [{
                             color: "GREEN",
                             description: `**Album adicionado à fila**`,
