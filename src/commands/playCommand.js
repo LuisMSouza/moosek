@@ -33,7 +33,6 @@ module.exports = {
         if (message.options) {
             query = message.options.get('music') ? message.options.get('music').value : args[0];
         }
-        const eSearch = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635119");
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
         const searchString = query || args.join(" ");
@@ -62,6 +61,9 @@ module.exports = {
         if (isDeezer) {
             const cth = await url.match(deezerRegex)[7]
             await deezerHandler(client, message, searchString, cth, voiceChannel);
+            if(message.options) {
+                message.reply(`🔎 Aguardando busca Deezer...`)
+            }
             return;
         }
 
@@ -71,7 +73,7 @@ module.exports = {
             const cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
             await sptfHandle.handleSpotifyMusic(client, searchString, cath, message, voiceChannel);
             if(message.options) {
-                message.reply(`${eSearch} Aguardando busca Spotify...`)
+                message.reply(`🔎 Aguardando busca Spotify...`)
             }
             return;
         }
