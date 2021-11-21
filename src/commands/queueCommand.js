@@ -98,10 +98,6 @@ module.exports = {
             }
             return;
         });
-        collector.on('end', async (collected) => {
-            await queueEmbed.delete(queueEmbed).catch(e => console.log(e));
-            return;
-        })
 
         function generateQueueEmbed(message, queue) {
             let embeds = [];
