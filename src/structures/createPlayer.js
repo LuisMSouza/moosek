@@ -267,7 +267,7 @@ module.exports.play = async (client, message, song) => {
                                     await serverQueue.songs.push(serverQueue.songs[0]);
                                 }
                                 if (serverQueue.nigthCore) {
-                                    const random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     await collector.stop();
                                     this.play(client, message, serverQueue.songs[random]);
                                     serverQueue.songs.splice((random), 1)
