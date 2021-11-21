@@ -85,7 +85,6 @@ module.exports = {
                             }
                         } else {
                             serverQueue.songs.push(song);
-                            if (playlist) return;
                             let thing = new MessageEmbed()
                                 .setTitle(`> __Música adicionada à fila__`)
                                 .setColor("GREEN")
