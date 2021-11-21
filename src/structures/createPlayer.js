@@ -49,7 +49,7 @@ module.exports.play = async (client, message, song) => {
             .setThumbnail(serverQueue.songs[0].thumbnail)
             .setURL(serverQueue.songs[0].url)
 
-        if (serverQueue.songs[0].duration === '0:00' || serverQueue.songs[0].liveStream) {
+        if (serverQueue.songs[0].duration = '0:00' || serverQueue.songs[0].liveStream) {
             embedMusic.addField("> __Duração:__", "```ini\n🔴 Live\n```", true);
         } else {
             embedMusic.addField("> __Duração:__", "```ini\n" + `${serverQueue.songs[0].duration}` + "\n```", true)
