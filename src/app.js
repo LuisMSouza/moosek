@@ -17,8 +17,8 @@ client.queue = new Collection();
 client.timeout = new Collection();
 client.db = require('./utils/db.js');
 client.radio = new Map();
-client.player = new AudioPlayer()
-client.slashCommands = new Collection()
+client.player = new AudioPlayer();;
+client.slashCommands = new Collection();
 
 const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {

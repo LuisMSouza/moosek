@@ -270,6 +270,7 @@ module.exports.play = async (client, message, song) => {
                                     const random = Math.floor(Math.random() * (serverQueue.songs.length));
                                     await collector.stop();
                                     this.play(client, message, serverQueue.songs[random]);
+                                    serverQueue.songs.delete(random)
                                     return b.update({ embeds: [song.embed], components: [] });
                                 }
                                 await serverQueue.songs.shift();
