@@ -55,7 +55,7 @@ module.exports = {
         const queueEmbed = await message.reply({ components: [buttonRow], embeds: [embeds[currentPage]] });
 
         const filter = (button) => button.user.id != client.user.id;
-        const collector = queueEmbed.channel.createMessageComponentCollector({ filter, time: 300000 });
+        const collector = serverQueue.textChannel.createMessageComponentCollector({ filter, time: 300000 });
 
         collector.on('collect', async (b) => {
             try {
