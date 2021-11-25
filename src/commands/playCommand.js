@@ -50,18 +50,29 @@ module.exports = {
         const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/
         const sptfRegex = /((open|play)\.spotify\.com\/)/;
         const deezerRegex = /^(http(s)?:\/\/)?(www\.)?deezer\.(com|page\.link)\/(.{2}\/)?(playlist\/|track\/|album\/|artist\/)?(.[0-9]+)?(.+)?$/
+        const soundCloudRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/
+
+        var isSoundCloud = soundCloudRegex.test(url);
         var isDeezer = deezerRegex.test(url);
-        isPlaylist = playlistRegex.test(url);
+        var isPlaylist = playlistRegex.test(url);
         var isSptf = sptfRegex.test(url);
 
         const radioListen = client.radio.get(message.guild.id);
         const serverQueue = message.client.queue.get(message.guild.id);
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
+        if (isSoundCloud) {
+            if (url.includes("/set/")) {
+
+            } else {
+
+            }
+        }
+
         if (isDeezer) {
             const cth = await url.match(deezerRegex)[7]
             await deezerHandler(client, message, searchString, cth, voiceChannel);
-            if(message.options) {
+            if (message.options) {
                 message.reply(`🔎 Aguardando busca Deezer...`)
             }
             return;
@@ -72,7 +83,7 @@ module.exports = {
             const spotifySymbolRegex = /spotify:(?:(album|track|playlist):|\?uri=spotify:track:)((\w|-){22})/;
             const cath = url.match(regEx) || url.match(spotifySymbolRegex) || [];
             await sptfHandle.handleSpotifyMusic(client, searchString, cath, message, voiceChannel);
-            if(message.options) {
+            if (message.options) {
                 message.reply(`🔎 Aguardando busca Spotify...`)
             }
             return;
