@@ -14,6 +14,7 @@ exports.radioStations = [
     "https://n4ab-e2.revma.ihrhls.com/zc1469?rj-ttl=5&rj-tok=AAABeSrMX9YA_jjDxy7FK2Yqtw",
     "https://s8.yesstreaming.net/proxy/goodnews?mp=/stream64",
     "https://n35b-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABfM93jUEA7LrbCUxtGwlNPQ",
+    "https://radiodigitalia-musicaitaliana.stream.laut.fm/radiodigitalia-musicaitaliana?ref=radiode&t302=2021-11-26_03-09-38&uuid=a22839fb-80a0-45e6-9cb3-efbefad8b5f0"
 ]
 exports.radioStationsName = [
     "Standard-Radio",
@@ -30,5 +31,6 @@ exports.radioStationsName = [
     "Classic Rock Florida",
     "Rádio Z100 - 100.3 FM",
     "89.7 KSGN",
-    "WNCI 97.9"
+    "WNCI 97.9",
+    "Radio Music Italia"
 ]
