@@ -16,8 +16,9 @@ module.exports = {
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);
+        const Bot = message.guild.members.cache.get(client.user.id)
         if (serverQueue) return sendError("Você deve parar a fila de músicas primeiro.", message.channel)
-        if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+        if (Bot.voice.channel.id !== message.member.voice.channel.id) {
             serverQueue.textChannel.send({
                 embeds: [{
                     color: "RED",
