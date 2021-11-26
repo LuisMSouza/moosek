@@ -217,7 +217,7 @@ module.exports = {
                 });
                 let stream_m3u8;
                 if (choice === null) {
-                    stream_m3u8 = await m3u8stream(fs.readFile('../utils/radioFiles/index_1_a-b.m3u8'))
+                    stream_m3u8 = await m3u8stream(fs.readFile('./src/utils/radioFiles/index_1_a-b.m3u8'))
                         .pipe(fs.createWriteStream('videofile.mp4'));
 
                 }
