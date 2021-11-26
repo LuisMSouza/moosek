@@ -1,0 +1,11 @@
+#EXTM3U
+#EXT-X-TARGETDURATION:10
+#EXT-X-ALLOW-CACHE:YES
+#EXT-X-VERSION:3
+#EXT-X-MEDIA-SEQUENCE:163789040
+#EXTINF:10.000,
+https://radioitaliasmi-lh.akamaihd.net/i/radioitaliasmi_1@329643/segment163789040_1_a-b.ts?sd=10&rebase=on
+#EXTINF:10.000,
+https://radioitaliasmi-lh.akamaihd.net/i/radioitaliasmi_1@329643/segment163789041_1_a-b.ts?sd=10&rebase=on
+#EXTINF:10.000,
+https://radioitaliasmi-lh.akamaihd.net/i/radioitaliasmi_1@329643/segment163789042_1_a-b.ts?sd=10&rebase=on

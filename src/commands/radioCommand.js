@@ -4,6 +4,8 @@ const Discord = require('discord.js');
 const radioStations = require('../utils/radioStations.js');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu } = require('discord.js');
 const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
+const fs = require('fs');
+const m3u8stream = require('m3u8stream');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -182,7 +184,12 @@ module.exports = {
                         await msgEmb.delete(msgEmb);
                         await initRadio(message, client, args, radioStations.radioStations[14], radioStations.radioStationsName[14])
                         break
+                    case "15":
+                        await msgEmb.delete(msgEmb);
+                        await initRadio(message, client, args, null, "Radio Italia Music")
+                        break
                 }
+
             })
         }
         async function initRadio(msg, bot, args, choice, choiceName) {
@@ -198,9 +205,15 @@ module.exports = {
                     guildId: message.guild.id,
                     adapterCreator: message.channel.guild.voiceAdapterCreator,
                 });
+                var stream_m3u8;
+                if (choice === null) {
+                    stream_m3u8 = await m3u8stream(fs.readFileSync('../utils/radioFiles/index_1_a-b.m3u8'))
+                        .pipe(fs.createWriteStream('videofile.mp4'));
+
+                }
                 const player = createAudioPlayer();
                 await connection.subscribe(player);
-                const resource = createAudioResource(choice);
+                const resource = createAudioResource(choice === null ? stream_m3u8 : choice);
                 player.play(resource);
 
                 const embedRadio = new Discord.MessageEmbed()
