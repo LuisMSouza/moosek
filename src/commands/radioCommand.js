@@ -107,9 +107,19 @@ module.exports = {
                                 value: '13',
                             },
                             {
-                                label: 'WNCI 97.9',
+                                label: '89.7 KSGN',
                                 description: '🇺🇸',
                                 value: '14',
+                            },
+                            {
+                                label: 'WNCI 97.9',
+                                description: '🇺🇸',
+                                value: '15',
+                            },
+                            {
+                                label: 'Radio Music Italia',
+                                description: '🇮🇹',
+                                value: '16',
                             },
                         ])
                 )
@@ -184,7 +194,7 @@ module.exports = {
                         await msgEmb.delete(msgEmb);
                         await initRadio(message, client, args, radioStations.radioStations[14], radioStations.radioStationsName[14])
                         break
-                    case "15":
+                    case "16":
                         await msgEmb.delete(msgEmb);
                         await initRadio(message, client, args, null, "Radio Italia Music")
                         break
@@ -205,7 +215,7 @@ module.exports = {
                     guildId: message.guild.id,
                     adapterCreator: message.channel.guild.voiceAdapterCreator,
                 });
-                var stream_m3u8;
+                let stream_m3u8;
                 if (choice === null) {
                     stream_m3u8 = await m3u8stream(fs.readFileSync('../utils/radioFiles/index_1_a-b.m3u8'))
                         .pipe(fs.createWriteStream('videofile.mp4'));
