@@ -16,14 +16,17 @@ module.exports = {
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);
-        if (serverQueue) return sendError("Você deve parar a fila de músicas primeiro.", message.channel)
-        if (message.guild.members.cache.get(client.user.id).voice.channel.id !== message.member.voice.channel.id) {
-            serverQueue.textChannel.send({
-                embeds: [{
-                    color: "RED",
-                    description: "❌ **O bot está sendo utilizado em outro canal!**"
-                }]
-            })
+        if (serverQueue) {
+            if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                serverQueue.textChannel.send({
+                    embeds: [{
+                        color: "RED",
+                        description: "❌ **O bot está sendo utilizado em outro canal!**"
+                    }]
+                })
+                return;
+            }
+            sendError("Você deve parar a fila de músicas primeiro.", message.channel);;
             return;
         }
         const choice = args[0];
