@@ -1,6 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
 const ytdl = require('ytdl-core');
+const dl = require('play-dl');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
 const YouTube = require("youtube-sr").default;
@@ -9,7 +10,7 @@ const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
 const { joinVoiceChannel } = require("@discordjs/voice");
-const guild_main = process.env.SERVER_MAIN
+const guild_main = process.env.SERVER_MAIN;
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -62,9 +63,17 @@ module.exports = {
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isSoundCloud) {
-            if (url.includes("/set/")) {
-
-            } else {
+            try {
+                if (url.includes("/sets/")) {
+                    dl.SoundCloudPlaylist(url).then(res => {
+                        console.log(res);
+                    });
+                } else {
+                    dl.SoundCloudTrack(url).then(res => {
+                        console.log(res);
+                    });
+                }
+            } catch (e) {
 
             }
         }
