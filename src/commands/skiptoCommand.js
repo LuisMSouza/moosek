@@ -64,12 +64,11 @@ module.exports = {
                 embeds: [
                     {
                         color: "YELLOW",
-                        description: `⏭ \`${(args[0] || query) - 1}\` músicas puladas por ${message.author}`
+                        description: `⏭ \`${(args[0] || query) - 1}\` músicas puladas por ${message.member.user.username}`
                     }
                 ]
 
             }).catch(console.error);
-            message.react("✅")
         } catch (error) {
             await message.guild.me.voice.disconnect();
             message.client.queue.delete(message.guild.id);
