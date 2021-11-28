@@ -22,7 +22,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("ANÚNCIO DOS DESENVOLVEDORES")
             .setDescription(`${msg}`)
-            .setColor("#0184f8")
+            .setColor("YELLOW")
             .setFooter("THE DRAGONS COMMUNITY TEAM • ALL RIGHTS RESERVED", "https://i.imgur.com/l59rO0X.gif")
 
         const button = new MessageButton()

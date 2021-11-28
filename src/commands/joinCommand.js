@@ -29,7 +29,7 @@ module.exports = {
                 adapterCreator: message.channel.guild.voiceAdapterCreator,
             });
             let emb = new MessageEmbed()
-                .setColor("#0184f8")
+                .setColor("YELLOW")
                 .setDescription(`Me juntei ao canal **${message.member.voice.channel.name}**`)
 
             message.reply({

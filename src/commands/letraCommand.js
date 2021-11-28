@@ -67,13 +67,13 @@ module.exports = {
             let embed = new MessageEmbed()
                 .setTitle(`${title} - ${artist}`)
                 .setThumbnail(`${thumb}`)
-                .setColor("#0184f8")
+                .setColor("YELLOW")
             let embed2 = new MessageEmbed()
-                .setColor("#0184f8")
+                .setColor("YELLOW")
             let embed3 = new MessageEmbed()
-                .setColor("#0184f8")
+                .setColor("YELLOW")
             let embed4 = new MessageEmbed()
-                .setColor("#0184f8")
+                .setColor("YELLOW")
 
             embed.setDescription(lyrics);
             embed2.setDescription(lyrics);

@@ -37,7 +37,7 @@ module.exports = {
             //if (serverQueue.looping) return sendError("Desative o Loop da fila de músicas primeiro ;)", message.channel);
             return message.reply({
                 embeds: [{
-                    color: "#0184f8",
+                    color: "YELLOW",
                     description: `🔀 Modo aleatório ${serverQueue.nigthCore ? `**Habilitado**` : `**Desabilitado**`}`
                 }]
             });

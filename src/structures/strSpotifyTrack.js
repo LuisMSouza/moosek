@@ -20,7 +20,7 @@ module.exports = {
                     author: message.member.user.tag,
                     embed: {
                         author: "Tocando agora:",
-                        color: "#2592b0",
+                        color: "YELLOW",
                         title: `${track.name} - ${track.artists[0].name}`,
                         thumbnail: {
                             "url": `${x[0].thumbnail.url}`,
@@ -81,7 +81,7 @@ module.exports = {
                     serverQueue.songs.push(song);
                     let thing = new MessageEmbed()
                         .setTitle(`> __Música adicionada à fila__`)
-                        .setColor("GREEN")
+                        .setColor("YELLOW")
                         .setThumbnail(song.img)
                         .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
                         .addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)

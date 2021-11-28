@@ -18,7 +18,7 @@ module.exports = {
             embeds: [
                 {
                     title: "Tocando agora:",
-                    color: "#0184f8",
+                    color: "YELLOW",
                     description: `**${serverQueue.songs[0].title}**`
                 }
             ]

@@ -37,7 +37,7 @@ module.exports = {
             serverQueue.songLooping = !serverQueue.songLooping
             return message.reply({
                 embeds: [{
-                    color: "#0184f8",
+                    color: "YELLOW",
                     description: `🔂 Loop para \`${serverQueue.songs[0].title}\` ${serverQueue.songLooping ? `**Habilitado**` : `**Desabilitado**`}`
                 }]
             });

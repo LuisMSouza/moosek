@@ -26,7 +26,7 @@ module.exports = {
                             author: message.member.user.tag,
                             embed: {
                                 author: "Tocando agora:",
-                                color: "#2592b0",
+                                color: "YELLOW",
                                 title: `${res.title} - ${res.artist.name}`,
                                 thumbnail: {
                                     "url": `${x[0].thumbnail.url}`,
@@ -87,7 +87,7 @@ module.exports = {
                             serverQueue.songs.push(song);
                             let thing = new MessageEmbed()
                                 .setTitle(`> __Música adicionada à fila__`)
-                                .setColor("GREEN")
+                                .setColor("YELLOW")
                                 .setThumbnail(song.img)
                                 .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
                                 .addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)
@@ -111,7 +111,7 @@ module.exports = {
                     await msg.delete(msg);
                     return message.reply({
                         embeds: [{
-                            color: "GREEN",
+                            color: "YELLOW",
                             description: `**Playlist adicionada à fila**`,
                             fields: [
                                 {
@@ -142,7 +142,7 @@ module.exports = {
                     await msg.delete(msg);
                     return message.reply({
                         embeds: [{
-                            color: "GREEN",
+                            color: "YELLOW",
                             description: `**Album adicionada à fila**`,
                             fields: [
                                 {

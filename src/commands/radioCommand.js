@@ -126,7 +126,7 @@ module.exports = {
             const msgEmb = await message.channel.send({
                 components: [row], embeds: [{
                     description: "> **Faça a escolha da rádio abaixo:**",
-                    color: "#0184f8"
+                    color: "YELLOW"
                 }]
             });
             const filter = (i) => i.user.id === (message.member.user.id || message.user.id);
@@ -222,7 +222,7 @@ module.exports = {
 
                 const embedRadio = new Discord.MessageEmbed()
                     .setAuthor("Tocando agora:")
-                    .setColor("#0184f8")
+                    .setColor("YELLOW")
                     .setTitle(choiceName)
                     .addField("> __Canal:__", "```fix\n" + `${msg.member.voice.channel.name}` + "\n```", true)
                     .addField("> __Pedido por:___", "```fix\n" + `${radioListenConstruct.author}` + "\n```", true)
@@ -299,7 +299,7 @@ module.exports = {
                         if (!msg.member.voice.channel) {
                             b.reply({
                                 embeds: [{
-                                    color: "#0184f8",
+                                    color: "YELLOW",
                                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                 }], ephemeral: true
                             });
@@ -309,7 +309,7 @@ module.exports = {
                         if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
                             b.reply({
                                 embeds: [{
-                                    color: "#0184f8",
+                                    color: "YELLOW",
                                     description: "❌ **O bot está sendo utilizado em outro canal!**"
                                 }], ephemeral: true
                             });
@@ -329,7 +329,7 @@ module.exports = {
                         if (!msg.member.voice.channel) {
                             b.reply({
                                 embeds: [{
-                                    color: "#0184f8",
+                                    color: "YELLOW",
                                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                 }], ephemeral: true
                             });
@@ -339,7 +339,7 @@ module.exports = {
                         if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
                             b.reply({
                                 embeds: [{
-                                    color: "#0184f8",
+                                    color: "YELLOW",
                                     description: "❌ **O bot está sendo utilizado em outro canal!**"
                                 }], ephemeral: true
                             });
@@ -358,7 +358,7 @@ module.exports = {
                         if (!msg.member.voice.channel) {
                             b.reply({
                                 embeds: [{
-                                    color: "#0184f8",
+                                    color: "YELLOW",
                                     description: "❌ **Você precisa estar em um canal de voz para reagir!**"
                                 }], ephemeral: true
                             });
@@ -368,7 +368,7 @@ module.exports = {
                         if (radioListenConstruct.channel.id !== msg.member.voice.channel.id) {
                             b.reply({
                                 embeds: [{
-                                    color: "#0184f8",
+                                    color: "YELLOW",
                                     description: "❌ **O bot está sendo utilizado em outro canal!**"
                                 }], ephemeral: true
                             });

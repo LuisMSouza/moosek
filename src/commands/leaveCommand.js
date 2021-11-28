@@ -24,7 +24,7 @@ module.exports = {
         try {
             await message.guild.me.voice.disconnect();
             let emb = new MessageEmbed()
-                .setColor("#0184f8")
+                .setColor("YELLOW")
                 .setDescription(`**Saí do canal ;)**`)
                 message.reply({
                 embeds: [emb]

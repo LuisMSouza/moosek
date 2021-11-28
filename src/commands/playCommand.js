@@ -113,17 +113,17 @@ module.exports = {
                 }
                 return message.reply({
                     embeds: [{
-                        color: "GREEN",
+                        color: "YELLOW",
                         description: `**Playlist adicionada à fila**`,
                         fields: [
                             {
                                 name: "> __Pedido por:__",
-                                value: "```ini\n" + `${message.member.user.tag}` + "\n```",
+                                value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                 inline: true
                             },
                             {
                                 name: "> __Total de músicas:__",
-                                value: "```ini\n" + `${videos.length}` + "\n```",
+                                value: "```fix\n" + `${videos.length}` + "\n```",
                                 inline: true
                             }
                         ]
@@ -144,17 +144,17 @@ module.exports = {
                     }
                     return message.reply({
                         embeds: [{
-                            color: "GREEN",
+                            color: "YELLOW",
                             description: `**Playlist adicionada à fila**`,
                             fields: [
                                 {
                                     name: "> __Pedido por:__",
-                                    value: "```ini\n" + `${message.member.user.tag}` + "\n```",
+                                    value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                     inline: true
                                 },
                                 {
                                     name: "> __Total de músicas:__",
-                                    value: "```ini\n" + `${videos.length}` + "\n```",
+                                    value: "```fix\n" + `${videos.length}` + "\n```",
                                     inline: true
                                 }
                             ]
@@ -165,7 +165,7 @@ module.exports = {
                     channelMain.send({
                         embed: {
                             title: "Erro na source",
-                            description: "*Detalhes do erro:*\n```ini\n" + `${error}` + "\n```"
+                            description: "*Detalhes do erro:*\n```fix\n" + `${error}` + "\n```"
                         }
                     });
                 }
@@ -196,7 +196,7 @@ module.exports = {
                         author: message.member.user.tag,
                         embed: {
                             author: "Tocando agora:",
-                            color: "#0184f8",
+                            color: "YELLOW",
                             title: `${x[0].title}`,
                             thumbnail: {
                                 "url": `${x[0].thumbnail.url}`,
@@ -205,17 +205,17 @@ module.exports = {
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```ini\n" + `${x[0].live ? "🔴 Live" : x[0].durationFormatted}` + "\n```",
+                                    "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationFormatted}` + "\n```",
                                     "inline": true
                                 },
                                 {
                                     "name": "> __Canal:__",
-                                    "value": "```ini\n" + `${voiceChannel.name}` + "\n```",
+                                    "value": "```fix\n" + `${voiceChannel.name}` + "\n```",
                                     "inline": true
                                 },
                                 {
                                     "name": "> __Pedido por:___",
-                                    "value": "```ini\n" + `${message.member.user.tag}` + "\n```",
+                                    "value": "```fix\n" + `${message.member.user.tag}` + "\n```",
                                     "inline": true
                                 },
                             ]
@@ -229,18 +229,18 @@ module.exports = {
                             serverQueue.songs.push(song);
                             message.reply({
                                 embeds: [{
-                                    color: "GREEN",
+                                    color: "YELLOW",
                                     title: "Adicionado à fila",
                                     description: `[${song.title}](${song.url}) adicionado à fila`,
                                     fields: [
                                         {
                                             name: "> __Duração:__",
-                                            value: "```ini\n" + `${song.duration}` + "\n```",
+                                            value: "```fix\n" + `${song.duration}` + "\n```",
                                             inline: true
                                         },
                                         {
                                             name: "> __Pedido por:__",
-                                            value: "```ini\n" + `${message.member.user.tag}` + "\n```",
+                                            value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                             inline: true
                                         }
                                     ]
@@ -252,18 +252,18 @@ module.exports = {
                             queueConstruct.songs.push(song);
                             message.reply({
                                 embeds: [{
-                                    color: "GREEN",
+                                    color: "YELLOW",
                                     title: "Adicionado à fila",
                                     description: `[${song.title}](${song.url}) adicionado à fila`,
                                     fields: [
                                         {
                                             name: "> __Duração:__",
-                                            value: "```ini\n" + `${song.duration}` + "\n```",
+                                            value: "```fix\n" + `${song.duration}` + "\n```",
                                             inline: true
                                         },
                                         {
                                             name: "> __Pedido por:__",
-                                            value: "```ini\n" + `${message.member.user.tag}` + "\n```",
+                                            value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                             inline: true
                                         }
                                     ]
@@ -289,18 +289,18 @@ module.exports = {
                         queueConstruct.songs.push(song);
                         message.reply({
                             embeds: [{
-                                color: "GREEN",
+                                color: "YELLOW",
                                 title: "Adicionado à fila",
                                 description: `[${song.title}](${song.url}) adicionado à fila`,
                                 fields: [
                                     {
                                         name: "> __Duração:__",
-                                        value: "```ini\n" + `${song.duration}` + "\n```",
+                                        value: "```fix\n" + `${song.duration}` + "\n```",
                                         inline: true
                                     },
                                     {
                                         name: "> __Pedido por:__",
-                                        value: "```ini\n" + `${message.member.user.tag}` + "\n```",
+                                        value: "```fix\n" + `${message.member.user.tag}` + "\n```",
                                         inline: true
                                     }
                                 ]
@@ -333,7 +333,7 @@ module.exports = {
                 channelMain.send({
                     embeds: [{
                         title: "Erro na source",
-                        description: "*Detalhes do erro:*\n```ini\n" + `${err}` + "\n```"
+                        description: "*Detalhes do erro:*\n```fix\n" + `${err}` + "\n```"
                     }]
                 });
                 return;

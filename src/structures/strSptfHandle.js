@@ -27,7 +27,7 @@ module.exports = {
                     await msg.delete(msg);
                     return message.channel.send({
                         embeds: [{
-                            color: "GREEN",
+                            color: "YELLOW",
                             description: `**Playlist adicionada à fila**`,
                             fields: [
                                 {
@@ -69,7 +69,7 @@ module.exports = {
                                         msg.delete(msg);
                                         return message.channel.send({
                                             embeds: [{
-                                                color: "GREEN",
+                                                color: "YELLOW",
                                                 description: `**Playlist adicionada à fila**`,
                                                 fields: [
                                                     {
@@ -139,7 +139,7 @@ module.exports = {
                     await msg.delete(msg);
                     return message.channel.send({
                         embeds: [{
-                            color: "GREEN",
+                            color: "YELLOW",
                             description: `**Album adicionado à fila**`,
                             fields: [
                                 {
@@ -177,7 +177,7 @@ module.exports = {
                                         await msg.delete(msg);
                                         return message.reply({
                                             embeds: [{
-                                                color: "GREEN",
+                                                color: "YELLOW",
                                                 description: `**Album adicionado à fila**`,
                                                 fields: [
                                                     {

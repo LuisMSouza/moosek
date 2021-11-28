@@ -44,19 +44,19 @@ module.exports.play = async (client, message, song) => {
     try {
         var embedMusic = new MessageEmbed()
             .setAuthor("Tocando agora:")
-            .setColor("#2592b0")
+            .setColor("YELLOW")
             .setTitle(serverQueue.songs[0].title)
             .setThumbnail(serverQueue.songs[0].thumbnail)
             .setURL(serverQueue.songs[0].url)
 
         if (serverQueue.songs[0].duration === '0:00' || serverQueue.songs[0].liveStream) {
-            embedMusic.addField("> __Duração:__", "```ini\n🔴 Live\n```", true);
+            embedMusic.addField("> __Duração:__", "```fix\n🔴 Live\n```", true);
         } else {
-            embedMusic.addField("> __Duração:__", "```ini\n" + `${serverQueue.songs[0].duration}` + "\n```", true)
+            embedMusic.addField("> __Duração:__", "```fix\n" + `${serverQueue.songs[0].duration}` + "\n```", true)
         }
 
-        embedMusic.addField("> __Canal:__", "```ini\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```", true)
-        embedMusic.addField("> __Pedido por:___", "```ini\n" + `${serverQueue.songs[0].author}` + "\n```", true)
+        embedMusic.addField("> __Canal:__", "```fix\n" + `${message.guild.me.voice.channel.name ? message.guild.me.voice.channel.name : "Not provided"}` + "\n```", true)
+        embedMusic.addField("> __Pedido por:___", "```fix\n" + `${serverQueue.songs[0].author}` + "\n```", true)
 
         const button = new MessageButton()
             .setCustomId('pause')

@@ -21,7 +21,7 @@ module.exports = {
                 author: message.member.user.tag,
                 embed: {
                     author: "Tocando agora:",
-                    color: "#2592b0",
+                    color: "YELLOW",
                     title: `${video.title}`,
                     thumbnail: {
                         "url": `${video.thumbnails[0].url}`,
@@ -85,7 +85,7 @@ module.exports = {
                 if (playlist) return;
                 let thing = new MessageEmbed()
                     .setTitle(`> __Música adicionada à fila__`)
-                    .setColor("GREEN")
+                    .setColor("YELLOW")
                     .setThumbnail(song.img)
                     .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
                     .addField("> __Duração:__", "```fix\n" + `${song.duration}` + "\n```", true)

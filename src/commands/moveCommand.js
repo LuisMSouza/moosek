@@ -60,7 +60,7 @@ module.exports = {
             message.reply({
                 embeds: [
                     {
-                        color: "#0184f8",
+                        color: "YELLOW",
                         description: `**${song}** agora está na posição **${newPosition}** da fila.`
                     }
                 ]
