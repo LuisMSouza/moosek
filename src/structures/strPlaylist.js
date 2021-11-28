@@ -26,7 +26,6 @@ module.exports = {
                     thumbnail: {
                         "url": `${video.thumbnails[0].url}`,
                     },
-                    url: `${video.shortUrl}`,
                     fields: [
                         {
                             "name": "> __Duração:__",

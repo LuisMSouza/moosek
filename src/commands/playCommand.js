@@ -201,7 +201,6 @@ module.exports = {
                             thumbnail: {
                                 "url": `${x[0].thumbnail.url}`,
                             },
-                            url: `${x[0].url}`,
                             fields: [
                                 {
                                     "name": "> __Duração:__",
