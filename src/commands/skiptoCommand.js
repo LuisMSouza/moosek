@@ -24,7 +24,7 @@ module.exports = {
         if (message.options) {
             query = message.options.get('position') ? message.options.get('position').value : args[0];
         }
-        if (!query && !args.length || isNaN(args[0])) {
+        if (args.length || isNaN(args[0])) {
             return message.reply({
                 embeds: [
                     {
