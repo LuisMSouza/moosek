@@ -56,7 +56,7 @@ module.exports = {
                 serverQueue.songs.push(serverQueue.songs.shift());
             }
         } else {
-            serverQueue.songs = serverQueue.songs.slice((args[0] || query) - 2);
+            serverQueue.songs = serverQueue.songs.slice((args[0] || query) - 1);
         }
         try {
             Player.play(client, message, serverQueue.songs[0]);
