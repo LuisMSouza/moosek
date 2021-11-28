@@ -47,7 +47,6 @@ module.exports.play = async (client, message, song) => {
             .setColor("YELLOW")
             .setTitle(serverQueue.songs[0].title)
             .setThumbnail(serverQueue.songs[0].thumbnail)
-            .setURL(serverQueue.songs[0].url)
 
         if (serverQueue.songs[0].duration === '0:00' || serverQueue.songs[0].liveStream) {
             embedMusic.addField("> __Duração:__", "```fix\n🔴 Live\n```", true);
