@@ -8,5 +8,5 @@ module.exports = async (client) => {
     var hora = now.getHours();
     var str_hora = hora + ':' + min + ':' + seg;
     var str_data = dia + '/' + (mes + 1) + '/' + ano4;
-    console.log(`[API ON] CONECTADO COMO ${client.user.username} | ${str_data} ${str_hora}`)
+    console.log(`[SOURCE] CONECTADO COMO ${client.user.username} | ${str_data} ${str_hora}`)
 }
