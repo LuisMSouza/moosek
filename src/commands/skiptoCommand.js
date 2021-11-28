@@ -24,14 +24,15 @@ module.exports = {
         if (message.options) {
             query = message.options.get('position') ? message.options.get('position').value : args[0];
         }
-        if (!args.length || isNaN(args[0]) || !query || isNaN(query))
-            returnmessage.reply({
+        if (!args.length || isNaN(args[0]) || !query || isNaN(query)) {
+            return message.reply({
                 embeds: [
                     {
                         description: `**Utilize**: \`${process.env.PREFIX_KEY}skipto [número da música na fila]\``
                     }
                 ]
             }).catch(console.error);
+        }
 
         const serverQueue = message.client.queue.get(message.guild.id);
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).catch(console.error);
