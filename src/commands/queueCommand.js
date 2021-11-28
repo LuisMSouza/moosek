@@ -12,8 +12,8 @@ module.exports = {
     aliases: ['queue', 'q', 'f', 'lista'],
 
     async execute(client, message, args) {
-        const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "right");
-        const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "left");
+        const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6269110");
+        const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6269618");
         const serverQueue = client.queue.get(message.guild.id);
 
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
