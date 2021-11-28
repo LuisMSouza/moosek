@@ -5,11 +5,11 @@ const sendError = require('../utils/error.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
-    const ePlay = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3634002");
-    const ePause = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635043");
-    const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635063");
-    const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635051");
-    const eStop = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "3635035");
+    const ePlay = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "play");
+    const ePause = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "pausa");
+    const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "pular");
+    const eBack = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "anterior");
+    const eStop = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "pare");
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!song) {
         await message.client.queue.delete(message.guild.id);
