@@ -46,7 +46,7 @@ module.exports = {
             return;
         }
 
-        if (!args.length) return
+        if (!args.length && !query1 && !query2) return
         if (!oldPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição.\n**Exemplo:**" + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
         if (!newPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição.\n**Exemplo:**" + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
 
