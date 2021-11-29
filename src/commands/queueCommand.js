@@ -116,7 +116,7 @@ module.exports = {
                     .setColor("YELLOW")
                     .setThumbnail(message.guild.iconURL())
                     .setDescription(`${info}`)
-                    .addField("Tocando agora", `[${queue[0].title}](${queue[0].url})`, true)
+                    .addField("Tocando agora", `[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`, true)
                     .addField("Canal de texto", `${serverQueue.textChannel}`, true)
                     .addField("Canal de voz", `${serverQueue.voiceChannel}`, true)
                 //.setFooter(`${message.guild.name}`, `${message.guild.iconURL()}`)
