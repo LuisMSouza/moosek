@@ -103,8 +103,8 @@ module.exports = {
             let embeds = [];
             let k = 10;
 
-            for (let i = 0; i < queue.length; i += 10) {
-                const current = queue.slice(i, k);
+            for (let i = 0; i < serverQueue.songs.length; i += 10) {
+                const current = serverQueue.songs.slice(i, k);
                 let j = i;
                 k += 10;
 
