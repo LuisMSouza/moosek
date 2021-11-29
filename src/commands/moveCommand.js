@@ -1,6 +1,6 @@
 /////////////////////// IMPORTS ///////////////////////////
 const sendError = require('../utils/error.js');
-const Move = require('array-move');
+const Move = require('array-move-item');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -56,7 +56,7 @@ module.exports = {
         let song = serverQueue.songs[oldPosition - 1].title;
 
         try {
-            const newQueue = await Move.arrayMoveImmutable(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
+            const newQueue = await Move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
             serverQueue.songs = newQueue;
             message.reply({
                 embeds: [
