@@ -100,6 +100,7 @@ module.exports = {
         });
 
         function generateQueueEmbed(message, queue) {
+            const serverQueue = message.client.queue.get(message.guild.id);
             let embeds = [];
             let k = 10;
 
@@ -110,7 +111,6 @@ module.exports = {
 
                 const info = current.map((track) => `**\`${++j}\`** | [\`${track.title}\`](${track.url})`).join("\n");
 
-                const serverQueue = message.client.queue.get(message.guild.id);
                 const embed = new MessageEmbed()
                     .setTitle(`Fila de músicas do servidor`)
                     .setColor("YELLOW")
