@@ -103,7 +103,7 @@ module.exports.play = async (client, message, song) => {
             switch (b.customId) {
                 case "pause":
                     if (!message.member.voice.channel) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -115,7 +115,7 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -142,7 +142,7 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "play":
                     if (!message.member.voice.channel) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -154,7 +154,7 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -181,7 +181,7 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "backward":
                     if (!message.member.voice.channel) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -193,7 +193,7 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -224,7 +224,7 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "forward":
                     if (!message.member.voice.channel) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -236,7 +236,7 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"
@@ -289,7 +289,7 @@ module.exports.play = async (client, message, song) => {
                     break;
                 case "stop":
                     if (!message.member.voice.channel) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **Você precisa estar em um canal de voz para reagir!**"
@@ -301,7 +301,7 @@ module.exports.play = async (client, message, song) => {
                         return;
                     }
                     if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        b.followUp({
+                        serverQueue.textChannel.send({
                             embeds: [{
                                 color: "RED",
                                 description: "❌ **O bot está sendo utilizado em outro canal!**"

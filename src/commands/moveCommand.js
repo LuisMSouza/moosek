@@ -32,6 +32,10 @@ module.exports = {
             query1 = message.options.get('position') ? message.options.get('position').value : args[0];
             query2 = message.options.get('new') ? message.options.get('new').value : args[0];
         }
+        const serverQueue = client.queue.get(message.guild.id);
+        var oldPosition = args[0] || query1;
+        var newPosition = args[1] || query2;
+        if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
         if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
             serverQueue.textChannel.send({
                 embeds: [{
@@ -41,10 +45,6 @@ module.exports = {
             })
             return;
         }
-        const serverQueue = client.queue.get(message.guild.id);
-        var oldPosition = args[0] || query1;
-        var newPosition = args[1] || query2;
-        if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
 
         if (!args.length) return
         if (!oldPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição.\n**Exemplo:**" + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
