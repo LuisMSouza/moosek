@@ -1,6 +1,6 @@
 /////////////////////// IMPORTS ///////////////////////////
 const sendError = require('../utils/error.js');
-const Move = require('alib-array')
+const { arrayMoveImmutable } = require('array-move');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -56,7 +56,8 @@ module.exports = {
         let song = serverQueue.songs[oldPosition - 1].title;
 
         try {
-            serverQueue.songs = Move().move(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
+            const newQueue = await arrayMoveImmutable(serverQueue.songs, oldPosition - 1, newPosition == 1 ? 1 : newPosition - 1);
+            serverQueue.songs = newQueue;
             message.reply({
                 embeds: [
                     {
