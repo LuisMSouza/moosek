@@ -172,6 +172,7 @@ module.exports = {
             }
         } else {
             try {
+                dl.authorization()
                 await dl.search(`${searchString}`, { limit: 1 }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
