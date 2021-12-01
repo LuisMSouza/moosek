@@ -327,7 +327,7 @@ module.exports = {
                     console.log(`[VIDEO UNAVAILABLE] ${searchString}`)
                     await sendError("**Este vídeo está indisponível.\n\nTentando métodos alternativos...**", message.channel);
                     dl.authorization();
-                    await dl.search(searchString, { limit: 1 }).then(v => {
+                    await dl.search(searchString, { limit: 1 }).then(async v => {
                         const connection = joinVoiceChannel({
                             guildId: message.guild.id,
                             channelId: voiceChannel.id,
