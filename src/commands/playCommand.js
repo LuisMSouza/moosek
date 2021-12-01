@@ -9,7 +9,7 @@ const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
-const { joinVoiceChannel } = require("@discordjs/voice");
+const { createAudioPlayer, createAudioResource, StreamType, demuxProbe, joinVoiceChannel, NoSubscriberBehavior, AudioPlayerStatus, VoiceConnectionStatus, getVoiceConnection } = require('@discordjs/voice')
 const guild_main = process.env.SERVER_MAIN;
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -323,9 +323,29 @@ module.exports = {
                     }
                 });
             } catch (err) {
-                if (err.message.includes("Cannot read property 'title' of undefined")) {
+                if (err.message.includes("Cannot read properties of undefined (reading 'title')")) {
                     console.log(`[VIDEO UNAVAILABLE] ${searchString}`)
-                    await sendError("**Este vídeo está indisponível.**", message.channel);
+                    await sendError("**Este vídeo está indisponível.\n\nTentando métodos alternativos...**", message.channel);
+                    dl.authorization();
+                    await dl.search(searchString, { limit: 1 }).then(v => {
+                        const connection = joinVoiceChannel({
+                            guildId: message.guild.id,
+                            channelId: voiceChannel.id,
+                            adapterCreator: message.guild.voiceAdapterCreator
+                        });
+                        let stream = await dl.stream(v[0].url)
+                        let resource = createAudioResource(stream.stream, {
+                            inputType: stream.type
+                        });
+                        let player = createAudioPlayer({
+                            behaviors: {
+                                noSubscriber: NoSubscriberBehavior.Play
+                            }
+                        })
+                        player.play(resource)
+
+                        connection.subscribe(player);
+                    });
                     return;
                 }
                 console.log(err);
