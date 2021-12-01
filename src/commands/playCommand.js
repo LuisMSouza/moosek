@@ -172,7 +172,7 @@ module.exports = {
             }
         } else {
             try {
-                await YouTube.search(`${searchString}`, { limit: 1, safeSearch: true }).then(async x => {
+                await dl.search(`${searchString}`, { limit: 1 }).then(async x => {
                     const queueConstruct = {
                         textChannel: message.channel,
                         voiceChannel: voiceChannel,
@@ -188,10 +188,10 @@ module.exports = {
                         songLooping: false
                     }
                     const song = {
-                        title: x[0].title ? x[0].title : ytdl.getBasicInfo(x[0].url).videoDetails.media.song,
+                        title: x[0].title,
                         url: x[0].url,
                         thumbnail: x[0].thumbnail.url,
-                        duration: x[0].durationFormatted,
+                        duration: x[0].durationRaw,
                         liveStream: x[0].live,
                         author: message.member.user.tag,
                         embed: {
@@ -204,7 +204,7 @@ module.exports = {
                             fields: [
                                 {
                                     "name": "> __Duração:__",
-                                    "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationFormatted}` + "\n```",
+                                    "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationRaw}` + "\n```",
                                     "inline": true
                                 },
                                 {
@@ -223,68 +223,30 @@ module.exports = {
 
 
                     if (serverQueue) {
-                        if (serverQueue.songs) {
-                            if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
-                            serverQueue.songs.push(song);
-                            message.reply({
-                                embeds: [{
-                                    color: "YELLOW",
-                                    title: "Adicionado à fila",
-                                    description: `[${song.title}](${song.url}) adicionado à fila`,
-                                    fields: [
-                                        {
-                                            name: "> __Duração:__",
-                                            value: "```fix\n" + `${song.duration}` + "\n```",
-                                            inline: true
-                                        },
-                                        {
-                                            name: "> __Pedido por:__",
-                                            value: "```fix\n" + `${message.member.user.tag}` + "\n```",
-                                            inline: true
-                                        }
-                                    ]
-                                }]
-                            })
-                                .catch(console.error);
-                            return;
-                        } else {
-                            queueConstruct.songs.push(song);
-                            message.reply({
-                                embeds: [{
-                                    color: "YELLOW",
-                                    title: "Adicionado à fila",
-                                    description: `[${song.title}](${song.url}) adicionado à fila`,
-                                    fields: [
-                                        {
-                                            name: "> __Duração:__",
-                                            value: "```fix\n" + `${song.duration}` + "\n```",
-                                            inline: true
-                                        },
-                                        {
-                                            name: "> __Pedido por:__",
-                                            value: "```fix\n" + `${message.member.user.tag}` + "\n```",
-                                            inline: true
-                                        }
-                                    ]
-                                }]
-                            })
-                            await message.client.queue.set(message.guild.id, queueConstruct);
-                            try {
-                                const connection = await joinVoiceChannel({
-                                    guildId: message.guild.id,
-                                    channelId: voiceChannel.id,
-                                    adapterCreator: message.guild.voiceAdapterCreator
-                                });
-                                queueConstruct.connection = connection;
-                                play(client, message, queueConstruct.songs[0]);
-                            } catch (error) {
-                                console.log(error);
-                                connection.destroy();
-                                client.queue.delete(message.guild.id);
-                                return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
-                            }
-                        }
-                    } else if (!serverQueue || (serverQueue && serverQueue.songs.length >= 1)) {
+                        if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
+                        serverQueue.songs.push(song);
+                        message.reply({
+                            embeds: [{
+                                color: "YELLOW",
+                                title: "Adicionado à fila",
+                                description: `[${song.title}](${song.url}) adicionado à fila`,
+                                fields: [
+                                    {
+                                        name: "> __Duração:__",
+                                        value: "```fix\n" + `${song.duration}` + "\n```",
+                                        inline: true
+                                    },
+                                    {
+                                        name: "> __Pedido por:__",
+                                        value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                                        inline: true
+                                    }
+                                ]
+                            }]
+                        })
+                            .catch(console.error);
+                        return;
+                    } else {
                         queueConstruct.songs.push(song);
                         message.reply({
                             embeds: [{
@@ -305,13 +267,13 @@ module.exports = {
                                 ]
                             }]
                         })
-                        const connection = joinVoiceChannel({
-                            guildId: message.guild.id,
-                            channelId: voiceChannel.id,
-                            adapterCreator: message.guild.voiceAdapterCreator
-                        });
                         await message.client.queue.set(message.guild.id, queueConstruct);
                         try {
+                            const connection = await joinVoiceChannel({
+                                guildId: message.guild.id,
+                                channelId: voiceChannel.id,
+                                adapterCreator: message.guild.voiceAdapterCreator
+                            });
                             queueConstruct.connection = connection;
                             play(client, message, queueConstruct.songs[0]);
                         } catch (error) {
@@ -325,27 +287,7 @@ module.exports = {
             } catch (err) {
                 if (err.message.includes("Cannot read properties of undefined (reading 'title')")) {
                     console.log(`[VIDEO UNAVAILABLE] ${searchString}`)
-                    await sendError("**Este vídeo está indisponível.\n\nTentando métodos alternativos...**", message.channel);
-                    dl.authorization();
-                    await dl.search(searchString, { limit: 1 }).then(async v => {
-                        const connection = joinVoiceChannel({
-                            guildId: message.guild.id,
-                            channelId: voiceChannel.id,
-                            adapterCreator: message.guild.voiceAdapterCreator
-                        });
-                        let stream = await dl.stream(v[0].url)
-                        let resource = createAudioResource(stream.stream, {
-                            inputType: stream.type
-                        });
-                        let player = createAudioPlayer({
-                            behaviors: {
-                                noSubscriber: NoSubscriberBehavior.Play
-                            }
-                        })
-                        player.play(resource)
-
-                        connection.subscribe(player);
-                    });
+                    await sendError("**Este vídeo está indisponível.**", message.channel);
                     return;
                 }
                 console.log(err);
