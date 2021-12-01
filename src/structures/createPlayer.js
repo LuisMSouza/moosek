@@ -16,6 +16,7 @@ module.exports.play = async (client, message, song) => {
         return serverQueue.connection.disconnect();
     }
     try {
+        ytdl2.authorization();
         var stream = await ytdl2.stream(song.url);
     } catch (error) {
         if (serverQueue) {
