@@ -62,7 +62,6 @@ module.exports = {
                 .setFooter(`Removido por ${message.author.tag}`, message.author.displayAvatarURL())
 
             message.reply({ embeds: [embed] })
-            message.react("✅")
         } catch (error) {
             return sendError(`Ocorreu um erro.\nType: ${error}`, message.channel);
         }
