@@ -1,6 +1,5 @@
 /////////////////////// IMPORTS //////////////////////////
 const ytlist = require('ytpl');;
-const ytdl = require('ytdl-core');
 const dl = require('play-dl');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
