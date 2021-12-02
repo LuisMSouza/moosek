@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const ytdl = require('ytdl-core');
 const lyrics = require("music-lyrics");
-const YouTube = require("youtube-sr").default;
+const dl = require("play-dl");
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -51,7 +51,8 @@ module.exports = {
             }
         } else {
             try {
-                const input = await YouTube.search(`${main_entry}`);
+                dl.authorization()
+                const input = await dl.search(`${main_entry}`);
                 const search = await ytdl.getBasicInfo(input[0].url);
                 await lyrics.search(`${main_entry}`).then(async r => {
                     await generateEmbeds(message, r, search.videoDetails.media.song, search.videoDetails.thumbnails[0].url, search.videoDetails.media.artist)
