@@ -2,7 +2,7 @@
 const { MessageEmbed } = require('discord.js');
 const sendError = require('../utils/error.js');
 const music_init = require('./createPlayer.js');
-const YouTube = require("youtube-sr").default;
+const dl = require('play-dl');
 const { joinVoiceChannel } = require("@discordjs/voice");
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -10,30 +10,30 @@ module.exports = {
     async handleVideo(client, track, message, channel, playlist = false) {
         const serverQueue = message.client.queue.get(message.guild.id);
         try {
-            await YouTube.search(`${track.track.name} - ${track.track.artists[0].name} Official Audio`, { limit: 1 }).then(async x => {
+            await dl.search(`${track.track.name} - ${track.track.artists[0].name} Official Audio`, { limit: 1 }).then(async x => {
                 const song = {
-                    title: `${track.track.name} - ${track.track.artists[0].name}`,
+                    title: x[0].title,
                     url: x[0].url,
                     thumbnail: x[0].thumbnail.url,
-                    duration: x[0].durationFormatted,
+                    duration: x[0].durationRaw,
                     liveStream: x[0].live,
                     author: message.member.user.tag,
                     embed: {
                         author: "Tocando agora:",
                         color: "YELLOW",
-                        title: `${track.track.name} - ${track.track.artists[0].name}`,
+                        title: `${x[0].title}`,
                         thumbnail: {
                             "url": `${x[0].thumbnail.url}`,
                         },
                         fields: [
                             {
                                 "name": "> __Duração:__",
-                                "value": "```fix\n" + `${x[0].durationFormatted}` + "\n```",
+                                "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationRaw}` + "\n```",
                                 "inline": true
                             },
                             {
                                 "name": "> __Canal:__",
-                                "value": "```fix\n" + `${channel.name}` + "\n```",
+                                "value": "```fix\n" + `${voiceChannel.name}` + "\n```",
                                 "inline": true
                             },
                             {

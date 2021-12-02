@@ -4,7 +4,6 @@ const ytdl = require('ytdl-core');
 const dl = require('play-dl');
 const sendError = require('../utils/error.js')
 const { QUEUE_LIMIT } = require('../utils/botUtils.js');
-const YouTube = require("youtube-sr").default;
 const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');

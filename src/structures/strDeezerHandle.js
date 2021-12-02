@@ -3,7 +3,7 @@ const Deezer = require('deezer-public-api');
 const dzr = new Deezer();
 const sendError = require('../utils/error.js');
 const music_init = require('./createPlayer.js');
-const YouTube = require("youtube-sr").default;
+const dl = require("play-dl");
 const { MessageEmbed } = require('discord.js');
 const handleTracks = require('../structures/strDeezerTracks.js');
 const { joinVoiceChannel } = require("@discordjs/voice");
@@ -16,25 +16,25 @@ module.exports = {
             dzr.track(`${cth}`).then(async res => {
                 const serverQueue = message.client.queue.get(message.guild.id);
                 try {
-                    await YouTube.search(`${res.title} - ${res.artist.name} Official Audio`, { limit: 1 }).then(async x => {
+                    await dl.search(`${res.title} - ${res.artist.name} Official Audio`, { limit: 1 }).then(async x => {
                         const song = {
-                            title: `${res.title} - ${res.artist.name}`,
+                            title: x[0].title,
                             url: x[0].url,
                             thumbnail: x[0].thumbnail.url,
-                            duration: x[0].durationFormatted,
+                            duration: x[0].durationRaw,
                             liveStream: x[0].live,
                             author: message.member.user.tag,
                             embed: {
                                 author: "Tocando agora:",
                                 color: "YELLOW",
-                                title: `${res.title} - ${res.artist.name}`,
+                                title: `${x[0].title}`,
                                 thumbnail: {
                                     "url": `${x[0].thumbnail.url}`,
                                 },
                                 fields: [
                                     {
                                         "name": "> __Duração:__",
-                                        "value": "```fix\n" + `${x[0].durationFormatted}` + "\n```",
+                                        "value": "```fix\n" + `${x[0].live ? "🔴 Live" : x[0].durationRaw}` + "\n```",
                                         "inline": true
                                     },
                                     {
