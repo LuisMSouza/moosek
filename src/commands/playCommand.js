@@ -279,14 +279,14 @@ module.exports = {
                             console.log(error);
                             connection.destroy();
                             client.queue.delete(message.guild.id);
-                            return sendError("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
+                            return message.reply("**Ops :(**\n\nAlgo de errado não está certo... Tente novamente", message.channel);
                         }
                     }
                 });
             } catch (err) {
                 if (err.message.includes("Cannot read properties of undefined (reading 'title')")) {
                     console.log(`[VIDEO UNAVAILABLE] ${searchString}`)
-                    await sendError("**Este vídeo está indisponível.**", message.channel);
+                    await message.reply("**Este vídeo está indisponível.**");
                     return;
                 }
                 console.log(err);
