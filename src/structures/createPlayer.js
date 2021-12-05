@@ -320,7 +320,7 @@ module.exports.play = async (client, message, song) => {
                         try {
                             await b.update({ embeds: [serverQueue.songs[0].embed], components: [] });
                             await collector.stop();
-                            await serverQueue.connection.destroy();
+                            await serverQueue.connection.disconnect();
                             await client.queue.delete(message.guild.id);
                         } catch (e) {
                             console.log(e);
