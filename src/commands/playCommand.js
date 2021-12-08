@@ -255,7 +255,7 @@ module.exports = {
                                 fields: [
                                     {
                                         name: "> __Duração:__",
-                                        value: "```fix\n" + `${song.duration}` + "\n```",
+                                        value: "```fix\n" + `${song.duration === '0:00' ? "🔴 Live" : song.duration}` + "\n```",
                                         inline: true
                                     },
                                     {
