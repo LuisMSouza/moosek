@@ -7,7 +7,7 @@ const { play } = require('../structures/createPlayer.js');
 const playlist_init = require('../structures/strPlaylist.js');
 const sptfHandle = require('../structures/strSptfHandle.js');
 const { deezerHandler } = require('../structures/strDeezerHandle.js');
-const { createAudioPlayer, createAudioResource, StreamType, demuxProbe, joinVoiceChannel, NoSubscriberBehavior, AudioPlayerStatus, VoiceConnectionStatus, getVoiceConnection } = require('@discordjs/voice')
+const { joinVoiceChannel } = require('@discordjs/voice')
 const guild_main = process.env.SERVER_MAIN;
 
 /////////////////////// SOURCE CODE ///////////////////////////
@@ -40,7 +40,7 @@ module.exports = {
         if (!searchString || !url) return sendError(`Como usar: .p <Link da música ou playlist | Nome da música>`, message.channel);
 
         const voiceChannel = message.member.voice.channel;
-        if (!voiceChannel) return sendError("Você precisa estar em um canal de voz para iniciar uma música!", message.channel);
+        if (!voiceChannel) return message.reply({ content: "Você precisa estar em um canal de voz para iniciar uma música!", ephemeral: true });
 
         const permissions = voiceChannel.permissionsFor(message.client.user);
         if (!permissions.has("CONNECT")) return sendError("Eu não teho permissões para conectar nesse canal :(", message.channel)
