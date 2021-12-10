@@ -14,7 +14,7 @@ module.exports = {
                 const song = {
                     title: x[0].title,
                     url: x[0].url,
-                    thumbnail: x[0].thumbnail.url,
+                    thumbnail: x[0].thumbnails[0].url,
                     duration: x[0].durationRaw,
                     liveStream: x[0].live,
                     author: message.member.user.tag,
