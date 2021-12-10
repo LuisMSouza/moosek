@@ -198,7 +198,7 @@ module.exports = {
                             color: "YELLOW",
                             title: `${x[0].title}`,
                             thumbnail: {
-                                "url": `${x[0].thumbnail.url}`,
+                                "url": `${x[0].thumbnails[0].url}`,
                             },
                             fields: [
                                 {
