@@ -33,7 +33,7 @@ module.exports = {
                             },
                             {
                                 "name": "> __Canal:__",
-                                "value": "```fix\n" + `${voiceChannel.name}` + "\n```",
+                                "value": "```fix\n" + `${channel.name}` + "\n```",
                                 "inline": true
                             },
                             {
