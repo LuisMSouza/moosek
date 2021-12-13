@@ -123,7 +123,7 @@ module.exports = {
                             },
                         ])
                 )
-            await message.reply("**Faça a escolha da rádio no menu abaixo:**")
+            await message.reply({content: "**Faça a escolha da rádio no menu abaixo:**", ephemeral: true})
             const msgEmb = await message.channel.send({
                 components: [row], embeds: [{
                     description: "> **Faça a escolha da rádio:**",
