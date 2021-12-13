@@ -123,7 +123,7 @@ module.exports = {
                             },
                         ])
                 )
-            const msgEmb = await message.channel.send({
+            const msgEmb = await message.reply({
                 components: [row], embeds: [{
                     description: "> **Faça a escolha da rádio abaixo:**",
                     color: "YELLOW"
@@ -196,7 +196,7 @@ module.exports = {
                         break
                     case "16":
                         await msgEmb.delete(msgEmb);
-                        await initRadio(message, client, args,radioStations.radioStations[15], radioStations.radioStationsName[15])
+                        await initRadio(message, client, args, radioStations.radioStations[15], radioStations.radioStationsName[15])
                         break
                 }
 
