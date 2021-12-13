@@ -125,10 +125,7 @@ module.exports = {
                 )
             await message.reply("**Faça a escolha da rádio no menu abaixo:**")
             const msgEmb = await message.channel.send({
-                components: [row], embeds: [{
-                    description: "> **Faça a escolha da rádio clicando aqui**",
-                    color: "YELLOW"
-                }]
+                components: [row]
             });
             const filter = (i) => i.user.id === (message.member.user.id || message.user.id);
             const collector = message.channel.createMessageComponentCollector({ filter, max: 1, time: 300_000 });
