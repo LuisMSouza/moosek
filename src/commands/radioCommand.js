@@ -123,9 +123,10 @@ module.exports = {
                             },
                         ])
                 )
-            const msgEmb = await message.reply({
+            await message.reply("**Faça a escolha da rádio no menu abaixo:**")
+            const msgEmb = await message.channel.send({
                 components: [row], embeds: [{
-                    description: "> **Faça a escolha da rádio abaixo:**",
+                    description: "> **Faça a escolha da rádio clicando aqui**",
                     color: "YELLOW"
                 }]
             });
