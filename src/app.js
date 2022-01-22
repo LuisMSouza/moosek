@@ -30,7 +30,7 @@ for (const file of commands) {
 }
 console.log("[SOURCE] COMMANDS RELOADED")
 
-readdir(__dirname + "/src/events/", (err, files) => {
+readdir(__dirname + "/events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach((file) => {
         const event = require(__dirname + `/events/${file}`);
