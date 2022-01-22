@@ -6,7 +6,7 @@ const { MessageEmbed } = require('discord.js');
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
     name: "entrar",
-    description: "Para o bot entrar do chat",
+    description: "Para o bot entrar no chat de voz em que você está",
     usage: [process.env.PREFIX_KEY + 'entrar'],
     category: 'user',
     timeout: 7000,
@@ -20,7 +20,7 @@ module.exports = {
         if (serverQueue) return;
         const bot = message.guild.members.cache.get(client.user.id);
         if (bot.voice.channel) {
-            return sendError("❌ **O bot já está sendo utilizado!**", message.channel);
+            return sendError("O bot já está sendo utilizado!", message.channel);
         }
         try {
             await joinVoiceChannel({

@@ -21,8 +21,14 @@ module.exports = {
 
     async execute(client, message, args) {
         var query;
-        if (message.options) {
-            query = message.options.get('position') ? message.options.get('position').value : args[0];
+        try {
+            if (args) {
+                query = args.get('position') ? args.get('position').value : null || args.join(" ")
+            }
+        } catch (e) {
+            if (e.message.includes("Cannot read properties of null (reading 'value')")) {
+                query = null
+            }
         }
         if (!args.length && !query || isNaN(args[0]) && !query) {
             return message.reply({
@@ -59,7 +65,7 @@ module.exports = {
             serverQueue.songs = serverQueue.songs.slice((args[0] || query) - 1);
         }
         try {
-            Player.play(client, message, serverQueue.songs[0]);
+            await Player.play(client, message, serverQueue.songs[0]);
             message.reply({
                 embeds: [
                     {

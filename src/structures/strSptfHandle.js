@@ -53,7 +53,7 @@ module.exports = {
                             async function (data3) {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data3.body['access_token']);
-                                fs.writeFile("./src/utils/acess.json", JSON.stringify(data3.body['access_token']), (err) => {
+                                fs.writeFile("./utils/acess.json", JSON.stringify(data3.body['access_token']), (err) => {
                                     if (err) {
                                         console.error(err);
                                         return;
@@ -109,7 +109,7 @@ module.exports = {
                             async function (data6) {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data6.body['access_token']);
-                                fs.writeFile("./src/utils/acess.json", JSON.stringify(data6.body['access_token']), (err) => {
+                                fs.writeFile("./utils/acess.json", JSON.stringify(data6.body['access_token']), (err) => {
                                     if (err) {
                                         console.error(err);
                                         return;
@@ -161,7 +161,7 @@ module.exports = {
                             async function (data4) {
                                 console.log('The access token has been refreshed!');
                                 await spotifyApi.setAccessToken(data4.body['access_token']);
-                                fs.writeFile("./src/utils/acess.json", JSON.stringify(data4.body['access_token']), (err) => {
+                                fs.writeFile("./utils/acess.json", JSON.stringify(data4.body['access_token']), (err) => {
                                     if (err) {
                                         console.error(err);
                                         return;

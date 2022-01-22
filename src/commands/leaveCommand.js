@@ -5,7 +5,7 @@ const { MessageEmbed } = require('discord.js');
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
     name: "sair",
-    description: "Para o bot sair no chat",
+    description: "Para o bot sair do chat de voz em que você está",
     usage: [process.env.PREFIX_KEY + 'sair'],
     category: 'user',
     timeout: 7000,
@@ -19,7 +19,7 @@ module.exports = {
         if (serverQueue) return;
         const bot = message.guild.members.cache.get(client.user.id);
         if (bot.voice.channel != message.member.voice.channel) {
-            return sendError("❌ **O bot já está sendo utilizado!**", message.channel);
+            return sendError("O bot já está sendo utilizado!", message.channel);
         }
         try {
             await message.guild.me.voice.disconnect();

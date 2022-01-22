@@ -1,7 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
 const { Client, intents, Collection } = require('discord.js');
 const dotenv = require('dotenv');
-const fs = require('fs');
+const { readdirSync, readdir } = require('fs');
 const { AudioPlayer } = require('@discordjs/voice');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -20,7 +20,7 @@ client.radio = new Map();
 client.player = new AudioPlayer();;
 client.slashCommands = new Collection();
 
-const commands = fs.readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
+const commands = readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
 for (const file of commands) {
     const cmd = require(`./commands/${file}`);
     if (cmd.category != 'ceo') {
@@ -28,8 +28,9 @@ for (const file of commands) {
     }
     client.commands.set(cmd.name, cmd);
 }
+console.log("[SOURCE] COMMANDS RELOADED")
 
-fs.readdir(__dirname + "/events/", (err, files) => {
+readdir(__dirname + "/src/events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach((file) => {
         const event = require(__dirname + `/events/${file}`);
@@ -37,6 +38,7 @@ fs.readdir(__dirname + "/events/", (err, files) => {
         client.on(eventName, event.bind(null, client));
     });
 });
+console.log("[SOURCE] EVENTS RELOADED")
 
 const rest = new REST({ version: '9' }).setToken(configVars.token);
 

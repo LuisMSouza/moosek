@@ -4,8 +4,6 @@ const Discord = require('discord.js');
 const radioStations = require('../utils/radioStations.js');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu } = require('discord.js');
 const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
-const fs = require('fs');
-const m3u8stream = require('m3u8stream');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
@@ -33,7 +31,7 @@ module.exports = {
         }
         const choice = args[0];
         const radioListen = client.radio.get(message.guild.id);
-        if (radioListen) return sendError("**A radio já está sendo executada.**", message.channel);
+        if (radioListen) return sendError("A radio já está sendo executada.", message.channel);
         if (!choice) {
             let row = new MessageActionRow()
                 .addComponents(

@@ -21,8 +21,14 @@ module.exports = {
 
     async execute(client, message, args) {
         var query;
-        if (message.options) {
-            query = message.options.get('position') ? message.options.get('position').value : args[0];
+        try {
+            if (args) {
+                query = args.get('position') ? args.get('position').value : null || args.join(" ")
+            }
+        } catch (e) {
+            if (e.message.includes("Cannot read properties of null (reading 'value')")) {
+                query = null
+            }
         }
         const serverQueue = client.queue.get(message.guild.id);
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel).then(m => m.delete({ timeout: 10000 }));
@@ -59,11 +65,11 @@ module.exports = {
             let embed = new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(`❌ **${song[0].title}** removida da fila.`)
-                .setFooter(`Removido por ${message.author.tag}`, message.author.displayAvatarURL())
+                .setFooter(`Removido por ${message.member.user.tag}`, message.member.user.displayAvatarURL())
 
             message.reply({ embeds: [embed] })
         } catch (error) {
-            return sendError(`Ocorreu um erro.\nType: ${error}`, message.channel);
+            return sendError(`Ocorreu um erro. Type: ${error}`, message.channel);
         }
     }
 }

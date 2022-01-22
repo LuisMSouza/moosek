@@ -1,5 +1,5 @@
 /////////////////////// IMPORTS //////////////////////////
-const sendError = require('../utils/error.js');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const { CEO_ID } = require('../utils/botUtils.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
@@ -12,26 +12,21 @@ module.exports = {
     aliases: ['rb'],
 
     async execute(client, message, args) {
-        const emoji = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "7041_loading");
         if (message.author.id != CEO_ID) return;
-
-        var msg = await message.channel.send({ content: `${emoji}` });
-
-        try {
-            setTimeout(async () => {
-                await msg.delete(msg);
-                await message.reply({
-                    embeds: [
-                        {
-                            color: "YELLOW",
-                            description: "```\nBot reiniciado!\n```"
-                        }
-                    ]
-                });
-                process.exit(1);
-            }, 5000);
-        } catch (e) {
-            return sendError("Ocorreu um erro ao reiniciar o bot.", message.channel)
-        }
+        await message.reply({
+            embeds: [
+                {
+                    color: "YELLOW",
+                    description: "```\nBot reiniciado!\n```"
+                }
+            ]
+        });
+        fetch(`https://discloud.app/status/bot/778462497728364554/restart`, {
+            method: 'POST',
+            headers: {
+                "api-token": "DQl90nQTPADiqzdwlEuDMQMPXWTWnaGmCKvoIDVNuWy8PC66ARtT0PoyUkCwVs"
+            }
+        }).then(info => info.json()).then(async json => {
+        });
     }
 }

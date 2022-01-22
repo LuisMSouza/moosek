@@ -5,7 +5,7 @@ const { MessageEmbed } = require('discord.js');
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     name: "ajuda",
-    description: "Exibe o menu de comandos do servidor",
+    description: "Exibe o menu de comandos disponíveis para o bot",
     options: [
         {
             name: 'comando',
@@ -21,8 +21,14 @@ module.exports = {
 
     async execute(client, message, args) {
         var query;
-        if (message.options) {
-            query = message.options.get('comando') ? message.options.get('comando').value : args[0];
+        try {
+            if (args) {
+                query = args.get('comando') ? args.get('comando').value : null || args.join(" ")
+            }
+        } catch (e) {
+            if (e.message.includes("Cannot read properties of null (reading 'value')")) {
+                query = null
+            }
         }
         const sorted = client.commands.filter(c => c.category !== 'ceo');
         let cmds = "";

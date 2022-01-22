@@ -5,7 +5,7 @@ const Move = require('array-move-item');
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
     name: "mover",
-    description: "Para mover uma música de posição na fila",
+    description: "Para mudar a posição de uma música na fila",
     options: [
         {
             name: 'position',
@@ -27,14 +27,21 @@ module.exports = {
 
     async execute(client, message, args) {
         var query1;
-        var query2;;
-        if (message.options) {
-            query1 = message.options.get('position') ? message.options.get('position').value : args[0];
-            query2 = message.options.get('new') ? message.options.get('new').value : args[0];
+        var query2
+        try {
+            if (args) {
+                query1 = args.get('position') ? args.get('position').value : null || args.join(" ");
+                query2 = args.get('new') ? args.get('new').value : null || args.join(" ");
+            }
+        } catch (e) {
+            if (e.message.includes("Cannot read properties of null (reading 'value')")) {
+                query1 = null;
+                query2 = null;
+            }
         }
         const serverQueue = client.queue.get(message.guild.id);
-        var oldPosition = args[0] || query1;
-        var newPosition = args[1] || query2;
+        var oldPosition = query1;
+        var newPosition = query2;
         if (!serverQueue) return sendError("Não há nenhuma música sendo reproduzida.", message.channel)
         if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
             serverQueue.textChannel.send({
@@ -47,8 +54,8 @@ module.exports = {
         }
 
         if (!args.length && !query1 && !query2) return
-        if (!oldPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição.\n**Exemplo:**" + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
-        if (!newPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição.\n**Exemplo:**" + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
+        if (!oldPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição. Exemplo: " + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
+        if (!newPosition) return sendError("Você deve inserir a posição atual da música e em seguida a nova posição. Exemplo: " + `${process.env.PREFIX_KEY}move [posição atual] [nova posição]`, message.channel);
 
         if (isNaN(oldPosition) || oldPosition <= 1 || oldPosition === newPosition) return sendError("Informe valores válidos!", message.channel);
         if (isNaN(newPosition) || newPosition <= 1 || newPosition === oldPosition) return sendError("Informe valores válidos!", message.channel);

@@ -11,7 +11,7 @@ module.exports = {
 
         mongoose.connect(process.env.DB_KEY, dbOptions);
         mongoose.connection.on('connected', () => {
-            console.log('[DATABASE] CONECTADA')
+            console.log('[DATABASE] CONNECTED')
         });
         mongoose.connection.on('err', err => {
             console.log(`ERRO AO TENTAR SE CONECTAR COM A DATABASE ${err.stack}`)

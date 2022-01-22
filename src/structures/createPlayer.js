@@ -38,9 +38,11 @@ module.exports.play = async (client, message, song) => {
         await entersState(serverQueue.connection, VoiceConnectionStatus.Ready, 30_000);
         serverQueue.connection.subscribe(serverQueue.audioPlayer);
     } catch (error) {
-        serverQueue.connection.destroy();
+        if (serverQueue) {
+            await serverQueue.connection.destroy();
+        }
         console.log(error);
-        return sendError("Alguma coisa desastrosa aconteceu :(\nTente novamente...", message.channel);
+        return sendError("Alguma coisa desastrosa aconteceu, tente novamente...", message.channel);
     }
     try {
         var embedMusic = new MessageEmbed()
@@ -99,10 +101,12 @@ module.exports.play = async (client, message, song) => {
         const collector = playingMessage.channel.createMessageComponentCollector({ filter });
 
         collector.on("collect", async (b) => {
-            var membReact = message.guild.members.cache.get(b.user.id);
-            var idBot = message.guild.members.cache.get(client.user.id);
             switch (b.customId) {
                 case "pause":
+                    if (!serverQueue) {
+                        await b.update({ embeds: [], content: "`Não há nenhuma música sendo reproduzida`" });
+                        return;
+                    }
                     if (!message.member.voice.channel) {
                         serverQueue.textChannel.send({
                             embeds: [{
@@ -115,17 +119,8 @@ module.exports.play = async (client, message, song) => {
                         });
                         return;
                     }
-                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        serverQueue.textChannel.send({
-                            embeds: [{
-                                color: "RED",
-                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                            }]
-                            , ephemeral: true
-                        }).then((m) => {
-                            setTimeout(() => m.delete(), 2000)
-                        });
-                        return;
+                    if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                        return sendError("O bot está sendo utilizado em outro canal!", serverQueue.textChannel);
                     }
                     if (!serverQueue.playing) return;
                     if (serverQueue) {
@@ -142,6 +137,10 @@ module.exports.play = async (client, message, song) => {
                     return;
                     break;
                 case "play":
+                    if (!serverQueue) {
+                        await b.update({ embeds: [], content: "`Não há nenhuma música sendo reproduzida`" });
+                        return;
+                    }
                     if (!message.member.voice.channel) {
                         serverQueue.textChannel.send({
                             embeds: [{
@@ -154,17 +153,8 @@ module.exports.play = async (client, message, song) => {
                         });
                         return;
                     }
-                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        serverQueue.textChannel.send({
-                            embeds: [{
-                                color: "RED",
-                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                            }]
-                            , ephemeral: true
-                        }).then((m) => {
-                            setTimeout(() => m.delete(), 2000)
-                        });
-                        return;
+                    if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                        return sendError("O bot está sendo utilizado em outro canal!", serverQueue.textChannel);
                     }
                     if (serverQueue.playing) return;
                     if (serverQueue) {
@@ -181,6 +171,10 @@ module.exports.play = async (client, message, song) => {
                     return;
                     break;
                 case "backward":
+                    if (!serverQueue) {
+                        await b.update({ embeds: [], content: "`Não há nenhuma música sendo reproduzida`" });
+                        return;
+                    }
                     if (!message.member.voice.channel) {
                         serverQueue.textChannel.send({
                             embeds: [{
@@ -193,17 +187,8 @@ module.exports.play = async (client, message, song) => {
                         });
                         return;
                     }
-                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        serverQueue.textChannel.send({
-                            embeds: [{
-                                color: "RED",
-                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                            }]
-                            , ephemeral: true
-                        }).then((m) => {
-                            setTimeout(() => m.delete(), 2000)
-                        });
-                        return;
+                    if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                        return sendError("O bot está sendo utilizado em outro canal!", serverQueue.textChannel);
                     }
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));
@@ -224,6 +209,10 @@ module.exports.play = async (client, message, song) => {
                     return;
                     break;
                 case "forward":
+                    if (!serverQueue) {
+                        await b.update({ embeds: [], content: "`Não há nenhuma música sendo reproduzida`" });
+                        return;
+                    }
                     if (!message.member.voice.channel) {
                         serverQueue.textChannel.send({
                             embeds: [{
@@ -236,59 +225,52 @@ module.exports.play = async (client, message, song) => {
                         });
                         return;
                     }
-                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        serverQueue.textChannel.send({
-                            embeds: [{
-                                color: "RED",
-                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                            }]
-                            , ephemeral: true
-                        }).then((m) => {
-                            setTimeout(() => m.delete(), 2000)
-                        });
-                        return;
+                    if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                        return sendError("O bot está sendo utilizado em outro canal!", serverQueue.textChannel);
                     }
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild);
                         return;
                     }
-                    if (serverQueue) {
-                        try {
-                            if (serverQueue.songs.length <= 1) {
-                                serverQueue.songs.shift();
-                                await message.guild.me.voice.disconnect();
-                                await message.client.queue.delete(message.guild.id);
-                                await collector.stop();
-                                return b.update({ embeds: [song.embed], components: [] });
-                            } else if (serverQueue.songs.length > 1) {
-                                serverQueue.prevSongs = [];
-                                await serverQueue.prevSongs.push(serverQueue.songs[0]);
-                                if (serverQueue.looping) {
-                                    await serverQueue.songs.push(serverQueue.songs[0]);
-                                }
-                                if (serverQueue.nigthCore) {
-                                    var random = Math.floor(Math.random() * (serverQueue.songs.length));
-                                    await collector.stop();
-                                    this.play(client, message, serverQueue.songs[random]);
-                                    serverQueue.songs.splice((random), 1)
-                                    return b.update({ embeds: [song.embed], components: [] });
-                                }
-                                await serverQueue.songs.shift();
-                                await b.update({ embeds: [song.embed], components: [] });
-                                await collector.stop();
-                                this.play(client, message, serverQueue.songs[0]);
-                                return;
+                    try {
+                        if (serverQueue.songs.length <= 1) {
+                            serverQueue.songs.shift();
+                            await message.guild.me.voice.disconnect();
+                            await message.client.queue.delete(message.guild.id);
+                            await collector.stop();
+                            return playingMessage.delete(playingMessage);
+                        } else if (serverQueue.songs.length > 1) {
+                            serverQueue.prevSongs = [];
+                            await serverQueue.prevSongs.push(serverQueue.songs[0]);
+                            if (serverQueue.looping) {
+                                await serverQueue.songs.push(serverQueue.songs[0]);
                             }
-                        } catch (e) {
-                            console.log(e);
+                            if (serverQueue.nigthCore) {
+                                var random = Math.floor(Math.random() * (serverQueue.songs.length));
+                                await collector.stop();
+                                this.play(client, message, serverQueue.songs[random]);
+                                serverQueue.songs.splice((random), 1)
+                                return b.update({ embeds: [song.embed], components: [] });
+                            }
                             await serverQueue.songs.shift();
-                            await this.play(client, message, serverQueue.songs[0]);
-                            return sendError("Erro ao reagir :(", serverQueue.textChannel);
+                            await b.update({ embeds: [song.embed], components: [] });
+                            await collector.stop();
+                            this.play(client, message, serverQueue.songs[0]);
+                            return;
                         }
+                    } catch (e) {
+                        console.log(e);
+                        await serverQueue.songs.shift();
+                        await this.play(client, message, serverQueue.songs[0]);
+                        return sendError("Erro ao reagir :(", serverQueue.textChannel);
                     }
                     return;
                     break;
                 case "stop":
+                    if (!serverQueue) {
+                        await b.update({ embeds: [], content: "`Não há nenhuma música sendo reproduzida`" });
+                        return;
+                    }
                     if (!message.member.voice.channel) {
                         serverQueue.textChannel.send({
                             embeds: [{
@@ -301,17 +283,8 @@ module.exports.play = async (client, message, song) => {
                         });
                         return;
                     }
-                    if (idBot.voice.channel.id !== membReact.voice.channel.id) {
-                        serverQueue.textChannel.send({
-                            embeds: [{
-                                color: "RED",
-                                description: "❌ **O bot está sendo utilizado em outro canal!**"
-                            }]
-                            , ephemeral: true
-                        }).then((m) => {
-                            setTimeout(() => m.delete(), 2000)
-                        });
-                        return;
+                    if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                        return sendError("O bot está sendo utilizado em outro canal!", serverQueue.textChannel);
                     }
                     if (!serverQueue) {
                         sendError("Não há nada tocando no momento.", message.guild).then(m3 => m3.delete({ timeout: 10000 }));

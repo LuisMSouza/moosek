@@ -65,7 +65,7 @@ module.exports = {
             }
 
         } else {
-            if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: \n` + "```css\n" + `${pref}config prefix\n` + "```", message.channel);
+            if (args[0].toLowerCase() != ("prefix" || "prefixo" || "pref")) return sendError(`Para modificar a configuração, utilize o comando da seguinte forma: ${pref}config prefix`, message.channel);
 
             if (args[0].toLowerCase() === ("prefix" || "prefixo" || "pref")) {
                 const filter = m => m.author.id === message.author.id;

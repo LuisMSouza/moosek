@@ -16,7 +16,7 @@ module.exports = {
     description: "Para tocar músicas no servidor",
     options: [
         {
-            name: 'music',
+            name: 'song',
             type: 3, // 'STRING' Type
             description: 'Nome ou link da música',
             required: true,
@@ -29,8 +29,8 @@ module.exports = {
 
     async execute(client, message, args) {
         var query;
-        if (message.options) {
-            query = message.options.get('music') ? message.options.get('music').value : args[0];
+        if (args) {
+            query = args[0] ? args.join(" ") : "" || args.get('song') ? args.get('song').value : args.join(" ")
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");
@@ -58,6 +58,11 @@ module.exports = {
 
         const radioListen = client.radio.get(message.guild.id);
         const serverQueue = message.client.queue.get(message.guild.id);
+        if (serverQueue) {
+            if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+                return sendError("O bot está sendo utilizado em outro canal!", serverQueue.textChannel);
+            }
+        }
         if (radioListen) return sendError("Você deve parar a radio primeiro.", message.channel);
 
         if (isSoundCloud) {
@@ -100,7 +105,7 @@ module.exports = {
             try {
                 if (serverQueue) {
                     if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
-                        return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
+                        return sendError(`Você não pode adicionar mais de ${QUEUE_LIMIT} músicas na fila.`, message.channel);
                     }
                 }
                 const playlist = await ytlist(`${url.match(playlistRegex)}`)
@@ -131,7 +136,7 @@ module.exports = {
                 try {
                     if (serverQueue) {
                         if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
-                            return sendError(`Você não pode adicionar mais de **${QUEUE_LIMIT}** músicas na fila.`, message.channel);
+                            return sendError(`Você não pode adicionar mais de ${QUEUE_LIMIT} músicas na fila.`, message.channel);
                         }
                     }
                     var searched = await ytlist(searchString)
@@ -222,7 +227,7 @@ module.exports = {
 
 
                     if (serverQueue) {
-                        if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :(\nParece que você não está no mesmo canal que eu...", serverQueue.textChannel);
+                        if (message.guild.me.voice.channel.id !== voiceChannel.id) return sendError("Ops :( Parece que você não está no mesmo canal que eu...", serverQueue.textChannel);
                         serverQueue.songs.push(song);
                         message.reply({
                             embeds: [{
