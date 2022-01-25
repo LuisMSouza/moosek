@@ -40,10 +40,11 @@ module.exports.play = async (client, message, song) => {
     } catch (error) {
         if (serverQueue) {
             if (error.message.includes("Cannot read properties of undefined (reading 'stream')")) {
+                sendError("Ocorreu um erro ao tentar reproduzir esta música, pulando para a próxima...");
                 await serverQueue.songs.shift();
                 return module.exports.play(client, message, serverQueue.songs[0]);
             }
-            return sendError("Ocorreu um erro na reprodução, tente novamente...")
+            return sendError("Ocorreu um erro na reprodução, tente novamente...");
         }
         console.log(error);
         return sendError("Alguma coisa desastrosa aconteceu, tente novamente...", message.channel);
