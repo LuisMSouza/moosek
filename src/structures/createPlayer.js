@@ -39,7 +39,10 @@ module.exports.play = async (client, message, song) => {
         serverQueue.connection.subscribe(serverQueue.audioPlayer);
     } catch (error) {
         if (serverQueue) {
-            await serverQueue.connection.destroy();
+            if (error.message.includes("Cannot read properties of undefined (reading 'stream')")) {
+                await serverQueue.songs.shift();
+                return module.exports.play(client, message, serverQueue.songs[0]);
+            }
         }
         console.log(error);
         return sendError("Alguma coisa desastrosa aconteceu, tente novamente...", message.channel);
