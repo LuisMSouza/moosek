@@ -43,6 +43,7 @@ module.exports.play = async (client, message, song) => {
                 await serverQueue.songs.shift();
                 return module.exports.play(client, message, serverQueue.songs[0]);
             }
+            return sendError("Ocorreu um erro na reprodução, tente novamente...")
         }
         console.log(error);
         return sendError("Alguma coisa desastrosa aconteceu, tente novamente...", message.channel);
