@@ -4,11 +4,11 @@ const { MessageEmbed } = require('discord.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "ajuda",
+    name: "help",
     description: "Exibe o menu de comandos disponíveis para o bot",
     options: [
         {
-            name: 'comando',
+            name: 'command',
             type: 3, // 'STRING' Type
             description: 'Comando específico',
             required: false,
@@ -17,13 +17,13 @@ module.exports = {
     usage: [process.env.PREFIX_KEY + 'ajuda'],
     category: 'user',
     timeout: 7000,
-    aliases: ['help', 'a', 'h'],
+    aliases: ['ajuda', 'a', 'h'],
 
     async execute(client, message, args) {
         var query;
         try {
             if (args) {
-                query = args.get('comando') ? args.get('comando').value : null || args.join(" ")
+                query = args.get('command') ? args.get('command').value : null || args.join(" ")
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

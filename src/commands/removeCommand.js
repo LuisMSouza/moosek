@@ -4,26 +4,26 @@ const sendError = require('../utils/error.js')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "remover",
+    name: "remove",
     description: "Para remover uma música específica na fila do servidor",
     options: [
         {
-            name: 'posição',
+            name: 'position',
             type: 4, // 'INTEGER' Type
             description: 'Posição da música na fila',
             required: true,
         }
     ],
-    usage: [process.env.PREFIX_KEY + 'remover [número da música na fila]'],
+    usage: [process.env.PREFIX_KEY + 'remove [número da música na fila]'],
     category: 'user',
     timeout: 7000,
-    aliases: ['rm', 'rv', 'remove'],
+    aliases: ['rm', 'rv', 'remover'],
 
     async execute(client, message, args) {
         var query;
         try {
             if (args) {
-                query = args.get('posição') ? args.get('posição').value : null || args.join(" ")
+                query = args.get('position') ? args.get('position').value : null || args.join(" ")
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

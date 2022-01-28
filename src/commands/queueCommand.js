@@ -4,12 +4,12 @@ const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "fila",
+    name: "queue",
     description: "Para ver a fila de músicas do servidor",
-    usage: [process.env.PREFIX_KEY + 'fila'],
+    usage: [process.env.PREFIX_KEY + 'queue'],
     category: 'user',
     timeout: 7000,
-    aliases: ['queue', 'q', 'f', 'lista'],
+    aliases: ['fila', 'q', 'f', 'lista'],
 
     async execute(client, message, args) {
         const eNext = client.guilds.cache.get("731542666277290016").emojis.cache.find(emj => emj.name === "6269110");

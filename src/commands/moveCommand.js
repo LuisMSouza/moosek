@@ -4,34 +4,34 @@ const Move = require('array-move-item');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "mover",
+    name: "move",
     description: "Para mudar a posição de uma música na fila",
     options: [
         {
-            name: 'posição',
+            name: 'old',
             type: 4, // 'INTEGER' Type
             description: 'Posição atual da música na fila',
             required: true,
         },
         {
-            name: 'nova',
+            name: 'new',
             type: 4, // 'INTEGER' Type
             description: 'Posição para qual vai ser colocado',
             required: true,
         }
     ],
-    usage: [process.env.PREFIX_KEY + 'mover [posição atual] [nova posição]'],
+    usage: [process.env.PREFIX_KEY + 'move [posição atual] [nova posição]'],
     category: 'user',
     timeout: 5000,
-    aliases: ['mv', 'move'],
+    aliases: ['mv', 'mover'],
 
     async execute(client, message, args) {
         var query1;
         var query2
         try {
             if (args) {
-                query1 = args.get('posição') ? args.get('posição').value : null || args.join(" ");
-                query2 = args.get('nova') ? args.get('nova').value : null || args.join(" ");
+                query1 = args.get('old') ? args.get('old').value : null || args.join(" ");
+                query2 = args.get('new') ? args.get('new').value : null || args.join(" ");
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

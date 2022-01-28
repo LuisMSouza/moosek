@@ -4,12 +4,12 @@ const { MessageEmbed } = require('discord.js');
 
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
-    name: "sair",
+    name: "leave",
     description: "Para o bot sair do chat de voz em que você está",
-    usage: [process.env.PREFIX_KEY + 'sair'],
+    usage: [process.env.PREFIX_KEY + 'leave'],
     category: 'user',
     timeout: 7000,
-    aliases: ['lv', 'leave'],
+    aliases: ['lv', 'sair'],
 
     async execute(client, message, args) {
         const voiceChannel = message.member.voice.channel;

@@ -4,12 +4,12 @@ const sendError = require('../utils/error.js')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "aleatorio",
+    name: "aleatory",
     description: "Ativa o modo aleatório para a fila de músicas",
-    usage: [process.env.PREFIX_KEY + 'aleatorio'],
+    usage: [process.env.PREFIX_KEY + 'aleatory'],
     category: 'user',
     timeout: 7000,
-    aliases: ['random', 'rd', 'aleatory'],
+    aliases: ['random', 'rd',],
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);

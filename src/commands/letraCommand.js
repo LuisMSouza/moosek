@@ -7,26 +7,26 @@ const dl = require("play-dl");
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
-    name: "letra",
+    name: "lyrics",
     description: "Para pegar a letra de uma música",
     options: [
         {
-            name: 'música',
+            name: 'song',
             type: 3, // 'STRING' Type
             description: 'Música para ser pesquisada a letra',
             required: false,
         }
     ],
-    usage: [process.env.PREFIX_KEY + 'letra [nome da música]'],
+    usage: [process.env.PREFIX_KEY + 'lyrics [nome da música]'],
     category: 'user',
     timeout: 7000,
-    aliases: ['lyrics', 'l'],
+    aliases: ['letra', 'l'],
 
     async execute(client, message, args) {
         var query;
         try {
             if (args) {
-                query = args.get('música') ? args.get('música').value : null || args.join(" ")
+                query = args.get('song') ? args.get('song').value : null || args.join(" ")
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

@@ -5,12 +5,12 @@ const { MessageEmbed } = require('discord.js');
 
 ////////////////// SOURCE CODE //////////////////
 module.exports = {
-    name: "entrar",
+    name: "join",
     description: "Para o bot entrar no chat de voz em que você está",
-    usage: [process.env.PREFIX_KEY + 'entrar'],
+    usage: [process.env.PREFIX_KEY + 'join'],
     category: 'user',
     timeout: 7000,
-    aliases: ['e', 'join'],
+    aliases: ['e', 'entrar'],
 
     async execute(client, message, args) {
         const voiceChannel = message.member.voice.channel;
