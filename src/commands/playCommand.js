@@ -12,25 +12,25 @@ const guild_main = process.env.SERVER_MAIN;
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "play",
+    name: "tocar",
     description: "Para tocar músicas no servidor",
     options: [
         {
-            name: 'song',
+            name: 'música',
             type: 3, // 'STRING' Type
             description: 'Nome ou link da música',
             required: true,
         }
     ],
-    usage: [process.env.PREFIX_KEY + 'play [nome da música / link da música / link da playlist]'],
+    usage: [process.env.PREFIX_KEY + 'tocar [nome da música / link da música / link da playlist]'],
     category: 'user',
     timeout: 3000,
-    aliases: ['p', 'tocar', 'iniciar'],
+    aliases: ['p', 'play', 'iniciar'],
 
     async execute(client, message, args) {
         var query;
         if (args) {
-            query = args[0] ? args.join(" ") : "" || args.get('song') ? args.get('song').value : args.join(" ")
+            query = args[0] ? args.join(" ") : "" || args.get('música') ? args.get('música').value : args.join(" ")
         }
         const serverMain = client.guilds.cache.get(guild_main);
         const channelMain = serverMain.channels.cache.get("807738719556993064");

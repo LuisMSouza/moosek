@@ -4,12 +4,12 @@ const sendError = require('../utils/error.js')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "repeat",
-    description: "Ativa o loop  para a música atual",
-    usage: [process.env.PREFIX_KEY + 'repeat'],
+    name: "repetir",
+    description: "Ativa a repetição para a música atual",
+    usage: [process.env.PREFIX_KEY + 'repetir'],
     category: 'user',
     timeout: 7000,
-    aliases: ['rp', 'rpt', 'repetir'],
+    aliases: ['rp', 'rpt', 'repeat'],
 
 
     async execute(client, message, args) {

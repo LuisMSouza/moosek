@@ -5,12 +5,12 @@ const guildData = require('../models/guildData.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
-    name: "config",
+    name: "configurar",
     description: "Configura o bot no servidor",
-    usage: [process.env.PREFIX_KEY + 'config'],
+    usage: [process.env.PREFIX_KEY + 'configurar'],
     category: 'user',
     timeout: 7000,
-    aliases: ['configurar'],
+    aliases: ['config', 'cfg'],
 
     async execute(client, message, args) {
         if (!message.member.permissions.has("ADMINISTRATOR")) return sendError("Você não pode utilizar este comando nesse servidor", message.channel);

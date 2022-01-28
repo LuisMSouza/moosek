@@ -4,9 +4,9 @@ const { CEO_ID } = require('../utils/botUtils.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
-    name: "reboot",
+    name: "reiniciar",
     description: "Reinicia o bot",
-    usage: [process.env.PREFIX_KEY + 'reboot'],
+    usage: [process.env.PREFIX_KEY + 'reiniciar'],
     category: 'ceo',
     timeout: 7000,
     aliases: ['rb'],

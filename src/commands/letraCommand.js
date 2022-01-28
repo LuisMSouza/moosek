@@ -11,7 +11,7 @@ module.exports = {
     description: "Para pegar a letra de uma música",
     options: [
         {
-            name: 'song',
+            name: 'música',
             type: 3, // 'STRING' Type
             description: 'Música para ser pesquisada a letra',
             required: false,
@@ -26,7 +26,7 @@ module.exports = {
         var query;
         try {
             if (args) {
-                query = args.get('song') ? args.get('song').value : null || args.join(" ")
+                query = args.get('música') ? args.get('música').value : null || args.join(" ")
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

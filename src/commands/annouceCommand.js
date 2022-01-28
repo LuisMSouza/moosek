@@ -6,9 +6,9 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = {
-    name: "announce",
+    name: "anuncio",
     description: "Faz um anúncio a todos os servidores em que o bot está",
-    usage: [process.env.PREFIX_KEY + 'announce'],
+    usage: [process.env.PREFIX_KEY + 'anuncio'],
     category: 'ceo',
     timeout: 7000,
     aliases: ['anc', 'msgall', 'msg'],

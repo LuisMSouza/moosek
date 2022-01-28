@@ -3,12 +3,12 @@ const sendError = require('../utils/error.js')
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "now",
+    name: "tocando",
     description: "Para ver a música que está tocando no servidor",
-    usage: [process.env.PREFIX_KEY + 'now'],
+    usage: [process.env.PREFIX_KEY + 'tocando'],
     category: 'user',
     timeout: 7000,
-    aliases: ['tocando', 'nowplaying'],
+    aliases: ['now', 'nowplaying'],
 
     async execute(client, message, args) {
         const serverQueue = client.queue.get(message.guild.id);

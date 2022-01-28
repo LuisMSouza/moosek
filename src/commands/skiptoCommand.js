@@ -4,11 +4,11 @@ const Player = require('../structures/createPlayer.js');
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
-    name: "skipto",
+    name: "pular",
     description: "Para pular para uma música específica na fila do servidor",
     options: [
         {
-            name: 'position',
+            name: 'posição',
             type: 4, // 'INTEGER' Type
             description: 'Posição da música para ser pulada',
             required: true,
@@ -17,13 +17,13 @@ module.exports = {
     usage: [process.env.PREFIX_KEY + 'skipto [número da música na fila]'],
     category: 'user',
     timeout: 7000,
-    aliases: ['st', 'nt', 'nextto'],
+    aliases: ['st', 'nt', 'nextto', 'skipto'],
 
     async execute(client, message, args) {
         var query;
         try {
             if (args) {
-                query = args.get('position') ? args.get('position').value : null || args.join(" ")
+                query = args.get('posição') ? args.get('posição').value : null || args.join(" ")
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

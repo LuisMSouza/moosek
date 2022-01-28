@@ -12,6 +12,7 @@ module.exports = {
     aliases: [],
 
     async execute(client, message, args) {
+        /*
         if (message.author.id != CEO_ID) return;
         fetch(`https://discloud.app/status/bot/778462497728364554`, {
             headers: {
@@ -71,5 +72,6 @@ module.exports = {
                 }]
             })
         })
+        */
     }
 }

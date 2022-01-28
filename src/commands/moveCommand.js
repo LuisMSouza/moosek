@@ -8,13 +8,13 @@ module.exports = {
     description: "Para mudar a posição de uma música na fila",
     options: [
         {
-            name: 'position',
+            name: 'posição',
             type: 4, // 'INTEGER' Type
             description: 'Posição atual da música na fila',
             required: true,
         },
         {
-            name: 'new',
+            name: 'nova',
             type: 4, // 'INTEGER' Type
             description: 'Posição para qual vai ser colocado',
             required: true,
@@ -30,8 +30,8 @@ module.exports = {
         var query2
         try {
             if (args) {
-                query1 = args.get('position') ? args.get('position').value : null || args.join(" ");
-                query2 = args.get('new') ? args.get('new').value : null || args.join(" ");
+                query1 = args.get('posição') ? args.get('posição').value : null || args.join(" ");
+                query2 = args.get('nova') ? args.get('nova').value : null || args.join(" ");
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {

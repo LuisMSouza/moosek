@@ -8,7 +8,7 @@ module.exports = {
     description: "Para remover uma música específica na fila do servidor",
     options: [
         {
-            name: 'position',
+            name: 'posição',
             type: 4, // 'INTEGER' Type
             description: 'Posição da música na fila',
             required: true,
@@ -23,7 +23,7 @@ module.exports = {
         var query;
         try {
             if (args) {
-                query = args.get('position') ? args.get('position').value : null || args.join(" ")
+                query = args.get('posição') ? args.get('posição').value : null || args.join(" ")
             }
         } catch (e) {
             if (e.message.includes("Cannot read properties of null (reading 'value')")) {
