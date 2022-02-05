@@ -1,12 +1,12 @@
 // -- BIBLIOTECAS E IMPORTS -- //
-const sendError = require('../utils/error.js');
-const ms = require('ms');
-const guildData = require('../models/guildData.js');
+import sendError from '../utils/error.js';
+import ms from 'ms';
+import { findOne } from '../models/guildData.js';
 
 // -- EXPORT EVENT -- //
-module.exports = async function (client, message) {
+export default async function (client, message) {
     try {
-        var prefix = await guildData.findOne({ guildID: message.guild.id, })
+        var prefix = await findOne({ guildID: message.guild.id, })
         const args = message.content.split(/ +/g);
         const commandName = args.shift().slice(prefix.guildPrefix.length).toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));

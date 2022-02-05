@@ -1,4 +1,4 @@
-module.exports = async function (client, oldState, newState) {
+export default async function (client, oldState, newState) {
     const serverQueue = newState.client.queue.get(newState.guild.id);
     if (newState.channelId && newState.channel.type === 'GUILD_STAGE_VOICE' && newState.guild.me.voice.suppress) {
         try {

@@ -1,9 +1,9 @@
 /////////////////////// IMPORTS //////////////////////////
-const createGuild = require('../models/createGuild.js');
-const { MessageEmbed } = require('discord.js');
+import createGuild from '../models/createGuild.js';
+import { MessageEmbed } from 'discord.js';
 
 /////////////////////// SOURCE CODE //////////////////////////
-module.exports = async (client, guild) => {
+export default async (client, guild) => {
     try {
         const embed_1 = new MessageEmbed()
             .setTitle("Obrigado por me adicionar!")

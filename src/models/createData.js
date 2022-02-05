@@ -1,8 +1,8 @@
 /////////////////////// IMPORTS //////////////////////////
-const userData = require('./userData.js');
+import userData from './userData.js';
 
 /////////////////////// SOURCE CODE ///////////////////////////
-module.exports = async (client, member) => {
+export default async (client, member) => {
     try {
         const data = new userData({
             userID: member,

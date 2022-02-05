@@ -1,23 +1,20 @@
 /////////////////////// IMPORTS ///////////////////////////
 
 /////////////////////// SOURCE CODE ///////////////////////////
-module.exports = {
-    name: "ping",
-    description: "Mostra o ping da aplicação",
-    usage: [process.env.PREFIX_KEY + 'ping'],
-    category: 'user',
-    timeout: 5000,
-    aliases: [],
-
-    async execute(client, message, args) {
-        let ping = Math.round(message.client.ws.ping);
-        message.reply(({
-            embeds: [
-                {
-                    color: "YELLOW",
-                    description: `**${ping} ms**`
-                }
-            ]
-        }))
-    }
+export const name = "ping";
+export const description = "Mostra o ping da aplicação";
+export const usage = [process.env.PREFIX_KEY + "ping"];
+export const category = "user";
+export const timeout = 5000;
+export const aliases = [];
+export async function execute(client, message, args) {
+  let ping = Math.round(message.client.ws.ping);
+  message.reply({
+    embeds: [
+      {
+        color: "YELLOW",
+        description: `**${ping} ms**`,
+      },
+    ],
+  });
 }

@@ -1,60 +1,61 @@
 /////////////////////// IMPORTS //////////////////////////
-const { Client, intents, Collection } = require('discord.js');
-const dotenv = require('dotenv');
-const { readdirSync, readdir } = require('fs');
-const { AudioPlayer } = require('@discordjs/voice');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+import { Client, Collection } from "discord.js";
+import { config } from "dotenv";
+import { readdirSync, readdir } from "fs";
+import { AudioPlayer } from "@discordjs/voice";
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/v9";
 
 /////////////////////// ENGINE CONFIG //////////////////////////
-dotenv.config();
+config();
 const client = new Client({ intents: 32767, restTimeOffset: 0 });
 const configVars = {
-    token: process.env.TOKEN_KEY,
-}
+  token: process.env.TOKEN_KEY,
+};
 client.commands = new Collection();
 client.queue = new Collection();
 client.timeout = new Collection();
-client.db = require('./utils/db.js');
+client.db = require("./utils/db.js");
 client.radio = new Map();
-client.player = new AudioPlayer();;
+client.player = new AudioPlayer();
 client.slashCommands = new Collection();
 
-const commands = readdirSync(`./src/commands`).filter(file => file.endsWith(".js"));
+const commands = readdirSync(`./src/commands`).filter((file) =>
+  file.endsWith(".js")
+);
 for (const file of commands) {
-    const cmd = require(`./commands/${file}`);
-    if (cmd.category != 'ceo') {
-        client.slashCommands.set(cmd.name, cmd);
-    }
-    client.commands.set(cmd.name, cmd);
+  const cmd = require(`./commands/${file}`);
+  if (cmd.category != "ceo") {
+    client.slashCommands.set(cmd.name, cmd);
+  }
+  client.commands.set(cmd.name, cmd);
 }
-console.log("[SOURCE] COMMANDS RELOADED")
+console.log("[SOURCE] COMMANDS RELOADED");
 
 readdir(__dirname + "/events/", (err, files) => {
-    if (err) return console.error(err);
-    files.forEach((file) => {
-        const event = require(__dirname + `/events/${file}`);
-        let eventName = file.split(".")[0];
-        client.on(eventName, event.bind(null, client));
-    });
+  if (err) return console.error(err);
+  files.forEach((file) => {
+    const event = require(__dirname + `/events/${file}`);
+    let eventName = file.split(".")[0];
+    client.on(eventName, event.bind(null, client));
+  });
 });
-console.log("[SOURCE] EVENTS RELOADED")
+console.log("[SOURCE] EVENTS RELOADED");
 
-const rest = new REST({ version: '9' }).setToken(configVars.token);
+const rest = new REST({ version: "9" }).setToken(configVars.token);
 
 (async () => {
-    try {
-        console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
+  try {
+    console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
 
-        await rest.put(
-            Routes.applicationCommands("778462497728364554"),
-            { body: client.slashCommands },
-        );
+    await rest.put(Routes.applicationCommands("778462497728364554"), {
+      body: client.slashCommands,
+    });
 
-        console.log("[SOURCE] GLOBAL COMMANDDS STARTED");
-    } catch (error) {
-        console.error(error);
-    }
+    console.log("[SOURCE] GLOBAL COMMANDDS STARTED");
+  } catch (error) {
+    console.error(error);
+  }
 })();
 
 /////////////////////// SOURCE CODE //////////////////////////

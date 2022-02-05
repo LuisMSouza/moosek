@@ -1,4 +1,4 @@
-exports.radioStations = [
+export const radioStations = [
     "https://streams.ilovemusic.de/iloveradio14.mp3",
     "https://streams.ilovemusic.de/iloveradio17.mp3",
     "https://streams.ilovemusic.de/iloveradio16.mp3",
@@ -16,7 +16,7 @@ exports.radioStations = [
     "https://n35b-e2.revma.ihrhls.com/zc1753?rj-ttl=5&rj-tok=AAABfM93jUEA7LrbCUxtGwlNPQ",
     "https://radiodigitalia-musicaitaliana.stream.laut.fm/radiodigitalia-musicaitaliana?ref=radiode&t302=2021-11-26_03-09-38&uuid=a22839fb-80a0-45e6-9cb3-efbefad8b5f0"
 ]
-exports.radioStationsName = [
+export const radioStationsName = [
     "Standard-Radio",
     "Chill-Radio",
     "Greatest-hits-Radio",

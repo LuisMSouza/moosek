@@ -1,8 +1,8 @@
 /////////////////////// IMPORTS //////////////////////////
-const { MessageEmbed } = require('discord.js');
+import { MessageEmbed } from 'discord.js';
 
 /////////////////////// SOURCE CODE //////////////////////////
-module.exports = async (client, error) => {
+export default async (client, error) => {
     try {
         const embed = new MessageEmbed()
             .setTitle("Erro encontrado")
