@@ -1,8 +1,8 @@
 /////////////////////// IMPORTS //////////////////////////
-import guildData from "./guildData.js";
+const guildData = require("./guildData.js");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-export default async (guild) => {
+module.exports = async (guild) => {
   try {
     const serv = new guildData({
       guildID: guild,

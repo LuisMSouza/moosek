@@ -1,13 +1,13 @@
 /////////////////////// IMPORTS //////////////////////////
-import { Client, Collection } from "discord.js";
-import { config } from "dotenv";
-import { readdirSync, readdir } from "fs";
-import { AudioPlayer } from "@discordjs/voice";
-import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
+const { Client, Collection } = require("discord.js");
+const dotenv = require("dotenv");
+const { readdirSync, readdir } = require("fs");
+const { AudioPlayer } = require("@discordjs/voice");
+const { REST } = require("@discordjs/rest");
+const { Routes } = require("discord-api-types/v9");
 
 /////////////////////// ENGINE CONFIG //////////////////////////
-config();
+dotenv.config();
 const client = new Client({ intents: 32767, restTimeOffset: 0 });
 const configVars = {
   token: process.env.TOKEN_KEY,

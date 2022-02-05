@@ -1,10 +1,10 @@
 /////////////////////// IMPORTS //////////////////////////
-import { Schema, model } from 'mongoose';
+const mongoose = require("mongoose");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-const userSchema = Schema({
-    userID: String,
-    list: Array,
+const userSchema = mongoose.Schema({
+  userID: String,
+  list: Array,
 });
 
-export default model('saveData', userSchema)
+module.exports = mongoose.model("saveData", userSchema);

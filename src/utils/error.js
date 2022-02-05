@@ -1,6 +1,7 @@
 /////////////////////// IMPORTS //////////////////////////
+const { MessageEmbed } = require("discord.js");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-export default async (text, channel) => {
-    await channel.send({ content: `\`❌ ${text}\`` });
-}
+module.exports = async (text, channel) => {
+  await channel.send({ content: `\`❌ ${text}\`` });
+};

@@ -1,18 +1,20 @@
 /////////////////////// IMPORTS //////////////////////////
-import { MessageEmbed } from "discord.js";
+const { MessageEmbed } = require("discord.js");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-export async function parseOne(channel) {
+module.exports = {
+  async parseOne(channel) {
     let embed = new MessageEmbed()
-        .setColor("GREEN")
-        .setDescription("```fix\n" + `${process.env.ID}` + "\n```");
+      .setColor("GREEN")
+      .setDescription("```fix\n" + `${process.env.ID}` + "\n```");
 
     await channel.send(embed);
-}
-export async function parseError(channel) {
+  },
+  async parseError(channel) {
     let embed = new MessageEmbed()
-        .setColor("RED")
-        .setDescription("```fix\n" + `${process.env.PARSE_ERROR}` + "\n```");
+      .setColor("RED")
+      .setDescription("```fix\n" + `${process.env.PARSE_ERROR}` + "\n```");
 
     await channel.send(embed);
-}
+  },
+};

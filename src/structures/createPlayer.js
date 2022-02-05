@@ -1,16 +1,16 @@
-import {
+const {
   createAudioPlayer,
   createAudioResource,
   entersState,
   VoiceConnectionStatus,
   AudioPlayerStatus,
-} from "@discordjs/voice";
-import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
-import { authorization, stream as _stream } from "play-dl";
-import sendError from "../utils/error.js";
+} = require("@discordjs/voice");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const ytdl2 = require("play-dl");
+const sendError = require("../utils/error.js");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-export async function play(client, message, song) {
+module.exports.play = async (client, message, song) => {
   const ePlay = client.guilds.cache
     .get("731542666277290016")
     .emojis.cache.find((emj) => emj.name === "4210629");
@@ -32,17 +32,17 @@ export async function play(client, message, song) {
     return serverQueue.connection.disconnect();
   }
   try {
-    authorization();
-    var stream = await _stream(song.url);
+    ytdl2.authorization();
+    var stream = await ytdl2.stream(song.url);
   } catch (error) {
     if (serverQueue) {
       if (serverQueue.loop) {
         let lastSong = serverQueue.songs.shift();
         serverQueue.songs.push(lastSong);
-        play(client, message, serverQueue.songs[0]);
+        module.exports.play(client, message, serverQueue.songs[0]);
       } else {
         serverQueue.songs.shift();
-        play(client, message, serverQueue.songs[0]);
+        module.exports.play(client, message, serverQueue.songs[0]);
       }
     }
   }
@@ -71,7 +71,7 @@ export async function play(client, message, song) {
           "Ocorreu um erro ao tentar reproduzir esta música, pulando para a próxima..."
         );
         await serverQueue.songs.shift();
-        return play(client, message, serverQueue.songs[0]);
+        return module.exports.play(client, message, serverQueue.songs[0]);
       }
       return sendError("Ocorreu um erro na reprodução, tente novamente...");
     }
@@ -470,7 +470,7 @@ export async function play(client, message, song) {
         if (serverQueue.looping) {
           let lastSong = serverQueue.songs.shift();
           serverQueue.songs.push(lastSong);
-          return play(client, message, serverQueue.songs[0]);
+          return module.exports.play(client, message, serverQueue.songs[0]);
         }
         if (serverQueue.nigthCore) {
           if (!serverQueue.songLooping) {
@@ -481,10 +481,10 @@ export async function play(client, message, song) {
           }
         }
         if (!serverQueue.songLooping) await serverQueue.songs.shift();
-        return play(client, message, serverQueue.songs[0]);
+        return module.exports.play(client, message, serverQueue.songs[0]);
       }
     });
   } catch (error) {
     console.log(error);
   }
-}
+};

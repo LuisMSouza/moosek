@@ -1,13 +1,13 @@
 /////////////////////// IMPORTS //////////////////////////
-import { findOneAndDelete } from './guildData.js';
+const guildData = require("./guildData.js");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-export default async (guild) => {
-    try {
-        await findOneAndDelete({
-            guildID: guild
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}
+module.exports = async (guild) => {
+  try {
+    await guildData.findOneAndDelete({
+      guildID: guild,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};

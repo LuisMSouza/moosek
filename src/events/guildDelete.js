@@ -1,8 +1,8 @@
 /////////////////////// IMPORTS //////////////////////////
-import deleteGuild from "../models/deleteGuild.js";
+const deleteGuild = require("../models/deleteGuild.js");
 
 /////////////////////// SOURCE CODE //////////////////////////
-export default async (client, guild) => {
+module.exports = async (client, guild) => {
   try {
     await deleteGuild(guild.id);
   } catch (e) {

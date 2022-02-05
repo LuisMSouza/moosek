@@ -10,7 +10,6 @@
   "engines": {
     "node": "16.11.0"
   },
-  "type": "module",
   "author": "Luís#0685",
   "license": "ISC",
   "dependencies": {

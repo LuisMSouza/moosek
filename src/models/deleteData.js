@@ -1,15 +1,18 @@
 /////////////////////// IMPORTS //////////////////////////
-import { findOneAndDelete } from './userData.js';
+const userData = require("./userData.js");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-export default async (client, member) => {
-    try {
-        findOneAndDelete({
-            userID: member
-        }, (err, res) => {
-            if (err) console.log(err);
-        });
-    } catch (e) {
-        console.log(e);
-    }
-}
+module.exports = async (client, member) => {
+  try {
+    userData.findOneAndDelete(
+      {
+        userID: member,
+      },
+      (err, res) => {
+        if (err) console.log(err);
+      }
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};

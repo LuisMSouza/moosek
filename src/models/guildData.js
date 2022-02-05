@@ -1,11 +1,11 @@
 /////////////////////// IMPORTS //////////////////////////
-import { Schema, model } from 'mongoose';
+const mongoose = require("mongoose");
 
 /////////////////////// SOURCE CODE ///////////////////////////
-const guildSchema = Schema({
-    guildID: String,
-    guildPrefix: String,
-    aleatory_mode: Boolean,
+const guildSchema = mongoose.Schema({
+  guildID: String,
+  guildPrefix: String,
+  aleatory_mode: Boolean,
 });
 
-export default model('guildData', guildSchema);
+module.exports = mongoose.model("guildData", guildSchema);
