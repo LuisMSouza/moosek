@@ -68,12 +68,16 @@ module.exports.play = async (client, message, song) => {
         )
       ) {
         sendError(
-          "Ocorreu um erro ao tentar reproduzir esta música, pulando para a próxima..."
+          "Ocorreu um erro ao tentar reproduzir esta música...",
+          serverQueue.textChannel
         );
         await serverQueue.songs.shift();
         return module.exports.play(client, message, serverQueue.songs[0]);
       }
-      return sendError("Ocorreu um erro na reprodução, tente novamente...");
+      return sendError(
+        "Ocorreu um erro na reprodução, tente novamente...",
+        serverQueue.textChannel
+      );
     }
     console.log(error);
     return sendError(
@@ -309,9 +313,7 @@ module.exports.play = async (client, message, song) => {
             );
           }
           if (!serverQueue) {
-            sendError("Não há nada tocando no momento.", message.guild).then(
-              (m3) => m3.delete({ timeout: 10000 })
-            );
+            sendError("Não há nada tocando no momento.", message.channel);
           }
           if (serverQueue) {
             try {
@@ -364,7 +366,7 @@ module.exports.play = async (client, message, song) => {
             );
           }
           if (!serverQueue) {
-            sendError("Não há nada tocando no momento.", message.guild);
+            sendError("Não há nada tocando no momento.", message.channel);
             return;
           }
           try {
@@ -435,9 +437,7 @@ module.exports.play = async (client, message, song) => {
             );
           }
           if (!serverQueue) {
-            sendError("Não há nada tocando no momento.", message.guild).then(
-              (m3) => m3.delete({ timeout: 10000 })
-            );
+            sendError("Não há nada tocando no momento.", message.channel);
             await b.update({
               embeds: [serverQueue.songs[0].embed],
               components: [],
