@@ -178,6 +178,7 @@ module.exports.play = async (client, message, song) => {
     });
 
     collector.on("collect", async (b) => {
+      const reacter = message.guild.members.cache.get(b.user.id);
       switch (b.customId) {
         case "pause":
           if (!serverQueue) {
@@ -187,7 +188,7 @@ module.exports.play = async (client, message, song) => {
             });
             return;
           }
-          if (!message.member.voice.channel) {
+          if (!reacter.voice.channel) {
             serverQueue.textChannel
               .send({
                 embeds: [
@@ -204,7 +205,7 @@ module.exports.play = async (client, message, song) => {
               });
             return;
           }
-          if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+          if (serverQueue.voiceChannel.id !== reacter.voice.channel.id) {
             return sendError(
               "O bot está sendo utilizado em outro canal!",
               serverQueue.textChannel
@@ -238,7 +239,7 @@ module.exports.play = async (client, message, song) => {
             });
             return;
           }
-          if (!message.member.voice.channel) {
+          if (!reacter.voice.channel) {
             serverQueue.textChannel
               .send({
                 embeds: [
@@ -255,7 +256,7 @@ module.exports.play = async (client, message, song) => {
               });
             return;
           }
-          if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+          if (serverQueue.voiceChannel.id !== reacter.voice.channel.id) {
             return sendError(
               "O bot está sendo utilizado em outro canal!",
               serverQueue.textChannel
@@ -289,7 +290,7 @@ module.exports.play = async (client, message, song) => {
             });
             return;
           }
-          if (!message.member.voice.channel) {
+          if (!reacter.voice.channel) {
             serverQueue.textChannel
               .send({
                 embeds: [
@@ -306,7 +307,7 @@ module.exports.play = async (client, message, song) => {
               });
             return;
           }
-          if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+          if (serverQueue.voiceChannel.id !== reacter.voice.channel.id) {
             return sendError(
               "O bot está sendo utilizado em outro canal!",
               serverQueue.textChannel
@@ -342,7 +343,7 @@ module.exports.play = async (client, message, song) => {
             });
             return;
           }
-          if (!message.member.voice.channel) {
+          if (!reacter.voice.channel) {
             serverQueue.textChannel
               .send({
                 embeds: [
@@ -359,7 +360,7 @@ module.exports.play = async (client, message, song) => {
               });
             return;
           }
-          if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+          if (serverQueue.voiceChannel.id !== reacter.voice.channel.id) {
             return sendError(
               "O bot está sendo utilizado em outro canal!",
               serverQueue.textChannel
@@ -413,7 +414,7 @@ module.exports.play = async (client, message, song) => {
             });
             return;
           }
-          if (!message.member.voice.channel) {
+          if (!reacter.voice.channel) {
             serverQueue.textChannel
               .send({
                 embeds: [
@@ -430,7 +431,7 @@ module.exports.play = async (client, message, song) => {
               });
             return;
           }
-          if (serverQueue.voiceChannel.id !== message.member.voice.channel.id) {
+          if (serverQueue.voiceChannel.id !== reacter.voice.channel.id) {
             return sendError(
               "O bot está sendo utilizado em outro canal!",
               serverQueue.textChannel

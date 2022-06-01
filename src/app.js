@@ -20,7 +20,7 @@ client.radio = new Map();
 client.player = new AudioPlayer();
 client.slashCommands = new Collection();
 
-const commands = readdirSync(`./src/commands`).filter((file) =>
+const commands = readdirSync(`./commands`).filter((file) =>
   file.endsWith(".js")
 );
 for (const file of commands) {
