@@ -20,11 +20,11 @@ client.radio = new Map();
 client.player = new AudioPlayer();
 client.slashCommands = new Collection();
 
-const commands = readdirSync(`./commands`).filter((file) =>
+const commands = readdirSync(`./src/commands`).filter((file) =>
   file.endsWith(".js")
 );
 for (const file of commands) {
-  const cmd = require(`./commands/${file}`);
+  const cmd = require(`./src/commands/${file}`);
   if (cmd.category != "ceo") {
     client.slashCommands.set(cmd.name, cmd);
   }
@@ -32,7 +32,7 @@ for (const file of commands) {
 }
 console.log("[SOURCE] COMMANDS RELOADED");
 
-readdir(__dirname + "/events/", (err, files) => {
+readdir(__dirname + "/src/events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
     const event = require(__dirname + `/events/${file}`);
@@ -48,7 +48,7 @@ const rest = new REST({ version: "9" }).setToken(configVars.token);
   try {
     console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
 
-    await rest.put(Routes.applicationCommands("778462497728364554"), {
+    await rest.put(Routes.applicationCommands("990724810210410526"), {
       body: client.slashCommands,
     });
 
