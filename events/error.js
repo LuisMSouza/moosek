@@ -1,10 +1,10 @@
 /////////////////////// IMPORTS //////////////////////////
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 /////////////////////// SOURCE CODE //////////////////////////
 module.exports = async (client, error) => {
   try {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle("Erro encontrado")
       .setDescription(`**${error}**`)
       .setTimestamp(client.user.username, client.user.displayAvatarURL());

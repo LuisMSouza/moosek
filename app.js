@@ -1,10 +1,8 @@
 /////////////////////// IMPORTS //////////////////////////
-const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, GatewayIntentBits, Routes, REST } = require("discord.js");
 const dotenv = require("dotenv");
 const { readdirSync, readdir } = require("fs");
 const { AudioPlayer } = require("@discordjs/voice");
-const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();

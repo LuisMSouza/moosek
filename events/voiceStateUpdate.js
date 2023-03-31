@@ -1,4 +1,4 @@
-const { MessageManager, ChannelType } = require("discord.js");
+const { MessageManager, ChannelType, NewsChannel } = require("discord.js");
 
 module.exports = async function (client, oldState, newState) {
   const serverQueue = newState.client.queue.get(newState.guild.id);
@@ -13,6 +13,11 @@ module.exports = async function (client, oldState, newState) {
     } catch (e) {
       return console.log(e);
     }
+  }
+  if (newState.guild.members.me.voice.channel.members.size <= 1) {
+    const msg = await serverQueue.textChannel.messages.cache.get(`${serverQueue.songs[0].messageId}`);
+    if (msg) await msg.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
+    client.queue.delete(newState.guild.id);
   }
   if (!newState.guild.members.me.voice.channelId) {
     if (serverQueue) {

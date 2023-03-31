@@ -13,10 +13,12 @@ const sendError = require("../utils/error.js");
 module.exports.play = async (client, message, song) => {
   const serverQueue = message.client.queue.get(message.guild.id);
   if (!song) {
-    await message.client.queue.delete(message.guild.id);
-    if (serverQueue) {
-      return serverQueue.connection.disconnect();
-    }
+    setTimeout(async () => {
+      if (!message.client.queue.get(message.guild.id)) {
+        await message.client.queue.delete(message.guild.id);
+        return serverQueue.connection.disconnect();
+      }
+    }, 300000);
   }
   try {
     ytdl2.authorization();
@@ -40,7 +42,7 @@ module.exports.play = async (client, message, song) => {
       inlineVolume: true,
       inputType: stream.type,
     });
-    serverQueue.audioPlayer.play(serverQueue.resource);
+    await serverQueue.audioPlayer.play(serverQueue.resource);
     await entersState(
       serverQueue.connection,
       VoiceConnectionStatus.Ready,

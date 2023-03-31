@@ -5,10 +5,6 @@ const ytdl = require("ytdl-core");
 const dl = require("play-dl");
 const lyricsFinder = require("@jeve/lyrics-finder");
 
-lyricsFinder.LyricsFinder("estranged").then((data) => {
-  console.log(data);
-});
-
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
   name: "lyrics",

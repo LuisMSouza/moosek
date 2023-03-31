@@ -24,7 +24,7 @@ module.exports = {
             liveStream: x[0].live,
             author: message.member.user.tag,
             embed: {
-              author: "Tocando agora:",
+              author: { name: "Tocando agora:" },
               color: Colors.Yellow,
               title: `${x[0].title}`,
               thumbnail: {

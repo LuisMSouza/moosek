@@ -4,7 +4,6 @@ const handleAlbum = require("./strSpotifyAlbum.js");
 const handlePlaylist = require("./strSpotifyPlaylist.js");
 const SpotifyWebApi = require("spotify-web-api-node");
 const sendError = require("../utils/error.js");
-const acess = require("../utils/acess.json");
 var fs = require("fs");
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPTF_CLIENT,
@@ -12,7 +11,7 @@ const spotifyApi = new SpotifyWebApi({
 });
 const { Colors } = require("discord.js");
 
-spotifyApi.setAccessToken(acess.acess);
+spotifyApi.setAccessToken(process.env.SPOTIFY_ACESS_TOKEN);
 spotifyApi.setRefreshToken(process.env.SPOTIFY_KEY_REFRESH);
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
