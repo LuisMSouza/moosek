@@ -16,8 +16,8 @@ module.exports.play = async (client, message, song) => {
     await message.client.queue.delete(message.guild.id);
     return setTimeout(async () => {
       if (!message.client.queue.get(message.guild.id)) {
-        if (message.client.queue) await message.client.queue.delete(message.guild.id);
-        return serverQueue.connection.disconnect();
+        serverQueue.connection.disconnect();
+        return
       }
     }, 300000);
   }
