@@ -13,9 +13,10 @@ const sendError = require("../utils/error.js");
 module.exports.play = async (client, message, song) => {
   const serverQueue = message.client.queue.get(message.guild.id);
   if (!song) {
-    setTimeout(async () => {
+    await message.client.queue.delete(message.guild.id);
+    return setTimeout(async () => {
       if (!message.client.queue.get(message.guild.id)) {
-        await message.client.queue.delete(message.guild.id);
+        if (message.client.queue) await message.client.queue.delete(message.guild.id);
         return serverQueue.connection.disconnect();
       }
     }, 300000);

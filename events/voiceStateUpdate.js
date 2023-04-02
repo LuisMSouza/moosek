@@ -17,7 +17,9 @@ module.exports = async function (client, oldState, newState) {
   if (newState.guild.members.me.voice.channel.members.size <= 1) {
     const msg = await serverQueue.textChannel.messages.cache.get(`${serverQueue.songs[0].messageId}`);
     if (msg) await msg.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
+    if (newState.client.queue.get(newState.guild.id)) serverQueue.connection.disconnect();
     client.queue.delete(newState.guild.id);
+    return
   }
   if (!newState.guild.members.me.voice.channelId) {
     if (serverQueue) {

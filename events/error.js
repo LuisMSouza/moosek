@@ -7,7 +7,7 @@ module.exports = async (client, error) => {
     const embed = new EmbedBuilder()
       .setTitle("Erro encontrado")
       .setDescription(`**${error}**`)
-      .setTimestamp(client.user.username, client.user.displayAvatarURL());
+      .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() });
 
     await client.guilds.cache
       .get("731542666277290016")
