@@ -4,8 +4,9 @@ const {
   entersState,
   VoiceConnectionStatus,
   AudioPlayerStatus,
+  getVoiceConnection
 } = require("@discordjs/voice");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Colors, ButtonStyle } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Colors, ButtonStyle, VoiceStateManager } = require("discord.js");
 const ytdl2 = require("play-dl");
 const sendError = require("../utils/error.js");
 
@@ -16,8 +17,9 @@ module.exports.play = async (client, message, song) => {
     await message.client.queue.delete(message.guild.id);
     return setTimeout(async () => {
       if (!message.client.queue.get(message.guild.id)) {
-        serverQueue.connection.disconnect();
-        return
+        const connection = getVoiceConnection(message.guild.id);
+        if (connection) connection.destroy();
+        return;
       }
     }, 300000);
   }

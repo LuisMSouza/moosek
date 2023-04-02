@@ -1,4 +1,5 @@
 const { MessageManager, ChannelType, NewsChannel } = require("discord.js");
+const { getVoiceConnection } = require("@discordjs/voice");
 
 module.exports = async function (client, oldState, newState) {
   const serverQueue = newState.client.queue.get(newState.guild.id);
@@ -14,12 +15,19 @@ module.exports = async function (client, oldState, newState) {
       return console.log(e);
     }
   }
-  if (newState.guild.members.me.voice.channel.members.size <= 1) {
-    const msg = await serverQueue.textChannel.messages.cache.get(`${serverQueue.songs[0].messageId}`);
-    if (msg) await msg.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
-    if (newState.client.queue.get(newState.guild.id)) serverQueue.connection.disconnect();
-    client.queue.delete(newState.guild.id);
-    return
+  if (newState.guild.members.me.voice.channel) {
+    if (newState.guild.members.me.voice.channel.members.size <= 1) {
+      if (newState.client.queue.get(newState.guild.id)) {
+        const msg = await serverQueue.textChannel.messages.cache.get(`${serverQueue.songs[0].messageId}`);
+        if (msg) await msg.edit({ embeds: [serverQueue.songs[0].embed], components: [] });
+        serverQueue.connection.disconnect();
+        client.queue.delete(newState.guild.id);
+      } else {
+        const conn = getVoiceConnection(newState.guild.id);
+        conn.destroy();
+      }
+      return
+    }
   }
   if (!newState.guild.members.me.voice.channelId) {
     if (serverQueue) {
