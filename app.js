@@ -6,6 +6,7 @@ const { AudioPlayer } = require("@discordjs/voice");
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
+process.setMaxListeners(0);
 const client = new Client({
   intents: [
     GatewayIntentBits.GuildMembers,
