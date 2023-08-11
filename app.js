@@ -3,6 +3,8 @@ const { Client, Collection, GatewayIntentBits, Routes, REST } = require("discord
 const dotenv = require("dotenv");
 const { readdirSync, readdir } = require("fs");
 const { AudioPlayer } = require("@discordjs/voice");
+const express = require("express");
+const app = express();
 
 process.setMaxListeners(0);
 /////////////////////// ENGINE CONFIG //////////////////////////
@@ -21,7 +23,8 @@ const client = new Client({
 });
 const configVars = {
   token: process.env.TOKEN_KEY,
-  client_id: process.env.CLIENT_ID
+  client_id: process.env.CLIENT_ID,
+  app_port: process.env.PORT
 };
 client.commands = new Collection();
 client.buttons = new Collection();
@@ -83,3 +86,7 @@ const rest = new REST({ version: "10" }).setToken(configVars.token);
 /////////////////////// SOURCE CODE //////////////////////////
 client.db.init();
 client.login(configVars.token);
+
+app.listen(configVars.app_port, () => {
+  console.log(`Server running on port: ${configVars.app_port}`);
+});
