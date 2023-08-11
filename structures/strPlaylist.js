@@ -11,16 +11,17 @@ module.exports = {
     try {
       const serverQueue = message.client.queue.get(message.guild.id);
 
+      var video_timestamp = await this.parseTimestamp(video.duration)
+
       const song = {
         id: video.id,
-        title: video.title
-          ? video.title
-          : await ytdl.getBasicInfo(video.shortUrl).videoDetails.media.song,
-        url: video.shortUrl,
+        title: video.title,
+        url: `https://www.youtube.com/watch?v=${video.id}`,
         thumbnail: video.thumbnails[0].url,
-        duration: video.duration,
+        duration: video_timestamp,
         isLive: video.isLive,
         author: message.member.user.tag,
+        messageId: null,
         embed: {
           author: { name: "Tocando agora:" },
           color: Colors.Yellow,
@@ -31,7 +32,7 @@ module.exports = {
           fields: [
             {
               name: "> __Duração:__",
-              value: "```fix\n" + `${video.duration}` + "\n```",
+              value: "```fix\n" + `${video_timestamp}` + "\n```",
               inline: true,
             },
             {
@@ -102,4 +103,16 @@ module.exports = {
       return console.log(e);
     }
   },
+  async parseTimestamp(secs) {
+    let totalSeconds = secs;
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    minutes = String(minutes).padStart(2, "0");
+    hours = String(hours).padStart(2, "0");
+    seconds = String(seconds).padStart(2, "0");
+    return hours + ":" + minutes + ":" + seconds;
+  }
 };

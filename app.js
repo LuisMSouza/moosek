@@ -6,7 +6,6 @@ const { AudioPlayer } = require("@discordjs/voice");
 
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
-process.setMaxListeners(0);
 const client = new Client({
   intents: [
     GatewayIntentBits.GuildMembers,
@@ -21,6 +20,7 @@ const client = new Client({
 });
 const configVars = {
   token: process.env.TOKEN_KEY,
+  client_id: process.env.CLIENT_ID
 };
 client.commands = new Collection();
 client.buttons = new Collection();
@@ -69,7 +69,7 @@ const rest = new REST({ version: "10" }).setToken(configVars.token);
   try {
     console.log("[SOURCE] STARTING GLOBAL COMMANDDS...");
 
-    await rest.put(Routes.applicationCommands("990724810210410526"), {
+    await rest.put(Routes.applicationCommands(configVars.client_id), {
       body: client.slashCommands,
     });
 

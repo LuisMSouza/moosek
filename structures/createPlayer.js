@@ -7,8 +7,13 @@ const {
   getVoiceConnection
 } = require("@discordjs/voice");
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Colors, ButtonStyle, VoiceStateManager } = require("discord.js");
-const ytdl2 = require("play-dl");
+const player = require("play-dl");
 const sendError = require("../utils/error.js");
+player.setToken({
+  useragent: ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"]
+})
+
+process.setMaxListeners(Infinity);
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports.play = async (client, message, song) => {
@@ -24,8 +29,8 @@ module.exports.play = async (client, message, song) => {
     }, 300000);
   }
   try {
-    ytdl2.authorization();
-    var stream = await ytdl2.stream(song.url);
+    player.authorization();
+    var stream = await player.stream(song.url);
   } catch (error) {
     if (serverQueue) {
       if (serverQueue.loop) {

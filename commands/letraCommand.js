@@ -3,7 +3,7 @@ const { EmbedBuilder, ApplicationCommandOptionType, Colors } = require("discord.
 const sendError = require("../utils/error.js");
 const ytdl = require("ytdl-core");
 const dl = require("play-dl");
-const lyricsFinder = require("@jeve/lyrics-finder");
+const lyricsFinder = require('simple-find-lyrics');
 
 ////////////////// SOURCE CODE /////////////////////
 module.exports = {
@@ -49,16 +49,15 @@ module.exports = {
         try {
           message.reply("🔎 Aguardando busca...");
           const search = await ytdl.getBasicInfo(serverQueue.songs[0].url);
-          await lyricsFinder.LyricsFinder(`${serverQueue.songs[0].title}`).then(async (r) => {
-            await generateEmbeds(
-              message,
-              r,
-              search.videoDetails.media.song ? search.videoDetails.media.song : search.videoDetails.title,
-              search.videoDetails.thumbnails[0].url,
-              search.videoDetails.media.artist
-            );
-            return msge.delete(msge);
-          });
+          const r = await lyricsFinder(`${serverQueue.songs[0].title}`)
+          await generateEmbeds(
+            message,
+            r.lyrics,
+            search.videoDetails.media.song ? search.videoDetails.media.song : search.videoDetails.title,
+            search.videoDetails.thumbnails[0].url,
+            search.videoDetails.media.artist
+          );
+          return msge.delete(msge);
         } catch (e) {
           msge.delete(msge);
           sendError(
@@ -80,16 +79,15 @@ module.exports = {
         dl.authorization();
         const input = await dl.search(`${SearchStr}`);
         const search = await ytdl.getBasicInfo(input[0].url);
-        await lyricsFinder.LyricsFinder(`${SearchStr}`).then(async (r) => {
-          await generateEmbeds(
-            message,
-            r,
-            search.videoDetails.media.song ? search.videoDetails.media.song : search.videoDetails.title,
-            search.videoDetails.thumbnails[0].url,
-            search.videoDetails.media.artist
-          );
-          return msge.delete(msge);
-        });
+        const r = await lyricsFinder(`${SearchStr}`)
+        await generateEmbeds(
+          message,
+          r.lyrics,
+          search.videoDetails.media.song ? search.videoDetails.media.song : search.videoDetails.title,
+          search.videoDetails.thumbnails[0].url,
+          search.videoDetails.media.artist
+        );
+        return msge.delete(msge);
       } catch (e) {
         msge.delete(msge);
         sendError(`Não encontrei resultados...`, message.channel);
@@ -97,6 +95,7 @@ module.exports = {
       }
     }
     async function generateEmbeds(message, lyrics, title, thumb, artist) {
+      if (lyrics.length < 1) return sendError(`Não encontrei resultados...`, message.channel);
       let embed = new EmbedBuilder()
         .setTitle(`${title}`)
         .setThumbnail(`${thumb}`)
@@ -111,14 +110,14 @@ module.exports = {
       embed4.setDescription(`${lyrics}`);
       embed.setDescription(`${lyrics}`);
 
-      if (embed.description.length > 2048 && embed.description.length <= 4090) {
+      if (embed.data.description.length > 2048 && embed.data.description.length <= 4090) {
         embed.description = `${embed.description.substr(0, 2045)}...`;
         await message.channel.send({ embeds: [embed] });
         embed2.description = `${lyrics.substr(2045)}`;
         if (embed2.description != "..." || embed2.description != "") {
           await message.channel.send({ embeds: [embed2] });
         }
-      } else if (embed.description.length > 4090) {
+      } else if (embed.data.description.length > 4090) {
         embed.description = `${embed.description.substr(0, 2045)}...`;
         await message.channel.send({ embeds: [embed] });
         embed2.description = `${lyrics.substr(2045, 2045)}...`;

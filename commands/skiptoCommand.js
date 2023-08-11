@@ -94,8 +94,8 @@ module.exports = {
           embeds: [
             {
               color: Colors.Yellow,
-              description: "```\n" + `⏭ \`${(args[0] || query) - 1
-                }\` músicas puladas por ${message.member.user.username}` + "\n```"
+              description: "```\n" + `⏭ ${(args[0] || query) - 1
+                } músicas puladas por ${message.member.user.username}` + "\n```"
             },
           ],
         })

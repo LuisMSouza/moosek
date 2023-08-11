@@ -1,15 +1,19 @@
 /////////////////////// IMPORTS //////////////////////////
-const ytlist = require("ytpl");
-const dl = require("play-dl");
+const { ApplicationCommandOptionType, Colors } = require("discord.js");
+const { joinVoiceChannel } = require("@discordjs/voice");
+const { Client } = require("youtubei");
+
 const sendError = require("../utils/error.js");
 const { QUEUE_LIMIT } = require("../utils/botUtils.js");
 const { play } = require("../structures/createPlayer.js");
 const playlist_init = require("../structures/strPlaylist.js");
 const sptfHandle = require("../structures/strSptfHandle.js");
 const { deezerHandler } = require("../structures/strDeezerHandle.js");
-const { joinVoiceChannel } = require("@discordjs/voice");
-const guild_main = process.env.SERVER_MAIN;
-const { ApplicationCommandOptionType, Colors } = require("discord.js");
+
+const GUILD_MAIN = process.env.SERVER_MAIN;
+const VOICE_CHANNEL_ID = "807738719556993064";
+
+const yt_scrapper = new Client();
 
 /////////////////////// SOURCE CODE ///////////////////////////
 module.exports = {
@@ -32,25 +36,19 @@ module.exports = {
   aliases: ["p", "play", "iniciar"],
 
   async execute(client, message, args) {
-    var query;
-    if (args) {
-      query = args[0]
-        ? args.join(" ")
-        : "" || args.get("song")
-          ? args.get("song").value
-          : args.join(" ");
-    }
-    const serverMain = client.guilds.cache.get(guild_main);
-    const channelMain = serverMain.channels.cache.get("807738719556993064");
+    const serverMain = client.guilds.cache.get(GUILD_MAIN);
+    const channelMain = serverMain.channels.cache.get(VOICE_CHANNEL_ID);
+
+    query = args[0] ?? args.get("song")?.value ?? args.join(" ");
+
     const searchString = query || args.join(" ");
+    const url = args[0]?.replace(/<(.+)>/g, "$1") || searchString || query;
+
     if (!searchString)
       return sendError(
         "Você precisa digitar a música a ser tocada",
         message.channel
       );
-    const url = args[0]
-      ? args[0].replace(/<(.+)>/g, "$1")
-      : "" || searchString || query;
     if (!searchString || !url)
       return message.reply({
         embeds: [
@@ -87,6 +85,7 @@ module.exports = {
       );
 
     const playlistRegex = /^http(s)?:\/\/(www\.)?youtube.com\/.+list=.+$/;
+    const playlistIdRegex = /[?&]list=([^#\&\?]+)/;
     const sptfRegex = /((open|play)\.spotify\.com\/)/;
     const deezerRegex =
       /^(http(s)?:\/\/)?(www\.)?deezer\.(com|page\.link)\/(.{2}\/)?(playlist\/|track\/|album\/|artist\/)?(.[0-9]+)?(.+)?$/;
@@ -180,10 +179,10 @@ module.exports = {
             );
           }
         }
-        const playlist = await ytlist(`${url.match(playlistRegex)}`);
+        const playlist = await yt_scrapper.getPlaylist(`${url.match(playlistIdRegex)[1]}`);
         if (!playlist)
           return sendError("Playlist não encontrada", message.channel);
-        const videos = await playlist.items;
+        const videos = await playlist.videos.items;
         for (const video of videos) {
           await playlist_init.handleVideo(
             client,
@@ -214,72 +213,53 @@ module.exports = {
           ],
         });
       } catch {
+        var searched;
         try {
-          if (serverQueue) {
-            if (
-              serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) &&
-              QUEUE_LIMIT !== 0
-            ) {
-              return sendError(
-                `Você não pode adicionar mais de ${QUEUE_LIMIT} músicas na fila.`,
-                message.channel
-              );
-            }
-          }
-          var searched = await ytlist(searchString).catch(e => {
-            console.log(e);
-            return sendError("Ocorreu um erro ao tentar reproduzir essa playlist.", message.channel);
-          })
-          if (searched.length === 0)
-            return sendError(
-              "Eu não consegui achar essa playlist :(",
-              message.channel
-            );
-          const videos = await searched.items;
-          for (const video of videos) {
-            await playlist_init.handleVideo(
-              client,
-              video,
-              message,
-              voiceChannel,
-              true
-            );
-          }
-          return message.reply({
-            embeds: [
-              {
-                color: Colors.Yellow,
-                description: `**Playlist adicionada à fila**`,
-                fields: [
-                  {
-                    name: "> __Pedido por:__",
-                    value: "```fix\n" + `${message.member.user.tag}` + "\n```",
-                    inline: true,
-                  },
-                  {
-                    name: "> __Total de músicas:__",
-                    value: "```fix\n" + `${videos.length}` + "\n```",
-                    inline: true,
-                  },
-                ],
-              },
-            ],
-          });
+          var searched = await yt_scrapper.getPlaylist(`${url.match(playlistIdRegex)[1]}`);
         } catch (error) {
-          console.log(error);
-          channelMain.send({
-            embed: {
-              title: "Erro na source",
-              description:
-                "*Detalhes do erro:*\n```fix\n" + `${error}` + "\n```",
-            },
-          });
+          console.log(e);
+          return sendError("Ocorreu um erro ao tentar reproduzir essa playlist.", message.channel);
         }
+
+        if (!searched || searched.length == 0)
+          return sendError(
+            "Eu não consegui achar essa playlist :(",
+            message.channel
+          );
+        const videos = await searched.videos;
+        for (const video of videos) {
+          await playlist_init.handleVideo(
+            client,
+            video,
+            message,
+            voiceChannel,
+            true
+          );
+        }
+        return message.reply({
+          embeds: [
+            {
+              color: Colors.Yellow,
+              description: `**Playlist adicionada à fila**`,
+              fields: [
+                {
+                  name: "> __Pedido por:__",
+                  value: "```fix\n" + `${message.member.user.tag}` + "\n```",
+                  inline: true,
+                },
+                {
+                  name: "> __Total de músicas:__",
+                  value: "```fix\n" + `${videos.length}` + "\n```",
+                  inline: true,
+                },
+              ],
+            },
+          ],
+        });
       }
     } else {
       try {
-        dl.authorization();
-        await dl.search(`${searchString}`, { limit: 1 }).then(async (x) => {
+        await yt_scrapper.findOne(`${searchString}`).then(async (video) => {
           const queueConstruct = {
             textChannel: message.channel,
             voiceChannel: voiceChannel,
@@ -294,27 +274,28 @@ module.exports = {
             looping: false,
             songLooping: false,
           };
+          var video_timestamp = await this.parseTimestamp(video.duration)
           const song = {
-            title: x[0].title,
-            url: x[0].url,
-            thumbnail: x[0].thumbnails[0].url,
-            duration: x[0].durationRaw,
-            liveStream: x[0].live,
+            title: video.title,
+            url: `https://www.youtube.com/watch?v=${video.id}`,
+            thumbnail: video.thumbnails[0].url,
+            duration: video_timestamp,
+            liveStream: video.live,
             author: message.member.user.tag,
             messageId: null,
             embed: {
               color: Colors.Yellow,
               author: { name: "Tocando agora:" },
-              title: `${x[0].title}`,
+              title: `${video.title}`,
               thumbnail: {
-                url: `${x[0].thumbnails[0].url}`,
+                url: `${video.thumbnails[0].url}`,
               },
               fields: [
                 {
                   name: "> __Duração:__",
                   value:
                     "```fix\n" +
-                    `${x[0].live ? "🔴 Live" : x[0].durationRaw}` +
+                    `${video.isLiveive ? "🔴 Live" : video_timestamp}` +
                     "\n```",
                   inline: true,
                 },
@@ -440,4 +421,16 @@ module.exports = {
       }
     }
   },
+  async parseTimestamp(secs) {
+    let totalSeconds = secs;
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    minutes = String(minutes).padStart(2, "0");
+    hours = String(hours).padStart(2, "0");
+    seconds = String(seconds).padStart(2, "0");
+    return hours + ":" + minutes + ":" + seconds;
+  }
 };

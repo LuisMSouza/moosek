@@ -14,7 +14,7 @@ module.exports = async function (client, interaction) {
     }
   }
   if (interaction.type === InteractionType.MessageComponent) {
-    if (interaction.isSelectMenu()) return;
+    if (interaction.isStringSelectMenu()) return;
     const button = client.buttons.get(interaction.customId.toLowerCase());
     try {
       button.execute(client, interaction);

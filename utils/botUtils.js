@@ -1,4 +1,4 @@
 exports.QUEUE_LIMIT = 100;
 exports.STAY_TIME = 300;
 exports.CEO_ID = 853106102824599552;
-exports.CLIENT_VERSION = "1.2.3";
+exports.CLIENT_VERSION = "1.4.2";

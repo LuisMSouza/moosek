@@ -22,6 +22,7 @@ module.exports = {
             duration: x[0].durationRaw,
             liveStream: x[0].live,
             author: message.member.user.tag,
+            messageId: null,
             embed: {
               author: { name: "Tocando agora:" },
               color: Colors.Yellow,
@@ -92,16 +93,10 @@ module.exports = {
               .setColor(Colors.Yellow)
               .setThumbnail(song.img)
               .setDescription(`[${song.title}](${song.url}) adicionado à fila`)
-              .addField(
-                "> __Duração:__",
-                "```fix\n" + `${song.duration}` + "\n```",
-                true
+              .addFields(
+                { name: "> __Duração:__", value: "```fix\n" + `${song.duration}` + "\n```", inline: true },
+                { name: "> __Pedido por:__", value: "```fix\n" + `${message.member.user.tag}` + "\n```", inline: true }
               )
-              .addField(
-                "> __Pedido por:__",
-                "```fix\n" + `${message.author.tag}` + "\n```",
-                true
-              );
             return serverQueue.textChannel.send({ embeds: [thing] });
           }
           return;
