@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const { readdirSync, readdir } = require("fs");
 const { AudioPlayer } = require("@discordjs/voice");
 
+process.setMaxListeners(0);
 /////////////////////// ENGINE CONFIG //////////////////////////
 dotenv.config();
 const client = new Client({
